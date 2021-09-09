@@ -11,4 +11,5 @@ struct DrinkData: Decodable, Encodable {
     var drinks = [Drink]()
     var dailyGoal = 2000.0
     var units = Constants.milliliters
+    var selectedDate = Date()
 }
