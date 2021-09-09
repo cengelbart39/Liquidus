@@ -38,7 +38,7 @@ struct DataLogsView: View {
             TimePicker(picker: $selectedTimePeriod)
             
             // MARK: - Day/Week Selector
-            TimeDataPicker(currentDate: $model.drinkData.selectedDate)
+            //DayDataPicker(currentDate: $model.drinkData.selectedDay)
             
             // MARK: - Stats
             HStack {
@@ -47,12 +47,12 @@ struct DataLogsView: View {
                 
                 VStack {
                     
-                    Text("\(model.getTotalPercent(date: model.drinkData.selectedDate)*100, specifier: "%.2f")%")
+                    Text("\(model.getTotalPercent(date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
                         .bold()
                         .font(.largeTitle)
                         .padding(.bottom, 6)
                     
-                    Text("\(model.getTotalAmount(date: model.drinkData.selectedDate), specifier: "%.0f") / \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.drinkData.units)")
+                    Text("\(model.getTotalAmount(date: model.drinkData.selectedDay), specifier: "%.0f") / \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.drinkData.units)")
                         .font(.title3)
                     
                     // MARK: Stats by Drink Type
@@ -67,7 +67,7 @@ struct DataLogsView: View {
                                 
                                 VStack(alignment: .leading) {
                                     Text(Constants.waterKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.waterKey, date: model.drinkData.selectedDate), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDate)*100, specifier: "%.2f")%")
+                                    Text("\(model.getDrinkTypeAmount(type: Constants.waterKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
                                 }
                                 
                             }
@@ -81,7 +81,7 @@ struct DataLogsView: View {
                                 
                                 VStack(alignment: .leading) {
                                     Text(Constants.coffeeKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.coffeeKey, date: model.drinkData.selectedDate), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.coffeeKey, date: model.drinkData.selectedDate)*100, specifier: "%.2f")%")
+                                    Text("\(model.getDrinkTypeAmount(type: Constants.coffeeKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.coffeeKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
                                 }
                             }
                         }
@@ -95,7 +95,7 @@ struct DataLogsView: View {
                                 
                                 VStack(alignment: .leading) {
                                     Text(Constants.sodaKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.sodaKey, date: model.drinkData.selectedDate), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.sodaKey, date: model.drinkData.selectedDate)*100, specifier: "%.2f")%")
+                                    Text("\(model.getDrinkTypeAmount(type: Constants.sodaKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.sodaKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
                                 }
                             }
                             
@@ -108,7 +108,7 @@ struct DataLogsView: View {
                                 
                                 VStack(alignment: .leading) {
                                     Text(Constants.juiceKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.juiceKey, date: model.drinkData.selectedDate), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDate)*100, specifier: "%.2f")%")
+                                    Text("\(model.getDrinkTypeAmount(type: Constants.juiceKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
                                 }
                             }
                         }

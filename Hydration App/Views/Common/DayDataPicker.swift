@@ -1,5 +1,5 @@
 //
-//  TimeDataPicker.swift
+//  DayDataPicker.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/7/21.
@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct TimeDataPicker: View {
+struct DayDataPicker: View {
+    
+    @EnvironmentObject var model: DrinkModel
     
     @Binding var currentDate: Date
     
@@ -56,9 +58,10 @@ struct TimeDataPicker: View {
     
     func isTomorrow(currentDate: Date) -> Bool {
         let calendar = Calendar.current
+        
         let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) ?? Date()
-        
+            
         if dateFormatter.string(from: nextDay) == dateFormatter.string(from: tomorrow) {
             return true
         } else {
