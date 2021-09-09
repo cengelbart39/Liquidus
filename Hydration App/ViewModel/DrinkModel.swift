@@ -113,4 +113,33 @@ class DrinkModel: ObservableObject {
         return percent
         
     }
+    
+    func getWeek(date: Date) -> [Date] {
+        
+        let dayNum = Calendar.current.dateComponents([.weekday], from: date).weekday
+        
+        if dayNum != nil {
+            if dayNum == 1 {
+                let endDate = Calendar.current.date(byAdding: .day, value: 6, to: date)!
+                
+                return [date, endDate]
+            } else if dayNum! > 1 && dayNum! < 7 {
+                let startDiff = -1 + dayNum!
+                let endDiff = 7 - dayNum!
+                
+                let startDate = Calendar.current.date(byAdding: .day, value: startDiff, to: date)!
+                let endDate = Calendar.current.date(byAdding: .day, value: endDiff, to: date)!
+                
+                return [startDate, endDate]
+            } else if dayNum == 7 {
+                let startDate = Calendar.current.date(byAdding: .day, value: -6, to: date)!
+                
+                return [startDate, date]
+            } else {
+                return [Date]()
+            }
+        } else {
+            return [Date]()
+        }
+    }
 }
