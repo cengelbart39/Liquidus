@@ -21,13 +21,18 @@ struct DailyGoalSettings: View {
             Section() {
                 
                 HStack {
+                    // Daily Goal input
                     TextField("\(model.drinkData.dailyGoal, specifier: "%.0f")", text: $dailyGoal)
                         .keyboardType(.numberPad)
                     
+                    // Save button
                     Button(action: {
                         if let num = Double(dailyGoal) {
+                            // Update daily goal
                             model.drinkData.dailyGoal = num
+                            // Save to user defaults
                             model.save()
+                            // Dismiss screen
                             presentationMode.wrappedValue.dismiss()
                         }
                     }, label: {

@@ -38,7 +38,13 @@ struct DataLogsView: View {
             TimePicker(picker: $selectedTimePeriod)
             
             // MARK: - Day/Week Selector
-            //DayDataPicker(currentDate: $model.drinkData.selectedDay)
+            // If day display day picker
+            if selectedTimePeriod == Constants.selectDay {
+                DayDataPicker(currentDate: $model.drinkData.selectedDay)
+            // If week display week picker
+            } else {
+                WeekDataPicker(currentWeek: $model.drinkData.selectedWeek)
+            }
             
             // MARK: - Stats
             HStack {
@@ -47,12 +53,14 @@ struct DataLogsView: View {
                 
                 VStack {
                     
-                    Text("\(model.getTotalPercent(date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
+                    // Display daily/weekly percentage
+                    Text("\(selectedTimePeriod == Constants.selectDay ? model.getTotalPercent(date: model.drinkData.selectedDay) : model.getTotalPercent(week: model.drinkData.selectedWeek)*100, specifier: "%.2f")%")
                         .bold()
                         .font(.largeTitle)
                         .padding(.bottom, 6)
                     
-                    Text("\(model.getTotalAmount(date: model.drinkData.selectedDay), specifier: "%.0f") / \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.drinkData.units)")
+                    // Display amount consumed and goal
+                    Text("\(selectedTimePeriod == Constants.selectDay ? model.getTotalAmount(date: model.drinkData.selectedDay) : model.getTotalAmount(week: model.drinkData.selectedWeek), specifier: "%.0f") / \(selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7, specifier: "%.0f") \(model.drinkData.units)")
                         .font(.title3)
                     
                     // MARK: Stats by Drink Type
@@ -60,57 +68,20 @@ struct DataLogsView: View {
                         
                         HStack {
                             
-                            HStack {
-                                
-                                RectangleCard(color: Constants.colors[Constants.waterKey]!)
-                                    .frame(width: 30, height: 30)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(Constants.waterKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.waterKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
-                                }
-                                
-                            }
+                            DataLogsDrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkType: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
                             
                             Spacer()
                             
-                            HStack {
-                                
-                                RectangleCard(color: Constants.colors[Constants.coffeeKey]!)
-                                    .frame(width: 30, height: 30)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(Constants.coffeeKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.coffeeKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.coffeeKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
-                                }
-                            }
+                            DataLogsDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkType: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
                         }
                         
                         HStack {
                             
-                            HStack {
-                                
-                                RectangleCard(color: Constants.colors[Constants.sodaKey]!)
-                                    .frame(width: 30, height: 30)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(Constants.sodaKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.sodaKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.sodaKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
-                                }
-                            }
+                            DataLogsDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkType: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
                             
                             Spacer()
                             
-                            HStack {
-                                
-                                RectangleCard(color: Constants.colors[Constants.juiceKey]!)
-                                    .frame(width: 30, height: 30)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(Constants.juiceKey)
-                                    Text("\(model.getDrinkTypeAmount(type: Constants.juiceKey, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units) / \(model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay)*100, specifier: "%.2f")%")
-                                }
-                            }
+                            DataLogsDrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkType: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
                         }
                     }
                     .padding(.horizontal)
@@ -127,14 +98,17 @@ struct DataLogsView: View {
                     
                     Spacer()
                     
-                    let data = model.filterDataByDay(day: Date())
+                    // Get the drink data for a day or week
+                    let data = selectedTimePeriod == Constants.selectDay ? model.filterDataByDay(day: model.drinkData.selectedDay) : model.filterDataByWeek(week: model.drinkData.selectedWeek)
                     
+                    // Check that there is data
                     if data.count > 0 {
                     
-                        VStack {
+                        VStack(alignment: .leading) {
                             ForEach(data) { drink in
                                 ZStack {
                                     
+                                    // Create card
                                     RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
                                         .frame(width: 250, height: 70)
                                         .shadow(radius: 5)
@@ -143,6 +117,7 @@ struct DataLogsView: View {
                                         
                                         Spacer()
                                         
+                                        // Colored Drop
                                         Image(systemName: "drop.fill")
                                             .resizable()
                                             .scaledToFit()
@@ -150,13 +125,16 @@ struct DataLogsView: View {
                                             .foregroundColor(Constants.colors[drink.type])
                                             .padding(.trailing)
                                         
+                                        // Amount consumed
                                         Text("\(Int(drink.amount.rounded(.up))) \(model.drinkData.units)")
                                             .padding(.trailing, 10)
                                         
+                                        // Time drink was logged
                                         Text(dateFormatter.string(from: drink.date))
                                         
                                         Spacer()
                                     }
+                                    
                                 }
                                 .padding(.top, 10)
                             }
@@ -164,7 +142,7 @@ struct DataLogsView: View {
                         
                         
                     } else {
-                        Text("No data is logged for this day.")
+                        Text("No data is logged for this \(selectedTimePeriod == Constants.selectDay ? "day" : "week").")
                             .font(.subheadline)
                             .bold()
                             .padding(.top)

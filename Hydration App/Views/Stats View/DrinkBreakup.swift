@@ -22,11 +22,13 @@ struct DrinkBreakup: View {
             
             VStack(alignment: .leading) {
                 
+                // If day display the daily percentage
                 if selectedTimePeriod == Constants.selectDay {
                     Text(String(format: "%.2f%%", min(model.getDrinkTypePercent(type: drinkName, date: model.drinkData.selectedDay), 1.0)*100.0))
                         .font(.title3)
                         .bold()
                         .padding(.bottom, 8)
+                // If week display the weekly percentage
                 } else {
                     Text(String(format: "%.2f%%", min(model.getDrinkTypePercent(type: drinkName, week: model.drinkData.selectedWeek), 1.0)*100.0))
                         .font(.title3)
@@ -34,12 +36,15 @@ struct DrinkBreakup: View {
                         .padding(.bottom, 8)
                 }
                 
+                // Display the type of drink
                 Text(drinkName)
                     .font(.subheadline)
                 
+                // If day display the daily intake
                 if selectedTimePeriod == Constants.selectDay {
                     Text("\(model.getDrinkTypeAmount(type: drinkName, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units)")
                         .font(.headline)
+                // If week display the weekly intake
                 } else {
                     Text("\(model.getDrinkTypeAmount(type: drinkName, week: model.drinkData.selectedWeek), specifier: "%.0f") \(model.drinkData.units)")
                         .font(.headline)

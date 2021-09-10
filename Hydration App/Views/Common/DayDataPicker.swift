@@ -26,8 +26,10 @@ struct DayDataPicker: View {
         
         HStack {
             Button(action: {
+                // Set new date
                 let calendar = Calendar.current
                 currentDate = calendar.date(byAdding: .day, value: -1, to: currentDate) ?? Date()
+                // Check if the next day is today or passed
                 isTomorrow = self.isTomorrow(currentDate: currentDate)
             }, label: {
                 Image(systemName: "chevron.left")
@@ -36,15 +38,21 @@ struct DayDataPicker: View {
 
             Spacer()
             
+            // Display Month Day, Year
             Text(dateFormatter.string(from: currentDate))
             
             Spacer()
             
             Button(action: {
+                // Get next day
                 let calendar = Calendar.current
                 let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
+                
+                // If this day is/has occured...
                 if !isTomorrow {
+                    // Update currentDate
                     currentDate = nextDay
+                    // Check if this new day has occured
                     isTomorrow = self.isTomorrow(currentDate: currentDate)
                 }
             }, label: {
@@ -59,11 +67,14 @@ struct DayDataPicker: View {
     func isTomorrow(currentDate: Date) -> Bool {
         let calendar = Calendar.current
         
+        // Get the next day and tomorrow date
         let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) ?? Date()
             
+        // If they are the same...
         if dateFormatter.string(from: nextDay) == dateFormatter.string(from: tomorrow) {
             return true
+        // If not
         } else {
             return false
         }

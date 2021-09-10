@@ -18,15 +18,18 @@ struct GoalInformation: View {
     var body: some View {
         
         ZStack(alignment: .leading) {
+            // Create card
             RectangleCard(color: colorScheme == .light ? Color.white : Color(.systemGray6))
                 .frame(height: 60)
                 .shadow(radius: 5)
             
             VStack(alignment: .leading, spacing: -5) {
+                // title
                 Text(headline)
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
+                // amount
                 Text("\(amount, specifier: "%.0f") \(model.drinkData.units)")
                     .font(.title)
             }

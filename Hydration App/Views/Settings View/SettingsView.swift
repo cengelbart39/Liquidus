@@ -19,16 +19,20 @@ struct SettingsView: View {
             
             Form {
                 
+                // MARK: - Daily Goal Settings
                 Section(footer: Text("Weekly goal adjusts accordingly")) {
                     
                     NavigationLink(
+                        // Display Settings Page
                         destination: DailyGoalSettings(),
                         label: {
                             HStack {
+                                // Display current daily goal
                                 Text("Daily Goal: \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.drinkData.units)")
                                 
                                 Spacer()
                                 
+                                // Button label
                                 Text("Change")
                                     .foregroundColor(.blue)
                             }
@@ -36,14 +40,17 @@ struct SettingsView: View {
                     
                 }
                 
+                // MARK: - Unit Settings
                 Section(footer: Text("If the unit is changed, all measurements will be converted")) {
                     
+                    // Unit Picker
                     Picker("Units", selection: $model.drinkData.units) {
                         Text("Milliliters (mL)")
                             .tag(Constants.milliliters)
                         Text("Ounces (oz)")
                             .tag(Constants.ounces)
                     }
+                    // Update model and convert measurements
                     .onChange(of: model.drinkData.units, perform: { value in
                         model.convertMeasurements()
                     })
@@ -55,7 +62,9 @@ struct SettingsView: View {
                         
                         Spacer()
                         
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Button(action: {
+                            // TODO
+                        }, label: {
                             Text("Sync with Apple Health")
                                 .foregroundColor(Color(.systemPink))
                         })

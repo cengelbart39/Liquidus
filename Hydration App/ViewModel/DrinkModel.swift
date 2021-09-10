@@ -13,18 +13,22 @@ class DrinkModel: ObservableObject {
     @Published var weeksPopulated = false
     
     init() {
+        // Retrieve data from UserDefaults
         if let data = UserDefaults.standard.data(forKey: Constants.savedKey) {
             if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
                 self.drinkData = decoded
+                // Populate the selectedWeek property
                 self.drinkData.selectedWeek = self.getDaysInWeek(date: Date())
                 return
             }
         }
         
+        // If unable to retrieve from UserDefaults, create a new DrinkData
         self.drinkData = DrinkData()
     }
     
     func save() {
+        // Save data to user defaults
         if let encoded = try? JSONEncoder().encode(drinkData) {
             UserDefaults.standard.set(encoded, forKey: Constants.savedKey)
         }
@@ -36,19 +40,27 @@ class DrinkModel: ObservableObject {
     }
     
     func convertMeasurements() {
+        // If units are changed to mL
         if self.drinkData.units == Constants.milliliters {
+            // Convert daily goal to mL
             self.drinkData.dailyGoal *= Constants.ozTOml
             
+            // Convert all drink amounts to mL
             for drink in drinkData.drinks {
                 drink.amount *= Constants.ozTOml
             }
+        // If units are changed to oz
         } else {
+            // Convert daily goal to oz
             self.drinkData.dailyGoal *= Constants.mlTOoz
             
+            // Convert all drink amounts to oz
             for drink in drinkData.drinks {
                 drink.amount *= Constants.mlTOoz
             }
         }
+        
+        // Save to user defaults
         self.save()
     }
     
@@ -71,19 +83,12 @@ class DrinkModel: ObservableObject {
         return filtered
     }
     
-    func filterByDrinkType(type: String, date: Date) -> [Drink] {
+    func getDrinkTypeAmount(type: String, date: Date) -> Double {
         // Get the filtered data for the day
         let time = filterDataByDay(day: date)
         
         // Filter by the drink type
-        let filtered = time.filter { $0.type == type }
-        
-        return filtered
-    }
-    
-    func getDrinkTypeAmount(type: String, date: Date) -> Double {
-        // Get drinks filtered by day and type
-        let drinks = self.filterByDrinkType(type: type, date: date)
+        let drinks = time.filter { $0.type == type }
         
         // Add up all the amounts
         var totalAmount = 0.0
@@ -226,21 +231,13 @@ class DrinkModel: ObservableObject {
         return weekData
     }
     
-    func filterByDrinkType(type: String, week: [Date]) -> [Drink] {
+    func getDrinkTypeAmount(type: String, week: [Date]) -> Double {
         
         // Get the drink data for the week
         let data = filterDataByWeek(week: week)
         
         // Filter by drink type
-        let filtered = data.filter { $0.type == type }
-        
-        return filtered
-    }
-    
-    func getDrinkTypeAmount(type: String, week: [Date]) -> Double {
-        
-        // Get the drink data
-        let drinks = self.filterDataByWeek(week: week)
+        let drinks = data.filter { $0.type == type }
         
         // Get the total amount
         var totalAmount = 0.0
@@ -297,14 +294,18 @@ class DrinkModel: ObservableObject {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         
+        // Loop for days in week1
         for dayA in week1 {
+            // Loop through days in week 2
             for dayB in week2 {
+                // If two days are the same...
                 if dateFormatter.string(from: dayA) == dateFormatter.string(from: dayB) {
                     return true
                 }
             }
         }
         
+        // If no two days are the same
         return false
     }
 }

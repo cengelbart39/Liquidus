@@ -23,12 +23,14 @@ struct LogDrinkView: View {
         
         VStack(alignment: .leading) {
             
+            // Title
             Text("Log A Drink")
                 .font(.largeTitle)
                 .bold()
                 .padding(.bottom)
                 .padding(.top, 50)
             
+            // Drink Type Picker
             Picker("Drink Type", selection: $drinkType) {
                 Text(Constants.waterKey)
                     .tag(Constants.waterKey)
@@ -45,6 +47,7 @@ struct LogDrinkView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding(.bottom)
             
+            // Drink Amount TextField
             HStack {
                 
                 Text("Drink Amount:")
@@ -61,7 +64,8 @@ struct LogDrinkView: View {
             
             Text("Time:")
                 .bold()
-                
+            
+            // Date Picker
             DatePicker("", selection: $timeSelection, in: ...Date())
                 .datePickerStyle(GraphicalDatePickerStyle())
                 .padding(.bottom)
@@ -72,8 +76,11 @@ struct LogDrinkView: View {
                 Spacer()
                 
                 Button(action: {
+                    // Add a drink to the model
                     let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
                     model.addDrink(drink: drink)
+                    
+                    // Dismiss the sheet
                     isPresented = false
                 }, label: {
                     ZStack {

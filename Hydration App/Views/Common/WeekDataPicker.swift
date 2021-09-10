@@ -27,7 +27,9 @@ struct WeekDataPicker: View {
         HStack {
             Button(action: {
                 let calendar = Calendar.current
+                // Get each day of the week
                 currentWeek = model.getDaysInWeek(date: calendar.date(byAdding: .day, value: -1, to: currentWeek[0]) ?? Date())
+                // Check if any day in the next week has occured
                 isNextWeek = self.isNextWeek(currentWeek: currentWeek)
             }, label: {
                 Image(systemName: "chevron.left")
@@ -42,9 +44,14 @@ struct WeekDataPicker: View {
             
             Button(action: {
                 let calendar = Calendar.current
+                // Set next week
                 let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: currentWeek[0]) ?? Date()
+                
+                // If next week hasn't occured...
                 if !isNextWeek {
+                    // Update current week
                     currentWeek = model.getDaysInWeek(date: nextWeek)
+                    // Check if any day in the next week has occured
                     isNextWeek = self.isNextWeek(currentWeek: currentWeek)
                 }
             }, label: {
@@ -59,9 +66,11 @@ struct WeekDataPicker: View {
     func isNextWeek(currentWeek: [Date]) -> Bool {
         let calendar = Calendar.current
         
+        // Get the next week per currentWeek and the next week per today
         let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: currentWeek[0]) ?? Date()
         let upcomingWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: Date()) ?? Date()
         
+        // If both dates fall in the same week...
         if model.doesDateFallInWeek(date1: nextWeek, date2: upcomingWeek) {
             return true
         } else {
@@ -71,6 +80,7 @@ struct WeekDataPicker: View {
     }
     
     func getWeekText() -> String {
+        // Get the sunday and saturday for a week
         let weekRange = model.getWeekRange(date: currentWeek[0])
         
         // Create a date formatter
