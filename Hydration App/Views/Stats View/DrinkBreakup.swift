@@ -13,7 +13,7 @@ struct DrinkBreakup: View {
     
     var color: Color
     var drinkName: String
-    var drinkAmount: Double
+    var selectedTimePeriod: String
     
     var body: some View {
         
@@ -22,16 +22,28 @@ struct DrinkBreakup: View {
             
             VStack(alignment: .leading) {
                 
-                Text(String(format: "%.2f%%", min(model.getDrinkTypePercent(type: drinkName, date: Date()), 1.0)*100.0))
-                    .font(.title3)
-                    .bold()
-                    .padding(.bottom, 8)
+                if selectedTimePeriod == Constants.selectDay {
+                    Text(String(format: "%.2f%%", min(model.getDrinkTypePercent(type: drinkName, date: model.drinkData.selectedDay), 1.0)*100.0))
+                        .font(.title3)
+                        .bold()
+                        .padding(.bottom, 8)
+                } else {
+                    Text(String(format: "%.2f%%", min(model.getDrinkTypePercent(type: drinkName, week: model.drinkData.selectedWeek), 1.0)*100.0))
+                        .font(.title3)
+                        .bold()
+                        .padding(.bottom, 8)
+                }
                 
                 Text(drinkName)
                     .font(.subheadline)
                 
-                Text("\(drinkAmount, specifier: "%.0f") \(model.drinkData.units)")
-                    .font(.headline)
+                if selectedTimePeriod == Constants.selectDay {
+                    Text("\(model.getDrinkTypeAmount(type: drinkName, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units)")
+                        .font(.headline)
+                } else {
+                    Text("\(model.getDrinkTypeAmount(type: drinkName, week: model.drinkData.selectedWeek), specifier: "%.0f") \(model.drinkData.units)")
+                        .font(.headline)
+                }
                 
             }
             .foregroundColor(.white)

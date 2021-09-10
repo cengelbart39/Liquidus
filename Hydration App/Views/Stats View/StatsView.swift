@@ -43,9 +43,15 @@ struct StatsView: View {
                 
                 Spacer()
                 
-                //let waterPercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.waterKey, week: <#T##[Date]#>)
+                let waterPercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.waterKey, week: model.drinkData.selectedWeek)
                 
-                CircularProgressBar(progressWater: model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDay), progressCoffee: model.getDrinkTypePercent(type: Constants.coffeeKey, date: model.drinkData.selectedDay), progressSoda: model.getDrinkTypePercent(type: Constants.sodaKey, date: model.drinkData.selectedDay), progressJuice: model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay), date: model.drinkData.selectedDay)
+                let coffeePercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.coffeeKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.coffeeKey, week: model.drinkData.selectedWeek)
+                
+                let sodaPercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.sodaKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.sodaKey, week: model.drinkData.selectedWeek)
+                
+                let juicePercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.juiceKey, week: model.drinkData.selectedWeek)
+                
+                CircularProgressBar(progressWater: waterPercent, progressCoffee: coffeePercent, progressSoda: sodaPercent, progressJuice: juicePercent, selectedTimePeriod: selectedTimePeriod)
                     .padding(.horizontal)
                     .frame(width: 280, height: 280)
                 
@@ -54,19 +60,19 @@ struct StatsView: View {
             
             // MARK: - Drink Type Breakup
             HStack {
-                DrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkName: Constants.waterKey, drinkAmount: model.getDrinkTypeAmount(type: Constants.waterKey, date: model.drinkData.selectedDay))
+                DrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkName: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
                 
                 Spacer()
                 
-                DrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkName: Constants.coffeeKey, drinkAmount: model.getDrinkTypeAmount(type: Constants.coffeeKey, date: model.drinkData.selectedDay))
+                DrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkName: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
                 
                 Spacer()
                 
-                DrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkName: Constants.sodaKey, drinkAmount: model.getDrinkTypeAmount(type: Constants.sodaKey, date: model.drinkData.selectedDay))
+                DrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkName: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
                 
                 Spacer()
                 
-                DrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkName: Constants.juiceKey, drinkAmount: model.getDrinkTypeAmount(type: Constants.juiceKey, date: model.drinkData.selectedDay))
+                DrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkName: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
             }
             .shadow(radius: 5)
             .frame(height: 94)

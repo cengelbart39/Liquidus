@@ -15,7 +15,7 @@ struct CircularProgressBar: View {
     var progressCoffee: Double
     var progressSoda: Double
     var progressJuice: Double
-    var date: Date
+    var selectedTimePeriod: String
     
     var body: some View {
         
@@ -33,9 +33,15 @@ struct CircularProgressBar: View {
             
             CircularProgressBarHighlight(progress: progressWater, color: Constants.colors[Constants.waterKey]!)
             
-            Text(String(format: "%.2f%%", min(model.getTotalPercent(date: date), 1.0)*100.0))
-                .font(.largeTitle)
-                .bold()
+            if selectedTimePeriod == Constants.selectDay {
+                Text(String(format: "%.2f%%", min(model.getTotalPercent(date: model.drinkData.selectedDay), 1.0)*100.0))
+                    .font(.largeTitle)
+                    .bold()
+            } else {
+                Text(String(format: "%.2f%%", min(model.getTotalPercent(week: model.drinkData.selectedWeek), 1.0)*100.0))
+                    .font(.largeTitle)
+                    .bold()
+            }
             
         }
         .padding(.horizontal)

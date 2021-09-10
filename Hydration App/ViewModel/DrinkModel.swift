@@ -10,13 +10,13 @@ import Foundation
 class DrinkModel: ObservableObject {
     
     @Published var drinkData = DrinkData()
+    @Published var weeksPopulated = false
     
     init() {
-        self.drinkData.selectedWeek = self.getDaysInWeek(date: Date())
-        
         if let data = UserDefaults.standard.data(forKey: Constants.savedKey) {
             if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
                 self.drinkData = decoded
+                self.drinkData.selectedWeek = self.getDaysInWeek(date: Date())
                 return
             }
         }
@@ -189,6 +189,10 @@ class DrinkModel: ObservableObject {
             let thursday = Calendar.current.date(byAdding: .day, value: 4, to: sunday)!
             let friday = Calendar.current.date(byAdding: .day, value: 5, to: sunday)!
             let saturday = weekRange[1]
+            
+            if !self.weeksPopulated {
+                weeksPopulated = true
+            }
             
             return [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
         }

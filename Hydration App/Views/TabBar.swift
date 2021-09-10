@@ -9,36 +9,40 @@ import SwiftUI
 
 struct TabBar: View {
     
+    @EnvironmentObject var model: DrinkModel
+    
     var body: some View {
         
-        TabView {
-            
-            StatsView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "drop.fill")
-                        Text("Hydration")
+        if model.weeksPopulated {
+            TabView {
+                
+                StatsView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "drop.fill")
+                            Text("Hydration")
+                        }
                     }
-                }
-                .tag(0)
-            
-            DataLogsView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "list.bullet")
-                        Text("Logs")
+                    .tag(0)
+                
+                DataLogsView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "list.bullet")
+                            Text("Logs")
+                        }
                     }
-                }
-                .tag(1)
-            
-            SettingsView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "gearshape.fill")
-                        Text("Settings")
+                    .tag(1)
+                
+                SettingsView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "gearshape.fill")
+                            Text("Settings")
+                        }
                     }
-                }
-                .tag(2)
+                    .tag(2)
+            }
         }
     }
 }
