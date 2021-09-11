@@ -57,7 +57,17 @@ struct SettingsView: View {
                         Spacer()
                         
                         Button(action: {
-                            // TODO
+                            if let healthStore = model.healthStore {
+                                healthStore.requestAuthorization { succcess in
+                                    if succcess {
+                                        healthStore.getHealthKitData { statsCollection in
+                                            if let statsCollection = statsCollection {
+                                                model.waterFromHealthKit(statsCollection)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }, label: {
                             Text("Sync with Apple Health")
                                 .foregroundColor(Color(.systemPink))

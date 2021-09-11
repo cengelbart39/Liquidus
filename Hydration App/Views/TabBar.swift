@@ -20,7 +20,7 @@ struct TabBar: View {
                     .tabItem {
                         VStack {
                             Image(systemName: "drop.fill")
-                            Text("Hydration")
+                            Text("Stats")
                         }
                     }
                     .tag(0)

@@ -25,6 +25,8 @@
 		9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BB26E675A200FEFE49 /* SettingsView.swift */; };
 		9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */; };
 		9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */; };
+		9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
+		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
 		9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99981A26E7B09000A46E78 /* DataLogsView.swift */; };
 		9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */; };
 		9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */; };
@@ -53,6 +55,9 @@
 		9D48B3BB26E675A200FEFE49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
 		9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDrinkView.swift; sourceTree = "<group>"; };
+		9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		9D935BEE26ED0E2400CA9C31 /* Hydration App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Hydration App.entitlements"; sourceTree = "<group>"; };
+		9D935BF026ED0E2400CA9C31 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		9D99981A26E7B09000A46E78 /* DataLogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLogsView.swift; sourceTree = "<group>"; };
 		9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataPicker.swift; sourceTree = "<group>"; };
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +82,7 @@
 			children = (
 				9D48B39926E65E2C00FEFE49 /* Hydration App */,
 				9D48B39826E65E2C00FEFE49 /* Products */,
+				9D935BEF26ED0E2400CA9C31 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +97,7 @@
 		9D48B39926E65E2C00FEFE49 /* Hydration App */ = {
 			isa = PBXGroup;
 			children = (
+				9D935BEE26ED0E2400CA9C31 /* Hydration App.entitlements */,
 				9D48B39A26E65E2C00FEFE49 /* Hydration_App.swift */,
 				9DA8D6E526E7BB8700FEEC6C /* Views */,
 				9DA8D6E926E7BC6100FEEC6C /* ViewModel */,
@@ -152,6 +160,14 @@
 			path = "Settings View";
 			sourceTree = "<group>";
 		};
+		9D935BEF26ED0E2400CA9C31 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9D935BF026ED0E2400CA9C31 /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9D99981926E7B07D00A46E78 /* Data Logs View */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +185,7 @@
 				9D99981926E7B07D00A46E78 /* Data Logs View */,
 				9D48B3BA26E6759500FEFE49 /* Settings View */,
 				9D48B3B426E671DB00FEFE49 /* Common */,
+				9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -280,6 +297,7 @@
 				9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */,
 				9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */,
 				9D48B3B026E66A7A00FEFE49 /* DrinkBreakup.swift in Sources */,
+				9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +425,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Hydration App/Hydration App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Hydration App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
@@ -428,6 +447,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Hydration App/Hydration App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Hydration App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;

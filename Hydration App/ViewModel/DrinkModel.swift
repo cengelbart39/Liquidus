@@ -6,13 +6,19 @@
 //
 
 import Foundation
+import HealthKit
 
 class DrinkModel: ObservableObject {
     
     @Published var drinkData = DrinkData()
     @Published var weeksPopulated = false
     
+    @Published var healthStore: HealthStore?
+    
     init() {
+        // Create HealthStore
+        healthStore = HealthStore()
+        
         // Retrieve data from UserDefaults
         if let data = UserDefaults.standard.data(forKey: Constants.savedKey) {
             if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
@@ -35,7 +41,9 @@ class DrinkModel: ObservableObject {
     }
     
     func addDrink(drink: Drink) {
-        drinkData.drinks.append(drink)
+        DispatchQueue.main.async {
+            self.drinkData.drinks.append(drink)
+        }
         self.save()
     }
     
@@ -306,6 +314,50 @@ class DrinkModel: ObservableObject {
         }
         
         // If no two days are the same
+        return false
+    }
+    
+    func waterFromHealthKit(_ statsCollection: HKStatisticsCollection) {
+        
+        // Get start and end date
+        let startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let endDate = Date()
+        
+        // Go through every date pulled from HealthKit
+        statsCollection.enumerateStatistics(from: startDate, to: endDate) { stats, stop in
+            
+            // Get the summed amount converted to unit based on user preference
+            let amount = stats.sumQuantity()?.doubleValue(for: self.drinkData.units == Constants.milliliters ? HKUnit.literUnit(with: .milli) : HKUnit.fluidOunceUS())
+            
+            // Create a drink
+            let drink = Drink(type: Constants.waterKey, amount: amount ?? 0, date: stats.startDate)
+            
+            // If some amount was consumed and the drink doesn't already exist in the ViewModel...
+            if drink.amount > 0 && !self.doesDrinkExist(drink: drink) {
+                // Add the drink to the ViewModel
+                DispatchQueue.main.async {
+                    self.addDrink(drink: drink)
+                }
+            }
+        }
+    }
+    
+    func doesDrinkExist(drink: Drink) -> Bool {
+        
+        // Create a date formatter
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        
+        for data in self.drinkData.drinks {
+            
+            // If the amount, type, and date are the same...
+            if data.amount == drink.amount && data.type == drink.type && formatter.string(from: data.date) == formatter.string(from: drink.date) {
+                return true
+            }
+        }
+        
+        // Else
         return false
     }
 }
