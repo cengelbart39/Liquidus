@@ -1,5 +1,5 @@
 //
-//  DailyGoalSettings.swift
+//  SettingsDailyGoalView.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DailyGoalSettings: View {
+struct SettingsDailyGoalView: View {
     
     @EnvironmentObject var model: DrinkModel
     @Environment(\.presentationMode) var presentationMode

@@ -24,7 +24,7 @@ struct SettingsView: View {
                     
                     NavigationLink(
                         // Display Settings Page
-                        destination: DailyGoalSettings(),
+                        destination: SettingsDailyGoalView(),
                         label: {
                             HStack {
                                 // Display current daily goal
@@ -43,17 +43,11 @@ struct SettingsView: View {
                 // MARK: - Unit Settings
                 Section(footer: Text("If the unit is changed, all measurements will be converted")) {
                     
-                    // Unit Picker
-                    Picker("Units", selection: $model.drinkData.units) {
-                        Text("Milliliters (mL)")
-                            .tag(Constants.milliliters)
-                        Text("Ounces (oz)")
-                            .tag(Constants.ounces)
-                    }
-                    // Update model and convert measurements
-                    .onChange(of: model.drinkData.units, perform: { value in
-                        model.convertMeasurements()
-                    })
+                    NavigationLink(
+                        destination: SettingsUnitsView(),
+                        label: {
+                            Text("\(model.drinkData.units == Constants.milliliters ? "Milliliters" : "Ounces") (\(model.drinkData.units))")
+                        })
                 }
                 
                 Section() {
@@ -86,5 +80,6 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .environmentObject(DrinkModel())
     }
 }

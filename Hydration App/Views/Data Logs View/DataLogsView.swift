@@ -15,14 +15,9 @@ struct DataLogsView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    let dateFormatter: DateFormatter = { () -> DateFormatter in
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.dateStyle = .none
-        return formatter
-    }()
-    
     var body: some View {
+        
+        let dateFormatter = self.formatter(period: selectedTimePeriod)
         
         VStack(alignment: .leading) {
             
@@ -64,25 +59,27 @@ struct DataLogsView: View {
                         .font(.title3)
                     
                     // MARK: Stats by Drink Type
-                    VStack(alignment: .leading) {
+                    
+                    HStack {
                         
-                        HStack {
+                        VStack(alignment: .leading) {
                             
                             DataLogsDrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkType: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
                             
-                            Spacer()
-                            
-                            DataLogsDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkType: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
+                            DataLogsDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkType: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
+
                         }
                         
-                        HStack {
+                        Spacer()
+                        
+                        VStack(alignment: .leading) {
                             
-                            DataLogsDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkType: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
-                            
-                            Spacer()
-                            
+                            DataLogsDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkType: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
+
                             DataLogsDrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkType: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
+                            
                         }
+                        
                     }
                     .padding(.horizontal)
                 }
@@ -110,7 +107,7 @@ struct DataLogsView: View {
                                     
                                     // Create card
                                     RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
-                                        .frame(width: 250, height: 70)
+                                        .frame(width: selectedTimePeriod == Constants.selectDay ? 250 : 300, height: 70)
                                         .shadow(radius: 5)
                                     
                                     HStack {
@@ -154,6 +151,19 @@ struct DataLogsView: View {
                 
             }
         }
+    }
+    
+    func formatter(period: String) -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        
+        if selectedTimePeriod == Constants.selectDay {
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .short
+        } else {
+            dateFormatter.dateFormat = "MM/dd/yy, h:mm a"
+        }
+        
+        return dateFormatter
     }
 }
 

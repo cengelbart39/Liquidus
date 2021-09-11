@@ -10,6 +10,7 @@
 		9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
 		9D1E701626EC0B6B00080B50 /* DataLogsDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1E701526EC0B6B00080B50 /* DataLogsDrinkBreakup.swift */; };
 		9D25E57726EAAEAF00A9CDC8 /* WeekDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */; };
+		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
 		9D48B39B26E65E2C00FEFE49 /* Hydration_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39A26E65E2C00FEFE49 /* Hydration_App.swift */; };
 		9D48B39D26E65E2C00FEFE49 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39C26E65E2C00FEFE49 /* StatsView.swift */; };
 		9D48B39F26E65E2F00FEFE49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D48B39E26E65E2F00FEFE49 /* Assets.xcassets */; };
@@ -22,7 +23,7 @@
 		9D48B3B626E6746600FEFE49 /* GoalInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3B526E6746600FEFE49 /* GoalInformation.swift */; };
 		9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3B726E6752C00FEFE49 /* TabBar.swift */; };
 		9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BB26E675A200FEFE49 /* SettingsView.swift */; };
-		9D48B3BE26E68CD100FEFE49 /* DailyGoalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* DailyGoalSettings.swift */; };
+		9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */; };
 		9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */; };
 		9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99981A26E7B09000A46E78 /* DataLogsView.swift */; };
 		9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */; };
@@ -35,6 +36,7 @@
 		9D1C3BB526E8012600D03771 /* DrinkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkData.swift; sourceTree = "<group>"; };
 		9D1E701526EC0B6B00080B50 /* DataLogsDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLogsDrinkBreakup.swift; sourceTree = "<group>"; };
 		9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDataPicker.swift; sourceTree = "<group>"; };
+		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
 		9D48B39726E65E2C00FEFE49 /* Hydration App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hydration App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D48B39A26E65E2C00FEFE49 /* Hydration_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydration_App.swift; sourceTree = "<group>"; };
 		9D48B39C26E65E2C00FEFE49 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		9D48B3B526E6746600FEFE49 /* GoalInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalInformation.swift; sourceTree = "<group>"; };
 		9D48B3B726E6752C00FEFE49 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		9D48B3BB26E675A200FEFE49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		9D48B3BD26E68CD100FEFE49 /* DailyGoalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalSettings.swift; sourceTree = "<group>"; };
+		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
 		9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDrinkView.swift; sourceTree = "<group>"; };
 		9D99981A26E7B09000A46E78 /* DataLogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLogsView.swift; sourceTree = "<group>"; };
 		9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
@@ -144,7 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				9D48B3BB26E675A200FEFE49 /* SettingsView.swift */,
-				9D48B3BD26E68CD100FEFE49 /* DailyGoalSettings.swift */,
+				9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */,
+				9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */,
 			);
 			path = "Settings View";
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
 				9D48B39B26E65E2C00FEFE49 /* Hydration_App.swift in Sources */,
 				9D48B3AA26E6603300FEFE49 /* Constants.swift in Sources */,
+				9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */,
 				9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */,
 				9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */,
 				9D48B3AC26E6635000FEFE49 /* CircularProgressBar.swift in Sources */,
@@ -269,7 +273,7 @@
 				9D1E701626EC0B6B00080B50 /* DataLogsDrinkBreakup.swift in Sources */,
 				9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */,
 				9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */,
-				9D48B3BE26E68CD100FEFE49 /* DailyGoalSettings.swift in Sources */,
+				9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */,
 				9D48B3AE26E667FE00FEFE49 /* CircularProgressBarHighlight.swift in Sources */,
 				9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */,
 				9D25E57726EAAEAF00A9CDC8 /* WeekDataPicker.swift in Sources */,
