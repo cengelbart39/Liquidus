@@ -21,10 +21,10 @@ struct SettingsUnitsView: View {
                 
                 Button(action: {
                     // If the units aren't already mL...
-                    if model.drinkData.units != Constants.milliliters {
+                    if model.drinkData.units != Constants.mL {
                         
                         // Change units to mL
-                        model.drinkData.units = Constants.milliliters
+                        model.drinkData.units = Constants.mL
                         
                         // Convert all measurements
                         model.convertMeasurements()
@@ -37,11 +37,11 @@ struct SettingsUnitsView: View {
                 }, label: {
                     HStack {
                         // Text
-                        Text("Milliliters (mL)")
+                        Text("\(Constants.milliliters) (\(Constants.mL))")
                             .accentColor(colorScheme == .light ? .black : .white)
                         
                         // If mL is selected...
-                        if model.drinkData.units == Constants.milliliters {
+                        if model.drinkData.units == Constants.mL {
                             Spacer()
                             
                             // Display a checkmark
@@ -53,10 +53,10 @@ struct SettingsUnitsView: View {
                 
                 Button(action: {
                     // If the units are mL...
-                    if model.drinkData.units != Constants.ounces {
+                    if model.drinkData.units != Constants.flOz {
                         
                         // Change to oz
-                        model.drinkData.units = Constants.ounces
+                        model.drinkData.units = Constants.flOz
                         
                         // Convert all measurements
                         model.convertMeasurements()
@@ -67,11 +67,11 @@ struct SettingsUnitsView: View {
                 }, label: {
                     HStack {
                         // Text
-                        Text("Ounces (oz)")
+                        Text("\(Constants.fluidOuncesUS) (\(Constants.flOz))")
                             .accentColor(colorScheme == .light ? .black : .white)
                         
                         // If oz are selected
-                        if model.drinkData.units == Constants.ounces {
+                        if model.drinkData.units == Constants.flOz {
                             
                             Spacer()
                             

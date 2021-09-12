@@ -49,7 +49,7 @@ struct DataLogsView: View {
                 VStack {
                     
                     // Display daily/weekly percentage
-                    Text("\(selectedTimePeriod == Constants.selectDay ? model.getTotalPercent(date: model.drinkData.selectedDay) : model.getTotalPercent(week: model.drinkData.selectedWeek)*100, specifier: "%.2f")%")
+                    Text("\(selectedTimePeriod == Constants.selectDay ? model.getTotalPercent(date: model.drinkData.selectedDay)*100 : model.getTotalPercent(week: model.drinkData.selectedWeek)*100, specifier: "%.2f")%")
                         .bold()
                         .font(.largeTitle)
                         .padding(.bottom, 6)

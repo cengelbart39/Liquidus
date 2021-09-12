@@ -53,7 +53,7 @@ struct StatsView: View {
                 let juicePercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.juiceKey, week: model.drinkData.selectedWeek)
                 
                 // Create Progress Circle
-                CircularProgressBar(progressWater: waterPercent, progressCoffee: coffeePercent, progressSoda: sodaPercent, progressJuice: juicePercent, selectedTimePeriod: selectedTimePeriod)
+                StatsCircularProgressBar(progressWater: waterPercent, progressCoffee: coffeePercent, progressSoda: sodaPercent, progressJuice: juicePercent, selectedTimePeriod: selectedTimePeriod)
                     .padding(.horizontal)
                     .frame(width: 280, height: 280)
                 
@@ -63,22 +63,22 @@ struct StatsView: View {
             // MARK: - Drink Type Breakup
             HStack {
                 // Water
-                DrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkName: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
+                StatsDrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkName: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
                 
                 Spacer()
                 
                 // Coffee
-                DrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkName: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
+                StatsDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkName: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
                 
                 Spacer()
                 
                 // Soda
-                DrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkName: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
+                StatsDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkName: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
                 
                 Spacer()
                 
                 // Juice
-                DrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkName: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
+                StatsDrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkName: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
             }
             .shadow(radius: 5)
             .frame(height: 94)
@@ -89,12 +89,12 @@ struct StatsView: View {
             HStack {
                 
                 // Display the Daily or Weekly Goal
-                GoalInformation(headline: "\(selectedTimePeriod == Constants.selectDay ? "Daily" : "Weekly") Goal", amount: selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7)
+                StatsGoalInformation(headline: "\(selectedTimePeriod == Constants.selectDay ? "Daily" : "Weekly") Goal", amount: selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7)
                 
                 Spacer()
                 
                 // Display the remaining amount until the goal is met
-                GoalInformation(headline: "Amount Left", amount: selectedTimePeriod == Constants.selectDay ? (model.drinkData.dailyGoal - model.getTotalAmount(date: model.drinkData.selectedDay)) : (model.drinkData.dailyGoal*7 - model.getTotalAmount(week: model.drinkData.selectedWeek)))
+                StatsGoalInformation(headline: "Amount Left", amount: selectedTimePeriod == Constants.selectDay ? (model.drinkData.dailyGoal - model.getTotalAmount(date: model.drinkData.selectedDay)) : (model.drinkData.dailyGoal*7 - model.getTotalAmount(week: model.drinkData.selectedWeek)))
             }
             .padding(.horizontal)
             .padding(.bottom)
@@ -125,7 +125,7 @@ struct StatsView: View {
                 
             })
             .sheet(isPresented: $isAddDrinkViewShowing, content: {
-                LogDrinkView(isPresented: $isAddDrinkViewShowing)
+                StatsLogDrinkView(isPresented: $isAddDrinkViewShowing)
             })
             
             Spacer()

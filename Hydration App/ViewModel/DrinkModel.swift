@@ -44,27 +44,28 @@ class DrinkModel: ObservableObject {
         DispatchQueue.main.async {
             self.drinkData.drinks.append(drink)
         }
+        self.saveToHealthKit()
         self.save()
     }
     
     func convertMeasurements() {
         // If units are changed to mL
-        if self.drinkData.units == Constants.milliliters {
+        if self.drinkData.units == Constants.mL {
             // Convert daily goal to mL
-            self.drinkData.dailyGoal *= Constants.ozTOml
+            self.drinkData.dailyGoal *= Constants.flOzUSToMl
             
             // Convert all drink amounts to mL
             for drink in drinkData.drinks {
-                drink.amount *= Constants.ozTOml
+                drink.amount *= Constants.flOzUSToMl
             }
         // If units are changed to oz
         } else {
             // Convert daily goal to oz
-            self.drinkData.dailyGoal *= Constants.mlTOoz
+            self.drinkData.dailyGoal *= Constants.mlToFlOzUS
             
             // Convert all drink amounts to oz
             for drink in drinkData.drinks {
-                drink.amount *= Constants.mlTOoz
+                drink.amount *= Constants.mlToFlOzUS
             }
         }
         
@@ -317,17 +318,19 @@ class DrinkModel: ObservableObject {
         return false
     }
     
+    // MARK: - HealthKit Methods
+    
     func waterFromHealthKit(_ statsCollection: HKStatisticsCollection) {
         
         // Get start and end date
-        let startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
         let endDate = Date()
         
         // Go through every date pulled from HealthKit
         statsCollection.enumerateStatistics(from: startDate, to: endDate) { stats, stop in
             
             // Get the summed amount converted to unit based on user preference
-            let amount = stats.sumQuantity()?.doubleValue(for: self.drinkData.units == Constants.milliliters ? HKUnit.literUnit(with: .milli) : HKUnit.fluidOunceUS())
+            let amount = stats.sumQuantity()?.doubleValue(for: self.drinkData.units == Constants.mL ? HKUnit.literUnit(with: .milli) : HKUnit.fluidOunceUS())
             
             // Create a drink
             let drink = Drink(type: Constants.waterKey, amount: amount ?? 0, date: stats.startDate)
@@ -347,7 +350,7 @@ class DrinkModel: ObservableObject {
         // Create a date formatter
         let formatter = DateFormatter()
         formatter.dateStyle = .long
-        formatter.timeStyle = .short
+        formatter.timeStyle = .medium
         
         for data in self.drinkData.drinks {
             
@@ -359,5 +362,32 @@ class DrinkModel: ObservableObject {
         
         // Else
         return false
+    }
+    
+    func saveToHealthKit() {
+        
+        let waterType = HKSampleType.quantityType(forIdentifier: .dietaryWater)!
+        
+        if self.healthStore != nil && self.healthStore?.healthStore != nil {
+            
+            for drink in self.drinkData.drinks {
+                
+                if (self.drinkData.lastHKSave == nil || self.drinkData.lastHKSave ?? Date() < drink.date) && drink.type == Constants.waterKey {
+                
+                    let startDate = drink.date
+                    let endDate = startDate
+                    
+                    let quantity = HKQuantity(unit: self.drinkData.units == Constants.mL ? HKUnit.literUnit(with: .milli) : HKUnit.fluidOunceUS(), doubleValue: drink.amount)
+                    
+                    let sample = HKQuantitySample(type: waterType, quantity: quantity, start: startDate, end: endDate)
+                    
+                    self.healthStore!.healthStore!.save(sample) { success, error in
+                        DispatchQueue.main.async {
+                            self.drinkData.lastHKSave = Date()
+                        }
+                    }
+                }
+            }
+        }
     }
 }

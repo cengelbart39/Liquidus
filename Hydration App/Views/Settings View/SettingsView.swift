@@ -46,7 +46,7 @@ struct SettingsView: View {
                     NavigationLink(
                         destination: SettingsUnitsView(),
                         label: {
-                            Text("\(model.drinkData.units == Constants.milliliters ? "Milliliters" : "Ounces") (\(model.drinkData.units))")
+                            Text("\(model.drinkData.units == Constants.mL ? Constants.milliliters : Constants.fluidOuncesUS) (\(model.drinkData.units))")
                         })
                 }
                 
@@ -63,6 +63,10 @@ struct SettingsView: View {
                                         healthStore.getHealthKitData { statsCollection in
                                             if let statsCollection = statsCollection {
                                                 model.waterFromHealthKit(statsCollection)
+                                                
+                                                //if model.drinkData.lastHKSave == nil {
+                                                model.saveToHealthKit()
+                                                //}
                                             }
                                         }
                                     }

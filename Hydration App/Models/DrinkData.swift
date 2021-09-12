@@ -10,7 +10,8 @@ import Foundation
 struct DrinkData: Decodable, Encodable {
     var drinks = [Drink]()
     var dailyGoal = 2000.0
-    var units = Constants.milliliters
+    var units = Constants.mL
     var selectedDay = Date()
     var selectedWeek = [Date()]
+    var lastHKSave: Date? = nil
 }

@@ -1,5 +1,5 @@
 //
-//  CircularProgressBar.swift
+//  StatsCircularProgressBar.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CircularProgressBar: View {
+struct StatsCircularProgressBar: View {
     
     @EnvironmentObject var model: DrinkModel
     
@@ -27,13 +27,13 @@ struct CircularProgressBar: View {
                 .foregroundColor(Color(.systemGray6))
             
             // Get the outline fill for each type
-            CircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.juiceKey]!)
+            StatsCircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.juiceKey]!)
             
-            CircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.sodaKey]!)
+            StatsCircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.sodaKey]!)
             
-            CircularProgressBarHighlight(progress: progressCoffee+progressWater, color: Constants.colors[Constants.coffeeKey]!)
+            StatsCircularProgressBarHighlight(progress: progressCoffee+progressWater, color: Constants.colors[Constants.coffeeKey]!)
             
-            CircularProgressBarHighlight(progress: progressWater, color: Constants.colors[Constants.waterKey]!)
+            StatsCircularProgressBarHighlight(progress: progressWater, color: Constants.colors[Constants.waterKey]!)
             
             // If a day display the daily percent
             if selectedTimePeriod == Constants.selectDay {

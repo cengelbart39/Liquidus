@@ -7,6 +7,7 @@
 
 import Foundation
 import HealthKit
+import SwiftUI
 
 extension Date {
     static func mondayAt12AM() -> Date {
@@ -19,6 +20,8 @@ class HealthStore {
     var healthStore: HKHealthStore?
     var waterQuery: HKStatisticsCollectionQuery?
     var caffeineQuery: HKStatisticsCollectionQuery?
+    var lastSaved: Date? = nil
+    
     
     init() {
         // Check if there is authorization to access Health data
@@ -34,20 +37,20 @@ class HealthStore {
         let caffeineType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCaffeine)!
         
         // Create dates
-        let startDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())
+        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())
         let endDate = Date()
         
-        // Set to pull data by the minute
-        let second = DateComponents(minute: 1)
+        // Set to pull data by the second
+        let second = DateComponents(second: 1)
         
         // Set bounds on what data is pulled
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         
         // Pull data for water
-        waterQuery = HKStatisticsCollectionQuery(quantityType: waterType, quantitySamplePredicate: predicate, options: .separateBySource, anchorDate: Date.mondayAt12AM(), intervalComponents: minute)
+        waterQuery = HKStatisticsCollectionQuery(quantityType: waterType, quantitySamplePredicate: predicate, options: .separateBySource, anchorDate: Date.mondayAt12AM(), intervalComponents: second)
         
         // Pull data for caffeine
-        caffeineQuery = HKStatisticsCollectionQuery(quantityType: caffeineType, quantitySamplePredicate: predicate, options: .separateBySource, anchorDate: Date.mondayAt12AM(), intervalComponents: minute)
+        caffeineQuery = HKStatisticsCollectionQuery(quantityType: caffeineType, quantitySamplePredicate: predicate, options: .separateBySource, anchorDate: Date.mondayAt12AM(), intervalComponents: second)
         
         waterQuery!.initialResultsHandler = { query, statisticsCollection, error in
             completion(statisticsCollection)
@@ -79,5 +82,4 @@ class HealthStore {
             completion(success)
         }
     }
-    
 }
