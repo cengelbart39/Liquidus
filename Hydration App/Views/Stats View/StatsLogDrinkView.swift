@@ -57,7 +57,7 @@ struct StatsLogDrinkView: View {
                     .keyboardType(.numberPad)
                     .frame(width: 60)
                 
-                Text(model.drinkData.units)
+                Text(model.getUnits())
                 
             }
             .padding(.bottom)

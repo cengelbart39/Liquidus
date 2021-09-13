@@ -28,13 +28,7 @@ struct SettingsView: View {
                         label: {
                             HStack {
                                 // Display current daily goal
-                                Text("Daily Goal: \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.drinkData.units)")
-                                
-                                Spacer()
-                                
-                                // Button label
-                                Text("Change")
-                                    .foregroundColor(.blue)
+                                Text("Daily Goal: \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.getUnits())")
                             }
                         })
                     
@@ -46,7 +40,7 @@ struct SettingsView: View {
                     NavigationLink(
                         destination: SettingsUnitsView(),
                         label: {
-                            Text("\(model.drinkData.units == Constants.mL ? Constants.milliliters : Constants.fluidOuncesUS) (\(model.drinkData.units))")
+                            Text("\(model.drinkData.units) (\(model.getUnits()))")
                         })
                 }
                 

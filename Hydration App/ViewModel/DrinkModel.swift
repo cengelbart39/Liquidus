@@ -42,34 +42,140 @@ class DrinkModel: ObservableObject {
     
     func addDrink(drink: Drink) {
         DispatchQueue.main.async {
+            // Add drink
             self.drinkData.drinks.append(drink)
-            self.saveToHealthKit()
+            
+            // If it's water, save to HealthKit
+            if self.drinkData.units == Constants.waterKey {
+                self.saveToHealthKit()
+            }
+            
+            // Save to UserDefaults
             self.save()
         }
         
     }
     
-    func convertMeasurements(pastUnit: String) {
-        // If units are changed to mL
-        if self.drinkData.units == Constants.mL {
-            // Convert daily goal to mL
-            self.drinkData.dailyGoal *= Constants.flOzUSToMl
+    func getUnits() -> String {
+        if self.drinkData.units == Constants.milliliters {
+            return Constants.mL
+        } else if self.drinkData.units == Constants.fluidOuncesUS {
+            return Constants.flOzUS
+        } else if self.drinkData.units == Constants.fluidOuncesIM {
+            return Constants.flOzIM
+        }
+        return ""
+    }
+    
+    func convertMeasurements(pastUnit: String, newUnit: String) {
+        // If converting from mL
+        if pastUnit == Constants.milliliters {
+                    
+            // If converting to Fluid Ounces (US)
+            if newUnit == Constants.fluidOuncesUS {
+                
+                let milliliters = Measurement(value: self.drinkData.dailyGoal, unit: UnitVolume.milliliters)
+                
+                // Convert daily goal to Fluid Ounces (US)
+                self.drinkData.dailyGoal = milliliters.converted(to: UnitVolume.fluidOunces).value
+                
+                // Convert all drink amounts to Fluid Ounces (US)
+                for drink in drinkData.drinks {
+                    
+                    let drinkML = Measurement(value: drink.amount, unit: UnitVolume.milliliters)
+                    
+                    drink.amount = drinkML.converted(to: UnitVolume.fluidOunces).value
+                    
+                    print("print")
+                }
+            // If converting to Fluid Ounces (Imperial)
+            } else if newUnit == Constants.fluidOuncesIM {
+                
+                let dailyGoalML = Measurement(value: self.drinkData.dailyGoal, unit: UnitVolume.milliliters)
+                
+                // Convert daily goal to Fluid Ounces (Imperial)
+                self.drinkData.dailyGoal = dailyGoalML.converted(to: UnitVolume.imperialFluidOunces).value
             
-            // Convert all drink amounts to mL
-            for drink in drinkData.drinks {
-                drink.amount *= Constants.flOzUSToMl
+                // Convert all drink amounts to Fluid Ounces (Imperial)
+                for drink in drinkData.drinks {
+                    
+                    let drinkML = Measurement(value: drink.amount, unit: UnitVolume.milliliters)
+                    
+                    drink.amount = drinkML.converted(to: UnitVolume.imperialFluidOunces).value
+                }
             }
-        // If units are changed to oz
-        } else {
-            // Convert daily goal to oz
-            self.drinkData.dailyGoal *= Constants.mlToFlOzUS
+        // If converting from Fluid Ounces (US)
+        } else if pastUnit == Constants.fluidOuncesUS {
             
-            // Convert all drink amounts to oz
-            for drink in drinkData.drinks {
-                drink.amount *= Constants.mlToFlOzUS
+            // If converting to Milliliters
+            if newUnit == Constants.milliliters {
+                
+                // Convert daily goal to Milliliters
+                
+                let dailyGoalFlOz = Measurement(value: self.drinkData.dailyGoal, unit: UnitVolume.fluidOunces)
+                
+                self.drinkData.dailyGoal = dailyGoalFlOz.converted(to: UnitVolume.milliliters).value
+                
+                // Convert all drink amounts to Milliliters
+                for drink in drinkData.drinks {
+                    
+                    let drinkFlOz = Measurement(value: drink.amount, unit: UnitVolume.fluidOunces)
+                    
+                    drink.amount = drinkFlOz.converted(to: UnitVolume.milliliters).value
+                }
+            // If converting to Fluid Ounces (Imperial)
+            } else if newUnit == Constants.fluidOuncesIM {
+                
+                // Convert daily goal to Fluid Ounces (Imperial)
+                let dailyGoalFlOz = Measurement(value: self.drinkData.dailyGoal, unit: UnitVolume.fluidOunces)
+                
+                self.drinkData.dailyGoal = dailyGoalFlOz.converted(to: UnitVolume.imperialFluidOunces).value
+            
+                // Convert all drink amounts to Fluid Ounces (Imperial)
+                for drink in drinkData.drinks {
+                    
+                    let drinkFlOz = Measurement(value: drink.amount, unit: UnitVolume.fluidOunces)
+                    
+                    drink.amount = drinkFlOz.converted(to: UnitVolume.imperialFluidOunces).value
+                }
+            }
+        // If converting Fluid Ounces (Imperial)
+        } else if pastUnit == Constants.fluidOuncesIM {
+            
+            // If converting to Milliliters
+            if newUnit == Constants.milliliters {
+                
+                // Convert daily goal to Milliliters
+                
+                let dailyGoalFlOz = Measurement(value: self.drinkData.dailyGoal, unit: UnitVolume.imperialFluidOunces)
+                
+                self.drinkData.dailyGoal = dailyGoalFlOz.converted(to: UnitVolume.milliliters).value
+                
+                // Convert all drink amounts to Milliliters
+                for drink in drinkData.drinks {
+                    
+                    let drinkFlOz = Measurement(value: drink.amount, unit: UnitVolume.imperialFluidOunces)
+                    
+                    drink.amount = drinkFlOz.converted(to: UnitVolume.milliliters).value
+                }
+                
+            // If converting to Fluid Ounces (US)
+            } else if newUnit == Constants.fluidOuncesUS {
+                
+                // Convert daily goal to Fluid Ounces (US)
+                let dailyGoalFlOz = Measurement(value: self.drinkData.dailyGoal, unit: UnitVolume.imperialFluidOunces)
+                
+                self.drinkData.dailyGoal = dailyGoalFlOz.converted(to: UnitVolume.fluidOunces).value
+            
+                // Convert all drink amounts to Fluid Ounces (US)
+                for drink in drinkData.drinks {
+                    
+                    let drinkFlOz = Measurement(value: drink.amount, unit: UnitVolume.imperialFluidOunces)
+                    
+                    drink.amount = drinkFlOz.converted(to: UnitVolume.fluidOunces).value
+                }
             }
         }
-        
         // Save to user defaults
         self.save()
     }
@@ -321,6 +427,16 @@ class DrinkModel: ObservableObject {
     
     // MARK: - HealthKit Methods
     
+    func getHKUnit() -> HKUnit {
+        if self.drinkData.units == Constants.milliliters {
+            return HKUnit.literUnit(with: .milli)
+        } else if self.drinkData.units == Constants.fluidOuncesUS {
+            return HKUnit.fluidOunceUS()
+        } else {
+            return HKUnit.fluidOunceImperial()
+        }
+    }
+    
     func retrieveFromHealthKit(_ statsCollection: HKStatisticsCollection) {
         
         // Get start and end date
@@ -331,7 +447,7 @@ class DrinkModel: ObservableObject {
         statsCollection.enumerateStatistics(from: startDate, to: endDate) { stats, stop in
             
             // Get the summed amount converted to unit based on user preference
-            let amount = stats.sumQuantity()?.doubleValue(for: self.drinkData.units == Constants.mL ? HKUnit.literUnit(with: .milli) : HKUnit.fluidOunceUS())
+            let amount = stats.sumQuantity()?.doubleValue(for: self.getHKUnit())
             
             // Create a drink
             let drink = Drink(type: Constants.waterKey, amount: amount ?? 0, date: stats.startDate)
@@ -378,7 +494,7 @@ class DrinkModel: ObservableObject {
                     let startDate = drink.date
                     let endDate = startDate
                     
-                    let quantity = HKQuantity(unit: self.drinkData.units == Constants.mL ? HKUnit.literUnit(with: .milli) : HKUnit.fluidOunceUS(), doubleValue: drink.amount)
+                    let quantity = HKQuantity(unit: self.getHKUnit(), doubleValue: drink.amount)
                     
                     let sample = HKQuantitySample(type: waterType, quantity: quantity, start: startDate, end: endDate)
                     

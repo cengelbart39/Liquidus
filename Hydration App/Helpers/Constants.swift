@@ -28,16 +28,6 @@ struct Constants {
     
     static var savedKey = "SavedKey"
     
-    static var mlToFlOzUS = 0.03381402
-    static var mlToFlOzIM = 0.03519508
-    
-    static var flOzUSToMl = 29.57353
-    static var flOzUSToFlOzIM = 1.0408423
-    
-    static var flOzIMtoMl = 28.41306
-    static var flOzIMtoFlOzUS = 0.960760338
-    
-    
     static var colors: [String:Color] = [
         Constants.waterKey:Color(.systemTeal),
         Constants.coffeeKey:Color("CoffeeBrown"),

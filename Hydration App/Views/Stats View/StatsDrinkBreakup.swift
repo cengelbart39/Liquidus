@@ -42,11 +42,11 @@ struct StatsDrinkBreakup: View {
                 
                 // If day display the daily intake
                 if selectedTimePeriod == Constants.selectDay {
-                    Text("\(model.getDrinkTypeAmount(type: drinkName, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.drinkData.units)")
+                    Text("\(model.getDrinkTypeAmount(type: drinkName, date: model.drinkData.selectedDay), specifier: "%.0f") \(model.getUnits())")
                         .font(.headline)
                 // If week display the weekly intake
                 } else {
-                    Text("\(model.getDrinkTypeAmount(type: drinkName, week: model.drinkData.selectedWeek), specifier: "%.0f") \(model.drinkData.units)")
+                    Text("\(model.getDrinkTypeAmount(type: drinkName, week: model.drinkData.selectedWeek), specifier: "%.0f") \(model.getUnits())")
                         .font(.headline)
                 }
                 
