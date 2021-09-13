@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct TabBar: View {
     
@@ -13,35 +14,42 @@ struct TabBar: View {
     
     var body: some View {
         
-        if model.weeksPopulated {
-            TabView {
-                
-                StatsView()
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "drop.fill")
-                            Text("Stats")
-                        }
+        TabView {
+            
+            StatsView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "drop.fill")
+                        Text("Stats")
                     }
-                    .tag(0)
-                
-                DataLogsView()
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "list.bullet")
-                            Text("Logs")
-                        }
+                }
+                .tag(0)
+            
+            DataLogsView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "list.bullet")
+                        Text("Logs")
                     }
-                    .tag(1)
-                
-                SettingsView()
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "gearshape.fill")
-                            Text("Settings")
-                        }
+                }
+                .tag(1)
+            
+            SettingsView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "gearshape.fill")
+                        Text("Settings")
                     }
-                    .tag(2)
+                }
+                .tag(2)
+        }
+        .onAppear {
+            if model.healthStore?.healthStore != nil && HKHealthStore.isHealthDataAvailable() {
+                model.healthStore!.getHealthKitData { statsCollection in
+                    if let statsCollection = statsCollection {
+                        model.retrieveFromHealthKit(statsCollection)
+                    }
+                }
             }
         }
     }

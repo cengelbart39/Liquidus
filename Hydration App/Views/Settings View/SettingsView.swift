@@ -58,15 +58,14 @@ struct SettingsView: View {
                         
                         Button(action: {
                             if let healthStore = model.healthStore {
-                                healthStore.requestAuthorization { succcess in
-                                    if succcess {
-                                        healthStore.getHealthKitData { statsCollection in
-                                            if let statsCollection = statsCollection {
-                                                model.waterFromHealthKit(statsCollection)
-                                                
-                                                //if model.drinkData.lastHKSave == nil {
-                                                model.saveToHealthKit()
-                                                //}
+                                if model.drinkData.lastHKSave == nil {
+                                    healthStore.requestAuthorization { succcess in
+                                        if succcess {
+                                            healthStore.getHealthKitData { statsCollection in
+                                                if let statsCollection = statsCollection {
+                                                    model.retrieveFromHealthKit(statsCollection)
+                                                    model.saveToHealthKit()
+                                                }
                                             }
                                         }
                                     }

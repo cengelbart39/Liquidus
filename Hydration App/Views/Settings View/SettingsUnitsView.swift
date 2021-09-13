@@ -23,11 +23,13 @@ struct SettingsUnitsView: View {
                     // If the units aren't already mL...
                     if model.drinkData.units != Constants.mL {
                         
+                        let pastUnit = model.drinkData.units
+                        
                         // Change units to mL
                         model.drinkData.units = Constants.mL
                         
                         // Convert all measurements
-                        model.convertMeasurements()
+                        model.convertMeasurements(pastUnit: pastUnit)
                         
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()
@@ -55,11 +57,13 @@ struct SettingsUnitsView: View {
                     // If the units are mL...
                     if model.drinkData.units != Constants.flOz {
                         
+                        let pastUnit = model.drinkData.units
+                        
                         // Change to oz
                         model.drinkData.units = Constants.flOz
                         
                         // Convert all measurements
-                        model.convertMeasurements()
+                        model.convertMeasurements(pastUnit: pastUnit)
                         
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()

@@ -14,7 +14,8 @@ struct Constants {
     static var selectWeek = "Week"
     
     static var mL = "mL"
-    static var flOz = "fl oz"
+    static var flOzUS = "fl oz"
+    static var flOzIM = "fl oz"
     
     static var milliliters = "Milliliters"
     static var fluidOuncesUS = "Fluid Ounces (US)"

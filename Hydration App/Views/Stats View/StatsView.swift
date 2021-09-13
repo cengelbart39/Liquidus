@@ -126,6 +126,7 @@ struct StatsView: View {
             })
             .sheet(isPresented: $isAddDrinkViewShowing, content: {
                 StatsLogDrinkView(isPresented: $isAddDrinkViewShowing)
+                    .environmentObject(model)
             })
             
             Spacer()

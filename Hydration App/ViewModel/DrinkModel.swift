@@ -43,12 +43,13 @@ class DrinkModel: ObservableObject {
     func addDrink(drink: Drink) {
         DispatchQueue.main.async {
             self.drinkData.drinks.append(drink)
+            self.saveToHealthKit()
+            self.save()
         }
-        self.saveToHealthKit()
-        self.save()
+        
     }
     
-    func convertMeasurements() {
+    func convertMeasurements(pastUnit: String) {
         // If units are changed to mL
         if self.drinkData.units == Constants.mL {
             // Convert daily goal to mL
@@ -320,7 +321,7 @@ class DrinkModel: ObservableObject {
     
     // MARK: - HealthKit Methods
     
-    func waterFromHealthKit(_ statsCollection: HKStatisticsCollection) {
+    func retrieveFromHealthKit(_ statsCollection: HKStatisticsCollection) {
         
         // Get start and end date
         let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!

@@ -34,7 +34,6 @@ class HealthStore {
         
         // Set what data to pull
         let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!
-        let caffeineType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCaffeine)!
         
         // Create dates
         let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())
@@ -49,21 +48,13 @@ class HealthStore {
         // Pull data for water
         waterQuery = HKStatisticsCollectionQuery(quantityType: waterType, quantitySamplePredicate: predicate, options: .separateBySource, anchorDate: Date.mondayAt12AM(), intervalComponents: second)
         
-        // Pull data for caffeine
-        caffeineQuery = HKStatisticsCollectionQuery(quantityType: caffeineType, quantitySamplePredicate: predicate, options: .separateBySource, anchorDate: Date.mondayAt12AM(), intervalComponents: second)
-        
         waterQuery!.initialResultsHandler = { query, statisticsCollection, error in
-            completion(statisticsCollection)
-        }
-        
-        caffeineQuery!.initialResultsHandler = { query, statisticsCollection, error in
             completion(statisticsCollection)
         }
         
         // If the health store exists and waterQuery exists
         if let healthStore = healthStore, let water = self.waterQuery {
             healthStore.execute(water)
-            //healthStore.execute(caffeine)
         }
         
     }
@@ -72,13 +63,12 @@ class HealthStore {
         
         // Set HealthKit data types
         let waterType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)!
-        let caffeineType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCaffeine)!
     
         // Check if healthStore exists
         guard let healthStore = self.healthStore else { return completion(false) }
         
         // Request read/write access to Water and Caffeine Data
-        healthStore.requestAuthorization(toShare: [waterType, caffeineType], read: [waterType, caffeineType]) { success, error in
+        healthStore.requestAuthorization(toShare: [waterType], read: [waterType]) { success, error in
             completion(success)
         }
     }
