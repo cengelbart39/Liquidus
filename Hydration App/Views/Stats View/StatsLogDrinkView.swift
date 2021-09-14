@@ -54,7 +54,7 @@ struct StatsLogDrinkView: View {
                     .bold()
                 
                 TextField("500", text: $amount)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.decimalPad)
                     .frame(width: 60)
                 
                 Text(model.getUnits())

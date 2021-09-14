@@ -30,7 +30,7 @@ struct StatsGoalInformation: View {
                     .foregroundColor(.gray)
                 
                 // amount
-                Text("\(amount, specifier: "%.0f") \(model.getUnits())")
+                Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
                     .font(.title)
             }
             .padding(.leading, 10)

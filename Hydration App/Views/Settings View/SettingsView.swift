@@ -28,7 +28,7 @@ struct SettingsView: View {
                         label: {
                             HStack {
                                 // Display current daily goal
-                                Text("Daily Goal: \(model.drinkData.dailyGoal, specifier: "%.0f") \(model.getUnits())")
+                                Text("Daily Goal: \(model.drinkData.dailyGoal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal)) \(model.getUnits())")
                             }
                         })
                     

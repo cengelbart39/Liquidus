@@ -55,7 +55,11 @@ struct DataLogsView: View {
                         .padding(.bottom, 6)
                     
                     // Display amount consumed and goal
-                    Text("\(selectedTimePeriod == Constants.selectDay ? model.getTotalAmount(date: model.drinkData.selectedDay) : model.getTotalAmount(week: model.drinkData.selectedWeek), specifier: "%.0f") / \(selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7, specifier: "%.0f") \(model.getUnits())")
+                    let dailyAmount = model.getTotalAmount(date: model.drinkData.selectedDay)
+                    let weeklyAmount = model.getTotalAmount(week: model.drinkData.selectedWeek)
+                    
+                    
+                    Text("\(selectedTimePeriod == Constants.selectDay ? dailyAmount : weeklyAmount, specifier: model.getSpecifier(amount: selectedTimePeriod == Constants.selectDay ? dailyAmount : weeklyAmount)) / \(selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7, specifier: model.getSpecifier(amount: selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7)) \(model.getUnits())")
                         .font(.title3)
                     
                     // MARK: Stats by Drink Type
