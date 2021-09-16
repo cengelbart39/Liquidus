@@ -37,14 +37,41 @@ struct StatsCircularProgressBar: View {
             
             // If a day display the daily percent
             if selectedTimePeriod == Constants.selectDay {
-                Text(String(format: "%.2f%%", min(model.getTotalPercent(date: model.drinkData.selectedDay), 1.0)*100.0))
-                    .font(.largeTitle)
-                    .bold()
+                
+                VStack {
+                    let percent = model.getTotalPercent(date: model.drinkData.selectedDay)
+                    
+                    Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", min(percent, 1.0)*100.0))
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.bottom, 5)
+                    
+                    let total = model.getTotalAmount(date: model.drinkData.selectedDay)
+                    let goal = model.drinkData.dailyGoal
+                    
+                    Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: goal)) \(model.getUnits())")
+                        .font(.subheadline)
+                        .foregroundColor(Color(.systemGray))
+                }
+                
             // If a week display the weekly percent
             } else {
-                Text(String(format: "%.2f%%", min(model.getTotalPercent(week: model.drinkData.selectedWeek), 1.0)*100.0))
-                    .font(.largeTitle)
-                    .bold()
+                
+                VStack {
+                    let percent = model.getTotalPercent(week: model.drinkData.selectedWeek)
+                    
+                    Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", min(percent, 1.0)*100.0))
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.bottom, 5)
+                    
+                    let total = model.getTotalAmount(week: model.drinkData.selectedWeek)
+                    let goal = model.drinkData.dailyGoal*7
+                    
+                    Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: goal)) \(model.getUnits())")
+                        .font(.subheadline)
+                        .foregroundColor(Color(.systemGray))
+                }
             }
             
         }

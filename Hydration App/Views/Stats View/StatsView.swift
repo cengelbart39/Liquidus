@@ -21,7 +21,7 @@ struct StatsView: View {
         VStack(alignment: .leading) {
             
             // MARK: - Title
-            Text("Hydration")
+            Text("Stats")
                 .bold()
                 .font(.largeTitle)
                 .padding(.leading)
@@ -34,8 +34,10 @@ struct StatsView: View {
             // MARK: - Choose Day or Week Data
             if selectedTimePeriod == Constants.selectDay {
                 DayDataPicker(currentDate: $model.drinkData.selectedDay)
+                    .frame(height: 25)
             } else {
                 WeekDataPicker(currentWeek: $model.drinkData.selectedWeek)
+                    .frame(height: 25)
             }
             
             // MARK: - Progress Bar
@@ -61,43 +63,7 @@ struct StatsView: View {
             }
             
             // MARK: - Drink Type Breakup
-            HStack {
-                // Water
-                StatsDrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkName: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
-                
-                Spacer()
-                
-                // Coffee
-                StatsDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkName: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
-                
-                Spacer()
-                
-                // Soda
-                StatsDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkName: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
-                
-                Spacer()
-                
-                // Juice
-                StatsDrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkName: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
-            }
-            .shadow(radius: 5)
-            .frame(height: 94)
-            .padding(.horizontal)
-            .padding(.bottom, 10)
-            
-            // MARK: - Goal Information
-            HStack {
-                
-                // Display the Daily or Weekly Goal
-                StatsGoalInformation(headline: "\(selectedTimePeriod == Constants.selectDay ? "Daily" : "Weekly") Goal", amount: selectedTimePeriod == Constants.selectDay ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7)
-                
-                Spacer()
-                
-                // Display the remaining amount until the goal is met
-                StatsGoalInformation(headline: "Amount Left", amount: selectedTimePeriod == Constants.selectDay ? (model.drinkData.dailyGoal - model.getTotalAmount(date: model.drinkData.selectedDay)) : (model.drinkData.dailyGoal*7 - model.getTotalAmount(week: model.drinkData.selectedWeek)))
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
+            MultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod)
             
             // MARK: - Add Drink Button
             

@@ -36,9 +36,11 @@ struct DataLogsView: View {
             // If day display day picker
             if selectedTimePeriod == Constants.selectDay {
                 DayDataPicker(currentDate: $model.drinkData.selectedDay)
+                    .frame(height: 25)
             // If week display week picker
             } else {
                 WeekDataPicker(currentWeek: $model.drinkData.selectedWeek)
+                    .frame(height: 25)
             }
             
             // MARK: - Stats
@@ -63,29 +65,7 @@ struct DataLogsView: View {
                         .font(.title3)
                     
                     // MARK: Stats by Drink Type
-                    
-                    HStack {
-                        
-                        VStack(alignment: .leading) {
-                            
-                            DataLogsDrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkType: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
-                            
-                            DataLogsDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkType: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
-
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .leading) {
-                            
-                            DataLogsDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkType: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
-
-                            DataLogsDrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkType: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
-                            
-                        }
-                        
-                    }
-                    .padding(.horizontal)
+                    MultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod)
                 }
                 
                 Spacer()
@@ -127,7 +107,7 @@ struct DataLogsView: View {
                                             .padding(.trailing)
                                         
                                         // Amount consumed
-                                        Text("\(Int(drink.amount.rounded(.up))) \(model.getUnits())")
+                                        Text("\(drink.amount, specifier: model.getSpecifier(amount: drink.amount)) \(model.getUnits())")
                                             .padding(.trailing, 10)
                                         
                                         // Time drink was logged

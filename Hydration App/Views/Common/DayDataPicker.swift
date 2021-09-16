@@ -39,7 +39,13 @@ struct DayDataPicker: View {
             Spacer()
             
             // Display Month Day, Year
-            Text(dateFormatter.string(from: currentDate))
+            ZStack {
+                ButtonDatePicker(selectedDate: $currentDate)
+                
+                Text(dateFormatter.string(from: currentDate))
+                    .userInteractionDisabled()
+                    .foregroundColor(.blue)
+            }
             
             Spacer()
             

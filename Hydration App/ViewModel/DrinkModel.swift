@@ -57,6 +57,18 @@ class DrinkModel: ObservableObject {
         
     }
     
+    func isToday() -> Bool {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        
+        if formatter.string(from: self.drinkData.selectedDay) != formatter.string(from: Date()) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     // MARK: - Units
     
     func getSpecifier(amount: Double) -> String {

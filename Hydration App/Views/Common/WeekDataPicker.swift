@@ -12,6 +12,7 @@ struct WeekDataPicker: View {
     @EnvironmentObject var model: DrinkModel
     
     @Binding var currentWeek: [Date]
+    @State var selectedDay = Date()
     
     let dateFormatter: DateFormatter = { () -> DateFormatter in
         let formatter = DateFormatter()
@@ -23,6 +24,8 @@ struct WeekDataPicker: View {
     var body: some View {
         
         var isNextWeek = isNextWeek(currentWeek: currentWeek)
+        
+        var displayText = getWeekText(weekRange: model.getWeekRange(date: currentWeek[0]))
         
         HStack {
             Button(action: {
@@ -38,7 +41,17 @@ struct WeekDataPicker: View {
             
             Spacer()
             
-            Text(getWeekText())
+            ZStack {
+                ButtonDatePicker(selectedDate: $selectedDay)
+                
+                Text(displayText)
+                    .userInteractionDisabled()
+                    .foregroundColor(.blue)
+            }
+            .onChange(of: selectedDay, perform: { value in
+                currentWeek = model.getDaysInWeek(date: selectedDay)
+                displayText = getWeekText(weekRange: model.getWeekRange(date: selectedDay))
+            })
             
             Spacer()
             
@@ -79,10 +92,7 @@ struct WeekDataPicker: View {
         
     }
     
-    func getWeekText() -> String {
-        // Get the sunday and saturday for a week
-        let weekRange = model.getWeekRange(date: currentWeek[0])
-        
+    func getWeekText(weekRange: [Date]) -> String {
         // Create a date formatter
         let formatter = DateFormatter()
         
