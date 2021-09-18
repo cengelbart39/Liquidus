@@ -16,11 +16,11 @@ struct TabBar: View {
         
         TabView {
             
-            StatsView()
+            IntakeView()
                 .tabItem {
                     VStack {
                         Image(systemName: "drop.fill")
-                        Text("Stats")
+                        Text("Intake")
                     }
                 }
                 .tag(0)

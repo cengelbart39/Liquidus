@@ -1,5 +1,5 @@
 //
-//  StatsDrinkBreakup.swift
+//  IntakeDrinkBreakup.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatsDrinkBreakup: View {
+struct IntakeDrinkBreakup: View {
     
     @EnvironmentObject var model: DrinkModel
     

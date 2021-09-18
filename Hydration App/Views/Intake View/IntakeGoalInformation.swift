@@ -1,5 +1,5 @@
 //
-//  StatsGoalInformation.swift
+//  IntakeGoalInformation.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatsGoalInformation: View {
+struct IntakeGoalInformation: View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var model: DrinkModel

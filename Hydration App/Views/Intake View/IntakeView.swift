@@ -1,5 +1,5 @@
 //
-//  StatsView.swift
+//  IntakeView.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatsView: View {
+struct IntakeView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -20,13 +20,34 @@ struct StatsView: View {
         
         VStack(alignment: .leading) {
             
-            // MARK: - Title
-            Text("Stats")
-                .bold()
-                .font(.largeTitle)
-                .padding(.leading)
-                .padding(.bottom, 16)
-                .padding(.top, 40)
+            HStack {
+                
+                // MARK: - Title
+                Text("Intake")
+                    .bold()
+                    .font(.largeTitle)
+                    .padding(.leading)
+                
+                Spacer()
+                
+                // MARK: - Add Drink Button
+                Button(action: {
+                    isAddDrinkViewShowing = true
+                }, label: {
+                    
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing)
+                })
+                .sheet(isPresented: $isAddDrinkViewShowing, content: {
+                    IntakeLogDrinkView(isPresented: $isAddDrinkViewShowing)
+                        .environmentObject(model)
+                })
+            }
+            .padding(.bottom, 16)
+            .padding(.top, 40)
             
             // MARK: - Day/Week Picker
             TimePicker(picker: $selectedTimePeriod)
@@ -55,7 +76,7 @@ struct StatsView: View {
                 let juicePercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.juiceKey, week: model.drinkData.selectedWeek)
                 
                 // Create Progress Circle
-                StatsCircularProgressBar(progressWater: waterPercent, progressCoffee: coffeePercent, progressSoda: sodaPercent, progressJuice: juicePercent, selectedTimePeriod: selectedTimePeriod)
+                IntakeCircularProgressBar(progressWater: waterPercent, progressCoffee: coffeePercent, progressSoda: sodaPercent, progressJuice: juicePercent, selectedTimePeriod: selectedTimePeriod)
                     .padding(.horizontal)
                     .frame(width: 280, height: 280)
                 
@@ -64,36 +85,6 @@ struct StatsView: View {
             
             // MARK: - Drink Type Breakup
             MultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod)
-            
-            // MARK: - Add Drink Button
-            
-            Button(action: {
-                isAddDrinkViewShowing = true
-            }, label: {
-                
-                HStack {
-                    
-                    Spacer()
-                    
-                    ZStack {
-                        
-                        RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
-                            .frame(width: 150, height: 50)
-                            .shadow(radius: 5)
-                        
-                        Text("Log A Drink")
-                            .font(.title2)
-                        
-                    }
-                    
-                    Spacer()
-                }
-                
-            })
-            .sheet(isPresented: $isAddDrinkViewShowing, content: {
-                StatsLogDrinkView(isPresented: $isAddDrinkViewShowing)
-                    .environmentObject(model)
-            })
             
             Spacer()
             
@@ -104,8 +95,8 @@ struct StatsView: View {
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            StatsView()
-            StatsView()
+            IntakeView()
+            IntakeView()
                 .preferredColorScheme(.dark)
         }
     }

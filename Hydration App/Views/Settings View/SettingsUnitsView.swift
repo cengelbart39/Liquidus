@@ -19,6 +19,74 @@ struct SettingsUnitsView: View {
         Form {
             Section {
                 
+                // MARK: - Cups (US)
+                Button(action: {
+                    // If the units are not Cups (US)...
+                    if model.drinkData.units != Constants.cupsUS {
+                        
+                        let pastUnit = model.drinkData.units
+                        
+                        // Change to oz
+                        model.drinkData.units = Constants.cupsUS
+                        
+                        // Convert all measurements
+                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.cupsUS)
+                        
+                        // Dismiss screen
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }, label: {
+                    HStack {
+                        // Text
+                        Text("\(Constants.cupsUS) (\(Constants.cups))")
+                            .accentColor(colorScheme == .light ? .black : .white)
+                        
+                        // If Cups (US) are selected
+                        if model.drinkData.units == Constants.cupsUS {
+                            
+                            Spacer()
+                            
+                            // Display checkmark1
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                })
+                
+                // MARK: - Fluid Ounces (US)
+                Button(action: {
+                    // If the units are not Fluid Ounces (US)...
+                    if model.drinkData.units != Constants.fluidOuncesUS {
+                        
+                        let pastUnit = model.drinkData.units
+                        
+                        // Change to oz
+                        model.drinkData.units = Constants.fluidOuncesUS
+                        
+                        // Convert all measurements
+                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.fluidOuncesUS)
+                        
+                        // Dismiss screen
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }, label: {
+                    HStack {
+                        // Text
+                        Text("\(Constants.fluidOuncesUS) (\(Constants.flOzUS))")
+                            .accentColor(colorScheme == .light ? .black : .white)
+                        
+                        // If Fluid Ounces (US) are selected
+                        if model.drinkData.units == Constants.fluidOuncesUS {
+                            
+                            Spacer()
+                            
+                            // Display checkmark1
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                })
+                
                 // MARK: - Liters
                 Button(action: {
                     // If the units are not Liters...
@@ -91,39 +159,7 @@ struct SettingsUnitsView: View {
                     }
                 })
                 
-                // MARK: - Fluid Ounces (US)
-                Button(action: {
-                    // If the units are not Fluid Ounces (US)...
-                    if model.drinkData.units != Constants.fluidOuncesUS {
-                        
-                        let pastUnit = model.drinkData.units
-                        
-                        // Change to oz
-                        model.drinkData.units = Constants.fluidOuncesUS
-                        
-                        // Convert all measurements
-                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.fluidOuncesUS)
-                        
-                        // Dismiss screen
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }, label: {
-                    HStack {
-                        // Text
-                        Text("\(Constants.fluidOuncesUS) (\(Constants.flOzUS))")
-                            .accentColor(colorScheme == .light ? .black : .white)
-                        
-                        // If Fluid Ounces (US) are selected
-                        if model.drinkData.units == Constants.fluidOuncesUS {
-                            
-                            Spacer()
-                            
-                            // Display checkmark1
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                })
+
             }
         }
         .navigationBarTitle("Unit Settings")

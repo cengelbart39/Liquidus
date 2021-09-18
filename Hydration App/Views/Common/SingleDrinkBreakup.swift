@@ -21,7 +21,7 @@ struct SingleDrinkBreakup: View {
             
             // Rectangle Card
             RectangleCard(color: color)
-                .frame(width: 30, height: 30)
+                .frame(width: 35, height: 35)
             
             // If day...
             if selectedTimePeriod == Constants.selectDay {
@@ -29,6 +29,7 @@ struct SingleDrinkBreakup: View {
                 VStack(alignment: .leading) {
                     // Drink Name
                     Text(drinkType)
+                        .bold()
                     
                     // Consumed Amount & Percent
                     let amount = model.getDrinkTypeAmount(type: drinkType, date: model.drinkData.selectedDay)
@@ -43,6 +44,7 @@ struct SingleDrinkBreakup: View {
                 VStack(alignment: .leading) {
                     // Drink Name
                     Text(drinkType)
+                        .bold()
                     
                     // Consumed Amount & Percent
                     let amount = model.getDrinkTypeAmount(type: drinkType, week: model.drinkData.selectedWeek)

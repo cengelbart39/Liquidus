@@ -1,5 +1,5 @@
 //
-//  StatsCircularProgressBarHighlight.swift
+//  IntakeCircularProgressBarHighlight.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatsCircularProgressBarHighlight: View {
+struct IntakeCircularProgressBarHighlight: View {
     
     var progress: Double
     

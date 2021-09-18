@@ -1,5 +1,5 @@
 //
-//  StatsLogDrinkView.swift
+//  IntakeLogDrinkView.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatsLogDrinkView: View {
+struct IntakeLogDrinkView: View {
     
     @Environment(\.colorScheme) var colorScheme
     

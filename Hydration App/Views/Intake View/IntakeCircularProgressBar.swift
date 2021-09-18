@@ -1,5 +1,5 @@
 //
-//  StatsCircularProgressBar.swift
+//  IntakeCircularProgressBar.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StatsCircularProgressBar: View {
+struct IntakeCircularProgressBar: View {
     
     @EnvironmentObject var model: DrinkModel
     
@@ -21,19 +21,30 @@ struct StatsCircularProgressBar: View {
         
         ZStack {
             
-            // Create circle background
-            Circle()
-                .stroke(lineWidth: 30)
-                .foregroundColor(Color(.systemGray6))
-            
-            // Get the outline fill for each type
-            StatsCircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.juiceKey]!)
-            
-            StatsCircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.sodaKey]!)
-            
-            StatsCircularProgressBarHighlight(progress: progressCoffee+progressWater, color: Constants.colors[Constants.coffeeKey]!)
-            
-            StatsCircularProgressBarHighlight(progress: progressWater, color: Constants.colors[Constants.waterKey]!)
+            if progressWater+progressCoffee+progressSoda+progressJuice > 1.0 {
+                
+                Circle()
+                    .stroke(style: StrokeStyle(lineWidth: 30, lineCap: .round, lineJoin: .round))
+                    .foregroundColor(Color("GoalGreen"))
+                    .rotationEffect(Angle(degrees: 270.0))
+                    .animation(.linear)
+              
+            } else {
+                
+                // Create circle background
+                Circle()
+                    .stroke(lineWidth: 30)
+                    .foregroundColor(Color(.systemGray6))
+                
+                // Get the outline fill for each type
+                IntakeCircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.juiceKey]!)
+                
+                IntakeCircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.sodaKey]!)
+                
+                IntakeCircularProgressBarHighlight(progress: progressCoffee+progressWater, color: Constants.colors[Constants.coffeeKey]!)
+                
+                IntakeCircularProgressBarHighlight(progress: progressWater, color: Constants.colors[Constants.waterKey]!)
+            }
             
             // If a day display the daily percent
             if selectedTimePeriod == Constants.selectDay {
@@ -41,7 +52,7 @@ struct StatsCircularProgressBar: View {
                 VStack {
                     let percent = model.getTotalPercent(date: model.drinkData.selectedDay)
                     
-                    Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", min(percent, 1.0)*100.0))
+                    Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(.largeTitle)
                         .bold()
                         .padding(.bottom, 5)
