@@ -21,30 +21,21 @@ struct IntakeCircularProgressBar: View {
         
         ZStack {
             
-            if progressWater+progressCoffee+progressSoda+progressJuice > 1.0 {
+            // Create circle background
+            Circle()
+                .stroke(lineWidth: 30)
+                .foregroundColor(Color(.systemGray6))
+            
+            let totalPercent = progressWater + progressCoffee + progressSoda + progressJuice
+            
+            // Get the outline fill for each type
+            IntakeCircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.juiceKey]!)
                 
-                Circle()
-                    .stroke(style: StrokeStyle(lineWidth: 30, lineCap: .round, lineJoin: .round))
-                    .foregroundColor(Color("GoalGreen"))
-                    .rotationEffect(Angle(degrees: 270.0))
-                    .animation(.linear)
-              
-            } else {
+            IntakeCircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.sodaKey]!)
                 
-                // Create circle background
-                Circle()
-                    .stroke(lineWidth: 30)
-                    .foregroundColor(Color(.systemGray6))
+            IntakeCircularProgressBarHighlight(progress: progressCoffee+progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.coffeeKey]!)
                 
-                // Get the outline fill for each type
-                IntakeCircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.juiceKey]!)
-                
-                IntakeCircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: Constants.colors[Constants.sodaKey]!)
-                
-                IntakeCircularProgressBarHighlight(progress: progressCoffee+progressWater, color: Constants.colors[Constants.coffeeKey]!)
-                
-                IntakeCircularProgressBarHighlight(progress: progressWater, color: Constants.colors[Constants.waterKey]!)
-            }
+            IntakeCircularProgressBarHighlight(progress: progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.waterKey]!)
             
             // If a day display the daily percent
             if selectedTimePeriod == Constants.selectDay {
