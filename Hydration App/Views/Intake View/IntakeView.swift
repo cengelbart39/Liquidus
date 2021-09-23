@@ -42,7 +42,7 @@ struct IntakeView: View {
                         .padding(.trailing)
                 })
                 .sheet(isPresented: $isAddDrinkViewShowing, content: {
-                    IntakeLogDrinkView(isPresented: $isAddDrinkViewShowing)
+                    LogDrinkView(isPresented: $isAddDrinkViewShowing)
                         .environmentObject(model)
                 })
             }
@@ -84,7 +84,7 @@ struct IntakeView: View {
             }
             
             // MARK: - Drink Type Breakup
-            MultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod)
+            IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod)
             
             Spacer()
             

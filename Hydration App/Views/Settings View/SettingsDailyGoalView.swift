@@ -22,7 +22,7 @@ struct SettingsDailyGoalView: View {
                 
                 HStack {
                     // Daily Goal input
-                    TextField("\(model.drinkData.dailyGoal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal))", text: $dailyGoal)
+                    TextField("\(Int(model.drinkData.dailyGoal)) \(model.getUnits())", text: $dailyGoal)
                         .keyboardType(.decimalPad)
                     
                     // Save button
