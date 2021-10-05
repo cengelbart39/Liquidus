@@ -9,32 +9,27 @@ import SwiftUI
 
 struct IntakeMultiDrinkBreakup: View {
     
+    @EnvironmentObject var model: DrinkModel
+    
     var selectedTimePeriod: String
     
     var body: some View {
         
-        HStack {
-            
-            VStack(alignment: .leading) {
-                
-                IntakeSingleDrinkBreakup(color: Constants.colors[Constants.waterKey]!, drinkType: Constants.waterKey, selectedTimePeriod: selectedTimePeriod)
-                
-                IntakeSingleDrinkBreakup(color: Constants.colors[Constants.sodaKey]!, drinkType: Constants.sodaKey, selectedTimePeriod: selectedTimePeriod)
-
-            }
-            
-            Spacer()
-            
-            VStack(alignment: .leading) {
-                
-                IntakeSingleDrinkBreakup(color: Constants.colors[Constants.coffeeKey]!, drinkType: Constants.coffeeKey, selectedTimePeriod: selectedTimePeriod)
-
-                IntakeSingleDrinkBreakup(color: Constants.colors[Constants.juiceKey]!, drinkType: Constants.juiceKey, selectedTimePeriod: selectedTimePeriod)
+        let columns = Array(repeating: GridItem(.adaptive(minimum: 200)), count: 2)
+        
+        LazyVGrid(columns: columns, alignment: .leading) {
+            ForEach(model.drinkData.drinkTypes, id: \.self) { type in
+                HStack {
+                    
+                    Spacer()
+                    
+                    IntakeSingleDrinkBreakup(color: model.drinkData.colors[type]!.getColor(), drinkType: type, selectedTimePeriod: selectedTimePeriod)
+                    
+                    Spacer()
+                }
                 
             }
-            
         }
-        .padding(.horizontal)
         
     }
 }

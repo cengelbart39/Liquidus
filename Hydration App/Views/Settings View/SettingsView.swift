@@ -34,6 +34,15 @@ struct SettingsView: View {
                     
                 }
                 
+                Section {
+                    NavigationLink {
+                        SettingsDrinkTypeView()
+                    } label: {
+                        Text("Drink Types")
+                    }
+
+                }
+                
                 // MARK: - Unit Settings
                 Section(footer: Text("If the unit is changed, all measurements will be converted")) {
                     

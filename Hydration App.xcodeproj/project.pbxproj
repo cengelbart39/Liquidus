@@ -13,6 +13,8 @@
 		9D27485426FA696F00F016D8 /* WeekLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27485326FA696F00F016D8 /* WeekLogView.swift */; };
 		9D27485626FA6A9800F016D8 /* DayLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27485526FA6A9800F016D8 /* DayLogView.swift */; };
 		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
+		9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */; };
+		9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
 		9D48B39B26E65E2C00FEFE49 /* Hydration_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39A26E65E2C00FEFE49 /* Hydration_App.swift */; };
 		9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39C26E65E2C00FEFE49 /* IntakeView.swift */; };
 		9D48B39F26E65E2F00FEFE49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D48B39E26E65E2F00FEFE49 /* Assets.xcassets */; };
@@ -36,6 +38,7 @@
 		9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */; };
 		9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
 		9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
+		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +48,8 @@
 		9D27485326FA696F00F016D8 /* WeekLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLogView.swift; sourceTree = "<group>"; };
 		9D27485526FA6A9800F016D8 /* DayLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLogView.swift; sourceTree = "<group>"; };
 		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
+		9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkTypeView.swift; sourceTree = "<group>"; };
+		9D395165270A0CFF009E7F40 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		9D48B39726E65E2C00FEFE49 /* Hydration App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hydration App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D48B39A26E65E2C00FEFE49 /* Hydration_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hydration_App.swift; sourceTree = "<group>"; };
 		9D48B39C26E65E2C00FEFE49 /* IntakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeView.swift; sourceTree = "<group>"; };
@@ -71,6 +76,7 @@
 		9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataPicker.swift; sourceTree = "<group>"; };
 		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
+		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 			children = (
 				9D48B3A926E6603300FEFE49 /* Constants.swift */,
 				9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */,
+				9D395165270A0CFF009E7F40 /* CodableColor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -168,6 +175,8 @@
 				9D48B3BB26E675A200FEFE49 /* SettingsView.swift */,
 				9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */,
 				9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */,
+				9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */,
+				9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */,
 			);
 			path = "Settings View";
 			sourceTree = "<group>";
@@ -294,10 +303,12 @@
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
 				9D27485626FA6A9800F016D8 /* DayLogView.swift in Sources */,
+				9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */,
 				9D48B39B26E65E2C00FEFE49 /* Hydration_App.swift in Sources */,
 				9D48B3AA26E6603300FEFE49 /* Constants.swift in Sources */,
 				9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */,
 				9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */,
+				9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */,
 				9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */,
 				9D48B3AC26E6635000FEFE49 /* IntakeCircularProgressBar.swift in Sources */,
 				9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */,
@@ -306,6 +317,7 @@
 				9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */,
 				9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */,
 				9D48B3AE26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift in Sources */,
+				9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */,
 				9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */,
 				9D27485426FA696F00F016D8 /* WeekLogView.swift in Sources */,
 				9D9378F626F3939000B83926 /* ButtonDatePicker.swift in Sources */,

@@ -31,20 +31,18 @@ struct LogDrinkView: View {
                 .padding(.top, 50)
             
             // Drink Type Picker
-            Picker("Drink Type", selection: $drinkType) {
-                Text(Constants.waterKey)
-                    .tag(Constants.waterKey)
+            HStack {
                 
-                Text(Constants.coffeeKey)
-                    .tag(Constants.coffeeKey)
+                Picker("Drink Type:", selection: $drinkType) {
+                    ForEach(model.drinkData.drinkTypes, id: \.self) { type in
+                        Text(type)
+                            .tag(type)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
                 
-                Text(Constants.sodaKey)
-                    .tag(Constants.sodaKey)
-                
-                Text(Constants.juiceKey)
-                    .tag(Constants.juiceKey)
+                Text(drinkType)
             }
-            .pickerStyle(SegmentedPickerStyle())
             .padding(.bottom)
             
             // Drink Amount TextField
@@ -61,9 +59,6 @@ struct LogDrinkView: View {
                 
             }
             .padding(.bottom)
-            
-            Text("Time:")
-                .bold()
             
             // Date Picker
             DatePicker("", selection: $timeSelection, in: ...Date())

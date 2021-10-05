@@ -36,11 +36,4 @@ struct Constants {
         Constants.liters:UnitVolume.liters,
         Constants.milliliters:UnitVolume.milliliters
     ]
-    
-    static var colors: [String:Color] = [
-        Constants.waterKey:Color(.systemTeal),
-        Constants.coffeeKey:Color("CoffeeBrown"),
-        Constants.sodaKey:Color(.systemGreen),
-        Constants.juiceKey:Color(.systemOrange)
-    ]
 }

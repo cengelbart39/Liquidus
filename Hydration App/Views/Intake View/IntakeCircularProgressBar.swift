@@ -11,10 +11,6 @@ struct IntakeCircularProgressBar: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    var progressWater: Double
-    var progressCoffee: Double
-    var progressSoda: Double
-    var progressJuice: Double
     var selectedTimePeriod: String
     
     var body: some View {
@@ -26,17 +22,16 @@ struct IntakeCircularProgressBar: View {
                 .stroke(lineWidth: 30)
                 .foregroundColor(Color(.systemGray6))
             
-            let totalPercent = progressWater + progressCoffee + progressSoda + progressJuice
+            let totalPercent = self.getProgressPercent(type: model.drinkData.drinkTypes.last!, timePeriod: selectedTimePeriod)
             
             // Get the outline fill for each type
-            IntakeCircularProgressBarHighlight(progress: progressJuice+progressSoda+progressCoffee+progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.juiceKey]!)
+            ForEach(model.drinkData.drinkTypes.reversed(), id: \.self) { type in
                 
-            IntakeCircularProgressBarHighlight(progress: progressSoda+progressCoffee+progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.sodaKey]!)
+                let color = totalPercent >= 1.0 ? Color("GoalGreen") : model.drinkData.colors[type]!.getColor()
                 
-            IntakeCircularProgressBarHighlight(progress: progressCoffee+progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.coffeeKey]!)
-                
-            IntakeCircularProgressBarHighlight(progress: progressWater, color: totalPercent >= 1.0 ? Color("GoalGreen") : Constants.colors[Constants.waterKey]!)
-            
+                IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type, timePeriod: selectedTimePeriod), color: color)
+            }
+
             // If a day display the daily percent
             if selectedTimePeriod == Constants.selectDay {
                 
@@ -78,6 +73,25 @@ struct IntakeCircularProgressBar: View {
             
         }
         .padding(.horizontal)
+        
+    }
+    
+    func getProgressPercent(type: String, timePeriod: String) -> Double {
+        let typeIndex = model.drinkData.drinkTypes.firstIndex(of: type)!
+        
+        var progress = 0.0
+        
+        if timePeriod == Constants.selectDay {
+            for index in 0...typeIndex {
+                progress += model.getDrinkTypePercent(type: model.drinkData.drinkTypes[index], date: model.drinkData.selectedDay)
+            }
+        } else {
+            for index in 0...typeIndex {
+                progress += model.getDrinkTypePercent(type: model.drinkData.drinkTypes[index], week: model.drinkData.selectedWeek)
+            }
+        }
+        
+        return progress
         
     }
 }

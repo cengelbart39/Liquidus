@@ -32,7 +32,7 @@ struct DayLogView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 15)
-                    .foregroundColor(Constants.colors[drink.type])
+                    .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
                     .padding(.trailing)
                 
                 // Amount consumed

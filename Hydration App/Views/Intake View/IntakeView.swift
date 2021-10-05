@@ -66,17 +66,8 @@ struct IntakeView: View {
                 
                 Spacer()
                 
-                // Get decimal percentages for each drink type
-                let waterPercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.waterKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.waterKey, week: model.drinkData.selectedWeek)
-                
-                let coffeePercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.coffeeKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.coffeeKey, week: model.drinkData.selectedWeek)
-                
-                let sodaPercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.sodaKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.sodaKey, week: model.drinkData.selectedWeek)
-                
-                let juicePercent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: Constants.juiceKey, date: model.drinkData.selectedDay) : model.getDrinkTypePercent(type: Constants.juiceKey, week: model.drinkData.selectedWeek)
-                
                 // Create Progress Circle
-                IntakeCircularProgressBar(progressWater: waterPercent, progressCoffee: coffeePercent, progressSoda: sodaPercent, progressJuice: juicePercent, selectedTimePeriod: selectedTimePeriod)
+                IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod)
                     .padding(.horizontal)
                     .frame(width: 280, height: 280)
                 
