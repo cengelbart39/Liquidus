@@ -87,6 +87,8 @@ class DrinkModel: ObservableObject {
         
         let codableColor = CodableColor(color: UIColor(color))
         
+        self.drinkData.enabled[saveType] = true
+        
         self.drinkData.customDrinkTypes.append(saveType)
         self.drinkData.colors[saveType] = codableColor
         self.save()
