@@ -41,6 +41,7 @@ struct WeekDataPicker: View {
             
             Spacer()
             
+            // Display week range
             ZStack {
                 ButtonDatePicker(selectedDate: $selectedDay)
                 
@@ -49,7 +50,10 @@ struct WeekDataPicker: View {
                     .foregroundColor(.blue)
             }
             .onChange(of: selectedDay, perform: { value in
+                // When selectedDay is enabled
+                // Update currentWeek
                 currentWeek = model.getDaysInWeek(date: selectedDay)
+                // Update displayText
                 displayText = getWeekText(weekRange: model.getWeekRange(date: selectedDay))
             })
             

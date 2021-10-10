@@ -84,9 +84,11 @@ struct IntakeView: View {
             
         }
         .onAppear {
+            // Update selectedWeek as soon as view appears
             selectedWeek = model.getDaysInWeek(date: selectedDay)
         }
         .onChange(of: selectedDay) { newValue in
+            // Update selectedWeek when selectedDay updates
             selectedWeek = model.getDaysInWeek(date: selectedDay)
         }
     }

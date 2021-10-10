@@ -40,14 +40,17 @@ struct SettingsNewDrinkTypeView: View {
                     }
             
                     Form {
+                        // Change drink type name
                         Section(header: Text("Drink Type")) {
                             TextField("Water", text: $drinkType)
                         }
                         
+                        // Change drink type color
                         Section(header: Text("Color"), footer: Text("White and black may not show up well in Light or Dark Mode")) {
                             ColorPicker("Choose a color", selection: $color, supportsOpacity: false)
                         }
                         
+                        // Save drinkType details
                         Section {
                             HStack {
                                 Spacer()

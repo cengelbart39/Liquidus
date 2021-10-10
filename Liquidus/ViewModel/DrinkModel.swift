@@ -61,10 +61,12 @@ class DrinkModel: ObservableObject {
     }
     
     func isToday() -> Bool {
+        // Get DateFormatter
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         
+        // If selectedDay and today are different dates
         if formatter.string(from: self.selectedDay) != formatter.string(from: Date()) {
             return false
         } else {
@@ -73,70 +75,105 @@ class DrinkModel: ObservableObject {
     }
     
     func saveDrinkType(type: String, color: Color) {
-        
+        // Seperate type by spaces
         let words = type.split(separator: " ")
         
         var saveType = ""
         
+        // Loop through words
         for word in words {
+            
+            // Get first char of word and uppercase it
             let first = word.first!.uppercased()
+            
+            // Lowercase word
             var rest = word.lowercased()
+            // Remove first char
             rest.remove(at: rest.startIndex)
+            
+            // Update saveType
             saveType += (first + rest)
+            
+            // If word isn't the end of type...
             if words.firstIndex(of: word) != words.count-1 {
+                // Add space
                 saveType += " "
             }
         }
         
+        // Create codableColor
         let codableColor = CodableColor(color: UIColor(color))
         
+        // Set as enabled
         self.drinkData.enabled[saveType] = true
         
+        // Add saveType and codableColor to model
         self.drinkData.customDrinkTypes.append(saveType)
         self.drinkData.colors[saveType] = codableColor
+        
+        // Save model
         self.save()
     }
     
+    // MARK: - Drink Type Customization
+    
     func deleteDefaultDrinks(type: String) {
+        
+        // Loop through drinks index
         for index in 0..<self.drinkData.drinks.count {
+            // If the types are the same...
             if self.drinkData.drinks[index].type == type {
+                // Remove drink
                 self.drinkData.drinks.remove(at: index)
             }
         }
         
+        // Save
         self.save()
     }
     
     func deleteCustomDrinks(atOffsets: IndexSet) {
-        
+        // Get drinkType
         let drinkType = self.drinkData.customDrinkTypes[atOffsets.first!]
         
+        // Loop through drinks
         for index in 0..<self.drinkData.drinks.count {
+            // If the drink type is the same...
             if self.drinkData.drinks[index].type == drinkType {
+                // Remove drink
                 self.drinkData.drinks.remove(at: index)
             }
         }
         
+        // Save
         self.save()
     }
     
     func editDrinkType(old: String, new: String) {
+        // Update colors
         if let entry = self.drinkData.colors.removeValue(forKey: old) {
             self.drinkData.colors[new] = entry
         }
         
+        // Update enabled
         if let entry = self.drinkData.enabled.removeValue(forKey: old) {
             self.drinkData.enabled[new] = entry
         }
         
+        // Update drinks
         for drink in self.drinkData.drinks {
             if drink.type == old {
                 drink.type = new
             }
         }
 
+        // Get index of old drink type name
         let index = self.drinkData.customDrinkTypes.firstIndex(of: old)!
+        
+        // Add new name at index
         self.drinkData.customDrinkTypes[index] = new
+        
+        // Save
         self.save()
     }
     

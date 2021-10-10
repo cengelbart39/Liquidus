@@ -17,9 +17,11 @@ struct SettingsDrinkColorPicker: View {
     var body: some View {
         
         ColorPicker(drinkType, selection: $color, supportsOpacity: false)
+            // When the color changes, update model
             .onChange(of: color) { newValue in
                 model.drinkData.colors[drinkType]! = CodableColor(color: UIColor(color))
             }
+            // When view appears, update color to drinkType's color
             .onAppear {
                 color = model.drinkData.colors[drinkType]!.getColor()
             }

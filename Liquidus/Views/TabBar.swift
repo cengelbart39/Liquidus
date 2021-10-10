@@ -16,6 +16,7 @@ struct TabBar: View {
         
         TabView {
             
+            // IntakeView
             IntakeView()
                 .tabItem {
                     VStack {
@@ -25,6 +26,7 @@ struct TabBar: View {
                 }
                 .tag(0)
             
+            // DataLogsView
             DataLogsView()
                 .tabItem {
                     VStack {
@@ -34,6 +36,7 @@ struct TabBar: View {
                 }
                 .tag(1)
             
+            // SettingsView
             SettingsView()
                 .tabItem {
                     VStack {
@@ -44,9 +47,13 @@ struct TabBar: View {
                 .tag(2)
         }
         .onAppear {
+            // If water is enabled...
             if model.drinkData.enabled[Constants.waterKey]! {
+                // If healthStore exists and does app have access...
                 if model.healthStore?.healthStore != nil && HKHealthStore.isHealthDataAvailable() {
+                    // Get statsCollections
                     model.healthStore!.getHealthKitData { statsCollection in
+                        // Retrieve HealthKit data
                         if let statsCollection = statsCollection {
                             model.retrieveFromHealthKit(statsCollection)
                         }

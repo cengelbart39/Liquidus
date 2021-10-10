@@ -53,6 +53,7 @@ struct SettingsView: View {
                         })
                 }
                 
+                // MARK: - Sync with Apple Health
                 Section() {
                     
                     HStack {

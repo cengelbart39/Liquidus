@@ -14,6 +14,7 @@ struct IntakeCircularProgressBarHighlight: View {
     
     var body: some View {
         
+        // Create a trimmed circular outline
         Circle()
             .trim(from: 0.0, to: CGFloat(min(progress, 1.0)))
             .stroke(style: StrokeStyle(lineWidth: 30, lineCap: .round, lineJoin: .round))

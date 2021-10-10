@@ -19,17 +19,22 @@ struct WeekLogView: View {
         
         VStack(alignment: .leading) {
         
+            // Date
             Text(formatter().string(from: date))
                 .textCase(.uppercase)
                 .foregroundColor(.gray)
             
+            // Get data for date
             let data = model.filterDataByDay(day: date)
             
+            // If there is data...
             if data.count > 0 {
+                // Show data for each drink
                 ForEach(data) { drink in
                     DayLogView(drink: drink)
                     
                 }
+            // If not...
             } else {
                 
                 ZStack {
@@ -46,6 +51,7 @@ struct WeekLogView: View {
         
     }
     
+    // Date Formatter
     func formatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long

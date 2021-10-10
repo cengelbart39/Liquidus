@@ -25,7 +25,6 @@
 		9D48B3AC26E6635000FEFE49 /* IntakeCircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3AB26E6635000FEFE49 /* IntakeCircularProgressBar.swift */; };
 		9D48B3AE26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */; };
 		9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3B126E6719100FEFE49 /* RectangleCard.swift */; };
-		9D48B3B626E6746600FEFE49 /* IntakeGoalInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3B526E6746600FEFE49 /* IntakeGoalInformation.swift */; };
 		9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3B726E6752C00FEFE49 /* TabBar.swift */; };
 		9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BB26E675A200FEFE49 /* SettingsView.swift */; };
 		9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */; };
@@ -64,7 +63,6 @@
 		9D48B3AB26E6635000FEFE49 /* IntakeCircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressBar.swift; sourceTree = "<group>"; };
 		9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressBarHighlight.swift; sourceTree = "<group>"; };
 		9D48B3B126E6719100FEFE49 /* RectangleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCard.swift; sourceTree = "<group>"; };
-		9D48B3B526E6746600FEFE49 /* IntakeGoalInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeGoalInformation.swift; sourceTree = "<group>"; };
 		9D48B3B726E6752C00FEFE49 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		9D48B3BB26E675A200FEFE49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 				9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */,
 				9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */,
 				9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */,
-				9D48B3B526E6746600FEFE49 /* IntakeGoalInformation.swift */,
 			);
 			path = "Intake View";
 			sourceTree = "<group>";
@@ -304,7 +301,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */,
-				9D48B3B626E6746600FEFE49 /* IntakeGoalInformation.swift in Sources */,
 				9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */,
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,

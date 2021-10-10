@@ -22,10 +22,12 @@ struct SettingsEditCustomTypeView: View {
         
         
         Form {
+            // Update type name
             Section(header: Text("Name")) {
                 TextField("", text: $name)
             }
             
+            // Update color
             Section(header: Text("Color")) {
                 ColorPicker("Choose a new color", selection: $newColor, supportsOpacity: false)
             }
@@ -35,8 +37,11 @@ struct SettingsEditCustomTypeView: View {
                     Spacer()
                     
                     Button {
+                        // Update color in model
                         model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
+                        // Edit existing drinks of type
                         model.editDrinkType(old: type, new: name)
+                        // Dismiss view
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Save")
@@ -47,6 +52,7 @@ struct SettingsEditCustomTypeView: View {
             }
         }
         .onAppear {
+            // Update variables
             name = type
             newColor = model.drinkData.colors[type]!.getColor()
         }
