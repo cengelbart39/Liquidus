@@ -44,14 +44,6 @@ struct TabBar: View {
                 .tag(2)
         }
         .onAppear {
-            if !model.isToday() {
-                model.drinkData.selectedDay = Date()
-            }
-            
-            if !model.doesDateFallInWeek(date1: model.drinkData.selectedDay, date2: Date()) {
-                model.drinkData.selectedWeek = model.getDaysInWeek(date: Date()+1)
-            }
-            
             if model.drinkData.enabled[Constants.waterKey]! {
                 if model.healthStore?.healthStore != nil && HKHealthStore.isHealthDataAvailable() {
                     model.healthStore!.getHealthKitData { statsCollection in

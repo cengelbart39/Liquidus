@@ -14,6 +14,9 @@ class DrinkModel: ObservableObject {
     @Published var drinkData = DrinkData()
     @Published var weeksPopulated = false
     
+    @Published var selectedDay = Date()
+    @Published var selectedWeek = [Date]()
+    
     @Published var healthStore: HealthStore?
     
     init() {
@@ -25,7 +28,7 @@ class DrinkModel: ObservableObject {
             if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
                 self.drinkData = decoded
                 // Populate the selectedWeek property
-                self.drinkData.selectedWeek = self.getDaysInWeek(date: Date())
+                self.selectedWeek = self.getDaysInWeek(date: Date())
                 return
             }
         }
@@ -62,7 +65,7 @@ class DrinkModel: ObservableObject {
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         
-        if formatter.string(from: self.drinkData.selectedDay) != formatter.string(from: Date()) {
+        if formatter.string(from: self.selectedDay) != formatter.string(from: Date()) {
             return false
         } else {
             return true

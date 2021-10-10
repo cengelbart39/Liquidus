@@ -12,6 +12,8 @@ struct IntakeCircularProgressBar: View {
     @EnvironmentObject var model: DrinkModel
     
     var selectedTimePeriod: String
+    var selectedDay: Date
+    var selectedWeek: [Date]
     
     var body: some View {
         
@@ -24,7 +26,7 @@ struct IntakeCircularProgressBar: View {
             
             let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
             
-            let totalPercent = self.getProgressPercent(type: drinkTypes.last!, timePeriod: selectedTimePeriod)
+            let totalPercent = self.getProgressPercent(type: drinkTypes.last!)
             
             // Get the outline fill for each type
             
@@ -33,7 +35,7 @@ struct IntakeCircularProgressBar: View {
                 if model.drinkData.enabled[type]! {
                     let color = totalPercent >= 1.0 ? Color("GoalGreen") : model.drinkData.colors[type]!.getColor()
                     
-                    IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type, timePeriod: selectedTimePeriod), color: color)
+                    IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type), color: color)
                 }
             }
 
@@ -41,14 +43,14 @@ struct IntakeCircularProgressBar: View {
             if selectedTimePeriod == Constants.selectDay {
                 
                 VStack {
-                    let percent = model.getTotalPercent(date: model.drinkData.selectedDay)
+                    let percent = model.getTotalPercent(date: selectedDay)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(.largeTitle)
                         .bold()
                         .padding(.bottom, 5)
                     
-                    let total = model.getTotalAmount(date: model.drinkData.selectedDay)
+                    let total = model.getTotalAmount(date: selectedDay)
                     let goal = model.drinkData.dailyGoal
                     
                     Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: goal)) \(model.getUnits())")
@@ -57,17 +59,17 @@ struct IntakeCircularProgressBar: View {
                 }
                 
             // If a week display the weekly percent
-            } else {
+            } else if selectedTimePeriod == Constants.selectWeek {
                 
                 VStack {
-                    let percent = model.getTotalPercent(week: model.drinkData.selectedWeek)
+                    let percent = model.getTotalPercent(week: selectedWeek)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", min(percent, 1.0)*100.0))
                         .font(.largeTitle)
                         .bold()
                         .padding(.bottom, 5)
                     
-                    let total = model.getTotalAmount(week: model.drinkData.selectedWeek)
+                    let total = model.getTotalAmount(week: selectedWeek)
                     let goal = model.drinkData.dailyGoal*7
                     
                     Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: goal)) \(model.getUnits())")
@@ -81,7 +83,7 @@ struct IntakeCircularProgressBar: View {
         
     }
     
-    func getProgressPercent(type: String, timePeriod: String) -> Double {
+    func getProgressPercent(type: String) -> Double {
         var drinkTypes = [String]()
         
         for type in model.drinkData.defaultDrinkTypes {
@@ -96,13 +98,13 @@ struct IntakeCircularProgressBar: View {
         
         var progress = 0.0
         
-        if timePeriod == Constants.selectDay {
+        if selectedTimePeriod == Constants.selectDay {
             for index in 0...typeIndex {
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], date: model.drinkData.selectedDay)
+                progress += model.getDrinkTypePercent(type: drinkTypes[index], date: selectedDay)
             }
         } else {
             for index in 0...typeIndex {
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], week: model.drinkData.selectedWeek)
+                progress += model.getDrinkTypePercent(type: drinkTypes[index], week: selectedWeek)
             }
         }
         

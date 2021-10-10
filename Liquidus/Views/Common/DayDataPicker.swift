@@ -11,7 +11,7 @@ struct DayDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    @Binding var currentDate: Date
+    @Binding var selectedDate: Date
     
     let dateFormatter: DateFormatter = { () -> DateFormatter in
         let formatter = DateFormatter()
@@ -22,15 +22,15 @@ struct DayDataPicker: View {
     
     var body: some View {
         
-        var isTomorrow = isTomorrow(currentDate: currentDate)
+        var isTomorrow = isTomorrow(currentDate: selectedDate)
         
         HStack {
             Button(action: {
                 // Set new date
                 let calendar = Calendar.current
-                currentDate = calendar.date(byAdding: .day, value: -1, to: currentDate) ?? Date()
+                selectedDate = calendar.date(byAdding: .day, value: -1, to: selectedDate) ?? Date()
                 // Check if the next day is today or passed
-                isTomorrow = self.isTomorrow(currentDate: currentDate)
+                isTomorrow = self.isTomorrow(currentDate: selectedDate)
             }, label: {
                 Image(systemName: "chevron.left")
                     .foregroundColor(.red)
@@ -40,9 +40,9 @@ struct DayDataPicker: View {
             
             // Display Month Day, Year
             ZStack {
-                ButtonDatePicker(selectedDate: $currentDate)
+                ButtonDatePicker(selectedDate: $selectedDate)
                 
-                Text(dateFormatter.string(from: currentDate))
+                Text(dateFormatter.string(from: selectedDate))
                     .userInteractionDisabled()
                     .foregroundColor(.blue)
             }
@@ -52,14 +52,14 @@ struct DayDataPicker: View {
             Button(action: {
                 // Get next day
                 let calendar = Calendar.current
-                let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
+                let nextDay = calendar.date(byAdding: .day, value: 1, to: selectedDate) ?? Date()
                 
                 // If this day is/has occured...
                 if !isTomorrow {
                     // Update currentDate
-                    currentDate = nextDay
+                    selectedDate = nextDay
                     // Check if this new day has occured
-                    isTomorrow = self.isTomorrow(currentDate: currentDate)
+                    isTomorrow = self.isTomorrow(currentDate: selectedDate)
                 }
             }, label: {
                 Image(systemName: "chevron.right")

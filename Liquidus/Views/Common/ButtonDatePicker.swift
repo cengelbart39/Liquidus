@@ -1,11 +1,12 @@
 //
 //  ButtonDatePicker.swift
-//  Hydration App
+//  Liquidus
 //
-//  Created by Christopher Engelbart on 9/16/21.
+//  Created by Christopher Engelbart on 10/9/21.
 //
 //  Code credited to chase (https://developer.apple.com/forums/thread/650433?answerId=624094022#624094022)
 
+import Foundation
 import SwiftUI
 
 struct ButtonDatePicker: View {
@@ -13,17 +14,11 @@ struct ButtonDatePicker: View {
     @Binding var selectedDate: Date
     
     var body: some View {
-
+        
         DatePicker("label", selection: $selectedDate, in: ...Date(), displayedComponents: [.date])
             .datePickerStyle(CompactDatePickerStyle())
             .labelsHidden()
-    }
-    
-}
-
-struct ButtonDatePicker_Previews: PreviewProvider {
-    static var previews: some View {
-        ButtonDatePicker(selectedDate: .constant(Date()))
+        
     }
 }
 

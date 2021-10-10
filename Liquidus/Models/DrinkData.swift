@@ -29,8 +29,6 @@ struct DrinkData: Decodable, Encodable {
         Constants.sodaKey: CodableColor(color: .systemGreen),
         Constants.juiceKey: CodableColor(color: .systemOrange)
     ]
-    
-    var selectedDay = Date()
-    var selectedWeek = [Date()]
+
     var lastHKSave: Date? = nil
 }

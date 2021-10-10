@@ -16,6 +16,9 @@ struct IntakeView: View {
     @State var selectedTimePeriod = Constants.selectDay
     @State var isAddDrinkViewShowing = false
     
+    @State var selectedDay = Date()
+    @State var selectedWeek = [Date]()
+    
     var body: some View {
         
         VStack(alignment: .leading) {
@@ -54,10 +57,10 @@ struct IntakeView: View {
             
             // MARK: - Choose Day or Week Data
             if selectedTimePeriod == Constants.selectDay {
-                DayDataPicker(currentDate: $model.drinkData.selectedDay)
+                DayDataPicker(selectedDate: $selectedDay)
                     .frame(height: 25)
             } else {
-                WeekDataPicker(currentWeek: $model.drinkData.selectedWeek)
+                WeekDataPicker(currentWeek: $selectedWeek)
                     .frame(height: 25)
             }
             
@@ -67,7 +70,7 @@ struct IntakeView: View {
                 Spacer()
                 
                 // Create Progress Circle
-                IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod)
+                IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
                     .padding(.horizontal)
                     .frame(width: 280, height: 280)
                 
@@ -75,10 +78,16 @@ struct IntakeView: View {
             }
             
             // MARK: - Drink Type Breakup
-            IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod)
+            IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
             
             Spacer()
             
+        }
+        .onAppear {
+            selectedWeek = model.getDaysInWeek(date: selectedDay)
+        }
+        .onChange(of: selectedDay) { newValue in
+            selectedWeek = model.getDaysInWeek(date: selectedDay)
         }
     }
 }

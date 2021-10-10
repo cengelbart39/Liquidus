@@ -10,7 +10,6 @@ import SwiftUI
 struct IntakeCircularProgressBarHighlight: View {
     
     var progress: Double
-    
     var color: Color
     
     var body: some View {
