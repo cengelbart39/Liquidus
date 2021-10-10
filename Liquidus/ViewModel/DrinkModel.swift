@@ -121,16 +121,20 @@ class DrinkModel: ObservableObject {
     }
     
     func editDrinkType(old: String, new: String) {
+        if let entry = self.drinkData.colors.removeValue(forKey: old) {
+            self.drinkData.colors[new] = entry
+        }
+        
+        if let entry = self.drinkData.enabled.removeValue(forKey: old) {
+            self.drinkData.enabled[new] = entry
+        }
+        
         for drink in self.drinkData.drinks {
             if drink.type == old {
                 drink.type = new
             }
         }
-        
-        if let entry = self.drinkData.colors.removeValue(forKey: old) {
-            self.drinkData.colors[new] = entry
-        }
-        
+
         let index = self.drinkData.customDrinkTypes.firstIndex(of: old)!
         self.drinkData.customDrinkTypes[index] = new
         self.save()
