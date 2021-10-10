@@ -10,6 +10,7 @@ import SwiftUI
 struct DataLogsView: View {
     
     @State var selectedDate = Date()
+    @State var selectedWeek = [Date]()
     @State var isAddDrinkViewShowing = false
     
     @EnvironmentObject var model: DrinkModel
@@ -43,7 +44,7 @@ struct DataLogsView: View {
                 }
                 .frame(width: 18, height: 18)
                 .onChange(of: selectedDate, perform: { value in
-                    model.selectedWeek = model.getDaysInWeek(date: selectedDate)
+                    selectedWeek = model.getDaysInWeek(date: selectedDate)
                 })
                 .padding(.trailing, 10)
 
@@ -71,7 +72,7 @@ struct DataLogsView: View {
             
             ScrollView {
                 
-                ForEach(model.selectedWeek.reversed(), id: \.self) { day in
+                ForEach(selectedWeek.reversed(), id: \.self) { day in
                     
                     if !hasHappened(currentDate: day) {
                         HStack {
@@ -87,6 +88,9 @@ struct DataLogsView: View {
                 }
                 
             }
+        }
+        .onAppear {
+            selectedWeek = model.getDaysInWeek(date: selectedDate)
         }
     }
     
