@@ -15,9 +15,11 @@ struct LaunchView: View {
     
     var body: some View {
         
+        // If the user is onboarding, show onboarding screens
         if model.drinkData.isOnboarding && isOnboarding {
             OnboardingMainView(isOnboarding: $isOnboarding)
                 .navigationBarHidden(true)
+        // If the user isn't onboarding, start with TabBar
         } else if !model.drinkData.isOnboarding || !isOnboarding {
             TabBar()
         }

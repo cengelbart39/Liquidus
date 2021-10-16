@@ -55,6 +55,7 @@ struct SettingsView: View {
                 }
                 
                 // MARK: - Sync with Apple Health
+                // Don't display button if Apple Health access is granted
                 if !HKHealthStore.isHealthDataAvailable() {
                     Section() {
                         

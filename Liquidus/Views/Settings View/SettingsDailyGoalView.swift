@@ -43,6 +43,7 @@ struct SettingsDailyGoalView: View {
                 }
             }
             
+            // Daily Intake Recommendations
             Section {
                 Button {
                     reccomendationsShowing = true

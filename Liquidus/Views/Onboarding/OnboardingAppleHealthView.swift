@@ -19,6 +19,7 @@ struct OnboardingAppleHealthView: View {
     var body: some View {
         
         VStack {
+            // Instructions
             Text("Liquidus can read and write water consumption data from Apple Health.")
                 .font(.title2)
                 .padding(.bottom)
@@ -27,6 +28,7 @@ struct OnboardingAppleHealthView: View {
                 .font(.title3)
                 .padding(.bottom)
             
+            // Ask for Apple Health access and pull data if authorized
             Button(action: {
                 if let healthStore = model.healthStore {
                     if model.drinkData.lastHKSave == nil {

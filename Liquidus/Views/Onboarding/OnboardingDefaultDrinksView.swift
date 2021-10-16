@@ -17,11 +17,13 @@ struct OnboardingDefaultDrinksView: View {
     
     var body: some View {
         
+        // Instructions
         VStack {
             Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
                 .font(.title2)
                 .padding(.bottom)
             
+            // Drink Toggles
             Form {
                 List {
                     ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in

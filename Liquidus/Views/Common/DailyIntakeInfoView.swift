@@ -22,6 +22,7 @@ struct DailyIntakeInfoView: View {
                 .foregroundColor(color)
                 .ignoresSafeArea()
             
+            // Male Recommendations per Unit
             let maleRecommendations = [
                 Constants.cupsUS : 15.5,
                 Constants.fluidOuncesUS : 124,
@@ -29,6 +30,7 @@ struct DailyIntakeInfoView: View {
                 Constants.milliliters : 3700
             ]
             
+            // Female Recommendations per Unit
             let femaleRecommendations = [
                 Constants.cupsUS:11.5,
                 Constants.fluidOuncesUS:92,
@@ -38,19 +40,23 @@ struct DailyIntakeInfoView: View {
             
             VStack {
                 VStack(alignment: .leading) {
+                    // Background Text
                     Text("The United States National Academies of Sciences, Engineering, and Medicine determined that an adequate daily fluid intake is (based on biological gender):")
                         .padding(.bottom, 10)
                     
+                    // Male Recommendations
                     let maleAmount = maleRecommendations[units != nil ? units! : model.drinkData.units]!
                     
                     Label("\(maleAmount, specifier: model.getSpecifier(amount: maleAmount)) \(units != nil ? model.onboardingGetUnits(name: units!) : model.getUnits()) for Men", systemImage: "circle.fill")
                         .padding(.bottom, 10)
                     
+                    // Female Recommendations
                     let femaleAmount = femaleRecommendations[units != nil ? units! : model.drinkData.units]!
                     
                     Label("\(femaleAmount, specifier: model.getSpecifier(amount: femaleAmount)) \(units != nil ? model.onboardingGetUnits(name: units!) : model.getUnits()) for Women", systemImage: "circle.fill")
                         .padding(.bottom)
                     
+                    // Source
                     Text("Sourced from the Mayo Clinic")
                         .font(.caption)
                         .foregroundColor(.gray)

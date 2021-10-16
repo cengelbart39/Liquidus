@@ -18,6 +18,7 @@ struct OnboardingToggleDrinksView: View {
     var body: some View {
         Toggle(type, isOn: $isEnabled)
             .onChange(of: isEnabled) { newValue in
+                // When isEnabled changes update model
                 model.drinkData.enabled[type]! = isEnabled
             }
     }

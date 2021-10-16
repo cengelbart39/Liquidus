@@ -20,6 +20,7 @@ struct OnboardingUnitsView: View {
                 .font(.title2)
                 .padding(.horizontal)
             
+            // Unit Picker
             Form {
                 Picker("", selection: $selectedUnit) {
                     Text("\(Constants.cupsUS) (\(Constants.cups))")

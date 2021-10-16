@@ -22,6 +22,7 @@ struct OnboardingDailyGoalView: View {
         
         VStack {
             
+            // Instruction
             Text("Now set your daily intake goal")
                 .font(.title2)
                 .padding(.bottom)
@@ -30,10 +31,12 @@ struct OnboardingDailyGoalView: View {
                 
                 Spacer()
                 
+                // TextField
                 TextField("2000", text: $dailyGoal)
                     .frame(width: 75)
                     .keyboardType(.decimalPad)
                 
+                // Units
                 Text(self.getUnits(unitName: selectedUnit))
                 
                 Spacer()
@@ -45,9 +48,12 @@ struct OnboardingDailyGoalView: View {
             } label: {
                 Label("Daily Intake Recommendations", systemImage: "info.circle")
             }
+            // Display Recommendations when button is pressed
             .sheet(isPresented: $isReccomendationsShowing) {
+                // onDismiss set to false
                 isReccomendationsShowing = false
             } content: {
+                // Show DailyIntakeInfoView
                 DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black, units: self.getUnits(unitName: selectedUnit))
             }
             .padding(.bottom)
@@ -57,6 +63,7 @@ struct OnboardingDailyGoalView: View {
         .navigationBarHidden(true)
     }
     
+    // Get unit abbreviation
     func getUnits(unitName: String) -> String {
         if unitName == Constants.milliliters {
             return Constants.mL
