@@ -48,7 +48,7 @@ struct OnboardingDailyGoalView: View {
             .sheet(isPresented: $isReccomendationsShowing) {
                 isReccomendationsShowing = false
             } content: {
-                DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black)
+                DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black, units: self.getUnits(unitName: selectedUnit))
             }
             .padding(.bottom)
         }

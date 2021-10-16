@@ -189,6 +189,20 @@ class DrinkModel: ObservableObject {
         }
     }
     
+    func onboardingGetUnits(name: String) -> String {
+        if name == Constants.cupsUS {
+            return Constants.cups
+        } else if name == Constants.fluidOuncesUS {
+            return Constants.flOzUS
+        } else if name == Constants.liters {
+            return Constants.L
+        } else if name == Constants.milliliters {
+            return Constants.mL
+        } else {
+            return ""
+        }
+    }
+    
     func getUnits() -> String {
         if self.drinkData.units == Constants.cupsUS {
             return Constants.cups
