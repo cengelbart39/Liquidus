@@ -50,7 +50,7 @@ class DrinkModel: ObservableObject {
             self.drinkData.drinks.append(drink)
             
             // If it's water, save to HealthKit
-            if self.drinkData.units == Constants.waterKey {
+            if self.drinkData.units == Constants.waterKey && self.drinkData.enabled[drink.type]! {
                 self.saveToHealthKit()
             }
             

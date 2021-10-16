@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct SettingsView: View {
     
@@ -54,35 +55,37 @@ struct SettingsView: View {
                 }
                 
                 // MARK: - Sync with Apple Health
-                Section() {
-                    
-                    HStack {
+                if !HKHealthStore.isHealthDataAvailable() {
+                    Section() {
                         
-                        Spacer()
-                        
-                        Button(action: {
-                            if let healthStore = model.healthStore {
-                                if model.drinkData.lastHKSave == nil {
-                                    healthStore.requestAuthorization { succcess in
-                                        if succcess {
-                                            healthStore.getHealthKitData { statsCollection in
-                                                if let statsCollection = statsCollection {
-                                                    model.retrieveFromHealthKit(statsCollection)
-                                                    model.saveToHealthKit()
+                        HStack {
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                if let healthStore = model.healthStore {
+                                    if model.drinkData.lastHKSave == nil {
+                                        healthStore.requestAuthorization { succcess in
+                                            if succcess {
+                                                healthStore.getHealthKitData { statsCollection in
+                                                    if let statsCollection = statsCollection {
+                                                        model.retrieveFromHealthKit(statsCollection)
+                                                        model.saveToHealthKit()
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        }, label: {
-                            Text("Sync with Apple Health")
-                                .foregroundColor(Color(.systemPink))
-                        })
+                            }, label: {
+                                Text("Sync with Apple Health")
+                                    .foregroundColor(Color(.systemPink))
+                            })
+                            
+                            Spacer()
+                        }
                         
-                        Spacer()
                     }
-                    
                 }
                 
                 

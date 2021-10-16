@@ -61,6 +61,7 @@ struct TabBar: View {
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 }
 

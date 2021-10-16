@@ -11,7 +11,7 @@ import SwiftUI
 struct Liquidus_App: App {
     var body: some Scene {
         WindowGroup {
-            TabBar()
+            LaunchView()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
                 .environmentObject(DrinkModel())
         }

@@ -25,6 +25,7 @@ struct SettingsEditCustomTypeView: View {
             // Update type name
             Section(header: Text("Name")) {
                 TextField("", text: $name)
+                    .multilineTextAlignment(.leading)
             }
             
             // Update color

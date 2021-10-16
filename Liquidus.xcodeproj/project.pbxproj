@@ -17,6 +17,16 @@
 		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
 		9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */; };
 		9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
+		9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */; };
+		9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */; };
+		9D46BBE42714C1C500DB9149 /* OnboardingDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE32714C1C500DB9149 /* OnboardingDailyGoalView.swift */; };
+		9D46BBE62714C58300DB9149 /* DailyIntakeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE52714C58300DB9149 /* DailyIntakeInfoView.swift */; };
+		9D46BBE82714CAE700DB9149 /* OnboardingDefaultDrinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE72714CAE700DB9149 /* OnboardingDefaultDrinksView.swift */; };
+		9D46BBEA2714D1D300DB9149 /* OnboardingToggleDrinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE92714D1D300DB9149 /* OnboardingToggleDrinksView.swift */; };
+		9D46BBEC2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBEB2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift */; };
+		9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */; };
+		9D46BBF02714D88200DB9149 /* OnboardingAppleHealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBEF2714D88200DB9149 /* OnboardingAppleHealthView.swift */; };
+		9D46BBF22714DDDE00DB9149 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBF12714DDDE00DB9149 /* LaunchView.swift */; };
 		9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39A26E65E2C00FEFE49 /* Liquidus_App.swift */; };
 		9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39C26E65E2C00FEFE49 /* IntakeView.swift */; };
 		9D48B39F26E65E2F00FEFE49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D48B39E26E65E2F00FEFE49 /* Assets.xcassets */; };
@@ -40,6 +50,7 @@
 		9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
 		9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
+		9DD955F727160D6200DA7C38 /* OnboardingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +64,16 @@
 		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
 		9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkTypeView.swift; sourceTree = "<group>"; };
 		9D395165270A0CFF009E7F40 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
+		9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
+		9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUnitsView.swift; sourceTree = "<group>"; };
+		9D46BBE32714C1C500DB9149 /* OnboardingDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDailyGoalView.swift; sourceTree = "<group>"; };
+		9D46BBE52714C58300DB9149 /* DailyIntakeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyIntakeInfoView.swift; sourceTree = "<group>"; };
+		9D46BBE72714CAE700DB9149 /* OnboardingDefaultDrinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDefaultDrinksView.swift; sourceTree = "<group>"; };
+		9D46BBE92714D1D300DB9149 /* OnboardingToggleDrinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingToggleDrinksView.swift; sourceTree = "<group>"; };
+		9D46BBEB2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCustomDrinksView.swift; sourceTree = "<group>"; };
+		9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkTypeDisplay.swift; sourceTree = "<group>"; };
+		9D46BBEF2714D88200DB9149 /* OnboardingAppleHealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppleHealthView.swift; sourceTree = "<group>"; };
+		9D46BBF12714DDDE00DB9149 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		9D48B39726E65E2C00FEFE49 /* Liquidus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Liquidus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D48B39A26E65E2C00FEFE49 /* Liquidus_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liquidus_App.swift; sourceTree = "<group>"; };
 		9D48B39C26E65E2C00FEFE49 /* IntakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeView.swift; sourceTree = "<group>"; };
@@ -79,6 +100,7 @@
 		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
+		9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				9D48B3B126E6719100FEFE49 /* RectangleCard.swift */,
+				9D46BBE52714C58300DB9149 /* DailyIntakeInfoView.swift */,
+				9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */,
 				9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */,
 				9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */,
 				9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */,
@@ -184,6 +208,29 @@
 			path = "Settings View";
 			sourceTree = "<group>";
 		};
+		9D4DF5F527138BA10063A6AE /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				9D48B3B726E6752C00FEFE49 /* TabBar.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		9D4DF5F627138BBA0063A6AE /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */,
+				9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */,
+				9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */,
+				9D46BBE32714C1C500DB9149 /* OnboardingDailyGoalView.swift */,
+				9D46BBE72714CAE700DB9149 /* OnboardingDefaultDrinksView.swift */,
+				9D46BBE92714D1D300DB9149 /* OnboardingToggleDrinksView.swift */,
+				9D46BBEB2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift */,
+				9D46BBEF2714D88200DB9149 /* OnboardingAppleHealthView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		9D935BEF26ED0E2400CA9C31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +252,9 @@
 		9DA8D6E526E7BB8700FEEC6C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9D48B3B726E6752C00FEFE49 /* TabBar.swift */,
+				9D46BBF12714DDDE00DB9149 /* LaunchView.swift */,
+				9D4DF5F627138BBA0063A6AE /* Onboarding */,
+				9D4DF5F527138BA10063A6AE /* Tabs */,
 				9D48B3B926E6758C00FEFE49 /* Intake View */,
 				9D99981926E7B07D00A46E78 /* Data Logs View */,
 				9D48B3BA26E6759500FEFE49 /* Settings View */,
@@ -300,12 +349,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D46BBE82714CAE700DB9149 /* OnboardingDefaultDrinksView.swift in Sources */,
+				9D46BBF22714DDDE00DB9149 /* LaunchView.swift in Sources */,
+				9D46BBF02714D88200DB9149 /* OnboardingAppleHealthView.swift in Sources */,
 				9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */,
 				9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */,
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
 				9D27485626FA6A9800F016D8 /* DayLogView.swift in Sources */,
+				9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */,
 				9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */,
+				9D46BBEC2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift in Sources */,
 				9DA7B148270C9D8100C5C1A7 /* SettingsNewDrinkTypeView.swift in Sources */,
 				9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */,
 				9D48B3AA26E6603300FEFE49 /* Constants.swift in Sources */,
@@ -313,13 +367,18 @@
 				9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */,
 				9D05D0BB2711E68500375C63 /* ButtonDatePicker.swift in Sources */,
 				9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */,
+				9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift in Sources */,
 				9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */,
+				9D46BBEA2714D1D300DB9149 /* OnboardingToggleDrinksView.swift in Sources */,
+				9D46BBE42714C1C500DB9149 /* OnboardingDailyGoalView.swift in Sources */,
 				9D48B3AC26E6635000FEFE49 /* IntakeCircularProgressBar.swift in Sources */,
 				9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */,
 				9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */,
 				9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */,
 				9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */,
+				9DD955F727160D6200DA7C38 /* OnboardingMainView.swift in Sources */,
 				9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */,
+				9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */,
 				9D48B3AE26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift in Sources */,
 				9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */,
 				9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */,
@@ -327,6 +386,7 @@
 				9D27485426FA696F00F016D8 /* WeekLogView.swift in Sources */,
 				9D25E57726EAAEAF00A9CDC8 /* WeekDataPicker.swift in Sources */,
 				9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */,
+				9D46BBE62714C58300DB9149 /* DailyIntakeInfoView.swift in Sources */,
 				9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */,
 				9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */,
 				9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */,

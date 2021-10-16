@@ -10,9 +10,11 @@ import SwiftUI
 struct SettingsDailyGoalView: View {
     
     @EnvironmentObject var model: DrinkModel
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     
     @State var dailyGoal = ""
+    @State var reccomendationsShowing = false
     
     var body: some View {
         
@@ -38,6 +40,19 @@ struct SettingsDailyGoalView: View {
                     }, label: {
                         Text("Save")
                     })
+                }
+            }
+            
+            Section {
+                Button {
+                    reccomendationsShowing = true
+                } label: {
+                    Label("Daily Intake Recommendations", systemImage: "info.circle")
+                }
+                .sheet(isPresented: $reccomendationsShowing) {
+                    reccomendationsShowing = false
+                } content: {
+                    DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black)
                 }
             }
             
