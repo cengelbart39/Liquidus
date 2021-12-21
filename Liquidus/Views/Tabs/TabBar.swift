@@ -59,6 +59,12 @@ struct TabBar: View {
                 .tag(2)
         }
         .onAppear {
+            // Change water color to .cyan on iOS 15
+            if model.drinkData.colors[Constants.waterKey]!.getColor() == Color(.systemTeal) {
+                if #available(iOS 15, *) {
+                    model.drinkData.colors[Constants.waterKey] = CodableColor(color: UIColor(.cyan))
+                }
+            }
             // If water is enabled...
             if model.drinkData.enabled[Constants.waterKey]! {
                 // If healthStore exists and does app have access...

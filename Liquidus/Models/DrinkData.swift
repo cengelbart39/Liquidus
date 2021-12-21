@@ -29,8 +29,8 @@ struct DrinkData: Decodable, Encodable {
     var colors: [String:CodableColor] = [
         Constants.waterKey: CodableColor(color: .systemTeal),
         Constants.coffeeKey: CodableColor(color: UIColor(named: "CoffeeBrown")!),
-        Constants.sodaKey: CodableColor(color: .systemGreen),
-        Constants.juiceKey: CodableColor(color: .systemOrange)
+        Constants.sodaKey: CodableColor(color: UIColor(.green)),
+        Constants.juiceKey: CodableColor(color: UIColor(.orange))
     ]
 
     var lastHKSave: Date? = nil
