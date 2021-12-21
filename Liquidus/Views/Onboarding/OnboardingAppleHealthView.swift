@@ -37,7 +37,7 @@ struct OnboardingAppleHealthView: View {
                         .frame(width: 75, height: 75)
                         .foregroundColor(.blue)
                         .padding(.bottom)
-                        .padding(.top, -95)
+                        .padding(.top, -90)
                 }
             }
             
