@@ -24,7 +24,7 @@ struct SettingsEditCustomTypeView: View {
         Form {
             // Update type name
             Section(header: Text("Name")) {
-                TextField("", text: $name)
+                TextField(name, text: $name)
                     .multilineTextAlignment(.leading)
             }
             
@@ -57,7 +57,7 @@ struct SettingsEditCustomTypeView: View {
             name = type
             newColor = model.drinkData.colors[type]!.getColor()
         }
-        .navigationTitle("Edit Drink Type")
+        .navigationTitle("Edit \(type)")
     }
     
 }

@@ -96,10 +96,7 @@ struct IntakeView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            IntakeView()
-            IntakeView()
-                .preferredColorScheme(.dark)
-        }
+        IntakeView()
+            .environmentObject(DrinkModel())
     }
 }

@@ -14,6 +14,12 @@ struct OnboardingWelcomeView: View {
     var body: some View {
         VStack {
             
+            Image("AppIcon-Transparent")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 300, height: 300)
+                .padding(.bottom, -20)
+            
             Text("Welcome to Liquidus!")
                 .font(.largeTitle)
                 .bold()
@@ -25,11 +31,13 @@ struct OnboardingWelcomeView: View {
         }
         .multilineTextAlignment(.center)
         .padding(.horizontal)
+
     }
 }
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingWelcomeView()
+            .preferredColorScheme(.dark)
     }
 }

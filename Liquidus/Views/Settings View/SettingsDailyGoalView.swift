@@ -58,7 +58,6 @@ struct SettingsDailyGoalView: View {
             }
             
         }
-        .padding(.top, -10)
         .navigationBarTitle("Daily Goal Settings")
     }
 }

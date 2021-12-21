@@ -21,83 +21,82 @@ struct LogDrinkView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
+        ZStack {
             
-            // Title
-            Text("Log A Drink")
-                .font(.largeTitle)
-                .bold()
-                .padding(.bottom)
-                .padding(.top, 50)
+            Rectangle()
+                .foregroundColor(Color(.systemGray6))
+                .ignoresSafeArea()
             
-            // Drink Type Picker
-            let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-            
-            HStack {
+            VStack(alignment: .leading) {
                 
-                Picker("Drink Type:", selection: $drinkType) {
-                    ForEach(drinkTypes, id: \.self) { type in
-                        Text(type)
-                            .tag(type)
+                // Title
+                Text("Log A Drink")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.horizontal)
+                    .padding(.top, 40)
+                    .padding(.bottom, -10)
+                
+                
+                let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
+                
+                Form {
+                    // Drink Type Picker
+                    Section(header: Text("Drink Type")) {
+                        Picker(drinkType, selection: $drinkType) {
+                            ForEach(drinkTypes, id: \.self) { type in
+                                Text(type)
+                                    .tag(type)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                    }
+                    
+                    // Drink Amount
+                    Section(header: Text("Drink Amount")) {
+                        HStack {
+                            TextField("500", text: $amount)
+                                .keyboardType(.decimalPad)
+                            
+                            Spacer()
+                            
+                            Text(model.getUnits())
+                        }
+                    }
+                    
+                    // Date Picker
+                    Section(header: Text("Date")) {
+                        DatePicker("Date", selection: $timeSelection, in: ...Date())
+                    }
+                    
+                    Section {
+                        HStack {
+                            Spacer ()
+                            
+                            Button(action: {
+                                // Add a drink to the model
+                                let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
+                                model.addDrink(drink: drink)
+                                
+                                // Dismiss the sheet
+                                isPresented = false
+                            }, label: {
+                                Text("Save")
+                                    .foregroundColor(.blue)
+                            })
+                            
+                            Spacer()
+                        }
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
-                
-                Text(drinkType)
             }
-            .padding(.bottom)
-            
-            // Drink Amount TextField
-            HStack {
-                
-                Text("Drink Amount:")
-                    .bold()
-                
-                TextField("500", text: $amount)
-                    .keyboardType(.decimalPad)
-                    .frame(width: 60)
-                
-                Text(model.getUnits())
-                
-            }
-            .padding(.bottom)
-            
-            // Date Picker
-            DatePicker("", selection: $timeSelection, in: ...Date())
-                .datePickerStyle(GraphicalDatePickerStyle())
-                .padding(.bottom)
-
-            
-            HStack {
-                
-                Spacer()
-                
-                Button(action: {
-                    // Add a drink to the model
-                    let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
-                    model.addDrink(drink: drink)
-                    
-                    // Dismiss the sheet
-                    isPresented = false
-                }, label: {
-                    ZStack {
-                        RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray5))
-                            .frame(width: 90, height: 55)
-                            .shadow(radius: colorScheme == .light ? 5 : 0)
-                        
-                        Text("Save")
-                            .foregroundColor(.blue)
-                            .font(.title2)
-                    }
-                })
-                
-                Spacer()
-                
-            }
-            
-            Spacer()
-            
         }
-        .padding(.horizontal)
+    }
+}
+
+struct LogDrinkView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogDrinkView(isPresented: .constant(true))
+            .environmentObject(DrinkModel())
     }
 }

@@ -16,6 +16,29 @@ struct OnboardingUnitsView: View {
     
     var body: some View {
         VStack {
+            if #available(iOS 14, *) {
+                
+                if #available(iOS 15, *) {
+                    Image("custom.lines.measurement.horizontal-3.0")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 75)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(.blue)
+                        .padding(.bottom)
+                        .padding(.top, -95)
+                } else {
+                    Image("custom.lines.measurement.horizontal-2.0")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 75)
+                        .foregroundColor(.blue)
+                        .padding(.bottom)
+                        .padding(.top, -90)
+                }
+                
+            }
+            
             Text("First select which units you want to use")
                 .font(.title2)
                 .padding(.horizontal)

@@ -19,6 +19,28 @@ struct OnboardingDefaultDrinksView: View {
         
         // Instructions
         VStack {
+            if #available(iOS 14.0, *) {
+                
+                if #available(iOS 15, *) {
+                    Image("custom.drink-3.0")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 75)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(.blue)
+                        .padding(.bottom)
+                        .padding(.top, -95)
+                } else {
+                    Image("custom.drink-2.0")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 75)
+                        .foregroundColor(.blue)
+                        .padding(.bottom)
+                        .padding(.top, -90)
+                }
+            }
+            
             Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
                 .font(.title2)
                 .padding(.bottom)
@@ -41,7 +63,12 @@ struct OnboardingDefaultDrinksView: View {
 
 struct OnboardingDefaultDrinksView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingDefaultDrinksView()
-            .environmentObject(DrinkModel())
+        Group {
+            OnboardingDefaultDrinksView()
+                .environmentObject(DrinkModel())
+            OnboardingDefaultDrinksView()
+                .preferredColorScheme(.dark)
+                .environmentObject(DrinkModel())
+        }
     }
 }

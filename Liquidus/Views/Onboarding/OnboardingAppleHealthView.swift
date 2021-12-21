@@ -19,6 +19,28 @@ struct OnboardingAppleHealthView: View {
     var body: some View {
         
         VStack {
+            // Section Image
+            if #available(iOS 14, *) {
+                if #available(iOS 15, *) {
+                    Image(systemName: "heart.text.square")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 75)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(.blue)
+                        .padding(.bottom)
+                        .padding(.top, -95)
+                } else {
+                    Image(systemName: "heart.text.square")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 75, height: 75)
+                        .foregroundColor(.blue)
+                        .padding(.bottom)
+                        .padding(.top, -95)
+                }
+            }
+            
             // Instructions
             Text("Liquidus can read and write water consumption data from Apple Health.")
                 .font(.title2)
@@ -65,7 +87,12 @@ struct OnboardingAppleHealthView: View {
 
 struct OnboardingAppleHealthView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingAppleHealthView(healthKitEnabled: .constant(true))
-            .environmentObject(DrinkModel())
+        Group {
+            OnboardingAppleHealthView(healthKitEnabled: .constant(true))
+                .environmentObject(DrinkModel())
+            OnboardingAppleHealthView(healthKitEnabled: .constant(true))
+                .preferredColorScheme(.dark)
+                .environmentObject(DrinkModel())
+        }
     }
 }

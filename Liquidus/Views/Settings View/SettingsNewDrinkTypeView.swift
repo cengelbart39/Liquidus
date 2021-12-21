@@ -38,6 +38,7 @@ struct SettingsNewDrinkTypeView: View {
                         
                         Spacer()
                     }
+                    .padding(.bottom, -10)
             
                     Form {
                         // Change drink type name
@@ -68,6 +69,7 @@ struct SettingsNewDrinkTypeView: View {
                             }
                         }
                     }
+                    .multilineTextAlignment(.leading)
                 }
             }
         }

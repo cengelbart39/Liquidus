@@ -20,7 +20,19 @@ struct TabBar: View {
             IntakeView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "drop.fill")
+                        if #available(iOS 14, *) {
+                            if #available(iOS 15, *) {
+                                Image("custom.drink.fill-3.0")
+                                    .resizable()
+                                    .font(.title2)
+                            } else {
+                                Image("custom.drink.fill-2.0")
+                                    .resizable()
+                                    .font(.title2)
+                            }
+                        } else {
+                            Image(systemName: "drop.fill")
+                        }
                         Text("Intake")
                     }
                 }
@@ -68,5 +80,6 @@ struct TabBar: View {
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
         TabBar()
+            .environmentObject(DrinkModel())
     }
 }

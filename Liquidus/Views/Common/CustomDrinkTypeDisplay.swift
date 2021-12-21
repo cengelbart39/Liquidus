@@ -31,9 +31,27 @@ struct CustomDrinkTypeDisplay: View {
                             Spacer()
                             
                             // Show type color
-                            Circle()
-                                .foregroundColor(model.drinkData.colors[type]!.getColor())
-                                .frame(width: 20, height: 20)
+                            if #available(iOS 14, *) {
+                                
+                                if #available(iOS 15, *) {
+                                    Image("custom.drink.fill.inside-3.0")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 25, height: 25)
+                                        .symbolRenderingMode(.palette)
+                                        .foregroundStyle(.primary, model.drinkData.colors[type]!.getColor(), .primary)
+                                } else {
+                                    Image("custom.drink.fill-2.0")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(model.drinkData.colors[type]!.getColor())
+                                }
+                            } else {
+                                Circle()
+                                    .foregroundColor(model.drinkData.colors[type]!.getColor())
+                                    .frame(width: 20, height: 20)
+                            }
                         }
                     }
 
@@ -68,5 +86,6 @@ struct CustomDrinkTypeDisplay: View {
 struct CustomDrinkTypeDisplay_Previews: PreviewProvider {
     static var previews: some View {
         CustomDrinkTypeDisplay()
+            .environmentObject(DrinkModel())
     }
 }

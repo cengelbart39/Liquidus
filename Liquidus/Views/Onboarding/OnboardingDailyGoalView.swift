@@ -9,7 +9,6 @@ import SwiftUI
 
 struct OnboardingDailyGoalView: View {
     
-    @EnvironmentObject var model: DrinkModel
     @Environment(\.colorScheme) var colorScheme
     
     @Binding var dailyGoal: String
@@ -19,8 +18,16 @@ struct OnboardingDailyGoalView: View {
     
     var body: some View {
         
-        
         VStack {
+            if #available(iOS 14, *) {
+                Image(systemName: "flag")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 75, height: 75)
+                    .foregroundColor(.blue)
+                    .padding(.bottom)
+                    .padding(.top, -95)
+            }
             
             // Instruction
             Text("Now set your daily intake goal")
@@ -55,6 +62,7 @@ struct OnboardingDailyGoalView: View {
             } content: {
                 // Show DailyIntakeInfoView
                 DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black, units: self.getUnits(unitName: selectedUnit))
+                    .multilineTextAlignment(.leading)
             }
             .padding(.bottom)
         }
@@ -80,7 +88,10 @@ struct OnboardingDailyGoalView: View {
 
 struct OnboardingDailyGoalView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
-            .environmentObject(DrinkModel())
+        Group {
+            OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
+            OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
+                .preferredColorScheme(.dark)
+        }
     }
 }

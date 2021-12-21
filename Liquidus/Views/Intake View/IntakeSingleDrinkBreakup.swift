@@ -22,8 +22,27 @@ struct IntakeSingleDrinkBreakup: View {
         HStack {
             
             // Rectangle Card
-            RectangleCard(color: color)
-                .frame(width: 35, height: 35)
+            if #available(iOS 14, *) {
+                
+                if #available(iOS 15, *) {
+                    Image("custom.drink.fill.inside-3.0")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.primary, color, .primary)
+                } else {
+                    Image("custom.drink.fill-2.0")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .foregroundColor(color)
+                }
+                
+            } else {
+                RectangleCard(color: color)
+                    .frame(width: 35, height: 35)
+            }
             
             // If day...
             if selectedTimePeriod == Constants.selectDay {

@@ -24,18 +24,18 @@ struct DailyIntakeInfoView: View {
             
             // Male Recommendations per Unit
             let maleRecommendations = [
-                Constants.cupsUS : 15.5,
-                Constants.fluidOuncesUS : 124,
-                Constants.liters : 3.7,
-                Constants.milliliters : 3700
+                Constants.cups : 15.5,
+                Constants.flOzUS : 124,
+                Constants.L : 3.7,
+                Constants.mL : 3700
             ]
             
             // Female Recommendations per Unit
             let femaleRecommendations = [
-                Constants.cupsUS:11.5,
-                Constants.fluidOuncesUS:92,
-                Constants.liters:2.7,
-                Constants.milliliters:2700
+                Constants.cups : 11.5,
+                Constants.flOzUS : 92,
+                Constants.L : 2.7,
+                Constants.mL : 2700
             ]
             
             VStack {
@@ -45,15 +45,15 @@ struct DailyIntakeInfoView: View {
                         .padding(.bottom, 10)
                     
                     // Male Recommendations
-                    let maleAmount = maleRecommendations[units != nil ? units! : model.drinkData.units]!
+                    let maleAmount = maleRecommendations[units != nil ? units! : model.getUnits()]!
                     
-                    Label("\(maleAmount, specifier: model.getSpecifier(amount: maleAmount)) \(units != nil ? model.onboardingGetUnits(name: units!) : model.getUnits()) for Men", systemImage: "circle.fill")
+                    Label("\(maleAmount, specifier: model.getSpecifier(amount: maleAmount)) \(units != nil ? units! : model.getUnits()) for Men", systemImage: "circle.fill")
                         .padding(.bottom, 10)
                     
                     // Female Recommendations
-                    let femaleAmount = femaleRecommendations[units != nil ? units! : model.drinkData.units]!
+                    let femaleAmount = femaleRecommendations[units != nil ? units! : model.getUnits()]!
                     
-                    Label("\(femaleAmount, specifier: model.getSpecifier(amount: femaleAmount)) \(units != nil ? model.onboardingGetUnits(name: units!) : model.getUnits()) for Women", systemImage: "circle.fill")
+                    Label("\(femaleAmount, specifier: model.getSpecifier(amount: femaleAmount)) \(units != nil ? units! : model.getUnits()) for Women", systemImage: "circle.fill")
                         .padding(.bottom)
                     
                     // Source

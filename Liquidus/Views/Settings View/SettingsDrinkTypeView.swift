@@ -32,9 +32,27 @@ struct SettingsDrinkTypeView: View {
                             Spacer()
                             
                             // Color
-                            Circle()
-                                .foregroundColor(model.drinkData.colors[type]!.getColor())
-                                .frame(width: 20, height: 20)
+                            if #available(iOS 14, *) {
+                                
+                                if #available(iOS 15, *) {
+                                    Image("custom.drink.fill.inside-3.0")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 25, height: 25)
+                                        .symbolRenderingMode(.palette)
+                                        .foregroundStyle(.primary, model.drinkData.colors[type]!.getColor(), .primary)
+                                } else {
+                                    Image("custom.drink.fill-2.0")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(model.drinkData.colors[type]!.getColor())
+                                }
+                            } else {
+                                Circle()
+                                    .foregroundColor(model.drinkData.colors[type]!.getColor())
+                                    .frame(width: 20, height: 20)
+                            }
                         }
                         // Show color or grayscale variant if enabled
                         .saturation(model.drinkData.enabled[type]! ? 1 : 0)

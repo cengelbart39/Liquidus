@@ -72,7 +72,7 @@ struct SettingsEditDefaultTypeView: View {
             // Save model
             model.save()
         })
-        .navigationTitle("Edit Drink Type")
+        .navigationTitle("Edit \(type)")
         
     }
 }

@@ -28,12 +28,41 @@ struct DayLogView: View {
                 Spacer()
                 
                 // Colored Drop
-                Image(systemName: "drop.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 15)
-                    .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
-                    .padding(.trailing)
+                if #available(iOS 14, *) {
+                    
+                    if #available(iOS 15, *) {
+                        VStack {
+                                
+                            Spacer()
+                                
+                            Image("custom.drink.fill.inside-3.0")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 17)
+                                .symbolRenderingMode(.palette)
+                            .foregroundStyle(.primary, model.drinkData.colors[drink.type]!.getColor(), .primary)
+                                
+                            Spacer()
+                                
+                        }
+                        .padding(.trailing)
+                        .frame(height: 70)
+                    } else {
+                        Image("custom.drink.fill-2.0")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15)
+                            .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
+                            .padding(.trailing)
+                    }
+                } else {
+                    Image(systemName: "drop.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15)
+                        .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
+                        .padding(.trailing)
+                }
                 
                 // Amount consumed
                 Text("\(drink.amount, specifier: model.getSpecifier(amount: drink.amount)) \(model.getUnits())")

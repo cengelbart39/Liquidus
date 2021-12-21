@@ -520,6 +520,7 @@
 				CODE_SIGN_ENTITLEMENTS = Liquidus/Liquidus.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Liquidus/Preview Content\"";
+				DEVELOPMENT_TEAM = 6DS9W86UXV;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Liquidus/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -542,6 +543,7 @@
 				CODE_SIGN_ENTITLEMENTS = Liquidus/Liquidus.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Liquidus/Preview Content\"";
+				DEVELOPMENT_TEAM = 6DS9W86UXV;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Liquidus/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
