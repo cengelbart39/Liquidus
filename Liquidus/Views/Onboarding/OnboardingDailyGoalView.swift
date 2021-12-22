@@ -18,56 +18,85 @@ struct OnboardingDailyGoalView: View {
     
     var body: some View {
         
-        VStack {
+        Form {
+            // Symbol
             if #available(iOS 14, *) {
-                Image(systemName: "flag")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 75, height: 75)
-                    .foregroundColor(.blue)
-                    .padding(.bottom)
-                    .padding(.top, -95)
+                Section {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        Image(systemName: "flag")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 75, height: 75)
+                            .foregroundColor(.blue)
+                        
+                        Spacer()
+                    }
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                }
             }
             
-            // Instruction
-            Text("Now set your daily intake goal")
-                .font(.title2)
-                .padding(.bottom)
+            // Instruction Text
+            Section {
+                HStack {
+                    
+                    Spacer()
+                    
+                    Text("Now set your daily intake goal")
+                        .font(.title2)
+                        .multilineTextAlignment(.center)
+                    
+                    Spacer()
+                    
+                }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+            }
             
-            HStack {
-                
-                Spacer()
-                
-                // TextField
-                TextField("2000", text: $dailyGoal)
-                    .frame(width: 75)
-                    .keyboardType(.decimalPad)
-                
-                // Units
-                Text(self.getUnits(unitName: selectedUnit))
-                
-                Spacer()
+            // Text Field
+            Section {
+                HStack {
+                    
+                    Spacer()
+                    
+                    // TextField
+                    TextField("2000", text: $dailyGoal)
+                        .frame(width: 70)
+                        .keyboardType(.decimalPad)
+                    
+                    // Units
+                    Text(self.getUnits(unitName: selectedUnit))
+                    
+                    Spacer()
+                }
             }
-            .padding(.bottom)
             
-            Button {
-                isReccomendationsShowing = true
-            } label: {
-                Label("Daily Intake Recommendations", systemImage: "info.circle")
+            // Intake Recommendations
+            Section {
+                Button {
+                    isReccomendationsShowing = true
+                } label: {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        Label("Daily Intake Recommendations", systemImage: "info.circle")
+                        
+                        Spacer()
+                    }
+                }
+                // Display Recommendations when button is pressed
+                .sheet(isPresented: $isReccomendationsShowing) {
+                    // onDismiss set to false
+                    isReccomendationsShowing = false
+                } content: {
+                    // Show DailyIntakeInfoView
+                    DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black, units: self.getUnits(unitName: selectedUnit))
+                        .multilineTextAlignment(.leading)
+                }
             }
-            // Display Recommendations when button is pressed
-            .sheet(isPresented: $isReccomendationsShowing) {
-                // onDismiss set to false
-                isReccomendationsShowing = false
-            } content: {
-                // Show DailyIntakeInfoView
-                DailyIntakeInfoView(color: colorScheme == .light ? Color(.systemGray6) : Color.black, units: self.getUnits(unitName: selectedUnit))
-                    .multilineTextAlignment(.leading)
-            }
-            .padding(.bottom)
         }
-        .multilineTextAlignment(.center)
-        .padding(.horizontal)
         .navigationBarHidden(true)
     }
     

@@ -18,44 +18,56 @@ struct OnboardingDefaultDrinksView: View {
     var body: some View {
         
         // Instructions
-        VStack {
+        Form {
             if #available(iOS 14.0, *) {
-                
-                if #available(iOS 15, *) {
-                    Image("custom.drink-3.0")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 75)
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundColor(.blue)
-                        .padding(.bottom)
-                        .padding(.top, -95)
-                } else {
-                    Image("custom.drink-2.0")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 75)
-                        .foregroundColor(.blue)
-                        .padding(.bottom)
-                        .padding(.top, -90)
+                Section {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        if #available(iOS 15, *) {
+                            Image("custom.drink-3.0")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundColor(.blue)
+                        } else {
+                            Image("custom.drink-2.0")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        Spacer()
+                    }
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                 }
             }
             
-            Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
-                .font(.title2)
-                .padding(.bottom)
+            Section {
+                HStack {
+                    
+                    Spacer ()
+                    
+                    Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
+                        .font(.title2)
+                    
+                    Spacer()
+                }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+            }
             
             // Drink Toggles
-            Form {
+            Section {
                 List {
                     ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
                         OnboardingToggleDrinksView(type: type)
                     }
                 }
             }
-            .frame(height: 250)
         }
-        .padding(.horizontal)
         .multilineTextAlignment(.center)
         .navigationBarHidden(true)
     }

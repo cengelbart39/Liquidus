@@ -56,7 +56,7 @@ struct SettingsView: View {
                 
                 // MARK: - Sync with Apple Health
                 // Don't display button if Apple Health access is granted
-                if !HKHealthStore.isHealthDataAvailable() {
+                if !model.drinkData.healthKitEnabled {
                     Section() {
                         
                         HStack {
@@ -72,6 +72,9 @@ struct SettingsView: View {
                                                     if let statsCollection = statsCollection {
                                                         model.retrieveFromHealthKit(statsCollection)
                                                         model.saveToHealthKit()
+                                                        DispatchQueue.main.async {
+                                                            model.drinkData.healthKitEnabled = true
+                                                        }
                                                     }
                                                 }
                                             }

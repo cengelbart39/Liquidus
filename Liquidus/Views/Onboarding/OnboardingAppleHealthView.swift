@@ -18,37 +18,53 @@ struct OnboardingAppleHealthView: View {
     
     var body: some View {
         
-        VStack {
+        Form {
             // Section Image
             if #available(iOS 14, *) {
-                if #available(iOS 15, *) {
-                    Image(systemName: "heart.text.square")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 75)
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundColor(.blue)
-                        .padding(.bottom)
-                        .padding(.top, -95)
-                } else {
-                    Image(systemName: "heart.text.square")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 75)
-                        .foregroundColor(.blue)
-                        .padding(.bottom)
-                        .padding(.top, -90)
+                Section {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        if #available(iOS 15, *) {
+                            Image(systemName: "heart.text.square")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundColor(.blue)
+                        } else {
+                            Image(systemName: "heart.text.square")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        Spacer()
+                    }
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                 }
             }
             
             // Instructions
-            Text("Liquidus can read and write water consumption data from Apple Health.")
-                .font(.title2)
-                .padding(.bottom)
-            
-            Text("You can always enable this later in the app's Settings.")
-                .font(.title3)
-                .padding(.bottom)
+            Section {
+                HStack {
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text("Liquidus can read and write water consumption data from Apple Health.\n")
+                            .font(.title2)
+                    
+                        Text("You can always enable this later in the app's Settings.")
+                            .font(.title3)
+                    }
+                    
+                    Spacer()
+                }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+            }
             
             // Ask for Apple Health access and pull data if authorized
             Button(action: {
@@ -61,6 +77,9 @@ struct OnboardingAppleHealthView: View {
                                     if let statsCollection = statsCollection {
                                         model.retrieveFromHealthKit(statsCollection)
                                         model.saveToHealthKit()
+                                        DispatchQueue.main.async {
+                                            model.drinkData.healthKitEnabled = true
+                                        }
                                     }
                                 }
                             }
@@ -68,19 +87,18 @@ struct OnboardingAppleHealthView: View {
                     }
                 }
             }, label: {
-                ZStack {
-                    RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
-                        .frame(width: 200, height: 45)
-                        .shadow(radius: 5)
+                HStack {
+                    
+                    Spacer()
                     
                     Text("Sync with Apple Health")
-                        .foregroundColor(Color(.systemPink))
+                        .foregroundColor(.pink)
+                    
+                    Spacer()
                 }
             })
-                .padding(.bottom)
         }
         .multilineTextAlignment(.center)
-        .padding(.horizontal)
         .navigationBarHidden(true)
     }
 }

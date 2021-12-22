@@ -66,7 +66,7 @@ struct TabBar: View {
                 }
             }
             // If water is enabled...
-            if model.drinkData.enabled[Constants.waterKey]! {
+            if model.drinkData.enabled[Constants.waterKey]! && model.drinkData.healthKitEnabled {
                 // If healthStore exists and does app have access...
                 if model.healthStore?.healthStore != nil && HKHealthStore.isHealthDataAvailable() {
                     // Get statsCollections

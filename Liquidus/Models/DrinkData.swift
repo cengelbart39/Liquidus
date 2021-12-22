@@ -34,4 +34,5 @@ struct DrinkData: Decodable, Encodable {
     ]
 
     var lastHKSave: Date? = nil
+    var healthKitEnabled = false
 }

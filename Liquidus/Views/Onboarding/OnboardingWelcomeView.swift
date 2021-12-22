@@ -12,25 +12,32 @@ struct OnboardingWelcomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        VStack {
+        ZStack {
             
-            Image("AppIcon-Transparent")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 300)
-                .padding(.bottom, -20)
+            Rectangle()
+                .foregroundColor(colorScheme == .light ? Color(.systemGray6) : .black)
+                .ignoresSafeArea()
             
-            Text("Welcome to Liquidus!")
-                .font(.largeTitle)
-                .bold()
-                .padding(.bottom)
-            
-            Text("Here you can take steps to staying hydrated while seeing what you drink and how much you drink.")
-                .font(.title3)
-                .padding(.bottom)
+            VStack {
+                
+                Image("AppIcon-Transparent")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 300, height: 300)
+                    .padding(.bottom, -20)
+                
+                Text("Welcome to Liquidus!")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.bottom)
+                
+                Text("Here you can take steps to staying hydrated while seeing what you drink and how much you drink.")
+                    .font(.title3)
+                    .padding(.bottom)
+            }
+            .multilineTextAlignment(.center)
+            .padding(.horizontal)
         }
-        .multilineTextAlignment(.center)
-        .padding(.horizontal)
 
     }
 }
@@ -38,6 +45,6 @@ struct OnboardingWelcomeView: View {
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingWelcomeView()
-            .preferredColorScheme(.dark)
+            
     }
 }

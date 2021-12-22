@@ -15,37 +15,43 @@ struct OnboardingUnitsView: View {
     @Binding var selectedUnit: String
     
     var body: some View {
-        VStack {
+        Form {
             if #available(iOS 14, *) {
+                Section {
+                    HStack {
                 
-                if #available(iOS 15, *) {
-                    Image("custom.lines.measurement.horizontal-3.0")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 75)
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundColor(.blue)
-                        .padding(.bottom)
-                        .padding(.top, -95)
-                } else {
-                    Image("custom.lines.measurement.horizontal-2.0")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 75, height: 75)
-                        .foregroundColor(.blue)
-                        .padding(.bottom)
-                        .padding(.top, -90)
+                        Spacer ()
+                        
+                        if #available(iOS 15, *) {
+                            Image("custom.lines.measurement.horizontal-3.0")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundColor(.blue)
+                        } else {
+                            Image("custom.lines.measurement.horizontal-2.0")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        Spacer()
+                    }
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                 }
-                
             }
             
-            Text("First select which units you want to use")
-                .font(.title2)
-                .padding(.horizontal)
+            Section {
+                Text("First select which units you want to use")
+                    .font(.title2)
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+            }
             
             // Unit Picker
-            Form {
-                Picker("", selection: $selectedUnit) {
+            Section {
+                Picker("Choose a Unit", selection: $selectedUnit) {
                     Text("\(Constants.cupsUS) (\(Constants.cups))")
                         .tag(Constants.cupsUS)
                     Text("\(Constants.fluidOuncesUS) (\(Constants.flOzUS))")
@@ -57,7 +63,6 @@ struct OnboardingUnitsView: View {
                 }
                 .pickerStyle(InlinePickerStyle())
             }
-            .frame(height: 290)
         }
         .multilineTextAlignment(.center)
         .navigationBarHidden(true)
