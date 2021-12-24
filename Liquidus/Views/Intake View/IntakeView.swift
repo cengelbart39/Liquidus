@@ -33,23 +33,45 @@ struct IntakeView: View {
                 
                 Spacer()
                 
+                // MARK: - Select Day/Week
+                ZStack {
+                    // DatePicker
+                    ButtonDatePicker(selectedDate: $selectedDay)
+                    
+                    // Image
+                    Image(systemName: "calendar.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.blue)
+                        .userInteractionDisabled()
+                }
+                .frame(width: 18, height: 18)
+                .onChange(of: selectedDay, perform: { value in
+                    // Update selectedWeek when selectedDate updates
+                    selectedWeek = model.getDaysInWeek(date: selectedDay)
+                })
+                .padding(.trailing, 10)
+
+                
                 // MARK: - Add Drink Button
                 Button(action: {
+                    // Update isAddDrinkViewShowing
                     isAddDrinkViewShowing = true
                 }, label: {
-                    
+                    // Image
                     Image(systemName: "plus.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 30, height: 30)
                         .padding(.trailing)
                 })
+                // Show sheet to add drink
                 .sheet(isPresented: $isAddDrinkViewShowing, content: {
                     LogDrinkView(isPresented: $isAddDrinkViewShowing)
                         .environmentObject(model)
                 })
             }
-            .padding(.bottom, 16)
             .padding(.top, 40)
             
             // MARK: - Day/Week Picker
@@ -64,21 +86,23 @@ struct IntakeView: View {
                     .frame(height: 25)
             }
             
+            ScrollView {
             // MARK: - Progress Bar
-            HStack {
+                HStack {
+                    
+                    Spacer()
+                    
+                    // Create Progress Circle
+                    IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                        .padding(.horizontal)
+                        .frame(width: 270, height: 270)
+                    
+                    Spacer()
+                }
                 
-                Spacer()
-                
-                // Create Progress Circle
-                IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
-                    .padding(.horizontal)
-                    .frame(width: 280, height: 280)
-                
-                Spacer()
+                // MARK: - Drink Type Breakup
+                IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
             }
-            
-            // MARK: - Drink Type Breakup
-            IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
             
             Spacer()
             
@@ -91,6 +115,7 @@ struct IntakeView: View {
             // Update selectedWeek when selectedDay updates
             selectedWeek = model.getDaysInWeek(date: selectedDay)
         }
+        .navigationTitle("Intake")
     }
 }
 

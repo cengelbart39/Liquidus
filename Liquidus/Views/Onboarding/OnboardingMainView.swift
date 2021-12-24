@@ -52,7 +52,7 @@ struct OnboardingMainView: View {
                         // If on WelcomeView show UnitsView
                         if tabSelection == 0 {
                             tabSelection = 1
-                        // If one UnitsView...
+                        // If on UnitsView...
                         } else if tabSelection == 1 {
                             // Update and save model
                             model.drinkData.units = selectedUnit
@@ -125,6 +125,7 @@ struct OnboardingMainView: View {
 struct OnboardingMainView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingMainView(isOnboarding: .constant(true))
+            .preferredColorScheme(.dark)
             .environmentObject(DrinkModel())
     }
 }

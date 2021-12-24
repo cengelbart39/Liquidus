@@ -34,7 +34,7 @@ struct SettingsNewDrinkTypeView: View {
                             .font(.largeTitle)
                             .bold()
                             .padding(.top, 50)
-                            .padding(.leading, 30)
+                            .padding(.leading)
                         
                         Spacer()
                     }

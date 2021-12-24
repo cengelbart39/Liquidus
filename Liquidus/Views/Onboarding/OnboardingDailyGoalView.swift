@@ -22,36 +22,67 @@ struct OnboardingDailyGoalView: View {
             // Symbol
             if #available(iOS 14, *) {
                 Section {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        Image(systemName: "flag")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 75, height: 75)
-                            .foregroundColor(.blue)
-                        
-                        Spacer()
+                    if #available(iOS 15, *) {
+                        HStack {
+                            
+                            Spacer()
+                            
+                            Image(systemName: "flag")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .foregroundColor(.blue)
+                            
+                            Spacer()
+                        }
+                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                        .listSectionSeparator(.hidden)
+                    } else {
+                        HStack {
+                            
+                            Spacer()
+                            
+                            Image(systemName: "flag")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                                .foregroundColor(.blue)
+                            
+                            Spacer()
+                        }
                     }
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                 }
             }
             
             // Instruction Text
             Section {
-                HStack {
-                    
-                    Spacer()
-                    
-                    Text("Now set your daily intake goal")
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
-                    
-                    Spacer()
-                    
+                if #available(iOS 15, *) {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        Text("Now set your daily intake goal")
+                            .font(.title2)
+                            .multilineTextAlignment(.center)
+                        
+                        Spacer()
+                        
+                    }
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                    .listSectionSeparator(.hidden)
+                } else {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        Text("Now set your daily intake goal")
+                            .font(.title2)
+                            .multilineTextAlignment(.center)
+                        
+                        Spacer()
+                        
+                    }
                 }
-                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
             }
             
             // Text Field

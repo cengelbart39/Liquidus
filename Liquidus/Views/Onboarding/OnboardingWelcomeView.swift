@@ -12,31 +12,36 @@ struct OnboardingWelcomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        ZStack {
-            
-            Rectangle()
-                .foregroundColor(colorScheme == .light ? Color(.systemGray6) : .black)
-                .ignoresSafeArea()
-            
-            VStack {
+        GeometryReader { geo in
+            ZStack {
                 
-                Image("AppIcon-Transparent")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 300, height: 300)
-                    .padding(.bottom, -20)
+                Rectangle()
+                    .foregroundColor(colorScheme == .light ? Color(.systemGray6) : .black)
+                    .ignoresSafeArea()
                 
-                Text("Welcome to Liquidus!")
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(.bottom)
-                
-                Text("Here you can take steps to staying hydrated while seeing what you drink and how much you drink.")
-                    .font(.title3)
-                    .padding(.bottom)
+                VStack {
+                    
+                    Spacer()
+                    
+                    Image("AppIcon-Transparent")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.all, -20)
+                        .frame(width: geo.size.width, height: geo.size.height/2.2)
+                    
+                    Text("Welcome to Liquidus!")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding([.bottom, .horizontal])
+                    
+                    Text("Here you can take steps to staying hydrated while seeing what you drink and how much you drink.")
+                        .font(.title3)
+                        .padding([.bottom, .horizontal])
+                    
+                    Spacer()
+                }
+                .multilineTextAlignment(.center)
             }
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
         }
 
     }

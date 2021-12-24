@@ -22,48 +22,73 @@ struct OnboardingAppleHealthView: View {
             // Section Image
             if #available(iOS 14, *) {
                 Section {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        if #available(iOS 15, *) {
+                    if #available(iOS 15, *) {
+                            
+                        HStack {
+                            Spacer ()
+                            
                             Image(systemName: "heart.text.square")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 75, height: 75)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(.blue)
-                        } else {
+                            
+                            Spacer()
+                        }
+                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                        .listSectionSeparator(.hidden)
+                    } else {
+                        HStack {
+                            Spacer ()
+                            
                             Image(systemName: "heart.text.square")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 75, height: 75)
                                 .foregroundColor(.blue)
+                            
+                            Spacer()
                         }
-                        
-                        Spacer()
                     }
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                 }
             }
             
             // Instructions
             Section {
-                HStack {
-                    
-                    Spacer()
-                    
-                    VStack {
-                        Text("Liquidus can read and write water consumption data from Apple Health.\n")
-                            .font(.title2)
-                    
-                        Text("You can always enable this later in the app's Settings.")
-                            .font(.title3)
+                if #available(iOS 15.0, *) {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text("Liquidus can read and write water consumption data from Apple Health.\n")
+                                .font(.title2)
+                            
+                            Text("You can always enable this later in the app's Settings.")
+                                .font(.title3)
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                    .listSectionSeparator(.hidden)
+                } else {
+                    HStack {
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text("Liquidus can read and write water consumption data from Apple Health.\n")
+                                .font(.title2)
+                            
+                            Text("You can always enable this later in the app's Settings.")
+                                .font(.title3)
+                        }
+                        
+                        Spacer()
+                    }
                 }
-                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
             }
             
             // Ask for Apple Health access and pull data if authorized

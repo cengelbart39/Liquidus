@@ -21,43 +21,62 @@ struct OnboardingCustomDrinksView: View {
             // MARK: - Section Image
             Section {
                 if #available(iOS 14, *) {
-                    
-                    HStack {
-                        
-                        Spacer()
-                        
-                        if #available(iOS 15, *) {
+                    if #available(iOS 15, *) {
+                        HStack {
+                            Spacer()
+                            
                             Image("custom.drink.badge.plus-3.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 75, height: 75)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(.blue)
+                            
+                            Spacer()
+                        }
+                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                        .listSectionSeparator(.hidden)
                                 
-                        } else {
+                    } else {
+                        HStack {
+                            
+                            Spacer()
+                            
                             Image("custom.drink.badge.plus-2.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 75, height: 75)
                                 .foregroundColor(.blue)
+                            
+                            Spacer()
                         }
-                        
-                        Spacer()
                     }
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                    
                 }
             }
             
             // MARK: - Instruction Text
             Section {
-                Text("You can also add custom drink types that aren't built in by default.")
-                    .font(.title2)
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                if #available(iOS 15.0, *) {
+                    Text("You can also add custom drink types that aren't built in by default.")
+                        .font(.title2)
+                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                        .listSectionSeparator(.hidden)
+                } else {
+                    Text("You can also add custom drink types that aren't built in by default.")
+                        .font(.title2)
+                }
             }
             Section {
-                Text("You can always edit, delete, and add more later")
-                    .font(.title3)
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                if #available(iOS 15.0, *) {
+                    Text("You can always edit, delete, and add more later")
+                        .font(.title3)
+                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                        .listSectionSeparator(.hidden)
+                } else {
+                    Text("You can always edit, delete, and add more later")
+                        .font(.title3)
+                }
             }
             
             // MARK: - Custom Drinks

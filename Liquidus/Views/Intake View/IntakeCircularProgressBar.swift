@@ -74,7 +74,7 @@ struct IntakeCircularProgressBar: View {
                     // Get percentage of liquid drinked over selectedWeek
                     let percent = model.getTotalPercent(week: selectedWeek)
                     
-                    Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", min(percent, 1.0)*100.0))
+                    Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(.largeTitle)
                         .bold()
                         .padding(.bottom, 5)

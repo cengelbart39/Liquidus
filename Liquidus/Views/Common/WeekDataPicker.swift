@@ -25,7 +25,7 @@ struct WeekDataPicker: View {
         
         var isNextWeek = isNextWeek(currentWeek: currentWeek)
         
-        var displayText = getWeekText(weekRange: model.getWeekRange(date: currentWeek[0]))
+        let displayText = getWeekText(weekRange: model.getWeekRange(date: currentWeek[0]))
         
         HStack {
             Button(action: {
@@ -42,20 +42,7 @@ struct WeekDataPicker: View {
             Spacer()
             
             // Display week range
-            ZStack {
-                ButtonDatePicker(selectedDate: $selectedDay)
-                
-                Text(displayText)
-                    .userInteractionDisabled()
-                    .foregroundColor(.blue)
-            }
-            .onChange(of: selectedDay, perform: { value in
-                // When selectedDay is enabled
-                // Update currentWeek
-                currentWeek = model.getDaysInWeek(date: selectedDay)
-                // Update displayText
-                displayText = getWeekText(weekRange: model.getWeekRange(date: selectedDay))
-            })
+            Text(displayText)
             
             Spacer()
             
