@@ -9,14 +9,18 @@ import SwiftUI
 
 struct DataLogsView: View {
     
+    // Current day/week selected
     @State var selectedDate = Date()
     @State var selectedWeek = [Date]()
     
+    // Sorting option selected
     @State var sortingMenu = Constants.allKey
     
+    // Are sheet views open?
     @State var isAddDrinkViewShowing = false
     @State var isCalendarViewShowing = false
     
+    // Toolbar Items IDs
     @State var addDrinkButtonID = UUID()
     @State var calendarButtonID = UUID()
     @State var currentDayWeekButtonID = UUID()
@@ -61,20 +65,24 @@ struct DataLogsView: View {
                 // Update selectedWeek when selectedDate updates
                 selectedWeek = model.getDaysInWeek(date: selectedDate)
             })
+            // LogDrinkView Sheet
             .sheet(isPresented: $isAddDrinkViewShowing, content: {
                 LogDrinkView(isPresented: $isAddDrinkViewShowing)
                     .environmentObject(model)
                     .onDisappear {
+                        // Update ids show items are tapable
                         addDrinkButtonID = UUID()
                         calendarButtonID = UUID()
                         currentDayWeekButtonID = UUID()
                         sortPickerID = UUID()
                     }
             })
+            // CalendarView Sheet
             .sheet(isPresented: $isCalendarViewShowing, content: {
                 CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDate, selectedPeriod: Constants.selectWeek)
                     .environmentObject(model)
                     .onDisappear {
+                        // Update ids show items are tapable
                         addDrinkButtonID = UUID()
                         calendarButtonID = UUID()
                         currentDayWeekButtonID = UUID()
@@ -83,6 +91,7 @@ struct DataLogsView: View {
             })
             .navigationTitle("Logs")
             .toolbar {
+                // Show LogDrinkView
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         isAddDrinkViewShowing = true
@@ -92,6 +101,7 @@ struct DataLogsView: View {
                     .id(self.addDrinkButtonID)
                 }
                 
+                // Show CalendarView
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         isCalendarViewShowing = true
@@ -100,6 +110,8 @@ struct DataLogsView: View {
                     }
                     .id(self.calendarButtonID)
                 }
+                
+                // Show the current week
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         selectedDate = Date()
@@ -108,6 +120,8 @@ struct DataLogsView: View {
                     }
                     .id(self.currentDayWeekButtonID)
                 }
+                
+                // Show Sorting Menu
                 ToolbarItem(placement: .navigationBarLeading) {
                     Picker("Sort", selection: $sortingMenu) {
                         Text("All")

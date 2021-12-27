@@ -18,11 +18,13 @@ struct OnboardingUnitsView: View {
         Form {
             if #available(iOS 14, *) {
                 Section {
+                    // if iOS 15...
                     if #available(iOS 15, *) {
                         HStack {
                             
                             Spacer()
                             
+                            // Show hierarchical symbol
                             Image("custom.lines.measurement.horizontal-3.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -33,14 +35,17 @@ struct OnboardingUnitsView: View {
                             Spacer()
                             
                         }
+                        // Remove seperators and change background color
                         .listSectionSeparator(.hidden)
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        
+                    
+                    // if iOS 14...
                     } else {
                         HStack {
                             
                             Spacer()
                             
+                            // Show monochrome symbol
                             Image("custom.lines.measurement.horizontal-2.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -55,17 +60,17 @@ struct OnboardingUnitsView: View {
             }
             
             Section {
+                // of iOS 15
                 if #available(iOS 15.0, *) {
+                    // Change background color and remove seperators
                     Text("First select which units you want to use")
                         .font(.title2)
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
                 } else {
+                    // Don't change background color and remove seperators
                     Text("First select which units you want to use")
                         .font(.title2)
-                    //.listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                        .listRowInsets(EdgeInsets())
                         .padding(.horizontal)
                 }
             }
@@ -74,6 +79,7 @@ struct OnboardingUnitsView: View {
             // Unit Picker
             Section {
                 if #available(iOS 14, *) {
+                    // if iOS 15, use .inline picker style
                     if #available(iOS 15, *) {
                         Picker("Choose a Unit", selection: $selectedUnit) {
                             Text("\(Constants.cupsUS) (\(Constants.cups))")
@@ -87,6 +93,7 @@ struct OnboardingUnitsView: View {
                         }
                         .pickerStyle(InlinePickerStyle())
                     } else {
+                        // if older than iOS 15, use wheel picker style
                         Picker("Choose a Unit", selection: $selectedUnit) {
                             Text("\(Constants.cupsUS) (\(Constants.cups))")
                                 .tag(Constants.cupsUS)

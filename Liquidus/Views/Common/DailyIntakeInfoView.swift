@@ -75,6 +75,7 @@ struct DailyIntakeInfoView: View {
             .navigationTitle("Recommendations")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // Show "Back" button
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         presentationMode.wrappedValue.dismiss()

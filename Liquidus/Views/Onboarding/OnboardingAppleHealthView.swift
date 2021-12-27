@@ -22,6 +22,8 @@ struct OnboardingAppleHealthView: View {
             // Section Image
             if #available(iOS 14, *) {
                 Section {
+                    // if iOS 15, show hierarchical symbol, change
+                    // background color, and remove symbols
                     if #available(iOS 15, *) {
                             
                         HStack {
@@ -38,6 +40,7 @@ struct OnboardingAppleHealthView: View {
                         }
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
+                    // if iOS 14, only show monochrome symbol
                     } else {
                         HStack {
                             Spacer ()
@@ -56,6 +59,8 @@ struct OnboardingAppleHealthView: View {
             
             // Instructions
             Section {
+                // if iOS 15, change background color and remove
+                // seperators
                 if #available(iOS 15.0, *) {
                     HStack {
                         
@@ -73,6 +78,8 @@ struct OnboardingAppleHealthView: View {
                     }
                     .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                     .listSectionSeparator(.hidden)
+                    
+                // if not, don't do the above
                 } else {
                     HStack {
                         

@@ -21,6 +21,8 @@ struct OnboardingCustomDrinksView: View {
             // MARK: - Section Image
             Section {
                 if #available(iOS 14, *) {
+                    // if iOS 15, show hierarchical symbol, change
+                    // background color, and remove seperators
                     if #available(iOS 15, *) {
                         HStack {
                             Spacer()
@@ -36,7 +38,9 @@ struct OnboardingCustomDrinksView: View {
                         }
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
-                                
+                    
+                    // if iOS 14, show monochrome symbol and do none
+                    // of the above changes
                     } else {
                         HStack {
                             
@@ -57,22 +61,28 @@ struct OnboardingCustomDrinksView: View {
             
             // MARK: - Instruction Text
             Section {
+                // if iOS 15, remove seperators and change background
+                // color
                 if #available(iOS 15.0, *) {
                     Text("You can also add custom drink types that aren't built in by default.")
                         .font(.title2)
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
+                // if not, don't do the above
                 } else {
                     Text("You can also add custom drink types that aren't built in by default.")
                         .font(.title2)
                 }
             }
             Section {
+                // if iOS 15, remove seperators and change background
+                // color
                 if #available(iOS 15.0, *) {
                     Text("You can always edit, delete, and add more later")
                         .font(.title3)
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
+                // if not, don't do the above
                 } else {
                     Text("You can always edit, delete, and add more later")
                         .font(.title3)

@@ -44,17 +44,19 @@ struct NewDrinkTypeView: View {
             .navigationTitle("New Drink Type")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // Save new Drink Type
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         model.saveDrinkType(type: drinkType, color: color)
                         isPresented = false
                     } label: {
-                        Text("Done")
+                        Text("Save")
                     }
                     .disabled(drinkType == "")
 
                 }
                 
+                // Dismiss sheet
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         isPresented = false

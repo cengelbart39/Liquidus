@@ -21,6 +21,9 @@ struct OnboardingDefaultDrinksView: View {
         Form {
             if #available(iOS 14.0, *) {
                 Section {
+                    // if iOS 15, show heirarchical symbol
+                    // remove seperators, and change background
+                    // color
                     if #available(iOS 15, *) {
                         HStack {
                             Spacer ()
@@ -37,6 +40,8 @@ struct OnboardingDefaultDrinksView: View {
                         }
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
+                    // if iOS 14, show monochrome symbol with none
+                    // of the other changes
                     } else {
                         HStack {
                             Spacer()
@@ -55,6 +60,8 @@ struct OnboardingDefaultDrinksView: View {
             }
             
             Section {
+                // if iOS 15, remove seperators and change background
+                // color
                 if #available(iOS 15, *) {
                     HStack {
                         
@@ -67,6 +74,7 @@ struct OnboardingDefaultDrinksView: View {
                     }
                     .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                     .listSectionSeparator(.hidden)
+                // if older, don't do the above
                 } else {
                     HStack {
                         

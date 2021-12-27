@@ -115,26 +115,6 @@ class DrinkModel: ObservableObject {
         self.save()
     }
     
-    func filterByDayAndDrinkType(type: String, day: Date) -> [Drink] {
-        let typeFilter = drinkData.drinks.filter { $0.type == type }
-        
-        // Create a date formatter
-        let dateFormatter = DateFormatter()
-        
-        // Only include the date not time
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        
-        // Filter by matching days
-        var dayFilter = typeFilter.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: day) }
-        
-        // Filter by times
-        dayFilter.sort { $0.date > $1.date }
-        
-        // Filter out disabled types
-        return dayFilter
-    }
-    
     // MARK: - Drink Type Customization
     
     func deleteDefaultDrinks(type: String) {
@@ -275,6 +255,27 @@ class DrinkModel: ObservableObject {
         
         // Filter out disabled types
         return filtered.filter { self.drinkData.enabled[$0.type]! }
+    }
+    
+    func filterByDayAndDrinkType(type: String, day: Date) -> [Drink] {
+        // Filter drinks by drink type
+        let typeFilter = drinkData.drinks.filter { $0.type == type }
+        
+        // Create a date formatter
+        let dateFormatter = DateFormatter()
+        
+        // Only include the date not time
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        
+        // Filter by matching days
+        var dayFilter = typeFilter.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: day) }
+        
+        // Filter by time logged
+        dayFilter.sort { $0.date > $1.date }
+        
+        // Filter out disabled types
+        return dayFilter
     }
     
     func getDrinkTypeAmount(type: String, date: Date) -> Double {

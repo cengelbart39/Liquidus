@@ -44,6 +44,8 @@ struct WeekLogView: View {
                         .frame(height: 70)
                         .shadow(radius: 5)
                     
+                    // If all data is shown "There is no data for this day."
+                    // Else, "There is no X data for this day."
                     Text(sortTag == Constants.allKey ? "There is no data for this day." : "There is no \(sortTag) data for this day.")
                 }
             }
@@ -61,8 +63,10 @@ struct WeekLogView: View {
     }
     
     func getData() -> [Drink] {
+        // If sortTag is "All" only filter data by date
         if sortTag == Constants.allKey {
             return model.filterDataByDay(day: date)
+        // Else, filter data by data and drink type
         } else {
             return model.filterByDayAndDrinkType(type: sortTag, day: date)
         }

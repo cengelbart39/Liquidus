@@ -29,7 +29,7 @@ struct DayLogView: View {
                 
                 // Colored Drop
                 if #available(iOS 14, *) {
-                    
+                    // if iOS 15, use palette symbol
                     if #available(iOS 15, *) {
                         VStack {
                                 
@@ -47,6 +47,7 @@ struct DayLogView: View {
                         }
                         .padding(.trailing)
                         .frame(height: 70)
+                    // if iOS 14, use monochrome symbol
                     } else {
                         Image("custom.drink.fill-2.0")
                             .resizable()
@@ -55,6 +56,7 @@ struct DayLogView: View {
                             .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
                             .padding(.trailing)
                     }
+                // if iOS 13 or older, use drop.fill symbol
                 } else {
                     Image(systemName: "drop.fill")
                         .resizable()

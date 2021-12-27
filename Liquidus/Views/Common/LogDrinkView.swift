@@ -65,6 +65,7 @@ struct LogDrinkView: View {
             .navigationTitle("Log a Drink")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // Add drink, when there is an amount
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         // Add a drink to the model
@@ -79,6 +80,7 @@ struct LogDrinkView: View {
                     .disabled(amount == "")
                 }
                 
+                // Cancel and dismiss sheet
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         isPresented = false

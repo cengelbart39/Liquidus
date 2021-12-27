@@ -23,17 +23,20 @@ struct OnboardingWelcomeView: View {
                     
                     Spacer()
                     
+                    // Image
                     Image("AppIcon-Transparent")
                         .resizable()
                         .scaledToFit()
                         .padding(.all, -20)
                         .frame(width: geo.size.width, height: geo.size.height/2.2)
                     
+                    // Welcome Text
                     Text("Welcome to Liquidus!")
                         .font(.largeTitle)
                         .bold()
                         .padding([.bottom, .horizontal])
                     
+                    // Description Text
                     Text("Here you can take steps to staying hydrated while seeing what you drink and how much you drink.")
                         .font(.title3)
                         .padding([.bottom, .horizontal])

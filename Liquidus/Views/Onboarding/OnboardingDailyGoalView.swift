@@ -22,6 +22,8 @@ struct OnboardingDailyGoalView: View {
             // Symbol
             if #available(iOS 14, *) {
                 Section {
+                    // if iOS 15 show monochrome symbol with changed
+                    // background and removed seperator
                     if #available(iOS 15, *) {
                         HStack {
                             
@@ -37,6 +39,8 @@ struct OnboardingDailyGoalView: View {
                         }
                         .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                         .listSectionSeparator(.hidden)
+                    // if iOS 14 show monochrome symbol with no
+                    // other changes
                     } else {
                         HStack {
                             
@@ -56,6 +60,8 @@ struct OnboardingDailyGoalView: View {
             
             // Instruction Text
             Section {
+                // if iOS 15, remove seperators and changed background
+                // color
                 if #available(iOS 15, *) {
                     HStack {
                         
@@ -70,6 +76,7 @@ struct OnboardingDailyGoalView: View {
                     }
                     .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
                     .listSectionSeparator(.hidden)
+                // if iOS 14 or older, don't do the above
                 } else {
                     HStack {
                         

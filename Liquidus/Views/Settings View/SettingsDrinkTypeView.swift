@@ -33,7 +33,7 @@ struct SettingsDrinkTypeView: View {
                             
                             // Color
                             if #available(iOS 14, *) {
-                                
+                                // if iOS 15, use plaette symbol
                                 if #available(iOS 15, *) {
                                     Image("custom.drink.fill.inside-3.0")
                                         .resizable()
@@ -41,6 +41,7 @@ struct SettingsDrinkTypeView: View {
                                         .frame(width: 25, height: 25)
                                         .symbolRenderingMode(.palette)
                                         .foregroundStyle(.primary, model.drinkData.colors[type]!.getColor(), .primary)
+                                // if iOS 14, use monochrome symbol
                                 } else {
                                     Image("custom.drink.fill-2.0")
                                         .resizable()
@@ -48,6 +49,7 @@ struct SettingsDrinkTypeView: View {
                                         .frame(width: 25, height: 25)
                                         .foregroundColor(model.drinkData.colors[type]!.getColor())
                                 }
+                            // if iOS 13 or older, use a circle
                             } else {
                                 Circle()
                                     .foregroundColor(model.drinkData.colors[type]!.getColor())

@@ -19,6 +19,8 @@ struct CalendarView: View {
             GeometryReader { geo in
                 Form {
                     Section(footer: selectedPeriod == Constants.selectWeek ? Text("Choose a date within the week you want to view") : Text("")) {
+                        
+                        // DatePicker
                         DatePicker("Choose a new \(selectedPeriod == Constants.selectDay ? "day" : "week")", selection: $selectedDay, in: ...Date(), displayedComponents: .date)
                     }
                 }
@@ -26,6 +28,7 @@ struct CalendarView: View {
             .navigationTitle("Choose a \(selectedPeriod == Constants.selectDay ? "day" : "week")")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // "Save" new date/week
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         isPresented = false
@@ -34,6 +37,7 @@ struct CalendarView: View {
                     }
                 }
                 
+                // Cancel selection
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         isPresented = false
