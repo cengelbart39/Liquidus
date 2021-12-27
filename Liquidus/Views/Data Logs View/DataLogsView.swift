@@ -11,7 +11,16 @@ struct DataLogsView: View {
     
     @State var selectedDate = Date()
     @State var selectedWeek = [Date]()
+    
+    @State var sortingMenu = Constants.allKey
+    
     @State var isAddDrinkViewShowing = false
+    @State var isCalendarViewShowing = false
+    
+    @State var addDrinkButtonID = UUID()
+    @State var calendarButtonID = UUID()
+    @State var currentDayWeekButtonID = UUID()
+    @State var sortPickerID = UUID()
     
     @EnvironmentObject var model: DrinkModel
     
@@ -19,85 +28,103 @@ struct DataLogsView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
-            
-            HStack {
+        NavigationView {
+            VStack(alignment: .leading) {
                 
-                // MARK: - Title
-                Text("Logs")
-                    .bold()
-                    .font(.largeTitle)
-                    .padding(.leading)
+                // MARK: - Logs
                 
-                Spacer()
-                
-                // MARK: - Select Week
-                ZStack {
-                    // DatePicker
-                    ButtonDatePicker(selectedDate: $selectedDate)
-                    
-                    // Image
-                    Image(systemName: "calendar.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.blue)
-                        .userInteractionDisabled()
-                }
-                .frame(width: 18, height: 18)
-                .onChange(of: selectedDate, perform: { value in
-                    // Update selectedWeek when selectedDate updates
-                    selectedWeek = model.getDaysInWeek(date: selectedDate)
-                })
-                .padding(.trailing, 10)
-
-                
-                // MARK: - Add Drink Button
-                Button(action: {
-                    // Update isAddDrinkViewShowing
-                    isAddDrinkViewShowing = true
-                }, label: {
-                    // Image
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing)
-                })
-                // Show sheet to add drink
-                .sheet(isPresented: $isAddDrinkViewShowing, content: {
-                    LogDrinkView(isPresented: $isAddDrinkViewShowing)
-                        .environmentObject(model)
-                })
-            }
-            .padding(.bottom, 16)
-            .padding(.top, 40)
-            
-            // MARK: - Logs
-            
-            ScrollView {
-                // Loop through selectedWeek in reverse
-                ForEach(selectedWeek.reversed(), id: \.self) { day in
-                    
-                    // If the date has happened
-                    if !hasHappened(currentDate: day) {
-                        HStack {
-                            
-                            Spacer()
-                            
-                            WeekLogView(date: day)
-                            
-                            Spacer()
+                ScrollView {
+                    // Loop through selectedWeek in reverse
+                    ForEach(selectedWeek.reversed(), id: \.self) { day in
+                        
+                        // If the date has happened
+                        if !hasHappened(currentDate: day) {
+                            HStack {
+                                
+                                Spacer()
+                                
+                                WeekLogView(date: day, sortTag: sortingMenu)
+                                
+                                Spacer()
+                            }
+                            .padding(.bottom)
                         }
-                        .padding(.bottom)
                     }
+                    
+                }
+            }
+            // Update selectedWeek based on selectedDate
+            .onAppear {
+                selectedWeek = model.getDaysInWeek(date: selectedDate)
+            }
+            .onChange(of: selectedDate, perform: { value in
+                // Update selectedWeek when selectedDate updates
+                selectedWeek = model.getDaysInWeek(date: selectedDate)
+            })
+            .sheet(isPresented: $isAddDrinkViewShowing, content: {
+                LogDrinkView(isPresented: $isAddDrinkViewShowing)
+                    .environmentObject(model)
+                    .onDisappear {
+                        addDrinkButtonID = UUID()
+                        calendarButtonID = UUID()
+                        currentDayWeekButtonID = UUID()
+                        sortPickerID = UUID()
+                    }
+            })
+            .sheet(isPresented: $isCalendarViewShowing, content: {
+                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDate, selectedPeriod: Constants.selectWeek)
+                    .environmentObject(model)
+                    .onDisappear {
+                        addDrinkButtonID = UUID()
+                        calendarButtonID = UUID()
+                        currentDayWeekButtonID = UUID()
+                        sortPickerID = UUID()
+                    }
+            })
+            .navigationTitle("Logs")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        isAddDrinkViewShowing = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .id(self.addDrinkButtonID)
                 }
                 
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isCalendarViewShowing = true
+                    } label: {
+                        Image(systemName: "calendar")
+                    }
+                    .id(self.calendarButtonID)
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        selectedDate = Date()
+                    } label: {
+                        Text("This Week")
+                    }
+                    .id(self.currentDayWeekButtonID)
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Picker("Sort", selection: $sortingMenu) {
+                        Text("All")
+                            .tag("All")
+                        ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
+                            Text(type)
+                                .tag(type)
+                        }
+                        ForEach(model.drinkData.customDrinkTypes, id: \.self) { type in
+                            Text(type)
+                                .tag(type)
+                        }
+                    }
+                    .id(sortPickerID)
+                    .pickerStyle(.menu)
+                }
             }
-        }
-        // Update selectedWeek based on selectedDate
-        .onAppear {
-            selectedWeek = model.getDaysInWeek(date: selectedDate)
         }
     }
     

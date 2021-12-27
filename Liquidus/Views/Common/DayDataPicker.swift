@@ -60,6 +60,7 @@ struct DayDataPicker: View {
                 Image(systemName: "chevron.right")
                     .foregroundColor(isTomorrow ? .gray : .red)
             })
+            .disabled(isTomorrow)
         }
         .padding(.horizontal)
         .padding(.bottom, 6)

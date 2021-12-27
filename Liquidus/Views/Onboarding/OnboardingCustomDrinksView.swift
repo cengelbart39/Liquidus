@@ -97,7 +97,7 @@ struct OnboardingCustomDrinksView: View {
                     }
                     // Show sheet
                     .sheet(isPresented: $isPresented) {
-                        SettingsNewDrinkTypeView(isPresented: $isPresented)
+                        NewDrinkTypeView(isPresented: $isPresented)
                             .environmentObject(model)
                     }
                     

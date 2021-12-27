@@ -15,107 +15,109 @@ struct IntakeView: View {
     
     @State var selectedTimePeriod = Constants.selectDay
     @State var isAddDrinkViewShowing = false
+    @State var isCalendarViewShowing = false
     
     @State var selectedDay = Date()
     @State var selectedWeek = [Date]()
     
+    @State var addDrinkButtonID = UUID()
+    @State var calendarButtonID = UUID()
+    @State var currentDayWeekButtonID = UUID()
+    
     var body: some View {
         
-        VStack(alignment: .leading) {
-            
-            HStack {
+        NavigationView {
+            VStack(alignment: .leading) {
                 
-                // MARK: - Title
-                Text("Intake")
-                    .bold()
-                    .font(.largeTitle)
-                    .padding(.leading)
+                // MARK: - Day/Week Picker
+                TimePicker(picker: $selectedTimePeriod)
+                
+                // MARK: - Choose Day or Week Data
+                if selectedTimePeriod == Constants.selectDay {
+                    DayDataPicker(selectedDate: $selectedDay)
+                        .frame(height: 25)
+                } else {
+                    WeekDataPicker(currentWeek: $selectedWeek)
+                        .frame(height: 25)
+                }
+                
+                ScrollView {
+                    // MARK: - Progress Bar
+                    HStack {
+                        
+                        Spacer()
+                        
+                        // Create Progress Circle
+                        IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                            .padding(.horizontal)
+                            .frame(width: 270, height: 270)
+                        
+                        Spacer()
+                    }
+                    
+                    // MARK: - Drink Type Breakup
+                    IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                }
                 
                 Spacer()
                 
-                // MARK: - Select Day/Week
-                ZStack {
-                    // DatePicker
-                    ButtonDatePicker(selectedDate: $selectedDay)
-                    
-                    // Image
-                    Image(systemName: "calendar.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.blue)
-                        .userInteractionDisabled()
-                }
-                .frame(width: 18, height: 18)
-                .onChange(of: selectedDay, perform: { value in
-                    // Update selectedWeek when selectedDate updates
-                    selectedWeek = model.getDaysInWeek(date: selectedDay)
-                })
-                .padding(.trailing, 10)
-
-                
-                // MARK: - Add Drink Button
-                Button(action: {
-                    // Update isAddDrinkViewShowing
-                    isAddDrinkViewShowing = true
-                }, label: {
-                    // Image
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing)
-                })
-                // Show sheet to add drink
-                .sheet(isPresented: $isAddDrinkViewShowing, content: {
-                    LogDrinkView(isPresented: $isAddDrinkViewShowing)
-                        .environmentObject(model)
-                })
             }
-            .padding(.top, 40)
-            
-            // MARK: - Day/Week Picker
-            TimePicker(picker: $selectedTimePeriod)
-            
-            // MARK: - Choose Day or Week Data
-            if selectedTimePeriod == Constants.selectDay {
-                DayDataPicker(selectedDate: $selectedDay)
-                    .frame(height: 25)
-            } else {
-                WeekDataPicker(currentWeek: $selectedWeek)
-                    .frame(height: 25)
+            .onAppear {
+                // Update selectedWeek as soon as view appears
+                selectedWeek = model.getDaysInWeek(date: selectedDay)
             }
-            
-            ScrollView {
-            // MARK: - Progress Bar
-                HStack {
-                    
-                    Spacer()
-                    
-                    // Create Progress Circle
-                    IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
-                        .padding(.horizontal)
-                        .frame(width: 270, height: 270)
-                    
-                    Spacer()
+            .onChange(of: selectedDay) { newValue in
+                // Update selectedWeek when selectedDay updates
+                selectedWeek = model.getDaysInWeek(date: selectedDay)
+            }
+            .sheet(isPresented: $isAddDrinkViewShowing, content: {
+                LogDrinkView(isPresented: $isAddDrinkViewShowing)
+                    .environmentObject(model)
+                    .onDisappear {
+                        addDrinkButtonID = UUID()
+                        calendarButtonID = UUID()
+                        currentDayWeekButtonID = UUID()
+                    }
+            })
+            .sheet(isPresented: $isCalendarViewShowing, content: {
+                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay, selectedPeriod: selectedTimePeriod)
+                    .environmentObject(model)
+                    .onDisappear {
+                        addDrinkButtonID = UUID()
+                        calendarButtonID = UUID()
+                        currentDayWeekButtonID = UUID()
+                    }
+            })
+            .navigationTitle("Intake")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        isAddDrinkViewShowing = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .id(self.addDrinkButtonID)
                 }
                 
-                // MARK: - Drink Type Breakup
-                IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isCalendarViewShowing = true
+                    } label: {
+                        Image(systemName: "calendar")
+                    }
+                    .id(self.calendarButtonID)
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        selectedDay = Date()
+                    } label: {
+                        Text(selectedTimePeriod == Constants.selectDay ? "Today" : "This Week")
+                    }
+                    .id(self.currentDayWeekButtonID)
+                }
             }
-            
-            Spacer()
-            
         }
-        .onAppear {
-            // Update selectedWeek as soon as view appears
-            selectedWeek = model.getDaysInWeek(date: selectedDay)
-        }
-        .onChange(of: selectedDay) { newValue in
-            // Update selectedWeek when selectedDay updates
-            selectedWeek = model.getDaysInWeek(date: selectedDay)
-        }
-        .navigationTitle("Intake")
     }
 }
 

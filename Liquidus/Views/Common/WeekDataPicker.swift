@@ -62,6 +62,7 @@ struct WeekDataPicker: View {
                 Image(systemName: "chevron.right")
                     .foregroundColor(isNextWeek ? .gray : .red)
             })
+            .disabled(isNextWeek)
         }
         .padding(.horizontal)
         .padding(.bottom, 6)

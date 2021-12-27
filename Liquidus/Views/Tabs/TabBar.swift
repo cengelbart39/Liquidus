@@ -65,6 +65,12 @@ struct TabBar: View {
                     model.drinkData.colors[Constants.waterKey] = CodableColor(color: UIColor(.cyan))
                 }
             }
+            // Change coffee color to .brown on iOS 15
+            if model.drinkData.colors[Constants.coffeeKey]!.getColor() == Color("CoffeeBrown") {
+                if #available(iOS 15, *) {
+                    model.drinkData.colors[Constants.coffeeKey] = CodableColor(color: UIColor(.brown))
+                }
+            }
             // If water is enabled...
             if model.drinkData.enabled[Constants.waterKey]! && model.drinkData.healthKitEnabled {
                 // If healthStore exists and does app have access...

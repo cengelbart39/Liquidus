@@ -21,72 +21,69 @@ struct LogDrinkView: View {
     
     var body: some View {
         
-        ZStack {
-            
-            Rectangle()
-                .foregroundColor(Color(.systemGray6))
-                .ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
+        NavigationView {
+            ZStack {
                 
-                // Title
-                Text("Log A Drink")
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(.horizontal)
-                    .padding(.top, 40)
-                    .padding(.bottom, -10)
+                Rectangle()
+                    .foregroundColor(Color(.systemGray6))
+                    .ignoresSafeArea()
                 
-                
-                let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-                
-                Form {
-                    // Drink Type Picker
-                    Section(header: Text("Drink Type")) {
-                        Picker(drinkType, selection: $drinkType) {
-                            ForEach(drinkTypes, id: \.self) { type in
-                                Text(type)
-                                    .tag(type)
+                VStack(alignment: .leading) {
+                    let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
+                    
+                    Form {
+                        // Drink Type Picker
+                        Section(header: Text("Drink Type")) {
+                            Picker(drinkType, selection: $drinkType) {
+                                ForEach(drinkTypes, id: \.self) { type in
+                                    Text(type)
+                                        .tag(type)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                        }
+                        
+                        // Drink Amount
+                        Section(header: Text("Drink Amount")) {
+                            HStack {
+                                TextField("500", text: $amount)
+                                    .keyboardType(.decimalPad)
+                                
+                                Spacer()
+                                
+                                Text(model.getUnits())
                             }
                         }
-                        .pickerStyle(MenuPickerStyle())
-                    }
-                    
-                    // Drink Amount
-                    Section(header: Text("Drink Amount")) {
-                        HStack {
-                            TextField("500", text: $amount)
-                                .keyboardType(.decimalPad)
-                            
-                            Spacer()
-                            
-                            Text(model.getUnits())
+                        
+                        // Date Picker
+                        Section(header: Text("Date")) {
+                            DatePicker("Date", selection: $timeSelection, in: ...Date())
                         }
                     }
-                    
-                    // Date Picker
-                    Section(header: Text("Date")) {
-                        DatePicker("Date", selection: $timeSelection, in: ...Date())
+                }
+            }
+            .navigationTitle("Log a Drink")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        // Add a drink to the model
+                        let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
+                        model.addDrink(drink: drink)
+                        
+                        // Dismiss the sheet
+                        isPresented = false
+                    } label: {
+                        Text("Add")
                     }
-                    
-                    Section {
-                        HStack {
-                            Spacer ()
-                            
-                            Button(action: {
-                                // Add a drink to the model
-                                let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
-                                model.addDrink(drink: drink)
-                                
-                                // Dismiss the sheet
-                                isPresented = false
-                            }, label: {
-                                Text("Save")
-                                    .foregroundColor(.blue)
-                            })
-                            
-                            Spacer()
-                        }
+                    .disabled(amount == "")
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        isPresented = false
+                    } label: {
+                        Text("Cancel")
                     }
                 }
             }

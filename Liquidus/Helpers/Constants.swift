@@ -28,6 +28,8 @@ struct Constants {
     static var sodaKey = "Soda"
     static var juiceKey = "Juice"
     
+    static var allKey = "All"
+    
     static var savedKey = "SavedKey"
     
     static var unitDictionary: [String:UnitVolume] = [

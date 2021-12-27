@@ -44,12 +44,13 @@
 		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
 		9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */; };
 		9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99981A26E7B09000A46E78 /* DataLogsView.swift */; };
-		9DA7B148270C9D8100C5C1A7 /* SettingsNewDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7B147270C9D8100C5C1A7 /* SettingsNewDrinkTypeView.swift */; };
+		9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */; };
 		9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */; };
 		9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */; };
 		9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
 		9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
+		9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* CalendarView.swift */; };
 		9DD955F727160D6200DA7C38 /* OnboardingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,12 +95,13 @@
 		9D935BF026ED0E2400CA9C31 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeMultiDrinkBreakup.swift; sourceTree = "<group>"; };
 		9D99981A26E7B09000A46E78 /* DataLogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLogsView.swift; sourceTree = "<group>"; };
-		9DA7B147270C9D8100C5C1A7 /* SettingsNewDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNewDrinkTypeView.swift; sourceTree = "<group>"; };
+		9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDrinkTypeView.swift; sourceTree = "<group>"; };
 		9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataPicker.swift; sourceTree = "<group>"; };
 		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
+		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,10 +174,12 @@
 				9D48B3B126E6719100FEFE49 /* RectangleCard.swift */,
 				9D46BBE52714C58300DB9149 /* DailyIntakeInfoView.swift */,
 				9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */,
-				9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */,
+				9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */,
+				9DD3F9E22778D32000809D1F /* CalendarView.swift */,
 				9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */,
 				9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */,
-				9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */,
+				9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */,
+				9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */,
 				9D05D0BA2711E68500375C63 /* ButtonDatePicker.swift */,
 			);
 			path = Common;
@@ -201,7 +205,6 @@
 				9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */,
 				9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */,
 				9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */,
-				9DA7B147270C9D8100C5C1A7 /* SettingsNewDrinkTypeView.swift */,
 				9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */,
 				9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */,
 			);
@@ -357,10 +360,11 @@
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
 				9D27485626FA6A9800F016D8 /* DayLogView.swift in Sources */,
+				9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */,
 				9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */,
 				9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */,
 				9D46BBEC2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift in Sources */,
-				9DA7B148270C9D8100C5C1A7 /* SettingsNewDrinkTypeView.swift in Sources */,
+				9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */,
 				9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */,
 				9D48B3AA26E6603300FEFE49 /* Constants.swift in Sources */,
 				9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */,
