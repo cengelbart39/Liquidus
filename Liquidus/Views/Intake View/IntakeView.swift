@@ -40,10 +40,10 @@ struct IntakeView: View {
                 // MARK: - Choose Day or Week Data
                 if selectedTimePeriod == Constants.selectDay {
                     DayDataPicker(selectedDate: $selectedDay)
-                        .frame(height: 25)
+                        .multilineTextAlignment(.center)
                 } else {
                     WeekDataPicker(currentWeek: $selectedWeek)
-                        .frame(height: 25)
+                        .multilineTextAlignment(.center)
                 }
                 
                 ScrollView {

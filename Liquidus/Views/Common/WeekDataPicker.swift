@@ -139,3 +139,10 @@ struct WeekDataPicker: View {
         }
     }
 }
+
+struct WeekDataPicker_Previews: PreviewProvider {
+    static var previews: some View {
+        WeekDataPicker(currentWeek: .constant(DrinkModel().getWeekRange(date: Date())))
+            .environmentObject(DrinkModel())
+    }
+}
