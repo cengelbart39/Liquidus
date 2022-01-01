@@ -42,6 +42,7 @@ struct SettingsEditDefaultTypeView: View {
                             if model.drinkData.enabled[type]! {
                                 // update color in model
                                 model.drinkData.colors[type] = CodableColor(color: UIColor(newColor))
+                                model.drinkData.colorChanged[type] = true
                             }
                             // Dismiss view
                             presentationMode.wrappedValue.dismiss()
@@ -59,7 +60,7 @@ struct SettingsEditDefaultTypeView: View {
         .onAppear {
             // On appear update variables based on model
             enabled = model.drinkData.enabled[type]!
-            newColor = model.drinkData.colors[type]!.getColor()
+            newColor = model.getDrinkTypeColor(type: type)
         }
         .onChange(of: enabled, perform: { newValue in
             // If type is enabled update model

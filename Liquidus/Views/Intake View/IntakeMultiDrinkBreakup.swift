@@ -17,32 +17,25 @@ struct IntakeMultiDrinkBreakup: View {
     
     var body: some View {
         
-        // Create columns
-        let columns = Array(repeating: GridItem(.adaptive(minimum: 200)), count: 2)
-        
         // Get all drink types
         let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
         
-        LazyVGrid(columns: columns, alignment: .leading) {
-            
-            // Loop through drinkTypes
+        VStack(alignment: .leading) {
             ForEach(drinkTypes, id: \.self) { type in
-                
                 // if type is enabled...
                 if model.drinkData.enabled[type]! {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        // Create single breakup
-                        IntakeSingleDrinkBreakup(color: model.drinkData.colors[type]!.getColor(), drinkType: type, selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
-                        
-                        Spacer()
-                    }
+                    IntakeSingleDrinkBreakup(color: model.getDrinkTypeColor(type: type), drinkType: type, selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                        .padding(.leading)
                 }
-                
             }
         }
         
+    }
+}
+
+struct IntakeMultiDrinkBreakup_Previews: PreviewProvider {
+    static var previews: some View {
+        IntakeMultiDrinkBreakup(selectedTimePeriod: Constants.selectDay, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
+            .environmentObject(DrinkModel())
     }
 }

@@ -15,6 +15,8 @@ struct OnboardingCustomDrinksView: View {
     
     @State var isPresented = false
     
+    @ScaledMetric(relativeTo: .body) var imageSize = 75
+    
     var body: some View {
         
         Form {
@@ -30,7 +32,7 @@ struct OnboardingCustomDrinksView: View {
                             Image("custom.drink.badge.plus-3.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: imageSize, height: imageSize)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(.blue)
                             
@@ -49,7 +51,7 @@ struct OnboardingCustomDrinksView: View {
                             Image("custom.drink.badge.plus-2.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: imageSize, height: imageSize)
                                 .foregroundColor(.blue)
                             
                             Spacer()
@@ -127,6 +129,7 @@ struct OnboardingCustomDrinksView_Previews: PreviewProvider {
             OnboardingCustomDrinksView()
                 .preferredColorScheme(.dark)
                 .environmentObject(DrinkModel())
+                .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
     }
 }

@@ -16,15 +16,17 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationView {
-            GeometryReader { geo in
                 Form {
                     Section(footer: selectedPeriod == Constants.selectWeek ? Text("Choose a date within the week you want to view") : Text("")) {
                         
-                        // DatePicker
-                        DatePicker("Choose a new \(selectedPeriod == Constants.selectDay ? "day" : "week")", selection: $selectedDay, in: ...Date(), displayedComponents: .date)
+                        VStack {
+                            // DatePicker
+                            DatePicker("", selection: $selectedDay, in: ...Date(), displayedComponents: .date)
+                                .datePickerStyle(.graphical)
+                        }
                     }
                 }
-            }
+
             .navigationTitle("Choose a \(selectedPeriod == Constants.selectDay ? "day" : "week")")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

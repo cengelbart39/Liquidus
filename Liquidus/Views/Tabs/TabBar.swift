@@ -19,22 +19,18 @@ struct TabBar: View {
             // IntakeView
             IntakeView()
                 .tabItem {
-                    VStack {
-                        if #available(iOS 14, *) {
-                            if #available(iOS 15, *) {
-                                Image("custom.drink.fill-3.0")
-                                    .resizable()
-                                    .font(.title2)
-                            } else {
-                                Image("custom.drink.fill-2.0")
-                                    .resizable()
-                                    .font(.title2)
-                            }
+                    if #available(iOS 14, *) {
+                        if #available(iOS 15, *) {
+                            Image("custom.drink.fill-3.0")
+                                .font(.system(size: 25))
                         } else {
-                            Image(systemName: "drop.fill")
+                            Image("custom.drink.fill-2.0")
+                                .font(.system(size: 25))
                         }
-                        Text("Intake")
+                    } else {
+                        Image(systemName: "drop.fill")
                     }
+                    Text("Intake")
                 }
                 .tag(0)
             
@@ -59,18 +55,6 @@ struct TabBar: View {
                 .tag(2)
         }
         .onAppear {
-            // Change water color to .cyan on iOS 15
-            if model.drinkData.colors[Constants.waterKey]!.getColor() == Color(.systemTeal) {
-                if #available(iOS 15, *) {
-                    model.drinkData.colors[Constants.waterKey] = CodableColor(color: UIColor(.cyan))
-                }
-            }
-            // Change coffee color to .brown on iOS 15
-            if model.drinkData.colors[Constants.coffeeKey]!.getColor() == Color("CoffeeBrown") {
-                if #available(iOS 15, *) {
-                    model.drinkData.colors[Constants.coffeeKey] = CodableColor(color: UIColor(.brown))
-                }
-            }
             // If water is enabled...
             if model.drinkData.enabled[Constants.waterKey]! && model.drinkData.healthKitEnabled {
                 // If healthStore exists and does app have access...

@@ -11,14 +11,9 @@ struct DayDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    @Binding var selectedDate: Date
+    @Environment(\.sizeCategory) var sizeCategory
     
-    let dateFormatter: DateFormatter = { () -> DateFormatter in
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .long
-        return formatter
-    }()
+    @Binding var selectedDate: Date
     
     var body: some View {
         
@@ -39,7 +34,7 @@ struct DayDataPicker: View {
             Spacer()
             
             // Display Month Day, Year
-            Text(dateFormatter.string(from: selectedDate))
+            Text(dateFormatter().string(from: selectedDate))
                 .foregroundColor(.primary)
             
             Spacer()
@@ -66,13 +61,30 @@ struct DayDataPicker: View {
         .padding(.bottom, 6)
     }
     
+    func dateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        
+        if !sizeCategory.isAccessibilityCategory {
+            formatter.timeStyle = .none
+            formatter.dateStyle = .long
+        } else {
+            formatter.dateFormat = "MMM. d, yyyy"
+        }
+        
+        return formatter
+    }
+    
     func isTomorrow(currentDate: Date) -> Bool {
         let calendar = Calendar.current
         
         // Get the next day and tomorrow date
         let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) ?? Date()
-            
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .long
+        
         // If they are the same...
         if dateFormatter.string(from: nextDay) == dateFormatter.string(from: tomorrow) {
             return true

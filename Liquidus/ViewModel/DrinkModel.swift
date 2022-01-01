@@ -110,6 +110,7 @@ class DrinkModel: ObservableObject {
         // Add saveType and codableColor to model
         self.drinkData.customDrinkTypes.append(saveType)
         self.drinkData.colors[saveType] = codableColor
+        self.drinkData.colorChanged[saveType] = true
         
         // Save model
         self.save()
@@ -234,6 +235,30 @@ class DrinkModel: ObservableObject {
             
         }
         
+    }
+    
+    func getDrinkTypeColor(type: String) -> Color {
+        if !self.drinkData.colorChanged[type]! {
+            if type == Constants.waterKey {
+                if #available(iOS 15, *) {
+                    return Color(.systemCyan)
+                } else {
+                    return Color(.systemTeal)
+                }
+            } else if type == Constants.coffeeKey {
+                if #available(iOS 15, *) {
+                    return Color(.systemBrown)
+                } else {
+                    return Color("CoffeeBrown")
+                }
+            } else if type == Constants.sodaKey {
+                return Color(.systemGreen)
+            } else if type == Constants.juiceKey {
+                return Color(.systemOrange)
+            }
+        }
+        
+        return self.drinkData.colors[type]!.getColor()
     }
     
     // MARK: - Data by Data Functions

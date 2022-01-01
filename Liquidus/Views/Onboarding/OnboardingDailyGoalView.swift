@@ -10,11 +10,14 @@ import SwiftUI
 struct OnboardingDailyGoalView: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     
     @Binding var dailyGoal: String
     var selectedUnit: String
     
     @State var isReccomendationsShowing = false
+    
+    @ScaledMetric(relativeTo: .body) var symbolSize = 75
     
     var body: some View {
         
@@ -32,7 +35,7 @@ struct OnboardingDailyGoalView: View {
                             Image(systemName: "flag")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: symbolSize, height: symbolSize)
                                 .foregroundColor(.blue)
                             
                             Spacer()
@@ -49,7 +52,7 @@ struct OnboardingDailyGoalView: View {
                             Image(systemName: "flag")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: symbolSize, height: symbolSize)
                                 .foregroundColor(.blue)
                             
                             Spacer()
@@ -100,7 +103,6 @@ struct OnboardingDailyGoalView: View {
                     
                     // TextField
                     TextField("2000", text: $dailyGoal)
-                        .frame(width: 70)
                         .keyboardType(.decimalPad)
                     
                     // Units
@@ -115,13 +117,20 @@ struct OnboardingDailyGoalView: View {
                 Button {
                     isReccomendationsShowing = true
                 } label: {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        Label("Daily Intake Recommendations", systemImage: "info.circle")
-                        
-                        Spacer()
+                    if !sizeCategory.isAccessibilityCategory {
+                        HStack {
+                            
+                            Spacer()
+                            
+                            Label("Daily Intake Recommendations", systemImage: "info.circle")
+                            
+                            Spacer()
+                        }
+                    } else {
+                        VStack(alignment: .leading) {
+                            Image(systemName: "info.circle")
+                            Text("Daily Intake Reccomendation")
+                        }
                     }
                 }
                 // Display Recommendations when button is pressed
@@ -159,6 +168,7 @@ struct OnboardingDailyGoalView_Previews: PreviewProvider {
             OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
             OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
                 .preferredColorScheme(.dark)
+                .environment(\.sizeCategory, .extraExtraExtraLarge)
         }
     }
 }

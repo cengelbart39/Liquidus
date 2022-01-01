@@ -14,6 +14,8 @@ struct OnboardingUnitsView: View {
     
     @Binding var selectedUnit: String
     
+    @ScaledMetric(relativeTo: .body) var symbolSize = 75
+    
     var body: some View {
         Form {
             if #available(iOS 14, *) {
@@ -28,7 +30,7 @@ struct OnboardingUnitsView: View {
                             Image("custom.lines.measurement.horizontal-3.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: symbolSize, height: symbolSize)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(.blue)
                             
@@ -49,7 +51,7 @@ struct OnboardingUnitsView: View {
                             Image("custom.lines.measurement.horizontal-2.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: symbolSize, height: symbolSize)
                                 .foregroundColor(.blue)
                             
                             Spacer()
@@ -119,6 +121,7 @@ struct OnboardingUnitsView: View {
         static var previews: some View {
             Group {
                 OnboardingUnitsView(selectedUnit: .constant(Constants.milliliters))
+                    .environment(\.sizeCategory, .extraExtraExtraLarge)
                     .environmentObject(DrinkModel())
                 OnboardingUnitsView(selectedUnit: .constant(Constants.milliliters))
                     .preferredColorScheme(.dark)

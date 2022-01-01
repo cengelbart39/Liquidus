@@ -40,37 +40,39 @@ struct DailyIntakeInfoView: View {
                     Constants.mL : 2700
                 ]
                 
-                VStack {
-                    VStack(alignment: .leading) {
+                ScrollView {
+                    VStack {
+                        VStack(alignment: .leading) {
 
+                            
+                            // Background Text
+                            Text("The United States National Academies of Sciences, Engineering, and Medicine determined that an adequate daily fluid intake is (based on biological gender):")
+                                .padding(.bottom, 10)
+                            
+                            // Male Recommendations
+                            let maleAmount = maleRecommendations[units != nil ? units! : model.getUnits()]!
+                            
+                            Label("\(maleAmount, specifier: model.getSpecifier(amount: maleAmount)) \(units != nil ? units! : model.getUnits()) for Men", systemImage: "circle.fill")
+                                .padding(.bottom, 10)
+                            
+                            // Female Recommendations
+                            let femaleAmount = femaleRecommendations[units != nil ? units! : model.getUnits()]!
+                            
+                            Label("\(femaleAmount, specifier: model.getSpecifier(amount: femaleAmount)) \(units != nil ? units! : model.getUnits()) for Women", systemImage: "circle.fill")
+                                .padding(.bottom)
+                            
+                            // Source
+                            Text("Sourced from the Mayo Clinic")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.top)
+                        .padding(.horizontal, 40)
                         
-                        // Background Text
-                        Text("The United States National Academies of Sciences, Engineering, and Medicine determined that an adequate daily fluid intake is (based on biological gender):")
-                            .padding(.bottom, 10)
-                        
-                        // Male Recommendations
-                        let maleAmount = maleRecommendations[units != nil ? units! : model.getUnits()]!
-                        
-                        Label("\(maleAmount, specifier: model.getSpecifier(amount: maleAmount)) \(units != nil ? units! : model.getUnits()) for Men", systemImage: "circle.fill")
-                            .padding(.bottom, 10)
-                        
-                        // Female Recommendations
-                        let femaleAmount = femaleRecommendations[units != nil ? units! : model.getUnits()]!
-                        
-                        Label("\(femaleAmount, specifier: model.getSpecifier(amount: femaleAmount)) \(units != nil ? units! : model.getUnits()) for Women", systemImage: "circle.fill")
-                            .padding(.bottom)
-                        
-                        // Source
-                        Text("Sourced from the Mayo Clinic")
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                        Spacer()
                     }
-                    .padding(.top)
-                    .padding(.horizontal, 40)
-                    
-                    Spacer()
+                    .multilineTextAlignment(.leading)
                 }
-                .multilineTextAlignment(.leading)
             }
             .navigationTitle("Recommendations")
             .navigationBarTitleDisplayMode(.inline)

@@ -18,40 +18,22 @@ struct WeekLogView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
-        
-            // Date
-            Text(formatter().string(from: date))
-                .textCase(.uppercase)
-                .foregroundColor(.gray)
+        let data = getData()
             
-            // Get data for date
-            let data = getData()
-            
-            // If there is data...
-            if data.count > 0 {
-                // Show data for each drink
-                ForEach(data) { drink in
-                    DayLogView(drink: drink)
-                    
-                }
-            // If not...
-            } else {
+        // If there is data...
+        if data.count > 0 {
+            // Show data for each drink
+            ForEach(data) { drink in
+                DayLogView(drink: drink)
                 
-                ZStack {
-                    
-                    RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
-                        .frame(height: 70)
-                        .shadow(radius: 5)
-                    
-                    // If all data is shown "There is no data for this day."
-                    // Else, "There is no X data for this day."
-                    Text(sortTag == Constants.allKey ? "There is no data for this day." : "There is no \(sortTag) data for this day.")
-                }
             }
+            
+        // If not...
+        } else {
+            // If all data is shown "There is no data for this day."
+            // Else, "There is no X data for this day."
+            Text(sortTag == Constants.allKey ? "There is no data for this day." : "There is no \(sortTag) data for this day.")
         }
-        .frame(width: 250)
-        
     }
     
     // Date Formatter

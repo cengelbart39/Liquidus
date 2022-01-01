@@ -55,7 +55,7 @@ struct SettingsEditCustomTypeView: View {
         .onAppear {
             // Update variables
             name = type
-            newColor = model.drinkData.colors[type]!.getColor()
+            newColor = model.getDrinkTypeColor(type: type)
         }
         .navigationTitle("Edit \(type)")
     }

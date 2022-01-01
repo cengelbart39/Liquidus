@@ -97,13 +97,13 @@ struct WeekDataPicker: View {
             let year = formatter.string(from: weekRange[0])
             
             // Format for month
-            formatter.dateFormat = "MMMM"
+            formatter.dateFormat = "MMM."
             
             // If the month is the same...
             if formatter.string(from: weekRange[0]) == formatter.string(from: weekRange[1]) {
                 
                 // Get date1
-                formatter.dateFormat = "MMMM d"
+                formatter.dateFormat = "MMM. d"
                 
                 let date1 = formatter.string(from: weekRange[0])
                 
@@ -118,7 +118,7 @@ struct WeekDataPicker: View {
             } else {
                 
                 // Formatt for month and day
-                formatter.dateFormat = "MMMM d"
+                formatter.dateFormat = "MMM. d"
                 
                 // Get dates
                 let date1 = formatter.string(from: weekRange[0])
@@ -129,7 +129,7 @@ struct WeekDataPicker: View {
             }
         } else {
             // Format for month and day
-            formatter.dateFormat = "MMMM d, yyyy"
+            formatter.dateFormat = "MMM. d, yyyy"
             
             // Get dates
             let date1 = formatter.string(from: weekRange[0])

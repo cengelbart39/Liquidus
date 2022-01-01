@@ -11,11 +11,15 @@ struct IntakeSingleDrinkBreakup: View {
     
     @EnvironmentObject var model: DrinkModel
     
+    @Environment(\.sizeCategory) var sizeCategory
+    
     var color: Color
     var drinkType: String
     var selectedTimePeriod: String
     var selectedDay: Date
     var selectedWeek: [Date]
+    
+    @ScaledMetric(relativeTo: .body) var symbolSize = 35
     
     var body: some View {
         
@@ -25,58 +29,76 @@ struct IntakeSingleDrinkBreakup: View {
             if #available(iOS 14, *) {
                 
                 if #available(iOS 15, *) {
-                    Image("custom.drink.fill.inside-3.0")
+                    Image("custom.drink.fill-3.0")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 35, height: 35)
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.primary, color, .primary)
+                        .frame(width: symbolSize, height: symbolSize)
+                        .foregroundColor(color)
                 } else {
                     Image("custom.drink.fill-2.0")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 35, height: 35)
+                        .frame(width: symbolSize, height: symbolSize)
                         .foregroundColor(color)
                 }
                 
             } else {
                 RectangleCard(color: color)
-                    .frame(width: 35, height: 35)
+                    .frame(width: symbolSize, height: symbolSize)
             }
             
-            // If day...
-            if selectedTimePeriod == Constants.selectDay {
-                
-                VStack(alignment: .leading) {
-                    // Drink Name
-                    Text(drinkType)
-                        .bold()
-                    
-                    // Consumed Amount & Percent
-                    let amount = model.getDrinkTypeAmount(type: drinkType, date: selectedDay)
-                    let percent = model.getDrinkTypePercent(type: drinkType, date: selectedDay)
-                    
-                    Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits()) / \(percent*100, specifier: "%.2f")%")
+            HStack {
+                if !sizeCategory.isAccessibilityCategory {
+                    VStack(alignment: .leading) {
+                        // Drink Name
+                        Text(drinkType)
+                            .font(.title)
+                            .bold()
+                        
+                        // Consumed Amount & Percent
+                        let amount = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypeAmount(type: drinkType, date: selectedDay) : model.getDrinkTypeAmount(type: drinkType, week: selectedWeek)
+                        
+                        let percent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: drinkType, date: selectedDay) : model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
+                        
+                        
+                        HStack {
+                            Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
+                                .font(.title2)
+                            
+                            Text("\(percent*100, specifier: "%.2f")%")
+                                .font(.title2)
+                        }
+                    }
+                } else {
+                    VStack(alignment: .leading) {
+                        // Drink Name
+                        Text(drinkType)
+                            .font(.title)
+                            .bold()
+                        
+                        // Consumed Amount & Percent
+                        let amount = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypeAmount(type: drinkType, date: selectedDay) : model.getDrinkTypeAmount(type: drinkType, week: selectedWeek)
+                        
+                        let percent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: drinkType, date: selectedDay) : model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
+                        
+                       Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
+                            .font(sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge ? .caption2 : .title2)
+
+                        Text("\(percent*100, specifier: "%.2f")%")
+                            .font(sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge ? .caption2 : .title2)
+
+                    }
                 }
                 
-            // If week...
-            } else if selectedTimePeriod == Constants.selectWeek {
-                
-                VStack(alignment: .leading) {
-                    // Drink Name
-                    Text(drinkType)
-                        .bold()
-                    
-                    // Consumed Amount & Percent
-                    let amount = model.getDrinkTypeAmount(type: drinkType, week: selectedWeek)
-                    let percent = model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
-                    
-                    Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits()) / \(percent*100, specifier: "%.2f")%")
-                    
-                }
-                
+                Spacer()
             }
-            
         }
+    }
+}
+
+struct IntakeSingleDrinkBreakup_Previews: PreviewProvider {
+    static var previews: some View {
+        IntakeSingleDrinkBreakup(color: Color(.systemTeal), drinkType: Constants.waterKey, selectedTimePeriod: Constants.selectDay, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
+            .environmentObject(DrinkModel())
     }
 }

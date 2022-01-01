@@ -10,6 +10,7 @@ import SwiftUI
 struct DayLogView: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     
     @EnvironmentObject var model: DrinkModel
     
@@ -17,75 +18,88 @@ struct DayLogView: View {
     
     var body: some View {
         
-        ZStack {
-            
-            RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
-                .frame(height: 70)
-                .shadow(radius: 5)
-            
+        // If Accessibility Dynamic Type Size...
+        if !sizeCategory.isAccessibilityCategory {
             HStack {
-                
-                Spacer()
-                
                 // Colored Drop
                 if #available(iOS 14, *) {
                     // if iOS 15, use palette symbol
                     if #available(iOS 15, *) {
-                        VStack {
-                                
-                            Spacer()
-                                
-                            Image("custom.drink.fill.inside-3.0")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 17)
-                                .symbolRenderingMode(.palette)
-                            .foregroundStyle(.primary, model.drinkData.colors[drink.type]!.getColor(), .primary)
-                                
-                            Spacer()
-                                
-                        }
-                        .padding(.trailing)
-                        .frame(height: 70)
-                    // if iOS 14, use monochrome symbol
+                        Image("custom.drink.fill-3.0")
+                            .font(.title)
+                            .foregroundColor(model.getDrinkTypeColor(type: drink.type))
+                            .padding(.trailing)
+                        // if iOS 14, use monochrome symbol
                     } else {
                         Image("custom.drink.fill-2.0")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 15)
-                            .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
+                            .font(.title)
+                            .foregroundColor(model.getDrinkTypeColor(type: drink.type))
                             .padding(.trailing)
                     }
-                // if iOS 13 or older, use drop.fill symbol
+                    // if iOS 13 or older, use drop.fill symbol
                 } else {
                     Image(systemName: "drop.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 15)
-                        .foregroundColor(model.drinkData.colors[drink.type]!.getColor())
-                        .padding(.trailing)
+                        .font(.title)
+                        .foregroundColor(model.getDrinkTypeColor(type: drink.type))
+                }
+                
+                Spacer()
+                
+                // Amount consumed
+                Text("\(drink.amount, specifier: model.getSpecifier(amount: drink.amount)) \(model.getUnits())")
+                    .font(.title3)
+                
+                Spacer()
+                
+                let formatter = formatter()
+                
+                // Time drink was logged
+                Text(formatter.string(from: drink.date))
+                    .padding(.leading, 10)
+                    .font(.title3)
+            }
+            // If not...
+        } else {
+            VStack(alignment: .leading) {
+                // Colored Drop
+                if #available(iOS 14, *) {
+                    // if iOS 15, use palette symbol
+                    if #available(iOS 15, *) {
+                        Image("custom.drink.fill-3.0")
+                            .font(.title)
+                            .foregroundColor(model.getDrinkTypeColor(type: drink.type))
+                            .padding(.trailing)
+                        // if iOS 14, use monochrome symbol
+                    } else {
+                        Image("custom.drink.fill-2.0")
+                            .font(.title)
+                            .foregroundColor(model.getDrinkTypeColor(type: drink.type))
+                            .padding(.trailing)
+                    }
+                    // if iOS 13 or older, use drop.fill symbol
+                } else {
+                    Image(systemName: "drop.fill")
+                        .font(.title)
+                        .foregroundColor(model.getDrinkTypeColor(type: drink.type))
                 }
                 
                 // Amount consumed
                 Text("\(drink.amount, specifier: model.getSpecifier(amount: drink.amount)) \(model.getUnits())")
-                    .padding(.trailing, 10)
+                    .font(.title3)
                 
                 let formatter = formatter()
-                    
+                
                 // Time drink was logged
                 Text(formatter.string(from: drink.date))
-                
-                Spacer()
+                    .font(.title3)
             }
-            
         }
-        
     }
     
     func formatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
         return formatter
     }
 }

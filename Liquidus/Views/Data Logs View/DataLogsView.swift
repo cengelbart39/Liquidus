@@ -29,32 +29,25 @@ struct DataLogsView: View {
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     
     var body: some View {
         
         NavigationView {
-            VStack(alignment: .leading) {
+            Form {
                 
                 // MARK: - Logs
+                // Loop through selectedWeek in reverse
                 
-                ScrollView {
-                    // Loop through selectedWeek in reverse
-                    ForEach(selectedWeek.reversed(), id: \.self) { day in
-                        
-                        // If the date has happened
-                        if !hasHappened(currentDate: day) {
-                            HStack {
-                                
-                                Spacer()
-                                
-                                WeekLogView(date: day, sortTag: sortingMenu)
-                                
-                                Spacer()
-                            }
-                            .padding(.bottom)
+                let formatter = formatter()
+                
+                ForEach(selectedWeek.reversed(), id: \.self) { day in
+                    
+                    if !hasHappened(currentDate: day) {
+                        Section(header: Text(formatter.string(from: day))) {
+                            WeekLogView(date: day, sortTag: sortingMenu)
                         }
                     }
-                    
                 }
             }
             // Update selectedWeek based on selectedDate
@@ -150,12 +143,17 @@ struct DataLogsView: View {
             return true
         }
     }
-
+    
     // Create DateFormatter
     func formatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
+        
+        if sizeCategory == .accessibilityExtraLarge || sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge {
+            formatter.dateFormat = "MMM. d, yyyy"
+        } else {
+            formatter.dateFormat = "MMMM d, yyyy"
+        }
+        
         return formatter
     }
 }
@@ -164,6 +162,7 @@ struct DataLogsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             DataLogsView()
+                .environment(\.sizeCategory, .large)
                 .environmentObject(DrinkModel())
         }
     }

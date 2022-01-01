@@ -13,6 +13,8 @@ struct SettingsDrinkTypeView: View {
     
     @State var isPresented = false
     
+    @ScaledMetric(relativeTo: .body) var symbolSize = 20
+    
     var body: some View {
         Form {
             
@@ -26,35 +28,32 @@ struct SettingsDrinkTypeView: View {
                         SettingsEditDefaultTypeView(type: type)
                     } label: {
                         HStack {
-                            // Type Name
-                            Text(type)
-                            
-                            Spacer()
-                            
                             // Color
                             if #available(iOS 14, *) {
                                 // if iOS 15, use plaette symbol
                                 if #available(iOS 15, *) {
-                                    Image("custom.drink.fill.inside-3.0")
+                                    Image("custom.drink.fill-3.0")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 25, height: 25)
-                                        .symbolRenderingMode(.palette)
-                                        .foregroundStyle(.primary, model.drinkData.colors[type]!.getColor(), .primary)
+                                        .frame(width: symbolSize, height: symbolSize)
+                                        .foregroundColor(model.getDrinkTypeColor(type: type))
                                 // if iOS 14, use monochrome symbol
                                 } else {
                                     Image("custom.drink.fill-2.0")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 25, height: 25)
-                                        .foregroundColor(model.drinkData.colors[type]!.getColor())
+                                        .frame(width: symbolSize, height: symbolSize)
+                                        .foregroundColor(model.getDrinkTypeColor(type: type))
                                 }
                             // if iOS 13 or older, use a circle
                             } else {
                                 Circle()
-                                    .foregroundColor(model.drinkData.colors[type]!.getColor())
-                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(model.getDrinkTypeColor(type: type))
+                                    .frame(width: symbolSize, height: symbolSize)
                             }
+                            
+                            // Type Name
+                            Text(type)
                         }
                         // Show color or grayscale variant if enabled
                         .saturation(model.drinkData.enabled[type]! ? 1 : 0)

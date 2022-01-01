@@ -15,6 +15,8 @@ struct OnboardingDefaultDrinksView: View {
     
     @State var isEnabled = true
     
+    @ScaledMetric(relativeTo: .body) var symbolSize = 75
+    
     var body: some View {
         
         // Instructions
@@ -31,7 +33,7 @@ struct OnboardingDefaultDrinksView: View {
                             Image("custom.drink-3.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: symbolSize, height: symbolSize)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(.blue)
                             
@@ -49,7 +51,7 @@ struct OnboardingDefaultDrinksView: View {
                             Image("custom.drink-2.0")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: symbolSize, height: symbolSize)
                                 .foregroundColor(.blue)
 
                             Spacer()
@@ -110,6 +112,7 @@ struct OnboardingDefaultDrinksView_Previews: PreviewProvider {
             OnboardingDefaultDrinksView()
                 .preferredColorScheme(.dark)
                 .environmentObject(DrinkModel())
+                .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
     }
 }

@@ -11,6 +11,8 @@ struct IntakeCircularProgressBar: View {
     
     @EnvironmentObject var model: DrinkModel
     
+    @Environment(\.sizeCategory) var sizeCategory
+        
     var selectedTimePeriod: String
     var selectedDay: Date
     var selectedWeek: [Date]
@@ -23,6 +25,7 @@ struct IntakeCircularProgressBar: View {
             Circle()
                 .stroke(lineWidth: 30)
                 .foregroundColor(Color(.systemGray6))
+                .scaledToFit()
             
             // Get all drink types
             let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
@@ -38,7 +41,7 @@ struct IntakeCircularProgressBar: View {
                     // Get color for highlight
                     // Use drink type color if goal isn't reached
                     // Use "GoalGreen" if goal is reached
-                    let color = totalPercent >= 1.0 ? Color("GoalGreen") : model.drinkData.colors[type]!.getColor()
+                    let color = totalPercent >= 1.0 ? Color("GoalGreen") : model.getDrinkTypeColor(type: type)
                     
                     IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type), color: color)
                 }
@@ -52,18 +55,15 @@ struct IntakeCircularProgressBar: View {
                     let percent = model.getTotalPercent(date: selectedDay)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
-                        .font(.largeTitle)
+                        .font(getFontStylePercent())
                         .bold()
                         .padding(.bottom, 5)
                     
                     // Get the total amount of liquid drank for selectedDay
                     let total = model.getTotalAmount(date: selectedDay)
                     
-                    // Get daily goal
-                    let goal = model.drinkData.dailyGoal
-                    
-                    Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: goal)) \(model.getUnits())")
-                        .font(.subheadline)
+                    Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
+                        .font(getFontStyleAmount())
                         .foregroundColor(Color(.systemGray))
                 }
                 
@@ -75,24 +75,22 @@ struct IntakeCircularProgressBar: View {
                     let percent = model.getTotalPercent(week: selectedWeek)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
-                        .font(.largeTitle)
+                        .font(getFontStylePercent())
                         .bold()
                         .padding(.bottom, 5)
                     
                     // Get the amount of liquid drank over selectedWeek
                     let total = model.getTotalAmount(week: selectedWeek)
                     
-                    // Get weekly goal
-                    let goal = model.drinkData.dailyGoal*7
-                    
-                    Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: goal)) \(model.getUnits())")
-                        .font(.subheadline)
+                    Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
+                        .font(getFontStyleAmount())
                         .foregroundColor(Color(.systemGray))
                 }
             }
             
         }
         .padding(.horizontal)
+        .multilineTextAlignment(.center)
         
     }
     
@@ -136,5 +134,39 @@ struct IntakeCircularProgressBar: View {
         
         return progress
         
+    }
+    
+    func getFontStylePercent() -> SwiftUI.Font {
+        if !sizeCategory.isAccessibilityCategory {
+            return .largeTitle
+        } else if sizeCategory == .accessibilityMedium {
+            return .title
+        } else if sizeCategory == .accessibilityLarge {
+            return .title2
+        } else if sizeCategory == .accessibilityExtraLarge {
+            return .callout
+        } else if sizeCategory == .accessibilityExtraExtraLarge {
+            return .footnote
+        } else {
+            return .caption2
+        }
+    }
+    
+    func getFontStyleAmount() -> SwiftUI.Font {
+        if !sizeCategory.isAccessibilityCategory || sizeCategory == .accessibilityMedium || sizeCategory == .accessibilityLarge {
+            return .body
+        } else if sizeCategory == .accessibilityExtraLarge {
+            return .caption
+        } else {
+            return .caption2
+        }
+    }
+}
+
+struct IntakeCircularProgressBar_Previews: PreviewProvider {
+    static var previews: some View {
+        IntakeCircularProgressBar(selectedTimePeriod: Constants.selectDay, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
+            .environment(\.sizeCategory, .large)
+            .environmentObject(DrinkModel())
     }
 }

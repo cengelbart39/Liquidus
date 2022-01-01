@@ -57,7 +57,11 @@ struct LogDrinkView: View {
                         
                         // Date Picker
                         Section(header: Text("Date")) {
-                            DatePicker("Date", selection: $timeSelection, in: ...Date())
+                            VStack {
+                                
+                                DatePicker("Date", selection: $timeSelection, in: ...Date(), displayedComponents: .date)
+                                .datePickerStyle(.graphical)
+                            }
                         }
                     }
                 }

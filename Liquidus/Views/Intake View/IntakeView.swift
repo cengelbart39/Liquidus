@@ -10,6 +10,7 @@ import SwiftUI
 struct IntakeView: View {
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     
     @EnvironmentObject var model: DrinkModel
     
@@ -37,28 +38,22 @@ struct IntakeView: View {
                 // MARK: - Day/Week Picker
                 TimePicker(picker: $selectedTimePeriod)
                 
-                // MARK: - Choose Day or Week Data
-                if selectedTimePeriod == Constants.selectDay {
-                    DayDataPicker(selectedDate: $selectedDay)
-                        .multilineTextAlignment(.center)
-                } else {
-                    WeekDataPicker(currentWeek: $selectedWeek)
-                        .multilineTextAlignment(.center)
-                }
-                
                 ScrollView {
-                    // MARK: - Progress Bar
-                    HStack {
-                        
-                        Spacer()
-                        
-                        // Create Progress Circle
-                        IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
-                            .padding(.horizontal)
-                            .frame(width: 270, height: 270)
-                        
-                        Spacer()
+                    // MARK: - Choose Day or Week Data
+                    if selectedTimePeriod == Constants.selectDay {
+                        DayDataPicker(selectedDate: $selectedDay)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom)
+                    } else {
+                        WeekDataPicker(currentWeek: $selectedWeek)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom)
                     }
+                    
+                    // MARK: - Progress Bar
+                    IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                        .padding(.horizontal, sizeCategory.isAccessibilityCategory ? 20 : 40)
+                        .padding(.vertical)
                     
                     // MARK: - Drink Type Breakup
                     IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)

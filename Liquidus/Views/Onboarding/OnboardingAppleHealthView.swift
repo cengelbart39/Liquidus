@@ -16,6 +16,8 @@ struct OnboardingAppleHealthView: View {
     
     @Binding var healthKitEnabled : Bool
     
+    @ScaledMetric(relativeTo: .body) var imageSize = 75
+    
     var body: some View {
         
         Form {
@@ -32,7 +34,7 @@ struct OnboardingAppleHealthView: View {
                             Image(systemName: "heart.text.square")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: imageSize, height: imageSize)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(.blue)
                             
@@ -48,7 +50,7 @@ struct OnboardingAppleHealthView: View {
                             Image(systemName: "heart.text.square")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: imageSize, height: imageSize)
                                 .foregroundColor(.blue)
                             
                             Spacer()
@@ -143,6 +145,7 @@ struct OnboardingAppleHealthView_Previews: PreviewProvider {
             OnboardingAppleHealthView(healthKitEnabled: .constant(true))
                 .preferredColorScheme(.dark)
                 .environmentObject(DrinkModel())
+                .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
     }
 }

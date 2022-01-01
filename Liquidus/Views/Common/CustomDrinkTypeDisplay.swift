@@ -9,7 +9,11 @@ import SwiftUI
 
 struct CustomDrinkTypeDisplay: View {
     
+    @Environment(\.sizeCategory) var sizeCategory
+    
     @EnvironmentObject var model: DrinkModel
+    
+    @ScaledMetric(relativeTo: .body) var symbolSize = 20
     
     var body: some View {
         
@@ -22,43 +26,71 @@ struct CustomDrinkTypeDisplay: View {
                     
                     NavigationLink {
                         // Go to Edit view
-                        SettingsEditCustomTypeView(type: type, color: model.drinkData.colors[type]!.getColor())
+                        SettingsEditCustomTypeView(type: type, color: model.getDrinkTypeColor(type: type))
                     } label: {
-                        HStack {
-                            // Type Name
-                            Text(type)
+                        // If Dynamic Type is accessibility xLarge, xxLarge, or xxxLarge...
+                        if sizeCategory == .accessibilityExtraLarge || sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge {
                             
-                            Spacer()
-                            
-                            // Show type color
-                            if #available(iOS 14, *) {
-                                
-                                if #available(iOS 15, *) {
-                                    Image("custom.drink.fill.inside-3.0")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 25, height: 25)
-                                        .symbolRenderingMode(.palette)
-                                        .foregroundStyle(.primary, model.drinkData.colors[type]!.getColor(), .primary)
+                            VStack(alignment: .leading, spacing: 10) {
+                                // Show type color
+                                if #available(iOS 14, *) {
+                                    
+                                    if #available(iOS 15, *) {
+                                        Image("custom.drink.fill-3.0")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: symbolSize, height: symbolSize)
+                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                    } else {
+                                        Image("custom.drink.fill-2.0")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: symbolSize, height: symbolSize)
+                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                    }
                                 } else {
-                                    Image("custom.drink.fill-2.0")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 25, height: 25)
-                                        .foregroundColor(model.drinkData.colors[type]!.getColor())
+                                    Circle()
+                                        .foregroundColor(model.getDrinkTypeColor(type: type))
+                                        .frame(width: symbolSize, height: symbolSize)
                                 }
-                            } else {
-                                Circle()
-                                    .foregroundColor(model.drinkData.colors[type]!.getColor())
-                                    .frame(width: 20, height: 20)
+                                
+                                // Type Name
+                                Text(type)
+                                
+                            }
+                        } else {
+                            HStack {
+                                // Show type color
+                                if #available(iOS 14, *) {
+                                    
+                                    if #available(iOS 15, *) {
+                                        Image("custom.drink.fill-3.0")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: symbolSize, height: symbolSize)
+                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                    } else {
+                                        Image("custom.drink.fill-2.0")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: symbolSize, height: symbolSize)
+                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                    }
+                                } else {
+                                    Circle()
+                                        .foregroundColor(model.getDrinkTypeColor(type: type))
+                                        .frame(width: symbolSize, height: symbolSize)
+                                }
+                                
+                                // Type Name
+                                Text(type)
                             }
                         }
                     }
-
-                    
                 }
                 .onDelete(perform: deleteCustom)
             }
+            
         // If not...
         } else {
             HStack {
@@ -73,7 +105,7 @@ struct CustomDrinkTypeDisplay: View {
         }
         
     }
-    
+            
     func deleteCustom(at offsets: IndexSet) {
         // Delete drinks of custom drink type
         model.deleteCustomDrinks(atOffsets: offsets)
@@ -82,7 +114,7 @@ struct CustomDrinkTypeDisplay: View {
         model.drinkData.customDrinkTypes.remove(atOffsets: offsets)
     }
 }
-
+        
 struct CustomDrinkTypeDisplay_Previews: PreviewProvider {
     static var previews: some View {
         CustomDrinkTypeDisplay()

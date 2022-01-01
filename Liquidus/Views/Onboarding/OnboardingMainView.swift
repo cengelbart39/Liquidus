@@ -89,7 +89,7 @@ struct OnboardingMainView: View {
                 } label: {
                     ZStack {
                         RectangleCard(color: colorScheme == .light ? .white : Color(.systemGray6))
-                            .frame(width: 200, height: 45)
+                            .frame(width: 250, height: 70)
                             .shadow(radius: 5)
                         
                         // If on Welcome, Units, DailyGoal, or Drink Type Views
@@ -126,6 +126,7 @@ struct OnboardingMainView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingMainView(isOnboarding: .constant(true))
             .preferredColorScheme(.dark)
+            .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
             .environmentObject(DrinkModel())
     }
 }
