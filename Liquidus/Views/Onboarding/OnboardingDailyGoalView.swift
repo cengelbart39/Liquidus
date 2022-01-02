@@ -129,7 +129,7 @@ struct OnboardingDailyGoalView: View {
                     } else {
                         VStack(alignment: .leading) {
                             Image(systemName: "info.circle")
-                            Text("Daily Intake Reccomendation")
+                            Text("Daily Intake Recomendation")
                         }
                     }
                 }
