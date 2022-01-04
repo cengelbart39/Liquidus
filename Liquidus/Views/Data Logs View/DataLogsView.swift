@@ -84,24 +84,45 @@ struct DataLogsView: View {
             })
             .navigationTitle("Logs")
             .toolbar {
-                // Show LogDrinkView
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        isAddDrinkViewShowing = true
+                // Show Sorting Menu
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Picker(selection: $sortingMenu, label: Text("Sort")) {
+                            Text("All")
+                                .tag("All")
+                            ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
+                                Text(type)
+                                    .tag(type)
+                            }
+                            ForEach(model.drinkData.customDrinkTypes, id: \.self) { type in
+                                Text(type)
+                                    .tag(type)
+                            }
+                        }
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "arrow.up.arrow.down")
                     }
-                    .id(self.addDrinkButtonID)
+                    .id(sortPickerID)
                 }
                 
                 // Show CalendarView
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isCalendarViewShowing = true
                     } label: {
                         Image(systemName: "calendar")
                     }
                     .id(self.calendarButtonID)
+                }
+                
+                // Show LogDrinkView
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isAddDrinkViewShowing = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .id(self.addDrinkButtonID)
                 }
                 
                 // Show the current week
@@ -112,24 +133,6 @@ struct DataLogsView: View {
                         Text("This Week")
                     }
                     .id(self.currentDayWeekButtonID)
-                }
-                
-                // Show Sorting Menu
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Picker("Sort", selection: $sortingMenu) {
-                        Text("All")
-                            .tag("All")
-                        ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
-                            Text(type)
-                                .tag(type)
-                        }
-                        ForEach(model.drinkData.customDrinkTypes, id: \.self) { type in
-                            Text(type)
-                                .tag(type)
-                        }
-                    }
-                    .id(sortPickerID)
-                    .pickerStyle(.menu)
                 }
             }
         }
@@ -162,7 +165,6 @@ struct DataLogsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             DataLogsView()
-                .environment(\.sizeCategory, .large)
                 .environmentObject(DrinkModel())
         }
     }
