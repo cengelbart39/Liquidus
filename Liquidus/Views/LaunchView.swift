@@ -19,9 +19,21 @@ struct LaunchView: View {
         if model.drinkData.isOnboarding && isOnboarding {
             OnboardingMainView(isOnboarding: $isOnboarding)
                 .navigationBarHidden(true)
+                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
+                    model.grayscaleEnabled.toggle()
+                }
+                .onAppear {
+                    model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                }
         // If the user isn't onboarding, start with TabBar
         } else if !model.drinkData.isOnboarding || !isOnboarding {
             TabBar()
+                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
+                    model.grayscaleEnabled.toggle()
+                }
+                .onAppear {
+                    model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                }
         }
         
     }

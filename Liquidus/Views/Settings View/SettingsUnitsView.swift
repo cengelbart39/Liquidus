@@ -162,7 +162,7 @@ struct SettingsUnitsView: View {
 
             }
         }
-        .navigationBarTitle("Unit Settings")
+        .navigationBarTitle("Units")
     }
 }
 

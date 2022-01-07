@@ -15,7 +15,7 @@ struct OnboardingAppleHealthView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @Binding var healthKitEnabled : Bool
-    
+        
     @ScaledMetric(relativeTo: .body) var imageSize = 75
     
     var body: some View {
@@ -36,7 +36,7 @@ struct OnboardingAppleHealthView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: imageSize, height: imageSize)
                                 .symbolRenderingMode(.hierarchical)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                         }
@@ -51,7 +51,7 @@ struct OnboardingAppleHealthView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: imageSize, height: imageSize)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                         }

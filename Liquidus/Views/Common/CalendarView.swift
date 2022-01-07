@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CalendarView: View {
     
+    @EnvironmentObject var model: DrinkModel
+    
     @Binding var isPresented: Bool
     
     @Binding var selectedDay: Date
@@ -36,6 +38,7 @@ struct CalendarView: View {
                         isPresented = false
                     } label: {
                         Text("Save")
+                            .foregroundColor(.blue)
                     }
                 }
                 
@@ -45,6 +48,7 @@ struct CalendarView: View {
                         isPresented = false
                     } label: {
                         Text("Cancel")
+                            .foregroundColor(.blue)
                     }
                 }
             }
@@ -58,5 +62,6 @@ struct CalendarView: View {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarView(isPresented: .constant(true), selectedDay: .constant(Date()), selectedPeriod: Constants.selectWeek)
+            .environmentObject(DrinkModel())
     }
 }

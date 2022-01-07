@@ -29,13 +29,15 @@ struct NewDrinkTypeView: View {
                     
                     Form {
                         // Change drink type name
-                        Section(header: Text("Drink Type")) {
+                        Section(header: Text("Drink Type"), footer: model.grayscaleEnabled ? Text("In the event Grayscale Color Filters are disabled, created drink types are assigned a random color.") : Text("")) {
                             TextField("Water", text: $drinkType)
                         }
                         
-                        // Change drink type color
-                        Section(header: Text("Color"), footer: Text("White and black may not show up well in Light or Dark Mode")) {
-                            ColorPicker("Choose a color", selection: $color, supportsOpacity: false)
+                        if !model.grayscaleEnabled {
+                            // Change drink type color
+                            Section(header: Text("Color"), footer: Text("White and black may not show up well in Light or Dark Mode")) {
+                                ColorPicker("Choose a color", selection: $color, supportsOpacity: false)
+                            }
                         }
                     }
                     .multilineTextAlignment(.leading)
@@ -47,7 +49,17 @@ struct NewDrinkTypeView: View {
                 // Save new Drink Type
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        model.saveDrinkType(type: drinkType, color: color)
+                        if model.grayscaleEnabled {
+                            let red = Double.random(in: 0...255)/255
+                            let green = Double.random(in: 0...255)/255
+                            let blue = Double.random(in: 0...255)/255
+                            
+                            let randomColor = Color(red: red, green: green, blue: blue)
+                            
+                            model.saveDrinkType(type: drinkType, color: randomColor)
+                        } else {
+                            model.saveDrinkType(type: drinkType, color: color)
+                        }
                         isPresented = false
                     } label: {
                         Text("Save")

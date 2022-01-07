@@ -19,6 +19,8 @@ class DrinkModel: ObservableObject {
     
     @Published var healthStore: HealthStore?
     
+    @Published var grayscaleEnabled = false
+    
     init() {
         // Create HealthStore
         healthStore = HealthStore()

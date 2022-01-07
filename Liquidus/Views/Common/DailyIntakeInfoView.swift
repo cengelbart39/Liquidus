@@ -84,7 +84,6 @@ struct DailyIntakeInfoView: View {
                     } label: {
                         Text("Back")
                     }
-
                 }
             }
         }

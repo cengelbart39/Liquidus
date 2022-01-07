@@ -28,7 +28,7 @@ struct DayDataPicker: View {
                 isTomorrow = self.isTomorrow(currentDate: selectedDate)
             }, label: {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(.red)
+                    .foregroundColor(model.grayscaleEnabled ? .primary : .red)
             })
 
             Spacer()
@@ -53,7 +53,7 @@ struct DayDataPicker: View {
                 }
             }, label: {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(isTomorrow ? .gray : .red)
+                    .foregroundColor(isTomorrow ? .gray : (model.grayscaleEnabled ? .primary : .red))
             })
             .disabled(isTomorrow)
         }

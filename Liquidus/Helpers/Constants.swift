@@ -27,7 +27,6 @@ struct Constants {
     static var coffeeKey = "Coffee"
     static var sodaKey = "Soda"
     static var juiceKey = "Juice"
-    
     static var allKey = "All"
     
     static var savedKey = "SavedKey"

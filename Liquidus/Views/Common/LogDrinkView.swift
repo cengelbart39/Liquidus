@@ -80,6 +80,7 @@ struct LogDrinkView: View {
                         isPresented = false
                     } label: {
                         Text("Add")
+                            .foregroundColor(amount == "" ? .gray : .blue)
                     }
                     .disabled(amount == "")
                 }
@@ -90,6 +91,7 @@ struct LogDrinkView: View {
                         isPresented = false
                     } label: {
                         Text("Cancel")
+                            .foregroundColor(.blue)
                     }
                 }
             }

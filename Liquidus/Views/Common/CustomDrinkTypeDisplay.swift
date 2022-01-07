@@ -14,7 +14,7 @@ struct CustomDrinkTypeDisplay: View {
     @EnvironmentObject var model: DrinkModel
     
     @ScaledMetric(relativeTo: .body) var symbolSize = 20
-    
+        
     var body: some View {
         
         // If there are custom drinks...
@@ -40,17 +40,17 @@ struct CustomDrinkTypeDisplay: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     } else {
                                         Image("custom.drink.fill-2.0")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     }
                                 } else {
                                     Circle()
-                                        .foregroundColor(model.getDrinkTypeColor(type: type))
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                         .frame(width: symbolSize, height: symbolSize)
                                 }
                                 
@@ -68,17 +68,17 @@ struct CustomDrinkTypeDisplay: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     } else {
                                         Image("custom.drink.fill-2.0")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.getDrinkTypeColor(type: type))
+                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     }
                                 } else {
                                     Circle()
-                                        .foregroundColor(model.getDrinkTypeColor(type: type))
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                         .frame(width: symbolSize, height: symbolSize)
                                 }
                                 
@@ -103,7 +103,6 @@ struct CustomDrinkTypeDisplay: View {
                 Spacer()
             }
         }
-        
     }
             
     func deleteCustom(at offsets: IndexSet) {

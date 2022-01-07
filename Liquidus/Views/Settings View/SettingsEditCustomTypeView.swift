@@ -12,6 +12,8 @@ struct SettingsEditCustomTypeView: View {
     @EnvironmentObject var model: DrinkModel
     @Environment(\.presentationMode) var presentationMode
     
+    @GestureState private var dragOffSet = CGSize.zero
+    
     var type: String
     var color: Color
     
@@ -28,27 +30,10 @@ struct SettingsEditCustomTypeView: View {
                     .multilineTextAlignment(.leading)
             }
             
-            // Update color
-            Section(header: Text("Color")) {
-                ColorPicker("Choose a new color", selection: $newColor, supportsOpacity: false)
-            }
-            
-            Section {
-                HStack {
-                    Spacer()
-                    
-                    Button {
-                        // Update color in model
-                        model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
-                        // Edit existing drinks of type
-                        model.editDrinkType(old: type, new: name)
-                        // Dismiss view
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Text("Save")
-                    }
-
-                    Spacer()
+            if !model.grayscaleEnabled {
+                // Update color
+                Section(header: Text("Color")) {
+                    ColorPicker("Choose a new color", selection: $newColor, supportsOpacity: false)
                 }
             }
         }
@@ -58,6 +43,20 @@ struct SettingsEditCustomTypeView: View {
             newColor = model.getDrinkTypeColor(type: type)
         }
         .navigationTitle("Edit \(type)")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    // Update color in model
+                    model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
+                    // Edit existing drinks of type
+                    model.editDrinkType(old: type, new: name)
+                    // Dismiss view
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Save")
+                }
+            }
+        }
     }
     
 }

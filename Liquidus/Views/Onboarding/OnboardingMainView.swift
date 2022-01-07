@@ -97,21 +97,21 @@ struct OnboardingMainView: View {
                         if tabSelection >= 0 && tabSelection <= 4 {
                             withAnimation {
                                 Text("Continue")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             }
                         // If Health data access is not authorized
                         // and on AppleHealthView display "Skip"
                         } else if !healthKitEnabled && tabSelection == 5 {
                             withAnimation {
                                 Text("Skip")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             }
                         // If Health access authorized and on AppleHealthView
                         // display "Continue"
                         } else if tabSelection == 5 && healthKitEnabled {
                             withAnimation {
                                 Text("Continue")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             }
                         }
                     }
@@ -126,7 +126,6 @@ struct OnboardingMainView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingMainView(isOnboarding: .constant(true))
             .preferredColorScheme(.dark)
-            .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
             .environmentObject(DrinkModel())
     }
 }

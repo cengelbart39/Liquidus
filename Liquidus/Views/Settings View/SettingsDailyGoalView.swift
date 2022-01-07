@@ -15,7 +15,7 @@ struct SettingsDailyGoalView: View {
     
     @State var dailyGoal = ""
     @State var reccomendationsShowing = false
-    
+        
     var body: some View {
         
         Form {
@@ -24,22 +24,12 @@ struct SettingsDailyGoalView: View {
                 
                 HStack {
                     // Daily Goal input
-                    TextField("\(Int(model.drinkData.dailyGoal)) \(model.getUnits())", text: $dailyGoal)
+                    TextField("\(Int(model.drinkData.dailyGoal))", text: $dailyGoal)
                         .keyboardType(.decimalPad)
                     
-                    // Save button
-                    Button(action: {
-                        if let num = Double(dailyGoal) {
-                            // Update daily goal
-                            model.drinkData.dailyGoal = num
-                            // Save to user defaults
-                            model.save()
-                            // Dismiss screen
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }, label: {
-                        Text("Save")
-                    })
+                    Spacer()
+                    
+                    Text(model.getUnits())
                 }
             }
             
@@ -58,6 +48,30 @@ struct SettingsDailyGoalView: View {
             }
             
         }
-        .navigationBarTitle("Daily Goal Settings")
+        .navigationBarTitle("Daily Goal")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                // Save button
+                Button(action: {
+                    if let num = Double(dailyGoal) {
+                        // Update daily goal
+                        model.drinkData.dailyGoal = num
+                        // Save to user defaults
+                        model.save()
+                        // Dismiss screen
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }, label: {
+                    Text("Save")
+                })
+            }
+        }
+    }
+}
+
+struct SettingsDailyGoalView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsDailyGoalView()
+            .environmentObject(DrinkModel())
     }
 }

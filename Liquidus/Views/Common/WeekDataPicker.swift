@@ -36,7 +36,7 @@ struct WeekDataPicker: View {
                 isNextWeek = self.isNextWeek(currentWeek: currentWeek)
             }, label: {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(.red)
+                    .foregroundColor(model.grayscaleEnabled ? .primary : .red)
             })
             
             Spacer()
@@ -60,7 +60,7 @@ struct WeekDataPicker: View {
                 }
             }, label: {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(isNextWeek ? .gray : .red)
+                    .foregroundColor(isNextWeek ? .gray : (model.grayscaleEnabled ? .primary : .red))
             })
             .disabled(isNextWeek)
         }

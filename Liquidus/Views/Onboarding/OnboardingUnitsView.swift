@@ -32,7 +32,7 @@ struct OnboardingUnitsView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: symbolSize, height: symbolSize)
                                 .symbolRenderingMode(.hierarchical)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                             
@@ -52,7 +52,7 @@ struct OnboardingUnitsView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: symbolSize, height: symbolSize)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                             

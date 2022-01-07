@@ -11,13 +11,12 @@ struct SettingsEditDefaultTypeView: View {
     
     @EnvironmentObject var model: DrinkModel
     @Environment(\.presentationMode) var presentationMode
-    
+        
     var type: String
     
     @State var enabled = true
-    
     @State var newColor = Color.black
-    
+        
     var body: some View {
         
         Form {
@@ -27,33 +26,11 @@ struct SettingsEditDefaultTypeView: View {
             }
             
             // If type is enabled...
-            if model.drinkData.enabled[type]! {
+            if model.drinkData.enabled[type]! && !model.grayscaleEnabled {
                 // Update color
                 Section(header: Text("Color")) {
                     // ColorPicker
                     ColorPicker("Choose a new color", selection: $newColor, supportsOpacity: false)
-                    
-                    // Save Button
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                            // If type enabled...
-                            if model.drinkData.enabled[type]! {
-                                // update color in model
-                                model.drinkData.colors[type] = CodableColor(color: UIColor(newColor))
-                                model.drinkData.colorChanged[type] = true
-                            }
-                            // Dismiss view
-                            presentationMode.wrappedValue.dismiss()
-                            
-                        } label: {
-                            Text("Save")
-                        }
-
-                        
-                        Spacer()
-                    }
                 }
             }
         }
@@ -62,19 +39,23 @@ struct SettingsEditDefaultTypeView: View {
             enabled = model.drinkData.enabled[type]!
             newColor = model.getDrinkTypeColor(type: type)
         }
-        .onChange(of: enabled, perform: { newValue in
-            // If type is enabled update model
-            if enabled {
-                model.drinkData.enabled[type] = true
-            // If type is disabled update model
-            } else {
-                model.drinkData.enabled[type] = false
-            }
-            // Save model
-            model.save()
-        })
         .navigationTitle("Edit \(type)")
-        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    // If type enabled...
+                    if model.drinkData.enabled[type]! {
+                        // update color in model
+                        model.drinkData.colors[type] = CodableColor(color: UIColor(newColor))
+                        model.drinkData.colorChanged[type] = true
+                    }
+                    // Dismiss view
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Save")
+                }
+            }
+        }
     }
 }
 

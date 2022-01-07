@@ -18,7 +18,7 @@ struct IntakeSingleDrinkBreakup: View {
     var selectedTimePeriod: String
     var selectedDay: Date
     var selectedWeek: [Date]
-    
+        
     @ScaledMetric(relativeTo: .body) var symbolSize = 35
     
     var body: some View {
@@ -33,17 +33,17 @@ struct IntakeSingleDrinkBreakup: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: symbolSize, height: symbolSize)
-                        .foregroundColor(color)
+                        .foregroundColor(model.grayscaleEnabled ? .primary : color)
                 } else {
                     Image("custom.drink.fill-2.0")
                         .resizable()
                         .scaledToFit()
                         .frame(width: symbolSize, height: symbolSize)
-                        .foregroundColor(color)
+                        .foregroundColor(model.grayscaleEnabled ? .primary : color)
                 }
                 
             } else {
-                RectangleCard(color: color)
+                RectangleCard(color: model.grayscaleEnabled ? .primary : color)
                     .frame(width: symbolSize, height: symbolSize)
             }
             

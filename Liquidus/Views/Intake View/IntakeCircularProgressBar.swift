@@ -12,6 +12,7 @@ struct IntakeCircularProgressBar: View {
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
         
     var selectedTimePeriod: String
     var selectedDay: Date
@@ -41,7 +42,7 @@ struct IntakeCircularProgressBar: View {
                     // Get color for highlight
                     // Use drink type color if goal isn't reached
                     // Use "GoalGreen" if goal is reached
-                    let color = totalPercent >= 1.0 ? Color("GoalGreen") : model.getDrinkTypeColor(type: type)
+                    let color = totalPercent >= 1.0 ? getHighlightColor(type: drinkTypes.last!) : getHighlightColor(type: type)
                     
                     IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type), color: color)
                 }
@@ -51,6 +52,14 @@ struct IntakeCircularProgressBar: View {
             if selectedTimePeriod == Constants.selectDay {
                 
                 VStack {
+                    // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
+                    if (differentiateWithoutColor || model.grayscaleEnabled) && totalPercent >= 1.0 {
+                        Image(systemName: "flag.fill")
+                            .foregroundColor(.primary)
+                            .font(getFontStyleAmount())
+                            .padding(.bottom, 0.5)
+                    }
+                    
                     // Get percentage of liquid drank for selectedDay
                     let percent = model.getTotalPercent(date: selectedDay)
                     
@@ -71,6 +80,14 @@ struct IntakeCircularProgressBar: View {
             } else if selectedTimePeriod == Constants.selectWeek {
                 
                 VStack {
+                    // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
+                    if (differentiateWithoutColor || model.grayscaleEnabled) && totalPercent >= 1.0 {
+                        Image(systemName: "flag.fill")
+                            .foregroundColor(.primary)
+                            .font(getFontStyleAmount())
+                            .padding(.bottom, 0.5)
+                    }
+                    
                     // Get percentage of liquid drinked over selectedWeek
                     let percent = model.getTotalPercent(week: selectedWeek)
                     
@@ -87,7 +104,6 @@ struct IntakeCircularProgressBar: View {
                         .foregroundColor(Color(.systemGray))
                 }
             }
-            
         }
         .padding(.horizontal)
         .multilineTextAlignment(.center)
@@ -160,6 +176,21 @@ struct IntakeCircularProgressBar: View {
         } else {
             return .caption2
         }
+    }
+    
+    func getHighlightColor(type: String) -> Color {
+        let totalPercent = self.getProgressPercent(type: type)
+        
+        if totalPercent >= 1.0 {
+            return Color("GoalGreen")
+        } else {
+            if model.grayscaleEnabled {
+                return .primary
+            } else {
+                return model.getDrinkTypeColor(type: type)
+            }
+        }
+        
     }
 }
 

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingDailyGoalView: View {
     
+    @EnvironmentObject var model: DrinkModel
+    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
     
@@ -36,7 +38,7 @@ struct OnboardingDailyGoalView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: symbolSize, height: symbolSize)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                         }
@@ -53,7 +55,7 @@ struct OnboardingDailyGoalView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: symbolSize, height: symbolSize)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                         }

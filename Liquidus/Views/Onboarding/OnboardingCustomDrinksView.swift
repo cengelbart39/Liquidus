@@ -34,7 +34,7 @@ struct OnboardingCustomDrinksView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: imageSize, height: imageSize)
                                 .symbolRenderingMode(.hierarchical)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                         }
@@ -52,7 +52,7 @@ struct OnboardingCustomDrinksView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: imageSize, height: imageSize)
-                                .foregroundColor(.blue)
+                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
                             Spacer()
                         }

@@ -83,7 +83,7 @@ struct SettingsView: View {
                                 }
                             }, label: {
                                 Text("Sync with Apple Health")
-                                    .foregroundColor(Color(.systemPink))
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : Color(.systemPink))
                             })
                             
                             Spacer()

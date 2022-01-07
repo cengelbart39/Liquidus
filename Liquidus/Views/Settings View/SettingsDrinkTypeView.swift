@@ -11,10 +11,17 @@ struct SettingsDrinkTypeView: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    @State var isPresented = false
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.editMode) private var editMode: Binding<EditMode>!
+    
+    @State var isPresented = false    
+    
+    @State var backButtonId = UUID()
+    @State var editButtonId = UUID()
+    @State var newDrinkTypeButtonId = UUID()
     
     @ScaledMetric(relativeTo: .body) var symbolSize = 20
-    
+        
     var body: some View {
         Form {
             
@@ -36,19 +43,19 @@ struct SettingsDrinkTypeView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: symbolSize, height: symbolSize)
-                                        .foregroundColor(model.getDrinkTypeColor(type: type))
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                 // if iOS 14, use monochrome symbol
                                 } else {
                                     Image("custom.drink.fill-2.0")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: symbolSize, height: symbolSize)
-                                        .foregroundColor(model.getDrinkTypeColor(type: type))
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                 }
                             // if iOS 13 or older, use a circle
                             } else {
                                 Circle()
-                                    .foregroundColor(model.getDrinkTypeColor(type: type))
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     .frame(width: symbolSize, height: symbolSize)
                             }
                             
@@ -68,32 +75,36 @@ struct SettingsDrinkTypeView: View {
                 CustomDrinkTypeDisplay()
                 
             }
-            
-            // MARK: - Add Custom Drinks
-            Section {
-                HStack {
-                    
-                    Spacer()
-                    
-                    Button {
-                        // Update isPresented
-                        isPresented = true
-                    } label: {
-                        Text("Add Drink Type")
-                    }
-                    // Show sheet
-                    .sheet(isPresented: $isPresented) {
-                        NewDrinkTypeView(isPresented: $isPresented)
-                            .environmentObject(model)
-                    }
-                    
-                    Spacer()
+        }
+        .sheet(isPresented: $isPresented) {
+            NewDrinkTypeView(isPresented: $isPresented)
+                .environmentObject(model)
+                .onDisappear {
+                    backButtonId = UUID()
+                    editButtonId = UUID()
+                    newDrinkTypeButtonId = UUID()
                 }
-            }
         }
         .navigationBarTitle("Drink Types")
         .toolbar {
-            EditButton()
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    // Update isPresented
+                    isPresented = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .id(newDrinkTypeButtonId)
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    editMode.wrappedValue.toggle()
+                } label: {
+                    Image(systemName: editMode.wrappedValue == .active ? "pencil.slash" : "pencil")
+                }
+                .id(editButtonId)
+            }
         }
     }
     
@@ -103,6 +114,12 @@ struct SettingsDrinkTypeView: View {
         
         // Remove drink type from customDrinkTypes
         model.drinkData.customDrinkTypes.remove(atOffsets: offsets)
+    }
+}
+
+extension EditMode {
+    mutating func toggle() {
+        self = self == .active ? .inactive : .active
     }
 }
 
