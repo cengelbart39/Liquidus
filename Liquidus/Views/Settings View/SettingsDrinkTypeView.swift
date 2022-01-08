@@ -75,7 +75,7 @@ struct SettingsDrinkTypeView: View {
             // MARK: - Custom
             Section(header: Text("Custom"), footer: Text("Deleting custom drink types, will delete ALL associated data")) {
                 
-                CustomDrinkTypeDisplay()
+                CustomDrinkTypeView()
                 
             }
         }

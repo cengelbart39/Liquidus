@@ -9,6 +9,8 @@ import SwiftUI
 
 struct IntakeCircularProgressBarHighlight: View {
     
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    
     var progress: Double
     var color: Color
     
@@ -20,7 +22,7 @@ struct IntakeCircularProgressBarHighlight: View {
             .stroke(style: StrokeStyle(lineWidth: 30, lineCap: .round, lineJoin: .round))
             .foregroundColor(color)
             .rotationEffect(Angle(degrees: 270.0))
-            .animation(.linear)
+            .animation(reduceMotion ? .none : .linear)
         
     }
 }

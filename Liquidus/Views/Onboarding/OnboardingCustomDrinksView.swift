@@ -93,7 +93,7 @@ struct OnboardingCustomDrinksView: View {
             
             // MARK: - Custom Drinks
             Section {
-                CustomDrinkTypeDisplay()
+                CustomDrinkTypeView()
             }
             
             Section {
@@ -118,6 +118,15 @@ struct OnboardingCustomDrinksView: View {
             }
         }
         .multilineTextAlignment(.center)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    OnboardingAppleHealthView()
+                } label: {
+                    Text("Next")
+                }
+            }
+        }
     }
 }
 

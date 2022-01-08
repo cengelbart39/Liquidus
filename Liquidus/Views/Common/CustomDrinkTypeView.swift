@@ -1,5 +1,5 @@
 //
-//  CustomDrinkTypeDisplay.swift
+//  CustomDrinkTypeView.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 10/11/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CustomDrinkTypeDisplay: View {
+struct CustomDrinkTypeView: View {
     
     @Environment(\.sizeCategory) var sizeCategory
     
@@ -116,7 +116,7 @@ struct CustomDrinkTypeDisplay: View {
         
 struct CustomDrinkTypeDisplay_Previews: PreviewProvider {
     static var previews: some View {
-        CustomDrinkTypeDisplay()
+        CustomDrinkTypeView()
             .environmentObject(DrinkModel())
     }
 }

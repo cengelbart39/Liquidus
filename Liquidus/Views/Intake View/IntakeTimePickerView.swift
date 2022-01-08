@@ -1,5 +1,5 @@
 //
-//  TimePicker.swift
+//  IntakeTimePickerView.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/7/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TimePicker: View {
+struct IntakeTimePickerView: View {
     
     @Binding var picker: String
     

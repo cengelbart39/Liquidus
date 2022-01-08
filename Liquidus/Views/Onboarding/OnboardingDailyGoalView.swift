@@ -14,9 +14,9 @@ struct OnboardingDailyGoalView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
     
-    @Binding var dailyGoal: String
     var selectedUnit: String
     
+    @State var dailyGoal = "2000"
     @State var isReccomendationsShowing = false
     
     @ScaledMetric(relativeTo: .body) var symbolSize = 75
@@ -146,7 +146,21 @@ struct OnboardingDailyGoalView: View {
                 }
             }
         }
-        .navigationBarHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    OnboardingDefaultDrinksView()
+                } label: {
+                    Text("Next")
+                }
+            }
+        }
+        .onDisappear {
+            if let num = Double(dailyGoal) {
+                model.drinkData.dailyGoal = num
+                model.save()
+            }
+        }
     }
     
     // Get unit abbreviation
@@ -167,8 +181,8 @@ struct OnboardingDailyGoalView: View {
 struct OnboardingDailyGoalView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
-            OnboardingDailyGoalView(dailyGoal: .constant("2000"), selectedUnit: Constants.milliliters)
+            OnboardingDailyGoalView(selectedUnit: Constants.milliliters)
+            OnboardingDailyGoalView(selectedUnit: Constants.milliliters)
                 .preferredColorScheme(.dark)
                 .environment(\.sizeCategory, .extraExtraExtraLarge)
         }

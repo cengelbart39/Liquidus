@@ -36,16 +36,16 @@ struct IntakeView: View {
             VStack(alignment: .leading) {
                 
                 // MARK: - Day/Week Picker
-                TimePicker(picker: $selectedTimePeriod)
+                IntakeTimePickerView(picker: $selectedTimePeriod)
                 
                 ScrollView {
                     // MARK: - Choose Day or Week Data
                     if selectedTimePeriod == Constants.selectDay {
-                        DayDataPicker(selectedDate: $selectedDay)
+                        IntakeDayDataPicker(selectedDate: $selectedDay)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
                     } else {
-                        WeekDataPicker(currentWeek: $selectedWeek)
+                        IntakeWeekDataPicker(currentWeek: $selectedWeek)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
                     }

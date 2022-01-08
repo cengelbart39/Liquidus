@@ -1,5 +1,5 @@
 //
-//  DayDataPicker.swift
+//  IntakeDayDataPicker.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/7/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DayDataPicker: View {
+struct IntakeDayDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     

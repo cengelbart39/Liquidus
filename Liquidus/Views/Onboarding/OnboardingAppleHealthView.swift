@@ -14,7 +14,7 @@ struct OnboardingAppleHealthView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @Binding var healthKitEnabled : Bool
+    @State var healthKitEnabled = false
         
     @ScaledMetric(relativeTo: .body) var imageSize = 75
     
@@ -133,19 +133,32 @@ struct OnboardingAppleHealthView: View {
             })
         }
         .multilineTextAlignment(.center)
-        .navigationBarHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    // Update and save onboarding status
+                    model.drinkData.isOnboarding = false
+                    model.save()
+                } label: {
+                    if healthKitEnabled {
+                        Text("Done")
+                    } else {
+                        Text("Skip")
+                    }
+                }
+            }
+        }
     }
 }
 
 struct OnboardingAppleHealthView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OnboardingAppleHealthView(healthKitEnabled: .constant(true))
+            OnboardingAppleHealthView()
                 .environmentObject(DrinkModel())
-            OnboardingAppleHealthView(healthKitEnabled: .constant(true))
+            OnboardingAppleHealthView()
                 .preferredColorScheme(.dark)
                 .environmentObject(DrinkModel())
-                .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
     }
 }

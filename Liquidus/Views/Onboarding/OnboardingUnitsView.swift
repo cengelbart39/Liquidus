@@ -12,7 +12,7 @@ struct OnboardingUnitsView: View {
     @EnvironmentObject var model: DrinkModel
     @Environment(\.colorScheme) var colorScheme
     
-    @Binding var selectedUnit: String
+    @State var selectedUnit = Constants.milliliters
     
     @ScaledMetric(relativeTo: .body) var symbolSize = 75
     
@@ -29,7 +29,7 @@ struct OnboardingUnitsView: View {
                             // Show hierarchical symbol
                             Image("custom.lines.measurement.horizontal-3.0")
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
+                                .scaledToFit()
                                 .frame(width: symbolSize, height: symbolSize)
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
@@ -50,7 +50,7 @@ struct OnboardingUnitsView: View {
                             // Show monochrome symbol
                             Image("custom.lines.measurement.horizontal-2.0")
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
+                                .scaledToFit()
                                 .frame(width: symbolSize, height: symbolSize)
                                 .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                             
@@ -113,17 +113,31 @@ struct OnboardingUnitsView: View {
             }
         }
         .multilineTextAlignment(.center)
-        .navigationBarHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    OnboardingDailyGoalView(selectedUnit: selectedUnit)
+                } label: {
+                    Text("Next")
+                }
+
+            }
+        }
+        .onDisappear {
+            // Update and save model
+            model.drinkData.units = selectedUnit
+            model.save()
+        }
     }
 }
     
     struct OnboardingUnitsView_Previews: PreviewProvider {
         static var previews: some View {
             Group {
-                OnboardingUnitsView(selectedUnit: .constant(Constants.milliliters))
+                OnboardingUnitsView()
                     .environment(\.sizeCategory, .extraExtraExtraLarge)
                     .environmentObject(DrinkModel())
-                OnboardingUnitsView(selectedUnit: .constant(Constants.milliliters))
+                OnboardingUnitsView()
                     .preferredColorScheme(.dark)
                     .environmentObject(DrinkModel())
             }

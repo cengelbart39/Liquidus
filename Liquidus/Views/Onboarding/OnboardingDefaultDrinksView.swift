@@ -100,7 +100,18 @@ struct OnboardingDefaultDrinksView: View {
             }
         }
         .multilineTextAlignment(.center)
-        .navigationBarHidden(true)
+        .toolbar {
+            NavigationLink {
+                OnboardingCustomDrinksView()
+            } label: {
+                Text("Next")
+            }
+
+        }
+        .onDisappear {
+            // Save changes
+            model.save()
+        }
     }
 }
 

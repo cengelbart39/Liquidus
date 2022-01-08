@@ -20,6 +20,7 @@ class DrinkModel: ObservableObject {
     @Published var healthStore: HealthStore?
     
     @Published var grayscaleEnabled = false
+    @Published var crossFadeEnabled = false
     
     init() {
         // Create HealthStore

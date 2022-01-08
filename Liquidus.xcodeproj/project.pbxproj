@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D05D0BB2711E68500375C63 /* ButtonDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D05D0BA2711E68500375C63 /* ButtonDatePicker.swift */; };
 		9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
 		9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */; };
 		9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */; };
-		9D25E57726EAAEAF00A9CDC8 /* WeekDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */; };
+		9D25E57726EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E57626EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift */; };
 		9D27485426FA696F00F016D8 /* WeekLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27485326FA696F00F016D8 /* WeekLogView.swift */; };
 		9D27485626FA6A9800F016D8 /* DayLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27485526FA6A9800F016D8 /* DayLogView.swift */; };
 		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
@@ -24,7 +23,7 @@
 		9D46BBE82714CAE700DB9149 /* OnboardingDefaultDrinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE72714CAE700DB9149 /* OnboardingDefaultDrinksView.swift */; };
 		9D46BBEA2714D1D300DB9149 /* OnboardingToggleDrinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE92714D1D300DB9149 /* OnboardingToggleDrinksView.swift */; };
 		9D46BBEC2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBEB2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift */; };
-		9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */; };
+		9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBED2714D50A00DB9149 /* CustomDrinkTypeView.swift */; };
 		9D46BBF02714D88200DB9149 /* OnboardingAppleHealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBEF2714D88200DB9149 /* OnboardingAppleHealthView.swift */; };
 		9D46BBF22714DDDE00DB9149 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBF12714DDDE00DB9149 /* LaunchView.swift */; };
 		9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B39A26E65E2C00FEFE49 /* Liquidus_App.swift */; };
@@ -45,21 +44,19 @@
 		9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */; };
 		9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D99981A26E7B09000A46E78 /* DataLogsView.swift */; };
 		9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */; };
-		9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */; };
-		9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */; };
+		9DA8D6E226E7BA5000FEEC6C /* IntakeTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E126E7BA5000FEEC6C /* IntakeTimePickerView.swift */; };
+		9DA8D6E426E7BAE900FEEC6C /* IntakeDayDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* IntakeDayDataPicker.swift */; };
 		9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
 		9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
 		9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* CalendarView.swift */; };
-		9DD955F727160D6200DA7C38 /* OnboardingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9D05D0BA2711E68500375C63 /* ButtonDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonDatePicker.swift; sourceTree = "<group>"; };
 		9D1C3BB526E8012600D03771 /* DrinkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkData.swift; sourceTree = "<group>"; };
 		9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeSingleDrinkBreakup.swift; sourceTree = "<group>"; };
 		9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsEditCustomTypeView.swift; sourceTree = "<group>"; };
-		9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDataPicker.swift; sourceTree = "<group>"; };
+		9D25E57626EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntakeWeekDataPicker.swift; sourceTree = "<group>"; };
 		9D27485326FA696F00F016D8 /* WeekLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLogView.swift; sourceTree = "<group>"; };
 		9D27485526FA6A9800F016D8 /* DayLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayLogView.swift; sourceTree = "<group>"; };
 		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
@@ -72,7 +69,7 @@
 		9D46BBE72714CAE700DB9149 /* OnboardingDefaultDrinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDefaultDrinksView.swift; sourceTree = "<group>"; };
 		9D46BBE92714D1D300DB9149 /* OnboardingToggleDrinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingToggleDrinksView.swift; sourceTree = "<group>"; };
 		9D46BBEB2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCustomDrinksView.swift; sourceTree = "<group>"; };
-		9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkTypeDisplay.swift; sourceTree = "<group>"; };
+		9D46BBED2714D50A00DB9149 /* CustomDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkTypeView.swift; sourceTree = "<group>"; };
 		9D46BBEF2714D88200DB9149 /* OnboardingAppleHealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppleHealthView.swift; sourceTree = "<group>"; };
 		9D46BBF12714DDDE00DB9149 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		9D48B39726E65E2C00FEFE49 /* Liquidus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Liquidus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,13 +93,12 @@
 		9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeMultiDrinkBreakup.swift; sourceTree = "<group>"; };
 		9D99981A26E7B09000A46E78 /* DataLogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLogsView.swift; sourceTree = "<group>"; };
 		9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDrinkTypeView.swift; sourceTree = "<group>"; };
-		9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
-		9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDataPicker.swift; sourceTree = "<group>"; };
+		9DA8D6E126E7BA5000FEEC6C /* IntakeTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeTimePickerView.swift; sourceTree = "<group>"; };
+		9DA8D6E326E7BAE900FEEC6C /* IntakeDayDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeDayDataPicker.swift; sourceTree = "<group>"; };
 		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
 		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,14 +169,10 @@
 			children = (
 				9D48B3B126E6719100FEFE49 /* RectangleCard.swift */,
 				9D46BBE52714C58300DB9149 /* DailyIntakeInfoView.swift */,
-				9D46BBED2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift */,
+				9D46BBED2714D50A00DB9149 /* CustomDrinkTypeView.swift */,
 				9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */,
 				9DD3F9E22778D32000809D1F /* CalendarView.swift */,
-				9DA8D6E326E7BAE900FEEC6C /* DayDataPicker.swift */,
-				9D25E57626EAAEAF00A9CDC8 /* WeekDataPicker.swift */,
 				9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */,
-				9DA8D6E126E7BA5000FEEC6C /* TimePicker.swift */,
-				9D05D0BA2711E68500375C63 /* ButtonDatePicker.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -189,6 +181,9 @@
 			isa = PBXGroup;
 			children = (
 				9D48B39C26E65E2C00FEFE49 /* IntakeView.swift */,
+				9DA8D6E126E7BA5000FEEC6C /* IntakeTimePickerView.swift */,
+				9DA8D6E326E7BAE900FEEC6C /* IntakeDayDataPicker.swift */,
+				9D25E57626EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift */,
 				9D48B3AB26E6635000FEFE49 /* IntakeCircularProgressBar.swift */,
 				9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */,
 				9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */,
@@ -222,7 +217,6 @@
 		9D4DF5F627138BBA0063A6AE /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				9DD955F627160D6200DA7C38 /* OnboardingMainView.swift */,
 				9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */,
 				9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */,
 				9D46BBE32714C1C500DB9149 /* OnboardingDailyGoalView.swift */,
@@ -356,7 +350,7 @@
 				9D46BBF22714DDDE00DB9149 /* LaunchView.swift in Sources */,
 				9D46BBF02714D88200DB9149 /* OnboardingAppleHealthView.swift in Sources */,
 				9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */,
-				9DA8D6E226E7BA5000FEEC6C /* TimePicker.swift in Sources */,
+				9DA8D6E226E7BA5000FEEC6C /* IntakeTimePickerView.swift in Sources */,
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
 				9D27485626FA6A9800F016D8 /* DayLogView.swift in Sources */,
@@ -368,10 +362,9 @@
 				9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */,
 				9D48B3AA26E6603300FEFE49 /* Constants.swift in Sources */,
 				9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */,
-				9DA8D6E426E7BAE900FEEC6C /* DayDataPicker.swift in Sources */,
-				9D05D0BB2711E68500375C63 /* ButtonDatePicker.swift in Sources */,
+				9DA8D6E426E7BAE900FEEC6C /* IntakeDayDataPicker.swift in Sources */,
 				9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */,
-				9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeDisplay.swift in Sources */,
+				9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeView.swift in Sources */,
 				9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */,
 				9D46BBEA2714D1D300DB9149 /* OnboardingToggleDrinksView.swift in Sources */,
 				9D46BBE42714C1C500DB9149 /* OnboardingDailyGoalView.swift in Sources */,
@@ -380,7 +373,6 @@
 				9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */,
 				9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */,
 				9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */,
-				9DD955F727160D6200DA7C38 /* OnboardingMainView.swift in Sources */,
 				9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */,
 				9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */,
 				9D48B3AE26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift in Sources */,
@@ -388,7 +380,7 @@
 				9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */,
 				9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */,
 				9D27485426FA696F00F016D8 /* WeekLogView.swift in Sources */,
-				9D25E57726EAAEAF00A9CDC8 /* WeekDataPicker.swift in Sources */,
+				9D25E57726EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift in Sources */,
 				9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */,
 				9D46BBE62714C58300DB9149 /* DailyIntakeInfoView.swift in Sources */,
 				9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */,

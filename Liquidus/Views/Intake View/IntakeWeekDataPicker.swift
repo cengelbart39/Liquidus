@@ -1,5 +1,5 @@
 //
-//  WeekDataPicker.swift
+//  IntakeWeekDataPicker.swift
 //  Hydration App
 //
 //  Created by Christopher Engelbart on 9/7/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeekDataPicker: View {
+struct IntakeWeekDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
@@ -142,7 +142,7 @@ struct WeekDataPicker: View {
 
 struct WeekDataPicker_Previews: PreviewProvider {
     static var previews: some View {
-        WeekDataPicker(currentWeek: .constant(DrinkModel().getWeekRange(date: Date())))
+        IntakeWeekDataPicker(currentWeek: .constant(DrinkModel().getWeekRange(date: Date())))
             .environmentObject(DrinkModel())
     }
 }
