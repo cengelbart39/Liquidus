@@ -28,7 +28,7 @@ struct DrinkData: Decodable, Encodable {
     
     var colors: [String:CodableColor] = [
         Constants.waterKey: CodableColor(color: .systemTeal),
-        Constants.coffeeKey: CodableColor(color: UIColor(named: "CoffeeBrown")!),
+        Constants.coffeeKey: CodableColor(color: .systemBrown),
         Constants.sodaKey: CodableColor(color: .systemGreen),
         Constants.juiceKey: CodableColor(color: .systemOrange)
     ]
