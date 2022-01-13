@@ -4,6 +4,9 @@
 //
 //  Created by Christopher Engelbart on 10/11/21.
 //
+//  Keyboard Dismiss Code by pawello2222 on StackOverflow
+//  https://stackoverflow.com/a/63942065
+//
 
 import SwiftUI
 
@@ -12,106 +15,71 @@ struct OnboardingDailyGoalView: View {
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     
     var selectedUnit: String
     
     @State var dailyGoal = "2000"
     @State var isReccomendationsShowing = false
     
+    @FocusState private var isFieldFocused: Bool
+    
     @ScaledMetric(relativeTo: .body) var symbolSize = 75
     
     var body: some View {
         
         Form {
-            // Symbol
-            if #available(iOS 14, *) {
-                Section {
-                    // if iOS 15 show monochrome symbol with changed
-                    // background and removed seperator
-                    if #available(iOS 15, *) {
-                        HStack {
-                            
-                            Spacer()
-                            
-                            Image(systemName: "flag")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: symbolSize, height: symbolSize)
-                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
-                            
-                            Spacer()
-                        }
-                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        .listSectionSeparator(.hidden)
-                    // if iOS 14 show monochrome symbol with no
-                    // other changes
-                    } else {
-                        HStack {
-                            
-                            Spacer()
-                            
-                            Image(systemName: "flag")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: symbolSize, height: symbolSize)
-                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
-                            
-                            Spacer()
-                        }
-                    }
-                }
-            }
-            
-            // Instruction Text
-            Section {
-                // if iOS 15, remove seperators and changed background
-                // color
-                if #available(iOS 15, *) {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        Text("Now set your daily intake goal")
-                            .font(.title2)
-                            .multilineTextAlignment(.center)
-                        
-                        Spacer()
-                        
-                    }
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                    .listSectionSeparator(.hidden)
-                // if iOS 14 or older, don't do the above
-                } else {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        Text("Now set your daily intake goal")
-                            .font(.title2)
-                            .multilineTextAlignment(.center)
-                        
-                        Spacer()
-                        
-                    }
-                }
-            }
-            
-            // Text Field
             Section {
                 HStack {
                     
                     Spacer()
                     
-                    // TextField
-                    TextField("2000", text: $dailyGoal)
-                        .keyboardType(.decimalPad)
-                    
-                    // Units
-                    Text(self.getUnits(unitName: selectedUnit))
+                    Image(systemName: "flag")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: symbolSize, height: symbolSize)
+                        .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                     
                     Spacer()
                 }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                .listSectionSeparator(.hidden)
+                .accessibilityHidden(true)
+            }
+            
+            // Instruction Text
+            Section {
+                HStack {
+                    
+                    Spacer()
+                    
+                    Text("Now set your daily intake goal")
+                        .font(.title2)
+                        .multilineTextAlignment(.center)
+                    
+                    Spacer()
+                    
+                }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                .listSectionSeparator(.hidden)
+            }
+            
+            // Text Field
+            Section {
+                HStack {
+                    // TextField
+                    TextField("Amount", text: $dailyGoal)
+                        .focused($isFieldFocused)
+                        .keyboardType(.decimalPad)
+                    
+                    Spacer()
+                    
+                    // Units
+                    Text(self.getUnits(unitName: selectedUnit))
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityValue("\(dailyGoal) \(selectedUnit)")
+                .accessibilityHint("Edit text to choose your goal")
             }
             
             // Intake Recommendations
@@ -119,7 +87,7 @@ struct OnboardingDailyGoalView: View {
                 Button {
                     isReccomendationsShowing = true
                 } label: {
-                    if !sizeCategory.isAccessibilityCategory {
+                    if !dynamicType.isAccessibilitySize {
                         HStack {
                             
                             Spacer()
@@ -152,6 +120,17 @@ struct OnboardingDailyGoalView: View {
                     OnboardingDefaultDrinksView()
                 } label: {
                     Text("Next")
+                }
+            }
+            ToolbarItem(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        isFieldFocused = false
+                    } label: {
+                        Text("Done")
+                    }
                 }
             }
         }

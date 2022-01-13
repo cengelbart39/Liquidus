@@ -55,6 +55,12 @@ struct CalendarView: View {
             .onDisappear {
                 isPresented = false
             }
+            .accessibilityAction(named: "Cancel") {
+                isPresented = false
+            }
+            .accessibilityAction(named: "Save") {
+                isPresented = false
+            }
         }
     }
 }

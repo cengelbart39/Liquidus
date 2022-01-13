@@ -13,6 +13,8 @@ struct WeekLogView: View {
     
     @EnvironmentObject var model: DrinkModel
     
+    @Namespace private var consumedDrinkNamespace
+    
     var date: Date
     var sortTag: String
     
@@ -25,7 +27,13 @@ struct WeekLogView: View {
             // Show data for each drink
             ForEach(data) { drink in
                 DayLogView(drink: drink)
+                    .accessibilityRotorEntry(id: drink.id, in: consumedDrinkNamespace)
                 
+            }
+            .accessibilityRotor("Days With Consumed Drinks") {
+                ForEach(data) { drink in
+                    AccessibilityRotorEntry(String(drink.amount), drink.id, in: consumedDrinkNamespace)
+                }
             }
             
         // If not...

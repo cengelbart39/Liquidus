@@ -23,13 +23,13 @@ struct DataLogsView: View {
     // Toolbar Items IDs
     @State var addDrinkButtonID = UUID()
     @State var calendarButtonID = UUID()
-    @State var currentDayWeekButtonID = UUID()
+    @State var currentWeekButtonID = UUID()
     @State var sortPickerID = UUID()
     
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     
     var body: some View {
         
@@ -66,7 +66,7 @@ struct DataLogsView: View {
                         // Update ids show items are tapable
                         addDrinkButtonID = UUID()
                         calendarButtonID = UUID()
-                        currentDayWeekButtonID = UUID()
+                        currentWeekButtonID = UUID()
                         sortPickerID = UUID()
                     }
             })
@@ -78,7 +78,7 @@ struct DataLogsView: View {
                         // Update ids show items are tapable
                         addDrinkButtonID = UUID()
                         calendarButtonID = UUID()
-                        currentDayWeekButtonID = UUID()
+                        currentWeekButtonID = UUID()
                         sortPickerID = UUID()
                     }
             })
@@ -91,8 +91,10 @@ struct DataLogsView: View {
                             Text("All")
                                 .tag("All")
                             ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
-                                Text(type)
-                                    .tag(type)
+                                if model.drinkData.enabled[type]! {
+                                    Text(type)
+                                        .tag(type)
+                                }
                             }
                             ForEach(model.drinkData.customDrinkTypes, id: \.self) { type in
                                 Text(type)
@@ -103,6 +105,7 @@ struct DataLogsView: View {
                         Image(systemName: "arrow.up.arrow.down")
                     }
                     .id(sortPickerID)
+                    .accessibilityLabel("Filter Data")
                 }
                 
                 // Show CalendarView
@@ -113,6 +116,7 @@ struct DataLogsView: View {
                         Image(systemName: "calendar")
                     }
                     .id(self.calendarButtonID)
+                    .accessibilityLabel("Change selected week")
                 }
                 
                 // Show LogDrinkView
@@ -123,6 +127,7 @@ struct DataLogsView: View {
                         Image(systemName: "plus")
                     }
                     .id(self.addDrinkButtonID)
+                    .accessibilityLabel("Log a Drink")
                 }
                 
                 // Show the current week
@@ -132,8 +137,30 @@ struct DataLogsView: View {
                     } label: {
                         Text("This Week")
                     }
-                    .id(self.currentDayWeekButtonID)
+                    .id(self.currentWeekButtonID)
+                    .accessibilityHint("Show data from the current week")
                 }
+            }
+            .accessibilityAction(named: "This Week") {
+                selectedDate = Date()
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                sortPickerID = UUID()
+                currentWeekButtonID = UUID()
+            }
+            .accessibilityAction(named: "Change Week") {
+                isCalendarViewShowing = true
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                sortPickerID = UUID()
+                currentWeekButtonID = UUID()
+            }
+            .accessibilityAction(named: "Log a Drink") {
+                isAddDrinkViewShowing = true
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                sortPickerID = UUID()
+                currentWeekButtonID = UUID()
             }
         }
     }
@@ -151,7 +178,7 @@ struct DataLogsView: View {
     func formatter() -> DateFormatter {
         let formatter = DateFormatter()
         
-        if sizeCategory == .accessibilityExtraLarge || sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge {
+        if dynamicType == .accessibility3 || dynamicType == .accessibility4 || dynamicType == .accessibility5 {
             formatter.dateFormat = "MMM. d, yyyy"
         } else {
             formatter.dateFormat = "MMMM d, yyyy"

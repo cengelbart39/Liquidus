@@ -11,7 +11,7 @@ struct IntakeSingleDrinkBreakup: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     
     var color: Color
     var drinkType: String
@@ -26,29 +26,15 @@ struct IntakeSingleDrinkBreakup: View {
         HStack {
             
             // Rectangle Card
-            if #available(iOS 14, *) {
-                
-                if #available(iOS 15, *) {
-                    Image("custom.drink.fill-3.0")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: symbolSize, height: symbolSize)
-                        .foregroundColor(model.grayscaleEnabled ? .primary : color)
-                } else {
-                    Image("custom.drink.fill-2.0")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: symbolSize, height: symbolSize)
-                        .foregroundColor(model.grayscaleEnabled ? .primary : color)
-                }
-                
-            } else {
-                RectangleCard(color: model.grayscaleEnabled ? .primary : color)
-                    .frame(width: symbolSize, height: symbolSize)
-            }
+            Image("custom.drink.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: symbolSize, height: symbolSize)
+                .foregroundColor(model.grayscaleEnabled ? .primary : color)
+                .accessibilityHidden(true)
             
             HStack {
-                if !sizeCategory.isAccessibilityCategory {
+                if !dynamicType.isAccessibilitySize {
                     VStack(alignment: .leading) {
                         // Drink Name
                         Text(drinkType)
@@ -60,13 +46,14 @@ struct IntakeSingleDrinkBreakup: View {
                         
                         let percent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: drinkType, date: selectedDay) : model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
                         
-                        
                         HStack {
                             Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
                                 .font(.title2)
+                                .accessibilityLabel("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getAccessibilityUnitLabel())")
                             
                             Text("\(percent*100, specifier: "%.2f")%")
                                 .font(.title2)
+                                .accessibilityLabel("\(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))")
                         }
                     }
                 } else {
@@ -75,6 +62,7 @@ struct IntakeSingleDrinkBreakup: View {
                         Text(drinkType)
                             .font(.title)
                             .bold()
+                            .accessibilityAddTraits(.isHeader)
                         
                         // Consumed Amount & Percent
                         let amount = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypeAmount(type: drinkType, date: selectedDay) : model.getDrinkTypeAmount(type: drinkType, week: selectedWeek)
@@ -82,17 +70,19 @@ struct IntakeSingleDrinkBreakup: View {
                         let percent = selectedTimePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: drinkType, date: selectedDay) : model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
                         
                        Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
-                            .font(sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge ? .caption2 : .title2)
+                            .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)
+                            .accessibilityLabel("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getAccessibilityUnitLabel()) of \(drinkType)")
 
                         Text("\(percent*100, specifier: "%.2f")%")
-                            .font(sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge ? .caption2 : .title2)
-
+                            .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)
+                            .accessibilityLabel("\(percent*100, specifier: "%.2f")% \(drinkType)")
                     }
                 }
                 
                 Spacer()
             }
         }
+        .accessibilityElement(children: .combine)
     }
 }
 

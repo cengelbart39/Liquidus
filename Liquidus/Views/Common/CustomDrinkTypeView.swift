@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomDrinkTypeView: View {
     
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     
     @EnvironmentObject var model: DrinkModel
     
@@ -29,30 +29,14 @@ struct CustomDrinkTypeView: View {
                         SettingsEditCustomTypeView(type: type, color: model.getDrinkTypeColor(type: type))
                     } label: {
                         // If Dynamic Type is accessibility xLarge, xxLarge, or xxxLarge...
-                        if sizeCategory == .accessibilityExtraLarge || sizeCategory == .accessibilityExtraExtraLarge || sizeCategory == .accessibilityExtraExtraExtraLarge {
+                        if dynamicType == .accessibility3 || dynamicType == .accessibility4 || dynamicType == .accessibility5 {
                             
                             VStack(alignment: .leading, spacing: 10) {
-                                // Show type color
-                                if #available(iOS 14, *) {
-                                    
-                                    if #available(iOS 15, *) {
-                                        Image("custom.drink.fill-3.0")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                    } else {
-                                        Image("custom.drink.fill-2.0")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                    }
-                                } else {
-                                    Circle()
-                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                        .frame(width: symbolSize, height: symbolSize)
-                                }
+                                Image("custom.drink.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: symbolSize, height: symbolSize)
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                 
                                 // Type Name
                                 Text(type)
@@ -61,26 +45,11 @@ struct CustomDrinkTypeView: View {
                         } else {
                             HStack {
                                 // Show type color
-                                if #available(iOS 14, *) {
-                                    
-                                    if #available(iOS 15, *) {
-                                        Image("custom.drink.fill-3.0")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                    } else {
-                                        Image("custom.drink.fill-2.0")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: symbolSize, height: symbolSize)
-                                            .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                    }
-                                } else {
-                                    Circle()
-                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                        .frame(width: symbolSize, height: symbolSize)
-                                }
+                                Image("custom.drink.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: symbolSize, height: symbolSize)
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                 
                                 // Type Name
                                 Text(type)

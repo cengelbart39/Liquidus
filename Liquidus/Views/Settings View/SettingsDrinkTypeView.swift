@@ -16,15 +16,16 @@ struct SettingsDrinkTypeView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.editMode) private var editMode: Binding<EditMode>!
+    @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    @Environment(\.dynamicTypeSize) var dynamicType
     
-    @State var isPresented = false    
+    @State var isPresented = false
     
-    @State var backButtonId = UUID()
     @State var editButtonId = UUID()
     @State var newDrinkTypeButtonId = UUID()
     
     @ScaledMetric(relativeTo: .body) var symbolSize = 20
-        
+    
     var body: some View {
         Form {
             
@@ -37,38 +38,79 @@ struct SettingsDrinkTypeView: View {
                         // Go to Edit view
                         SettingsEditDefaultTypeView(type: type)
                     } label: {
-                        HStack {
-                            // Color
-                            if #available(iOS 14, *) {
-                                // if iOS 15, use plaette symbol
-                                if #available(iOS 15, *) {
-                                    Image("custom.drink.fill-3.0")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: symbolSize, height: symbolSize)
-                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                // if iOS 14, use monochrome symbol
-                                } else {
-                                    Image("custom.drink.fill-2.0")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: symbolSize, height: symbolSize)
-                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                }
-                            // if iOS 13 or older, use a circle
-                            } else {
-                                Circle()
-                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                        if model.drinkData.enabled[type]! {
+                            HStack {
+                                Image("custom.drink.fill")
+                                    .resizable()
+                                    .scaledToFit()
                                     .frame(width: symbolSize, height: symbolSize)
+                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                    .accessibilityHidden(true)
+                                
+                                // Type Name
+                                Text(type)
                             }
-                            
-                            // Type Name
-                            Text(type)
+                            // Show color or grayscale variant if enabled
+                            .saturation(model.drinkData.enabled[type]! ? 1 : 0)
+                        } else {
+                            if dynamicType.isAccessibilitySize {
+                                VStack(alignment: .leading) {
+                                    
+                                    Image("custom.drink.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: symbolSize, height: symbolSize)
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                        .accessibilityHidden(true)
+                                    
+                                    // Type Name
+                                    Text(type)
+                                    // Accessibility Label should only include "Type Disabled"
+                                    // when the type is disabled, when Differenitiate without Color
+                                    // is disabled, and when the Grayscale Color Filter is disabled
+                                        .accessibilityLabel("\(type)\((!model.drinkData.enabled[type]! && !differentiateWithoutColor && !model.grayscaleEnabled) ? ", Type Disabled" : "")")
+                                    
+                                    // Check if Differentiate without Color or Grayscale Color Filter
+                                    // is enabled and the type is disabled
+                                    if (differentiateWithoutColor || model.grayscaleEnabled) && !model.drinkData.enabled[type]! {
+                                        
+                                        Text("Disabled")
+                                        
+                                    }
+                                }
+                                .saturation(model.drinkData.enabled[type]! ? 1 : 0)
+                            } else {
+                                HStack {
+                                    // Color
+                                    Image("custom.drink.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: symbolSize, height: symbolSize)
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                        .accessibilityHidden(true)
+                                    
+                                    // Type Name
+                                    Text(type)
+                                    // Accessibility Label should only include "Type Disabled"
+                                    // when the type is disabled, when Differenitiate without Color
+                                    // is disabled, and when the Grayscale Color Filter is disabled
+                                        .accessibilityLabel("\(type)\((!model.drinkData.enabled[type]! && !differentiateWithoutColor && !model.grayscaleEnabled) ? ", Type Disabled" : "")")
+                                    
+                                    // Check if Differentiate without Color or Grayscale Color Filter
+                                    // is enabled and the type is disabled
+                                    if (differentiateWithoutColor || model.grayscaleEnabled) && !model.drinkData.enabled[type]! {
+                                        
+                                        Spacer()
+                                        
+                                        Text("Disabled")
+                                        
+                                    }
+                                }
+                                // Show color or grayscale variant if enabled
+                                .saturation(model.drinkData.enabled[type]! ? 1 : 0)
+                            }
                         }
-                        // Show color or grayscale variant if enabled
-                        .saturation(model.drinkData.enabled[type]! ? 1 : 0)
                     }
-
                 }
             }
             
@@ -83,7 +125,6 @@ struct SettingsDrinkTypeView: View {
             NewDrinkTypeView(isPresented: $isPresented)
                 .environmentObject(model)
                 .onDisappear {
-                    backButtonId = UUID()
                     editButtonId = UUID()
                     newDrinkTypeButtonId = UUID()
                 }
@@ -98,6 +139,7 @@ struct SettingsDrinkTypeView: View {
                     Image(systemName: "plus")
                 }
                 .id(newDrinkTypeButtonId)
+                .accessibilityLabel("Create New Drink Type")
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -107,7 +149,16 @@ struct SettingsDrinkTypeView: View {
                     Image(systemName: editMode.wrappedValue == .active ? "pencil.slash" : "pencil")
                 }
                 .id(editButtonId)
+                .accessibilityLabel(editMode.wrappedValue == .active ? "Cancel Edit" : "Edit Custom Drink Types")
             }
+        }
+        .accessibilityAction(named: "Create New Drink Type") {
+            isPresented = true
+            editButtonId = UUID()
+            newDrinkTypeButtonId = UUID()
+        }
+        .accessibilityAction(named: "Edit Custom Types") {
+            editMode.wrappedValue.toggle()
         }
     }
     

@@ -21,73 +21,37 @@ struct OnboardingDefaultDrinksView: View {
         
         // Instructions
         Form {
-            if #available(iOS 14.0, *) {
-                Section {
-                    // if iOS 15, show heirarchical symbol
-                    // remove seperators, and change background
-                    // color
-                    if #available(iOS 15, *) {
-                        HStack {
-                            Spacer ()
-                            
-                            Image("custom.drink-3.0")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: symbolSize, height: symbolSize)
-                                .symbolRenderingMode(.hierarchical)
-                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
-                            
-                            Spacer ()
-                            
-                        }
-                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        .listSectionSeparator(.hidden)
-                    // if iOS 14, show monochrome symbol with none
-                    // of the other changes
-                    } else {
-                        HStack {
-                            Spacer()
-                            
-                            Image("custom.drink-2.0")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: symbolSize, height: symbolSize)
-                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
-
-                            Spacer()
-                        }
-                    }
+            Section {
+                HStack {
+                    Spacer ()
+                    
+                    Image("custom.drink")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: symbolSize, height: symbolSize)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
+                    
+                    Spacer ()
                     
                 }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                .listSectionSeparator(.hidden)
+                .accessibilityHidden(true)
             }
             
             Section {
-                // if iOS 15, remove seperators and change background
-                // color
-                if #available(iOS 15, *) {
-                    HStack {
-                        
-                        Spacer ()
-                        
-                        Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
-                            .font(.title2)
-                        
-                        Spacer()
-                    }
-                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                    .listSectionSeparator(.hidden)
-                // if older, don't do the above
-                } else {
-                    HStack {
-                        
-                        Spacer ()
-                        
-                        Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
-                            .font(.title2)
-                        
-                        Spacer()
-                    }
+                HStack {
+                    
+                    Spacer ()
+                    
+                    Text("Liquidus comes with 4 default drink types. These can be enabled and disabled at any time.")
+                        .font(.title2)
+                    
+                    Spacer()
                 }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                .listSectionSeparator(.hidden)
             }
             
             // Drink Toggles
@@ -106,7 +70,7 @@ struct OnboardingDefaultDrinksView: View {
             } label: {
                 Text("Next")
             }
-
+            
         }
         .onDisappear {
             // Save changes

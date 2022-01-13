@@ -4,6 +4,9 @@
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //
+//  Keyboard Dismiss Code by pawello2222 on StackOverflow
+//  https://stackoverflow.com/a/63942065
+//
 
 import SwiftUI
 
@@ -16,21 +19,27 @@ struct SettingsDailyGoalView: View {
     @State var dailyGoal = ""
     @State var reccomendationsShowing = false
         
+    @FocusState private var isFieldFocused: Bool
+    
     var body: some View {
         
         Form {
             
-            Section() {
+            Section(footer: Text("Weekly goal adjusts accordingly")) {
                 
                 HStack {
                     // Daily Goal input
                     TextField("\(Int(model.drinkData.dailyGoal))", text: $dailyGoal)
                         .keyboardType(.decimalPad)
+                        .focused($isFieldFocused)
                     
                     Spacer()
                     
                     Text(model.getUnits())
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityValue("\(model.drinkData.dailyGoal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal)) \(model.getAccessibilityUnitLabel())")
+                .accessibilityHint("Edit text to change your goal")
             }
             
             // Daily Intake Recommendations
@@ -64,6 +73,28 @@ struct SettingsDailyGoalView: View {
                 }, label: {
                     Text("Save")
                 })
+            }
+            
+            ToolbarItem(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        isFieldFocused = false
+                    } label: {
+                        Text("Done")
+                    }
+                }
+            }
+        }
+        .accessibilityAction(named: "Save") {
+            if let num = Double(dailyGoal) {
+                // Update daily goal
+                model.drinkData.dailyGoal = num
+                // Save to user defaults
+                model.save()
+                // Dismiss screen
+                presentationMode.wrappedValue.dismiss()
             }
         }
     }

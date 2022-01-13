@@ -14,90 +14,116 @@ struct SettingsView: View {
     
     @State var dailyGoal = ""
     
+    @ScaledMetric(relativeTo: .body) var symbolSize = 20
+    
     var body: some View {
         
         NavigationView {
             
             Form {
                 
-                // MARK: - Daily Goal Settings
-                Section(footer: Text("Weekly goal adjusts accordingly")) {
+                // MARK: - Customization
+                Section(header: Text("Customization")) {
                     
+                    // Daily Goal
                     NavigationLink(
                         // Display Settings Page
                         destination: SettingsDailyGoalView(),
                         label: {
-                            HStack {
-                                // Display current daily goal
-                                Text("Daily Goal: \(model.drinkData.dailyGoal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal)) \(model.getUnits())")
-                            }
+                            Label("Daily Goal", systemImage: "flag")
                         })
                     
-                }
-                
-                Section {
+                    // Drink Types
                     NavigationLink {
                         SettingsDrinkTypeView()
                     } label: {
-                        Text("Drink Types")
+                        Label {
+                            Text("Drink Types")
+                        } icon: {
+                            Image("custom.drink")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: symbolSize, height: symbolSize)
+                        }
                     }
-
-                }
-                
-                // MARK: - Unit Settings
-                Section(footer: Text("If the unit is changed, all measurements will be converted")) {
                     
+                    // Units
                     NavigationLink(
                         destination: SettingsUnitsView(),
                         label: {
-                            Text("\(model.drinkData.units) (\(model.getUnits()))")
+                            Label("Units", systemImage: "ruler")
                         })
                 }
                 
-                // MARK: - Sync with Apple Health
+                // MARK: - Apple Health
                 // Don't display button if Apple Health access is granted
                 if !model.drinkData.healthKitEnabled {
-                    Section() {
+                    Section(header: Text("Apple Health")) {
                         
-                        HStack {
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                if let healthStore = model.healthStore {
-                                    if model.drinkData.lastHKSave == nil {
-                                        healthStore.requestAuthorization { succcess in
-                                            if succcess {
-                                                healthStore.getHealthKitData { statsCollection in
-                                                    if let statsCollection = statsCollection {
-                                                        model.retrieveFromHealthKit(statsCollection)
-                                                        model.saveToHealthKit()
-                                                        DispatchQueue.main.async {
-                                                            model.drinkData.healthKitEnabled = true
-                                                        }
+                        Button(action: {
+                            if let healthStore = model.healthStore {
+                                if model.drinkData.lastHKSave == nil {
+                                    healthStore.requestAuthorization { succcess in
+                                        if succcess {
+                                            healthStore.getHealthKitData { statsCollection in
+                                                if let statsCollection = statsCollection {
+                                                    model.retrieveFromHealthKit(statsCollection)
+                                                    model.saveToHealthKit()
+                                                    DispatchQueue.main.async {
+                                                        model.drinkData.healthKitEnabled = true
                                                     }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }, label: {
+                            }
+                        }, label: {
+                            Label {
                                 Text("Sync with Apple Health")
-                                    .foregroundColor(model.grayscaleEnabled ? .primary : Color(.systemPink))
-                            })
-                            
-                            Spacer()
-                        }
+                                    .foregroundColor(.primary)
+                            } icon: {
+                                Image(systemName: "heart")
+                                    .foregroundColor(Color(.systemPink))
+                            }
+                        })
                         
                     }
                 }
                 
+                // MARK: - Other
+                Section(header: Text("Other")) {
+                    // About
+                    NavigationLink(destination: SettingsAboutView()) {
+                        Label("About", systemImage: "info.circle")
+                    }
+                    
+                    // GitHub Repo
+                    Link(destination: URL(string: "https://github.com/cengelbart39/Liquidus")!) {
+                        Label {
+                            Text("GitHub Repo")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "chevron.left.forwardslash.chevron.right")
+                                .foregroundColor(Color(.systemBlue))
+                        }
+                    }
+                    
+                    // Development Journal
+                    Link(destination: URL(string: "https://codecrew.codewithchris.com/t/christophers-healthkit-app-challenge-journal/14611")!) {
+                        Label {
+                            Text("Development Jorunal")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "book.closed")
+                                .foregroundColor(Color(.systemBlue))
+                        }
+                    }
+                }
                 
             }
             .navigationBarTitle("Settings")
         }
-
-        
     }
 }
 

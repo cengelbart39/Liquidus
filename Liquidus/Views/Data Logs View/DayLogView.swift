@@ -10,7 +10,7 @@ import SwiftUI
 struct DayLogView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     
     @EnvironmentObject var model: DrinkModel
@@ -21,29 +21,14 @@ struct DayLogView: View {
         
         // If Accessibility Dynamic Type Size...
         if !model.grayscaleEnabled && !differentiateWithoutColor {
-            if !sizeCategory.isAccessibilityCategory {
+            if !dynamicType.isAccessibilitySize {
                 HStack {
-                    // Colored Drop
-                    if #available(iOS 14, *) {
-                        // if iOS 15, use palette symbol
-                        if #available(iOS 15, *) {
-                            Image("custom.drink.fill-3.0")
-                                .font(.title)
-                                .foregroundColor(model.getDrinkTypeColor(type: drink.type))
-                                .padding(.trailing)
-                            // if iOS 14, use monochrome symbol
-                        } else {
-                            Image("custom.drink.fill-2.0")
-                                .font(.title)
-                                .foregroundColor(model.getDrinkTypeColor(type: drink.type))
-                                .padding(.trailing)
-                        }
-                        // if iOS 13 or older, use drop.fill symbol
-                    } else {
-                        Image(systemName: "drop.fill")
-                            .font(.title)
-                            .foregroundColor(model.getDrinkTypeColor(type: drink.type))
-                    }
+                    Image("custom.drink.fill")
+                        .font(.title)
+                        .foregroundColor(model.getDrinkTypeColor(type: drink.type))
+                        .padding(.trailing)
+                        .accessibilityLabel(drink.type)
+                        .accessibilityRemoveTraits(.isImage)
                     
                     Spacer()
                     
@@ -60,30 +45,17 @@ struct DayLogView: View {
                         .padding(.leading, 10)
                         .font(.title3)
                 }
+                .accessibilityElement(children: .combine)
                 // If not...
             } else {
                 VStack(alignment: .leading) {
-                    // Colored Drop
-                    if #available(iOS 14, *) {
-                        // if iOS 15, use palette symbol
-                        if #available(iOS 15, *) {
-                            Image("custom.drink.fill-3.0")
-                                .font(.title)
-                                .foregroundColor(model.getDrinkTypeColor(type: drink.type))
-                                .padding(.trailing)
-                            // if iOS 14, use monochrome symbol
-                        } else {
-                            Image("custom.drink.fill-2.0")
-                                .font(.title)
-                                .foregroundColor(model.getDrinkTypeColor(type: drink.type))
-                                .padding(.trailing)
-                        }
-                        // if iOS 13 or older, use drop.fill symbol
-                    } else {
-                        Image(systemName: "drop.fill")
-                            .font(.title)
-                            .foregroundColor(model.getDrinkTypeColor(type: drink.type))
-                    }
+                    Image("custom.drink.fill")
+                        .font(.title)
+                        .foregroundColor(model.getDrinkTypeColor(type: drink.type))
+                        .padding(.trailing)
+                        .accessibilityLabel(drink.type)
+                        .accessibilityRemoveTraits(.isImage)
+                        .accessibilityAddTraits(.isStaticText)
                     
                     // Amount consumed
                     Text("\(drink.amount, specifier: model.getSpecifier(amount: drink.amount)) \(model.getUnits())")
@@ -95,6 +67,7 @@ struct DayLogView: View {
                     Text(formatter.string(from: drink.date))
                         .font(.title3)
                 }
+                .accessibilityElement(children: .combine)
             }
         } else {
             VStack(alignment: .leading) {
@@ -102,7 +75,7 @@ struct DayLogView: View {
                     .font(.title2)
                     .bold()
                 
-                if !sizeCategory.isAccessibilityCategory {
+                if !dynamicType.isAccessibilitySize {
                     HStack {
                         Text("\(drink.amount, specifier: model.getSpecifier(amount: drink.amount)) \(model.getUnits())")
                             .font(.title3)
@@ -124,6 +97,7 @@ struct DayLogView: View {
                         .font(.title3)
                 }
             }
+            .accessibilityElement(children: .combine)
         }
     }
     

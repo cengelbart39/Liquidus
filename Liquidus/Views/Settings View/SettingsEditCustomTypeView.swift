@@ -4,6 +4,9 @@
 //
 //  Created by Christopher Engelbart on 10/8/21.
 //
+//  Keyboard Dismiss Code by pawello2222 on StackOverflow
+//  https://stackoverflow.com/a/63942065
+//
 
 import SwiftUI
 
@@ -20,20 +23,26 @@ struct SettingsEditCustomTypeView: View {
     @State var newColor = Color.black
     @State var name = ""
     
+    @FocusState private var isFieldFocused: Bool
+    
     var body: some View {
-        
         
         Form {
             // Update type name
             Section(header: Text("Name")) {
                 TextField(name, text: $name)
                     .multilineTextAlignment(.leading)
+                    .accessibilityHint("Edit text to change name")
+                    .focused($isFieldFocused)
             }
             
             if !model.grayscaleEnabled {
                 // Update color
                 Section(header: Text("Color")) {
                     ColorPicker("Choose a new color", selection: $newColor, supportsOpacity: false)
+                        .accessibilityElement()
+                        .accessibilityLabel("Change color")
+                        .accessibilityAddTraits(.isButton)
                 }
             }
         }
@@ -42,7 +51,7 @@ struct SettingsEditCustomTypeView: View {
             name = type
             newColor = model.getDrinkTypeColor(type: type)
         }
-        .navigationTitle("Edit \(type)")
+        .navigationTitle("Edit \"\(type)\"")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -56,6 +65,26 @@ struct SettingsEditCustomTypeView: View {
                     Text("Save")
                 }
             }
+            
+            ToolbarItem(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        isFieldFocused = false
+                    } label: {
+                        Text("Done")
+                    }
+                }
+            }
+        }
+        .accessibilityAction(named: "Save") {
+            // Update color in model
+            model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
+            // Edit existing drinks of type
+            model.editDrinkType(old: type, new: name)
+            // Dismiss view
+            presentationMode.wrappedValue.dismiss()
         }
     }
     

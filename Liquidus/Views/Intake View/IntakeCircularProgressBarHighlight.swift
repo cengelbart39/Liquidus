@@ -22,7 +22,6 @@ struct IntakeCircularProgressBarHighlight: View {
             .stroke(style: StrokeStyle(lineWidth: 30, lineCap: .round, lineJoin: .round))
             .foregroundColor(color)
             .rotationEffect(Angle(degrees: 270.0))
-            .animation(reduceMotion ? .none : .linear)
-        
+            .animation(reduceMotion ? .none : .linear, value: progress)
     }
 }

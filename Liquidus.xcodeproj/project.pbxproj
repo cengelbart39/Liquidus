@@ -39,6 +39,7 @@
 		9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */; };
 		9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */; };
 		9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */; };
+		9D8E8774278F7E520051D808 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E8773278F7E510051D808 /* SettingsAboutView.swift */; };
 		9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
 		9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */; };
@@ -87,6 +88,7 @@
 		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
 		9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDrinkView.swift; sourceTree = "<group>"; };
 		9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditDefaultTypeView.swift; sourceTree = "<group>"; };
+		9D8E8773278F7E510051D808 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
 		9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		9D935BEE26ED0E2400CA9C31 /* Liquidus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Liquidus.entitlements; sourceTree = "<group>"; };
 		9D935BF026ED0E2400CA9C31 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -202,6 +204,7 @@
 				9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */,
 				9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */,
 				9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */,
+				9D8E8773278F7E510051D808 /* SettingsAboutView.swift */,
 			);
 			path = "Settings View";
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */,
 				9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */,
 				9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */,
+				9D8E8774278F7E520051D808 /* SettingsAboutView.swift in Sources */,
 				9D46BBEC2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift in Sources */,
 				9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */,
 				9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */,
@@ -519,7 +523,7 @@
 				DEVELOPMENT_TEAM = 6DS9W86UXV;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Liquidus/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,7 +546,7 @@
 				DEVELOPMENT_TEAM = 6DS9W86UXV;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Liquidus/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

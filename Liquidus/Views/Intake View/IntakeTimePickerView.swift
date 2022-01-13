@@ -23,6 +23,5 @@ struct IntakeTimePickerView: View {
         .pickerStyle(SegmentedPickerStyle())
         .padding(.horizontal)
         .padding(.bottom, 16)
-        
     }
 }

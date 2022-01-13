@@ -22,73 +22,36 @@ struct OnboardingCustomDrinksView: View {
         Form {
             // MARK: - Section Image
             Section {
-                if #available(iOS 14, *) {
-                    // if iOS 15, show hierarchical symbol, change
-                    // background color, and remove seperators
-                    if #available(iOS 15, *) {
-                        HStack {
-                            Spacer()
-                            
-                            Image("custom.drink.badge.plus-3.0")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: imageSize, height: imageSize)
-                                .symbolRenderingMode(.hierarchical)
-                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
-                            
-                            Spacer()
-                        }
-                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        .listSectionSeparator(.hidden)
+                HStack {
+                    Spacer()
                     
-                    // if iOS 14, show monochrome symbol and do none
-                    // of the above changes
-                    } else {
-                        HStack {
-                            
-                            Spacer()
-                            
-                            Image("custom.drink.badge.plus-2.0")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: imageSize, height: imageSize)
-                                .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
-                            
-                            Spacer()
-                        }
-                    }
+                    Image("custom.drink.badge.plus")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: imageSize, height: imageSize)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(model.grayscaleEnabled ? .primary : .blue)
                     
+                    Spacer()
                 }
+                .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                .listSectionSeparator(.hidden)
+                .accessibilityHidden(true)
             }
+            
             
             // MARK: - Instruction Text
             Section {
-                // if iOS 15, remove seperators and change background
-                // color
-                if #available(iOS 15.0, *) {
-                    Text("You can also add custom drink types that aren't built in by default.")
-                        .font(.title2)
-                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        .listSectionSeparator(.hidden)
-                // if not, don't do the above
-                } else {
-                    Text("You can also add custom drink types that aren't built in by default.")
-                        .font(.title2)
-                }
+                Text("You can also add custom drink types that aren't built in by default.")
+                    .font(.title2)
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                    .listSectionSeparator(.hidden)
             }
             Section {
-                // if iOS 15, remove seperators and change background
-                // color
-                if #available(iOS 15.0, *) {
-                    Text("You can always edit, delete, and add more later")
-                        .font(.title3)
-                        .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
-                        .listSectionSeparator(.hidden)
-                // if not, don't do the above
-                } else {
-                    Text("You can always edit, delete, and add more later")
-                        .font(.title3)
-                }
+                Text("You can always edit, delete, and add more later")
+                    .font(.title3)
+                    .listRowBackground(colorScheme == .light ? Color(.systemGray6) : Color.black)
+                    .listSectionSeparator(.hidden)
             }
             
             // MARK: - Custom Drinks

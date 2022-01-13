@@ -31,12 +31,14 @@ struct OnboardingWelcomeView: View {
                                 .scaledToFit()
                                 .padding(.all, -20)
                                 .frame(width: geo.size.width, height: geo.size.height/2.2)
+                                .accessibilityHidden(true)
                             
                             // Welcome Text
                             Text("Welcome to Liquidus!")
                                 .font(.largeTitle)
                                 .bold()
                                 .padding([.bottom, .horizontal])
+                                .accessibilityAddTraits(.isHeader)
                             
                             // Description Text
                             Text("Here you can take steps to staying hydrated while seeing what you drink and how much you drink.")

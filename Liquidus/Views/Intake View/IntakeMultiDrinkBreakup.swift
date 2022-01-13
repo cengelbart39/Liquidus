@@ -11,6 +11,8 @@ struct IntakeMultiDrinkBreakup: View {
     
     @EnvironmentObject var model: DrinkModel
     
+    @Namespace private var consumedDrinkNamespace
+    
     var selectedTimePeriod: String
     var selectedDay: Date
     var selectedWeek: [Date]
@@ -26,10 +28,24 @@ struct IntakeMultiDrinkBreakup: View {
                 if model.drinkData.enabled[type]! {
                     IntakeSingleDrinkBreakup(color: model.getDrinkTypeColor(type: type), drinkType: type, selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
                         .padding(.leading)
+                        .accessibilityRotorEntry(id: type.self, in: consumedDrinkNamespace)
                 }
             }
         }
-        
+        .accessibilityRotor("Consumed Drink Types") {
+            ForEach(model.drinkData.defaultDrinkTypes+model.drinkData.customDrinkTypes, id: \.self) { type in
+                if selectedTimePeriod == Constants.selectDay {
+                    if model.getDrinkTypeAmount(type: type, date: selectedDay) != 0.0 {
+                        AccessibilityRotorEntry(type, type.self, in: consumedDrinkNamespace)
+                    }
+                }
+                if selectedTimePeriod == Constants.selectWeek {
+                    if model.getDrinkTypeAmount(type: type, week: selectedWeek) != 0.0 {
+                        AccessibilityRotorEntry(type, type.self, in: consumedDrinkNamespace)
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -17,7 +17,7 @@ struct SettingsUnitsView: View {
     var body: some View {
         
         Form {
-            Section {
+            Section(footer: Text("Changing the unit will cause all measurements to be converted")) {
                 
                 // MARK: - Cups (US)
                 Button(action: {
@@ -40,6 +40,7 @@ struct SettingsUnitsView: View {
                         // Text
                         Text("\(Constants.cupsUS) (\(Constants.cups))")
                             .accentColor(colorScheme == .light ? .black : .white)
+                            .accessibilityLabel(Constants.cupsUS)
                         
                         // If Cups (US) are selected
                         if model.drinkData.units == Constants.cupsUS {
@@ -49,9 +50,11 @@ struct SettingsUnitsView: View {
                             // Display checkmark1
                             Image(systemName: "checkmark")
                                 .foregroundColor(.blue)
+                                .accessibilityAddTraits(.isSelected)
                         }
                     }
                 })
+                .accessibilityElement(children: .combine)
                 
                 // MARK: - Fluid Ounces (US)
                 Button(action: {
@@ -74,6 +77,7 @@ struct SettingsUnitsView: View {
                         // Text
                         Text("\(Constants.fluidOuncesUS) (\(Constants.flOzUS))")
                             .accentColor(colorScheme == .light ? .black : .white)
+                            .accessibilityLabel(Constants.fluidOuncesUS)
                         
                         // If Fluid Ounces (US) are selected
                         if model.drinkData.units == Constants.fluidOuncesUS {
@@ -83,9 +87,11 @@ struct SettingsUnitsView: View {
                             // Display checkmark1
                             Image(systemName: "checkmark")
                                 .foregroundColor(.blue)
+                                .accessibilityAddTraits(.isSelected)
                         }
                     }
                 })
+                .accessibilityElement(children: .combine)
                 
                 // MARK: - Liters
                 Button(action: {
@@ -109,6 +115,7 @@ struct SettingsUnitsView: View {
                         // Text
                         Text("\(Constants.liters) (\(Constants.L))")
                             .accentColor(colorScheme == .light ? .black : .white)
+                            .accessibilityLabel(Constants.liters)
                         
                         // If Liters are selected
                         if model.drinkData.units == Constants.liters {
@@ -118,11 +125,12 @@ struct SettingsUnitsView: View {
                             // Display checkmark
                             Image(systemName: "checkmark")
                                 .foregroundColor(.blue)
+                                .accessibilityAddTraits(.isSelected)
                         }
                     }
 
                 })
-                
+                .accessibilityElement(children: .combine)
                 
                 // MARK: - Milliliters
                 Button(action: {
@@ -147,6 +155,7 @@ struct SettingsUnitsView: View {
                         // Text
                         Text("\(Constants.milliliters) (\(Constants.mL))")
                             .accentColor(colorScheme == .light ? .black : .white)
+                            .accessibilityLabel(Constants.milliliters)
                         
                         // If mL is selected...
                         if model.drinkData.units == Constants.milliliters {
@@ -155,10 +164,11 @@ struct SettingsUnitsView: View {
                             // Display a checkmark
                             Image(systemName: "checkmark")
                                 .foregroundColor(.blue)
+                                .accessibilityAddTraits(.isSelected)
                         }
                     }
                 })
-                
+                .accessibilityElement(children: .combine)
 
             }
         }

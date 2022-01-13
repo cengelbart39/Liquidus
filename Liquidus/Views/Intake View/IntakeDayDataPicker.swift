@@ -11,14 +11,13 @@ struct IntakeDayDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     
     @Binding var selectedDate: Date
     
+    @State var isTomorrow = false
+    
     var body: some View {
-        
-        var isTomorrow = isTomorrow(currentDate: selectedDate)
-        
         HStack {
             Button(action: {
                 // Set new date
@@ -30,6 +29,7 @@ struct IntakeDayDataPicker: View {
                 Image(systemName: "chevron.left")
                     .foregroundColor(model.grayscaleEnabled ? .primary : .red)
             })
+            .accessibilityHidden(true)
 
             Spacer()
             
@@ -56,15 +56,45 @@ struct IntakeDayDataPicker: View {
                     .foregroundColor(isTomorrow ? .gray : (model.grayscaleEnabled ? .primary : .red))
             })
             .disabled(isTomorrow)
+            .accessibilityHidden(true)
         }
         .padding(.horizontal)
         .padding(.bottom, 6)
+        .onAppear {
+            self.isTomorrow = self.isTomorrow(currentDate: selectedDate)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Go forward or back a day")
+        .accessibilityAdjustableAction({ direction in
+            switch direction {
+            case .increment:
+                if let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) {
+                    if !isTomorrow {
+                        selectedDate = newDate
+                        isTomorrow = self.isTomorrow(currentDate: selectedDate)
+                    } else {
+                        break
+                    }
+                } else {
+                    break
+                }
+            case .decrement:
+                if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) {
+                    selectedDate = newDate
+                    isTomorrow = self.isTomorrow(currentDate: selectedDate)
+                } else {
+                    break
+                }
+            @unknown default:
+                break
+            }
+        })
     }
     
     func dateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         
-        if !sizeCategory.isAccessibilityCategory {
+        if !dynamicType.isAccessibilitySize {
             formatter.timeStyle = .none
             formatter.dateStyle = .long
         } else {

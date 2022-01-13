@@ -10,7 +10,7 @@ import SwiftUI
 struct IntakeView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.dynamicTypeSize) var dynamicType
     
     @EnvironmentObject var model: DrinkModel
     
@@ -24,14 +24,16 @@ struct IntakeView: View {
     // Current day/week selected
     @State var selectedDay = Date()
     @State var selectedWeek = [Date]()
-    
+        
     // Button IDs
     @State var addDrinkButtonID = UUID()
     @State var calendarButtonID = UUID()
     @State var currentDayWeekButtonID = UUID()
     
+    // Focus
+    @AccessibilityFocusState private var isTimePeriodFocused: Bool
+    
     var body: some View {
-        
         NavigationView {
             VStack(alignment: .leading) {
                 
@@ -44,15 +46,17 @@ struct IntakeView: View {
                         IntakeDayDataPicker(selectedDate: $selectedDay)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
+                            .accessibilityFocused($isTimePeriodFocused)
                     } else {
                         IntakeWeekDataPicker(currentWeek: $selectedWeek)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
+                            .accessibilityFocused($isTimePeriodFocused)
                     }
                     
                     // MARK: - Progress Bar
                     IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
-                        .padding(.horizontal, sizeCategory.isAccessibilityCategory ? 20 : 40)
+                        .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
                         .padding(.vertical)
                     
                     // MARK: - Drink Type Breakup
@@ -69,6 +73,15 @@ struct IntakeView: View {
             .onChange(of: selectedDay) { newValue in
                 // Update selectedWeek when selectedDay updates
                 selectedWeek = model.getDaysInWeek(date: selectedDay)
+            }
+            .onChange(of: selectedTimePeriod) { _ in
+                isTimePeriodFocused = true
+            }
+            .onChange(of: selectedDay) { _ in
+                isTimePeriodFocused = true
+            }
+            .onChange(of: selectedWeek) { _ in
+                isTimePeriodFocused = true
             }
             .sheet(isPresented: $isAddDrinkViewShowing, content: {
                 // Show LogDrinkView
@@ -102,6 +115,7 @@ struct IntakeView: View {
                         Image(systemName: "plus")
                     }
                     .id(self.addDrinkButtonID)
+                    .accessibilityLabel("Log a Drink")
                 }
                 
                 // Show CalendarView
@@ -112,6 +126,7 @@ struct IntakeView: View {
                         Image(systemName: "calendar")
                     }
                     .id(self.calendarButtonID)
+                    .accessibilityLabel("Change selected \(selectedTimePeriod == Constants.selectDay ? "date" : "week")")
                 }
                 
                 // Show Today / This Week Button
@@ -120,10 +135,37 @@ struct IntakeView: View {
                         selectedDay = Date()
                     } label: {
                         Text(selectedTimePeriod == Constants.selectDay ? "Today" : "This Week")
+                            .accessibilityHint("Show data from \(selectedTimePeriod == Constants.selectDay ? "today" : "this week")")
                     }
                     .id(self.currentDayWeekButtonID)
+                    .accessibilityHint("Show data from today or this week")
                 }
             }
+            .accessibilityAction(named: "Today / This Week") {
+                selectedDay = Date()
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                currentDayWeekButtonID = UUID()
+            }
+            .accessibilityAction(named: "Change Date / Week") {
+                isCalendarViewShowing = true
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                currentDayWeekButtonID = UUID()
+            }
+            .accessibilityAction(named: "Log a Drink") {
+                isAddDrinkViewShowing = true
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                currentDayWeekButtonID = UUID()
+            }
+
+        }
+        .accessibilityAction(named: "View by Day") {
+            selectedTimePeriod = Constants.selectDay
+        }
+        .accessibilityAction(named: "View By Week") {
+            selectedTimePeriod = Constants.selectWeek
         }
     }
 }

@@ -20,13 +20,8 @@ struct LaunchView: View {
                 .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
                     model.grayscaleEnabled.toggle()
                 }
-                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.prefersCrossFadeTransitionsStatusDidChange), perform: { _ in
-                    model.crossFadeEnabled.toggle()
-                })
                 .onAppear {
                     model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
-                    model.crossFadeEnabled = UIAccessibility.prefersCrossFadeTransitions
-
                 }
         // If the user isn't onboarding, start with TabBar
         } else if !model.drinkData.isOnboarding {
@@ -34,12 +29,8 @@ struct LaunchView: View {
                 .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
                     model.grayscaleEnabled.toggle()
                 }
-                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.prefersCrossFadeTransitionsStatusDidChange), perform: { _ in
-                    model.crossFadeEnabled.toggle()
-                })
                 .onAppear {
                     model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
-                    model.crossFadeEnabled = UIAccessibility.prefersCrossFadeTransitions
                 }
         }
         

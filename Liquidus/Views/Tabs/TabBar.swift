@@ -19,18 +19,12 @@ struct TabBar: View {
             // IntakeView
             IntakeView()
                 .tabItem {
-                    if #available(iOS 14, *) {
-                        if #available(iOS 15, *) {
-                            Image("custom.drink.fill-3.0")
-                                .font(.system(size: 25))
-                        } else {
-                            Image("custom.drink.fill-2.0")
-                                .font(.system(size: 25))
-                        }
-                    } else {
-                        Image(systemName: "drop.fill")
+                    VStack {
+                        Image("custom.drink.fill")
+                            .font(.system(size: 25))
+
+                        Text("Intake")
                     }
-                    Text("Intake")
                 }
                 .tag(0)
             

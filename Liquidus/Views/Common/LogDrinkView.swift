@@ -4,6 +4,9 @@
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //
+//  Keyboard Dismiss Code by pawello2222 on StackOverflow
+//  https://stackoverflow.com/a/63942065
+//
 
 import SwiftUI
 
@@ -18,6 +21,10 @@ struct LogDrinkView: View {
     @State var drinkType = Constants.waterKey
     @State var amount = ""
     @State var timeSelection = Date()
+        
+    @FocusState private var isAmountFocused: Bool
+    
+    @AccessibilityFocusState private var isAmountFocusedAccessibility: Bool
     
     var body: some View {
         
@@ -41,6 +48,7 @@ struct LogDrinkView: View {
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())
+                            .accessibilityLabel("Choose Drink Type")
                         }
                         
                         // Drink Amount
@@ -48,11 +56,15 @@ struct LogDrinkView: View {
                             HStack {
                                 TextField("500", text: $amount)
                                     .keyboardType(.decimalPad)
+                                    .focused($isAmountFocused)
                                 
                                 Spacer()
                                 
                                 Text(model.getUnits())
                             }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityValue("\(amount) \(model.getAccessibilityUnitLabel())")
+                            .accessibilityFocused($isAmountFocusedAccessibility)
                         }
                         
                         // Date Picker
@@ -72,17 +84,20 @@ struct LogDrinkView: View {
                 // Add drink, when there is an amount
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        // Add a drink to the model
-                        let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
-                        model.addDrink(drink: drink)
-                        
-                        // Dismiss the sheet
-                        isPresented = false
+                        if amount.isEmpty {
+                            isAmountFocusedAccessibility = true
+                        } else {
+                            // Add a drink to the model
+                            let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
+                            model.addDrink(drink: drink)
+                            
+                            // Dismiss the sheet
+                            isPresented = false
+                        }
                     } label: {
                         Text("Add")
-                            .foregroundColor(amount == "" ? .gray : .blue)
+                            .foregroundColor(amount.isEmpty ? .gray : .blue)
                     }
-                    .disabled(amount == "")
                 }
                 
                 // Cancel and dismiss sheet
@@ -94,6 +109,31 @@ struct LogDrinkView: View {
                             .foregroundColor(.blue)
                     }
                 }
+                
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            isAmountFocused = false
+                        } label: {
+                            Text("Done")
+                        }
+                    }
+                }
+            }
+            .accessibilityAction(named: "Add") {
+                if amount != "" {
+                    // Add a drink to the model
+                    let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
+                    model.addDrink(drink: drink)
+                    
+                    // Dismiss the sheet
+                    isPresented = false
+                }
+            }
+            .accessibilityAction(named: "Cancel") {
+                isPresented = false
             }
         }
     }

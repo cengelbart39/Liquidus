@@ -20,7 +20,6 @@ class DrinkModel: ObservableObject {
     @Published var healthStore: HealthStore?
     
     @Published var grayscaleEnabled = false
-    @Published var crossFadeEnabled = false
     
     init() {
         // Create HealthStore
@@ -119,8 +118,7 @@ class DrinkModel: ObservableObject {
         self.save()
     }
     
-    // MARK: - Drink Type Customization
-    
+    // MARK: - Drink Types
     func deleteDefaultDrinks(type: String) {
         
         // Loop through drinks index
@@ -170,7 +168,7 @@ class DrinkModel: ObservableObject {
                 drink.type = new
             }
         }
-
+        
         // Get index of old drink type name
         let index = self.drinkData.customDrinkTypes.firstIndex(of: old)!
         
@@ -179,6 +177,22 @@ class DrinkModel: ObservableObject {
         
         // Save
         self.save()
+    }
+    
+    func getDrinkTypeColor(type: String) -> Color {
+        if !self.drinkData.colorChanged[type]! {
+            if type == Constants.waterKey {
+                return Color(.systemCyan)
+            } else if type == Constants.coffeeKey {
+                return Color(.systemBrown)
+            } else if type == Constants.sodaKey {
+                return Color(.systemGreen)
+            } else if type == Constants.juiceKey {
+                return Color(.systemOrange)
+            }
+        }
+        
+        return self.drinkData.colors[type]!.getColor()
     }
     
     // MARK: - Units
@@ -220,6 +234,20 @@ class DrinkModel: ObservableObject {
         return ""
     }
     
+    func getAccessibilityUnitLabel() -> String {
+        let units = self.drinkData.units
+        
+        if units == Constants.milliliters {
+            return "milliliters"
+        } else if units == Constants.liters {
+            return "liters"
+        } else if units == Constants.fluidOuncesUS {
+            return "fluid ounces"
+        } else {
+            return "cups"
+        }
+    }
+    
     func convertMeasurements(pastUnit: String, newUnit: String) {
         
         // Get measurement of daily goal from pastUnit
@@ -238,30 +266,6 @@ class DrinkModel: ObservableObject {
             
         }
         
-    }
-    
-    func getDrinkTypeColor(type: String) -> Color {
-        if !self.drinkData.colorChanged[type]! {
-            if type == Constants.waterKey {
-                if #available(iOS 15, *) {
-                    return Color(.systemCyan)
-                } else {
-                    return Color(.systemTeal)
-                }
-            } else if type == Constants.coffeeKey {
-                if #available(iOS 15, *) {
-                    return Color(.systemBrown)
-                } else {
-                    return Color("CoffeeBrown")
-                }
-            } else if type == Constants.sodaKey {
-                return Color(.systemGreen)
-            } else if type == Constants.juiceKey {
-                return Color(.systemOrange)
-            }
-        }
-        
-        return self.drinkData.colors[type]!.getColor()
     }
     
     // MARK: - Data by Data Functions
@@ -378,7 +382,7 @@ class DrinkModel: ObservableObject {
                 
                 return [date, endDate]
                 
-            // If it's a day from Monday to Friday...
+                // If it's a day from Monday to Friday...
             } else if dayNum! > 1 && dayNum! < 7 {
                 
                 // Get the difference between the current day and the Sunday and Saturday of that week
@@ -391,7 +395,7 @@ class DrinkModel: ObservableObject {
                 
                 return [startDate, endDate]
                 
-            // If it's Saturday...
+                // If it's Saturday...
             } else if dayNum == 7 {
                 // Get the Sunday for that week
                 let startDate = Calendar.current.date(byAdding: .day, value: -6, to: date)!
@@ -607,7 +611,7 @@ class DrinkModel: ObservableObject {
             for drink in self.drinkData.drinks {
                 
                 if (self.drinkData.lastHKSave == nil || self.drinkData.lastHKSave ?? Date() < drink.date) && drink.type == Constants.waterKey {
-                
+                    
                     let startDate = drink.date
                     let endDate = startDate
                     

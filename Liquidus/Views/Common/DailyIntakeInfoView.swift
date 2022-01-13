@@ -86,6 +86,9 @@ struct DailyIntakeInfoView: View {
                     }
                 }
             }
+            .accessibilityAction(named: "Back") {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
     }
 }

@@ -26,11 +26,14 @@ struct SettingsEditDefaultTypeView: View {
             }
             
             // If type is enabled...
-            if model.drinkData.enabled[type]! && !model.grayscaleEnabled {
+            if enabled && !model.grayscaleEnabled {
                 // Update color
                 Section(header: Text("Color")) {
                     // ColorPicker
                     ColorPicker("Choose a new color", selection: $newColor, supportsOpacity: false)
+                        .accessibilityElement()
+                        .accessibilityLabel("Change color")
+                        .accessibilityAddTraits(.isButton)
                 }
             }
         }
@@ -43,18 +46,42 @@ struct SettingsEditDefaultTypeView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    // Update enabled status
+                    model.drinkData.enabled[type]! = enabled
+                    
                     // If type enabled...
                     if model.drinkData.enabled[type]! {
                         // update color in model
                         model.drinkData.colors[type] = CodableColor(color: UIColor(newColor))
                         model.drinkData.colorChanged[type] = true
                     }
+                    
+                    // Save information
+                    model.save()
+                    
                     // Dismiss view
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Save")
                 }
             }
+        }
+        .accessibilityAction(named: "Save") {
+            // Update enabled status
+            model.drinkData.enabled[type]! = enabled
+            
+            // If type enabled...
+            if model.drinkData.enabled[type]! {
+                // update color in model
+                model.drinkData.colors[type] = CodableColor(color: UIColor(newColor))
+                model.drinkData.colorChanged[type] = true
+            }
+            
+            // Save information
+            model.save()
+            
+            // Dismiss view
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }
