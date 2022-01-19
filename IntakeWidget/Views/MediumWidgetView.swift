@@ -26,6 +26,7 @@ struct MediumWidgetView: View {
                 
                 Spacer()
                 
+                // MARK: - Circular Progress Bar
                 ZStack {
                     // Create circle background
                     Circle()
@@ -68,6 +69,7 @@ struct MediumWidgetView: View {
                 
                 let nonZeroTypes = self.nonZeroTypes(types: drinkTypes)
                 
+                // MARK: - Drink Type Detail
                 VStack(alignment: .leading, spacing: 10) {
                     if !nonZeroTypes.isEmpty {
                         

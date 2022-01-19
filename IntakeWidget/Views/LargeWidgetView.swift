@@ -34,6 +34,7 @@ struct LargeWidgetView: View {
                     
                     Spacer()
                     
+                    // MARK: - Circular Progress Bar
                     ZStack {
                         // Create circle background
                         Circle()
@@ -65,6 +66,7 @@ struct LargeWidgetView: View {
                     
                     Spacer()
                     
+                    // MARK: - Total Info
                     VStack(alignment: .leading) {
                         let percent = entry.timePeriod == Constants.selectDay ? model.getTotalPercent(date: entry.date) : model.getTotalPercent(week: model.getDaysInWeek(date: entry.date))
                         
@@ -95,6 +97,7 @@ struct LargeWidgetView: View {
                 Divider()
                     .padding(.vertical, 10)
                 
+                // MARK: - Drink Type Detail
                 let columns = Array(repeating: GridItem(.flexible(minimum: geo.size.width/4)), count: 2)
                 
                 let allTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes

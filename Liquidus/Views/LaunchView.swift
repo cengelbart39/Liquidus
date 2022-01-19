@@ -33,7 +33,6 @@ struct LaunchView: View {
                     model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
                 }
         }
-        
     }
 }
 
