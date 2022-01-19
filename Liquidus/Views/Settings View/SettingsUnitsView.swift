@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsUnitsView: View {
     
@@ -31,6 +32,12 @@ struct SettingsUnitsView: View {
                         
                         // Convert all measurements
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.cupsUS)
+                        
+                        // Save model
+                        model.save()
+                        
+                        // Update widget
+                        WidgetCenter.shared.reloadAllTimelines()
                         
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()
@@ -69,6 +76,12 @@ struct SettingsUnitsView: View {
                         // Convert all measurements
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.fluidOuncesUS)
                         
+                        // Save model
+                        model.save()
+                        
+                        // Update widget
+                        WidgetCenter.shared.reloadAllTimelines()
+                        
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -105,6 +118,12 @@ struct SettingsUnitsView: View {
                         
                         // Convert all measurements
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.liters)
+                        
+                        // Save model
+                        model.save()
+                        
+                        // Update widget
+                        WidgetCenter.shared.reloadAllTimelines()
                         
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()
@@ -144,6 +163,12 @@ struct SettingsUnitsView: View {
                         
                         // Convert all measurements
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.milliliters)
+                        
+                        // Save model
+                        model.save()
+                        
+                        // Update widget
+                        WidgetCenter.shared.reloadAllTimelines()
                         
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()

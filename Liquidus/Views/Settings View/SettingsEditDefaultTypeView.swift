@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsEditDefaultTypeView: View {
     
@@ -59,6 +60,9 @@ struct SettingsEditDefaultTypeView: View {
                     // Save information
                     model.save()
                     
+                    // Update widget
+                    WidgetCenter.shared.reloadAllTimelines()
+                    
                     // Dismiss view
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -79,6 +83,9 @@ struct SettingsEditDefaultTypeView: View {
             
             // Save information
             model.save()
+            
+            // Update Widget
+            WidgetCenter.shared.reloadAllTimelines()
             
             // Dismiss view
             presentationMode.wrappedValue.dismiss()

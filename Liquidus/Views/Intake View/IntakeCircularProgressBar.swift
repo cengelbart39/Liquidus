@@ -46,7 +46,7 @@ struct IntakeCircularProgressBar: View {
                     // Use "GoalGreen" if goal is reached
                     let color = totalPercent >= 1.0 ? self.getHighlightColor(type: drinkTypes.last!) : self.getHighlightColor(type: type)
                     
-                    IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type), color: color)
+                    IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type), color: color, width: 30)
                 }
             }
 
@@ -209,7 +209,6 @@ struct IntakeCircularProgressBar: View {
                 return model.getDrinkTypeColor(type: type)
             }
         }
-        
     }
 }
 

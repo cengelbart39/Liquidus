@@ -12,12 +12,18 @@ struct TabBar: View {
     
     @EnvironmentObject var model: DrinkModel
     
+    @State var selectedTab = 0
+    
+    @State var isLogDrinkViewShowing = false
+    
+    @State var updateButtons = false
+    @State var timePeriod = ""
+    
     var body: some View {
         
-        TabView {
-            
+        TabView(selection: $selectedTab) {
             // IntakeView
-            IntakeView()
+            IntakeView(updateButtons: updateButtons, updateTimePicker: timePeriod)
                 .tabItem {
                     VStack {
                         Image("custom.drink.fill")
@@ -48,6 +54,34 @@ struct TabBar: View {
                 }
                 .tag(2)
         }
+        .onOpenURL(perform: { url in
+            if url == Constants.intakeDailyURL {
+                selectedTab = 0
+                timePeriod = Constants.selectDay
+            } else if url == Constants.logDrinkDailyURL {
+                selectedTab = 0
+                timePeriod = Constants.selectDay
+                isLogDrinkViewShowing = true
+                updateButtons = true
+            } else if url == Constants.intakeWeeklyURL {
+                selectedTab = 0
+                timePeriod = Constants.selectWeek
+            } else if url == Constants.logDrinkWeeklyURL {
+                selectedTab = 0
+                timePeriod = Constants.selectWeek
+                isLogDrinkViewShowing = true
+                updateButtons = true
+            }
+        })
+        .sheet(isPresented: $isLogDrinkViewShowing, content: {
+            // Show LogDrinkView
+            LogDrinkView(isPresented: $isLogDrinkViewShowing)
+                .environmentObject(model)
+                .onDisappear {
+                    updateButtons = false
+                }
+
+        })
         .onAppear {
             // If water is enabled...
             if model.drinkData.enabled[Constants.waterKey]! && model.drinkData.healthKitEnabled {

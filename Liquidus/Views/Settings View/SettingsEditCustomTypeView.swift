@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsEditCustomTypeView: View {
     
@@ -59,6 +60,8 @@ struct SettingsEditCustomTypeView: View {
                     model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
                     // Edit existing drinks of type
                     model.editDrinkType(old: type, new: name)
+                    // Update Widget
+                    WidgetCenter.shared.reloadAllTimelines()
                     // Dismiss view
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -83,6 +86,8 @@ struct SettingsEditCustomTypeView: View {
             model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
             // Edit existing drinks of type
             model.editDrinkType(old: type, new: name)
+            // Update Widget
+            WidgetCenter.shared.reloadAllTimelines()
             // Dismiss view
             presentationMode.wrappedValue.dismiss()
         }

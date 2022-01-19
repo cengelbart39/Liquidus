@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import HealthKit
+import WidgetKit
 
 class DrinkModel: ObservableObject {
     
@@ -19,19 +20,21 @@ class DrinkModel: ObservableObject {
     
     @Published var healthStore: HealthStore?
     
-    @Published var grayscaleEnabled = false
+    @Published var grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
     
     init() {
         // Create HealthStore
         healthStore = HealthStore()
         
         // Retrieve data from UserDefaults
-        if let data = UserDefaults.standard.data(forKey: Constants.savedKey) {
-            if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
-                self.drinkData = decoded
-                // Populate the selectedWeek property
-                self.selectedWeek = self.getDaysInWeek(date: Date())
-                return
+        if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
+            if let data = userDefaults.data(forKey: Constants.savedKey) {
+                if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
+                    self.drinkData = decoded
+                    
+                    self.selectedWeek = self.getDaysInWeek(date: Date())
+                    return
+                }
             }
         }
         
@@ -41,8 +44,10 @@ class DrinkModel: ObservableObject {
     
     func save() {
         // Save data to user defaults
-        if let encoded = try? JSONEncoder().encode(drinkData) {
-            UserDefaults.standard.set(encoded, forKey: Constants.savedKey)
+        if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
+            if let encoded = try? JSONEncoder().encode(drinkData) {
+                userDefaults.set(encoded, forKey: Constants.savedKey)
+            }
         }
     }
     
@@ -59,6 +64,9 @@ class DrinkModel: ObservableObject {
             // Save to UserDefaults
             self.save()
         }
+        
+        // Update widget
+        WidgetCenter.shared.reloadAllTimelines()
         
     }
     
@@ -119,21 +127,6 @@ class DrinkModel: ObservableObject {
     }
     
     // MARK: - Drink Types
-    func deleteDefaultDrinks(type: String) {
-        
-        // Loop through drinks index
-        for index in 0..<self.drinkData.drinks.count {
-            // If the types are the same...
-            if self.drinkData.drinks[index].type == type {
-                // Remove drink
-                self.drinkData.drinks.remove(at: index)
-            }
-        }
-        
-        // Save
-        self.save()
-    }
-    
     func deleteCustomDrinks(atOffsets: IndexSet) {
         // Get drinkType
         let drinkType = self.drinkData.customDrinkTypes[atOffsets.first!]
@@ -149,6 +142,9 @@ class DrinkModel: ObservableObject {
         
         // Save
         self.save()
+        
+        // Update widget
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func editDrinkType(old: String, new: String) {
@@ -177,6 +173,9 @@ class DrinkModel: ObservableObject {
         
         // Save
         self.save()
+        
+        // Update Widget
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func getDrinkTypeColor(type: String) -> Color {
@@ -193,6 +192,15 @@ class DrinkModel: ObservableObject {
         }
         
         return self.drinkData.colors[type]!.getColor()
+    }
+    
+    static func sampleDrinks() -> [Drink] {
+        let drink1 = Drink(type: Constants.waterKey, amount: 200, date: .now)
+        let drink2 = Drink(type: Constants.coffeeKey, amount: 200, date: .now)
+        let drink3 = Drink(type: Constants.sodaKey, amount: 200, date: .now)
+        let drink4 = Drink(type: Constants.juiceKey, amount: 200, date: .now)
+        
+        return [drink1, drink2, drink3, drink4]
     }
     
     // MARK: - Units
@@ -362,7 +370,6 @@ class DrinkModel: ObservableObject {
         let percent = totalAmount / self.drinkData.dailyGoal
         
         return percent
-        
     }
     
     // MARK: - Data by Week Functions

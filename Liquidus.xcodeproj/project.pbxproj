@@ -7,8 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D0309D3279329CD0034526D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D0309D2279329CD0034526D /* WidgetKit.framework */; };
+		9D0309D5279329CD0034526D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D0309D4279329CD0034526D /* SwiftUI.framework */; };
+		9D0309D8279329CD0034526D /* IntakeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309D7279329CD0034526D /* IntakeWidget.swift */; };
+		9D0309DA279329D00034526D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0309D9279329D00034526D /* Assets.xcassets */; };
+		9D0309DE279329D00034526D /* IntakeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D0309D1279329CD0034526D /* IntakeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9D0309E4279329EA0034526D /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309E3279329EA0034526D /* Provider.swift */; };
+		9D0309E627932A070034526D /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309E527932A070034526D /* SimpleEntry.swift */; };
+		9D0309E827932A280034526D /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309E727932A280034526D /* WidgetView.swift */; };
+		9D0309EC279334700034526D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3A926E6603300FEFE49 /* Constants.swift */; };
+		9D0309EE279334A20034526D /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
+		9D0309EF279334A40034526D /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
+		9D0309F02793381A0034526D /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
 		9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
 		9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */; };
+		9D2017522793663D008257FA /* IntakeCircularProgressBarHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */; };
+		9D201756279374FD008257FA /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
+		9D20175727937CD7008257FA /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */; };
 		9D25E57726EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E57626EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift */; };
 		9D27485426FA696F00F016D8 /* WeekLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27485326FA696F00F016D8 /* WeekLogView.swift */; };
@@ -38,7 +53,11 @@
 		9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BB26E675A200FEFE49 /* SettingsView.swift */; };
 		9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */; };
 		9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */; };
+		9D4B983B279783AE0068A486 /* TimePeriodSelection.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9D4B983A279783AE0068A486 /* TimePeriodSelection.intentdefinition */; };
+		9D4B983C279783AE0068A486 /* TimePeriodSelection.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9D4B983A279783AE0068A486 /* TimePeriodSelection.intentdefinition */; };
 		9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */; };
+		9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */; };
+		9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */; };
 		9D8E8774278F7E520051D808 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E8773278F7E510051D808 /* SettingsAboutView.swift */; };
 		9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
@@ -50,10 +69,45 @@
 		9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
 		9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
+		9DC4CCFE2795EBCD00908E10 /* ProviderLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */; };
 		9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* CalendarView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9D0309DC279329D00034526D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D48B38F26E65E2C00FEFE49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D0309D0279329CD0034526D;
+			remoteInfo = IntakeWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9D0309DF279329D00034526D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9D0309DE279329D00034526D /* IntakeWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		9D0309D1279329CD0034526D /* IntakeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntakeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D0309D2279329CD0034526D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		9D0309D4279329CD0034526D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		9D0309D7279329CD0034526D /* IntakeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeWidget.swift; sourceTree = "<group>"; };
+		9D0309D9279329D00034526D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9D0309DB279329D00034526D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D0309E3279329EA0034526D /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		9D0309E527932A070034526D /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
+		9D0309E727932A280034526D /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
+		9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntakeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		9D1C3BB526E8012600D03771 /* DrinkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkData.swift; sourceTree = "<group>"; };
 		9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeSingleDrinkBreakup.swift; sourceTree = "<group>"; };
 		9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsEditCustomTypeView.swift; sourceTree = "<group>"; };
@@ -87,7 +141,10 @@
 		9D48B3BB26E675A200FEFE49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
 		9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDrinkView.swift; sourceTree = "<group>"; };
+		9D4B983A279783AE0068A486 /* TimePeriodSelection.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = TimePeriodSelection.intentdefinition; sourceTree = "<group>"; };
 		9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditDefaultTypeView.swift; sourceTree = "<group>"; };
+		9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumWidgetView.swift; sourceTree = "<group>"; };
+		9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeWidgetView.swift; sourceTree = "<group>"; };
 		9D8E8773278F7E510051D808 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
 		9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		9D935BEE26ED0E2400CA9C31 /* Liquidus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Liquidus.entitlements; sourceTree = "<group>"; };
@@ -100,10 +157,20 @@
 		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
+		9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderLogic.swift; sourceTree = "<group>"; };
 		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9D0309CE279329CD0034526D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D0309D5279329CD0034526D /* SwiftUI.framework in Frameworks */,
+				9D0309D3279329CD0034526D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D48B39426E65E2C00FEFE49 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,10 +182,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D0309D6279329CD0034526D /* IntakeWidget */ = {
+			isa = PBXGroup;
+			children = (
+				9D0309D7279329CD0034526D /* IntakeWidget.swift */,
+				9D0309ED279334780034526D /* Views */,
+				9D0309E527932A070034526D /* SimpleEntry.swift */,
+				9D0309E3279329EA0034526D /* Provider.swift */,
+				9D4B983A279783AE0068A486 /* TimePeriodSelection.intentdefinition */,
+				9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */,
+				9D0309D9279329D00034526D /* Assets.xcassets */,
+				9D0309DB279329D00034526D /* Info.plist */,
+			);
+			path = IntakeWidget;
+			sourceTree = "<group>";
+		};
+		9D0309ED279334780034526D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D0309E727932A280034526D /* WidgetView.swift */,
+				9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */,
+				9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9D48B38E26E65E2C00FEFE49 = {
 			isa = PBXGroup;
 			children = (
+				9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */,
 				9D48B39926E65E2C00FEFE49 /* Liquidus */,
+				9D0309D6279329CD0034526D /* IntakeWidget */,
 				9D48B39826E65E2C00FEFE49 /* Products */,
 				9D935BEF26ED0E2400CA9C31 /* Frameworks */,
 			);
@@ -128,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				9D48B39726E65E2C00FEFE49 /* Liquidus.app */,
+				9D0309D1279329CD0034526D /* IntakeWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				9D935BF026ED0E2400CA9C31 /* HealthKit.framework */,
+				9D0309D2279329CD0034526D /* WidgetKit.framework */,
+				9D0309D4279329CD0034526D /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -283,6 +380,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9D0309D0279329CD0034526D /* IntakeWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D0309E2279329D00034526D /* Build configuration list for PBXNativeTarget "IntakeWidgetExtension" */;
+			buildPhases = (
+				9D0309CD279329CD0034526D /* Sources */,
+				9D0309CE279329CD0034526D /* Frameworks */,
+				9D0309CF279329CD0034526D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntakeWidgetExtension;
+			productName = IntakeWidgetExtension;
+			productReference = 9D0309D1279329CD0034526D /* IntakeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		9D48B39626E65E2C00FEFE49 /* Liquidus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D48B3A626E65E2F00FEFE49 /* Build configuration list for PBXNativeTarget "Liquidus" */;
@@ -290,10 +404,12 @@
 				9D48B39326E65E2C00FEFE49 /* Sources */,
 				9D48B39426E65E2C00FEFE49 /* Frameworks */,
 				9D48B39526E65E2C00FEFE49 /* Resources */,
+				9D0309DF279329D00034526D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9D0309DD279329D00034526D /* PBXTargetDependency */,
 			);
 			name = Liquidus;
 			productName = "Hydration App";
@@ -306,9 +422,12 @@
 		9D48B38F26E65E2C00FEFE49 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					9D0309D0279329CD0034526D = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					9D48B39626E65E2C00FEFE49 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -328,11 +447,20 @@
 			projectRoot = "";
 			targets = (
 				9D48B39626E65E2C00FEFE49 /* Liquidus */,
+				9D0309D0279329CD0034526D /* IntakeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9D0309CF279329CD0034526D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D0309DA279329D00034526D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D48B39526E65E2C00FEFE49 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,6 +473,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9D0309CD279329CD0034526D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */,
+				9D0309EC279334700034526D /* Constants.swift in Sources */,
+				9D0309E627932A070034526D /* SimpleEntry.swift in Sources */,
+				9D0309EE279334A20034526D /* DrinkData.swift in Sources */,
+				9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */,
+				9D4B983C279783AE0068A486 /* TimePeriodSelection.intentdefinition in Sources */,
+				9D0309E4279329EA0034526D /* Provider.swift in Sources */,
+				9DC4CCFE2795EBCD00908E10 /* ProviderLogic.swift in Sources */,
+				9D0309E827932A280034526D /* WidgetView.swift in Sources */,
+				9D20175727937CD7008257FA /* HealthStore.swift in Sources */,
+				9D0309EF279334A40034526D /* Drink.swift in Sources */,
+				9D201756279374FD008257FA /* DrinkModel.swift in Sources */,
+				9D0309F02793381A0034526D /* CodableColor.swift in Sources */,
+				9D2017522793663D008257FA /* IntakeCircularProgressBarHighlight.swift in Sources */,
+				9D0309D8279329CD0034526D /* IntakeWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D48B39326E65E2C00FEFE49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -372,6 +522,7 @@
 				9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */,
 				9D46BBEA2714D1D300DB9149 /* OnboardingToggleDrinksView.swift in Sources */,
 				9D46BBE42714C1C500DB9149 /* OnboardingDailyGoalView.swift in Sources */,
+				9D4B983B279783AE0068A486 /* TimePeriodSelection.intentdefinition in Sources */,
 				9D48B3AC26E6635000FEFE49 /* IntakeCircularProgressBar.swift in Sources */,
 				9D99981B26E7B09000A46E78 /* DataLogsView.swift in Sources */,
 				9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */,
@@ -395,7 +546,75 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9D0309DD279329D00034526D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D0309D0279329CD0034526D /* IntakeWidgetExtension */;
+			targetProxy = 9D0309DC279329D00034526D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		9D0309E0279329D00034526D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = IntakeWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DS9W86UXV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntakeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntakeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cengelbart.Liquidus.IntakeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9D0309E1279329D00034526D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = IntakeWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DS9W86UXV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntakeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntakeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cengelbart.Liquidus.IntakeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		9D48B3A426E65E2F00FEFE49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -515,6 +734,7 @@
 		9D48B3A726E65E2F00FEFE49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Liquidus/Liquidus.entitlements;
@@ -538,6 +758,7 @@
 		9D48B3A826E65E2F00FEFE49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Liquidus/Liquidus.entitlements;
@@ -561,6 +782,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9D0309E2279329D00034526D /* Build configuration list for PBXNativeTarget "IntakeWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D0309E0279329D00034526D /* Debug */,
+				9D0309E1279329D00034526D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9D48B39226E65E2C00FEFE49 /* Build configuration list for PBXProject "Liquidus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -24,6 +24,10 @@
 	<string>This app can display your pre-existing health data</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>This app can update your health data with any data added to the app</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>TimePeriodSelectionIntent</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

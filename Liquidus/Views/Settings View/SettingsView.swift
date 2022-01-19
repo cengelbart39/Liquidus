@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HealthKit
+import WidgetKit
 
 struct SettingsView: View {
     
@@ -53,6 +54,22 @@ struct SettingsView: View {
                         label: {
                             Label("Units", systemImage: "ruler")
                         })
+                    
+                    Button {
+                        model.drinkData.drinks = [Drink]()
+                        
+                        model.save()
+                        
+                        WidgetCenter.shared.reloadAllTimelines()
+                    } label: {
+                        Label {
+                            Text("Delete All Drinks")
+                                .foregroundColor(.red)
+                        } icon: {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                        }
+                    }
                 }
                 
                 // MARK: - Apple Health

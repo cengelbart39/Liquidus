@@ -31,6 +31,13 @@ struct Constants {
     
     static var savedKey = "SavedKey"
     
+    static var sharedKey = "group.com.cengelbart.Liquidus.shared"
+    
+    static var intakeDailyURL = URL(string: "liquidus://intake/daily")!
+    static var logDrinkDailyURL = URL(string: "liquidus://intake/daily/log")!
+    static var intakeWeeklyURL = URL(string: "liquidus://intake/weekly")
+    static var logDrinkWeeklyURL = URL(string: "liquidus://intake/weekly/log")
+    
     static var unitDictionary: [String:UnitVolume] = [
         Constants.cupsUS:UnitVolume.cups,
         Constants.fluidOuncesUS:UnitVolume.fluidOunces,

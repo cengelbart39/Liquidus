@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsDailyGoalView: View {
     
@@ -67,6 +68,8 @@ struct SettingsDailyGoalView: View {
                         model.drinkData.dailyGoal = num
                         // Save to user defaults
                         model.save()
+                        // Update Widget
+                        WidgetCenter.shared.reloadAllTimelines()
                         // Dismiss screen
                         presentationMode.wrappedValue.dismiss()
                     }

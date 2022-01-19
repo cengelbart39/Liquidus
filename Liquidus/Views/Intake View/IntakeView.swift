@@ -30,6 +30,9 @@ struct IntakeView: View {
     @State var calendarButtonID = UUID()
     @State var currentDayWeekButtonID = UUID()
     
+    var updateButtons: Bool
+    var updateTimePicker: String
+    
     // Focus
     @AccessibilityFocusState private var isTimePeriodFocused: Bool
     
@@ -69,6 +72,19 @@ struct IntakeView: View {
             .onAppear {
                 // Update selectedWeek as soon as view appears
                 selectedWeek = model.getDaysInWeek(date: selectedDay)
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                currentDayWeekButtonID = UUID()
+            }
+            .onChange(of: updateButtons) { _ in
+                addDrinkButtonID = UUID()
+                calendarButtonID = UUID()
+                currentDayWeekButtonID = UUID()
+            }
+            .onChange(of: updateTimePicker) { newVal in
+                if newVal != "" {
+                    selectedTimePeriod = newVal
+                }
             }
             .onChange(of: selectedDay) { newValue in
                 // Update selectedWeek when selectedDay updates
@@ -172,7 +188,7 @@ struct IntakeView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeView()
+        IntakeView(updateButtons: false, updateTimePicker: "")
             .environmentObject(DrinkModel())
     }
 }

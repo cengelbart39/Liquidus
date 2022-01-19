@@ -13,13 +13,14 @@ struct IntakeCircularProgressBarHighlight: View {
     
     var progress: Double
     var color: Color
+    var width: CGFloat
     
     var body: some View {
         
         // Create a trimmed circular outline
         Circle()
             .trim(from: 0.0, to: CGFloat(min(progress, 1.0)))
-            .stroke(style: StrokeStyle(lineWidth: 30, lineCap: .round, lineJoin: .round))
+            .stroke(style: StrokeStyle(lineWidth: width, lineCap: .round, lineJoin: .round))
             .foregroundColor(color)
             .rotationEffect(Angle(degrees: 270.0))
             .animation(reduceMotion ? .none : .linear, value: progress)
