@@ -16,7 +16,7 @@ struct IntakeCircularProgressBar: View {
     
     @AccessibilityFocusState private var isIntakeInfoFocused: Bool
     
-    var selectedTimePeriod: String
+    var selectedTimePeriod: Constants.TimePeriod
     var selectedDay: Date
     var selectedWeek: [Date]
     
@@ -51,7 +51,7 @@ struct IntakeCircularProgressBar: View {
             }
 
             // If a day display the daily percent
-            if selectedTimePeriod == Constants.selectDay {
+            if selectedTimePeriod == .daily {
                 
                 VStack {
                     // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
@@ -86,7 +86,7 @@ struct IntakeCircularProgressBar: View {
                 .accessibilityFocused($isIntakeInfoFocused)
                 
             // If a week display the weekly percent
-            } else if selectedTimePeriod == Constants.selectWeek {
+            } else if selectedTimePeriod == .weekly {
                 
                 VStack {
                     // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
@@ -152,7 +152,7 @@ struct IntakeCircularProgressBar: View {
         var progress = 0.0
         
         // If selectedTimePeriod is Day...
-        if selectedTimePeriod == Constants.selectDay {
+        if selectedTimePeriod == .daily {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
@@ -214,7 +214,7 @@ struct IntakeCircularProgressBar: View {
 
 struct IntakeCircularProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeCircularProgressBar(selectedTimePeriod: Constants.selectDay, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
+        IntakeCircularProgressBar(selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
             .environment(\.sizeCategory, .large)
             .environmentObject(DrinkModel())
     }

@@ -84,48 +84,6 @@ class DrinkModel: ObservableObject {
         }
     }
     
-    func saveDrinkType(type: String, color: Color) {
-        // Seperate type by spaces
-        let words = type.split(separator: " ")
-        
-        var saveType = ""
-        
-        // Loop through words
-        for word in words {
-            
-            // Get first char of word and uppercase it
-            let first = word.first!.uppercased()
-            
-            // Lowercase word
-            var rest = word.lowercased()
-            // Remove first char
-            rest.remove(at: rest.startIndex)
-            
-            // Update saveType
-            saveType += (first + rest)
-            
-            // If word isn't the end of type...
-            if words.firstIndex(of: word) != words.count-1 {
-                // Add space
-                saveType += " "
-            }
-        }
-        
-        // Create codableColor
-        let codableColor = CodableColor(color: UIColor(color))
-        
-        // Set as enabled
-        self.drinkData.enabled[saveType] = true
-        
-        // Add saveType and codableColor to model
-        self.drinkData.customDrinkTypes.append(saveType)
-        self.drinkData.colors[saveType] = codableColor
-        self.drinkData.colorChanged[saveType] = true
-        
-        // Save model
-        self.save()
-    }
-    
     // MARK: - Drink Types
     func deleteCustomDrinks(atOffsets: IndexSet) {
         // Get drinkType
@@ -194,13 +152,46 @@ class DrinkModel: ObservableObject {
         return self.drinkData.colors[type]!.getColor()
     }
     
-    static func sampleDrinks() -> [Drink] {
-        let drink1 = Drink(type: Constants.waterKey, amount: 200, date: .now)
-        let drink2 = Drink(type: Constants.coffeeKey, amount: 200, date: .now)
-        let drink3 = Drink(type: Constants.sodaKey, amount: 200, date: .now)
-        let drink4 = Drink(type: Constants.juiceKey, amount: 200, date: .now)
+    func saveDrinkType(type: String, color: Color) {
+        // Seperate type by spaces
+        let words = type.split(separator: " ")
         
-        return [drink1, drink2, drink3, drink4]
+        var saveType = ""
+        
+        // Loop through words
+        for word in words {
+            
+            // Get first char of word and uppercase it
+            let first = word.first!.uppercased()
+            
+            // Lowercase word
+            var rest = word.lowercased()
+            // Remove first char
+            rest.remove(at: rest.startIndex)
+            
+            // Update saveType
+            saveType += (first + rest)
+            
+            // If word isn't the end of type...
+            if words.firstIndex(of: word) != words.count-1 {
+                // Add space
+                saveType += " "
+            }
+        }
+        
+        // Create codableColor
+        let codableColor = CodableColor(color: UIColor(color))
+        
+        // Set as enabled
+        self.drinkData.enabled[saveType] = true
+        
+        // Add saveType and codableColor to model
+        self.drinkData.customDrinkTypes.append(saveType)
+        self.drinkData.colors[saveType] = codableColor
+        self.drinkData.colorChanged[saveType] = true
+        
+        // Save model
+        self.save()
     }
     
     // MARK: - Units

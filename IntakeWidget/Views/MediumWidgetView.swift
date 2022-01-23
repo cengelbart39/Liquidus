@@ -56,7 +56,7 @@ struct MediumWidgetView: View {
                 }
                 .padding([.leading, .vertical])
                 .padding(.trailing, 10)
-                .widgetURL(entry.timePeriod == Constants.selectDay ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
+                .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
                 .frame(height: geo.size.height/1.1)
                 
                 Divider()
@@ -73,7 +73,7 @@ struct MediumWidgetView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     if !nonZeroTypes.isEmpty {
                         
-                        let percent = entry.timePeriod == Constants.selectDay ? model.getTotalPercent(date: entry.date) : model.getTotalPercent(week: model.getDaysInWeek(date: entry.date))
+                        let percent = entry.timePeriod == .daily ? model.getTotalPercent(date: entry.date) : model.getTotalPercent(week: model.getDaysInWeek(date: entry.date))
                         
                         Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                             .font(dynamicType.isAccessibilitySize ? .body : .title3)
@@ -97,9 +97,9 @@ struct MediumWidgetView: View {
                                     .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     .padding(.leading, -5)
                                     
-                                    let typeAmount = entry.timePeriod == Constants.selectDay ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
-                                    let typePercent = entry.timePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typePercent = entry.timePeriod == .daily ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
                                     HStack {
                                         Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
@@ -115,7 +115,7 @@ struct MediumWidgetView: View {
                                 .accessibilityElement(children: .combine)
                                 
                             }
-                            .widgetURL(entry.timePeriod == Constants.selectDay ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
+                            .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
                         } else {
                             ForEach(nonZeroTypes, id: \.self) { type in
                                 VStack(alignment: .leading) {
@@ -130,9 +130,9 @@ struct MediumWidgetView: View {
                                     }
                                     .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     
-                                    let typeAmount = entry.timePeriod == Constants.selectDay ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
-                                    let typePercent = entry.timePeriod == Constants.selectDay ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typePercent = entry.timePeriod == .daily ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
                                     HStack {
                                         Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
@@ -147,7 +147,7 @@ struct MediumWidgetView: View {
                                 }
                                 .accessibilityElement(children: .combine)
                             }
-                            .widgetURL(entry.timePeriod == Constants.selectDay ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
+                            .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
                         }
                         
                     } else {
@@ -155,12 +155,12 @@ struct MediumWidgetView: View {
                             
                             Spacer()
                             
-                            Text("Log a drink in the app to reach your \(entry.timePeriod == Constants.selectDay ? "daily" : "weekly") goal.")
+                            Text("Log a drink in the app to reach your \(entry.timePeriod == .daily ? "daily" : "weekly") goal.")
                                 .font(dynamicType.isAccessibilitySize ? .subheadline : .body)
                             
                             Spacer()
                         }
-                        .widgetURL(entry.timePeriod == Constants.selectDay ? Constants.logDrinkDailyURL : Constants.logDrinkWeeklyURL)
+                        .widgetURL(entry.timePeriod == .daily ? Constants.logDrinkDailyURL : Constants.logDrinkWeeklyURL)
                     }
                 }
                 .frame(width: geo.size.width/2)
@@ -193,7 +193,7 @@ struct MediumWidgetView: View {
         var progress = 0.0
         
         // If entry.relevance is Day...
-        if entry.timePeriod == Constants.selectDay {
+        if entry.timePeriod == .daily {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type

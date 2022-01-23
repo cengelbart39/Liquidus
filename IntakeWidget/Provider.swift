@@ -10,15 +10,15 @@ import WidgetKit
 struct Provider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), relevance: nil, timePeriod: Constants.selectDay)
+        SimpleEntry(date: Date(), relevance: nil, timePeriod: .daily)
     }
 
-    func getSnapshot(for configuration: TimePeriodSelectionIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), relevance: nil, timePeriod: Constants.selectDay)
+    func getSnapshot(for configuration: ViewIntakeIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+        let entry = SimpleEntry(date: Date(), relevance: nil, timePeriod: .daily)
         completion(entry)
     }
 
-    func getTimeline(for configuration: TimePeriodSelectionIntent, in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+    func getTimeline(for configuration: ViewIntakeIntent, in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
         var entries: [SimpleEntry] = []
 
         let selectedTimePeriod = timePeriod(for: configuration)
@@ -36,22 +36,22 @@ struct Provider: IntentTimelineProvider {
         completion(timeline)
     }
     
-    private func timePeriod(for configuration: TimePeriodSelectionIntent) -> String {
+    private func timePeriod(for configuration: ViewIntakeIntent) -> Constants.TimePeriod {
         switch configuration.timePeriod {
         case .day:
-            return Constants.selectDay
+            return .daily
         case .week:
-            return Constants.selectWeek
+            return .weekly
         default:
-            return Constants.selectDay
+            return .daily
         }
     }
     
-    private func getScore(selectedTimePeriod: String, date: Date) -> Float {
+    private func getScore(selectedTimePeriod: Constants.TimePeriod, date: Date) -> Float {
         if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
             if let data = userDefaults.data(forKey: Constants.savedKey) {
                 if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
-                    if selectedTimePeriod == Constants.selectDay {
+                    if selectedTimePeriod == .daily {
                         let goal = decoded.dailyGoal
                         
                         let amount = ProviderLogic.getTotalAmount(date: date, data: decoded)

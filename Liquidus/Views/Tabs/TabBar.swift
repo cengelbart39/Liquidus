@@ -17,7 +17,7 @@ struct TabBar: View {
     @State var isLogDrinkViewShowing = false
     
     @State var updateButtons = false
-    @State var timePeriod = ""
+    @State var timePeriod = Constants.TimePeriod.daily
     
     var body: some View {
         
@@ -57,18 +57,18 @@ struct TabBar: View {
         .onOpenURL(perform: { url in
             if url == Constants.intakeDailyURL {
                 selectedTab = 0
-                timePeriod = Constants.selectDay
+                timePeriod = .daily
             } else if url == Constants.logDrinkDailyURL {
                 selectedTab = 0
-                timePeriod = Constants.selectDay
+                timePeriod = .daily
                 isLogDrinkViewShowing = true
                 updateButtons = true
             } else if url == Constants.intakeWeeklyURL {
                 selectedTab = 0
-                timePeriod = Constants.selectWeek
+                timePeriod = .weekly
             } else if url == Constants.logDrinkWeeklyURL {
                 selectedTab = 0
-                timePeriod = Constants.selectWeek
+                timePeriod = .weekly
                 isLogDrinkViewShowing = true
                 updateButtons = true
             }

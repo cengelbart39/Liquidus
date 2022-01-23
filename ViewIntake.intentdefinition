@@ -27,7 +27,7 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Day</string>
+					<string>Daily</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>KgbvE4</string>
 					<key>INEnumValueIndex</key>
@@ -37,7 +37,7 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Week</string>
+					<string>Weekly</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>BMswNk</string>
 					<key>INEnumValueIndex</key>
@@ -66,12 +66,10 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
-			<string>View data by day or by week</string>
+			<string>View intake by day or by week</string>
 			<key>INIntentDescriptionID</key>
 			<string>mwzwZU</string>
 			<key>INIntentEligibleForWidgets</key>
-			<true/>
-			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
 			<integer>2</integer>
@@ -81,16 +79,38 @@
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>View ${timePeriod} Intake</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>qZjTOo</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
 					<true/>
 				</dict>
 			</dict>
 			<key>INIntentName</key>
-			<string>TimePeriodSelection</string>
+			<string>ViewIntake</string>
+			<key>INIntentParameterCombinations</key>
+			<dict>
+				<key>timePeriod</key>
+				<dict>
+					<key>INIntentParameterCombinationIsLinked</key>
+					<true/>
+					<key>INIntentParameterCombinationIsPrimary</key>
+					<true/>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>View ${timePeriod} Intake</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>84E6Hf</string>
+				</dict>
+			</dict>
 			<key>INIntentParameters</key>
 			<array>
 				<dict>
 					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
 					<string>Time Period</string>
@@ -102,6 +122,11 @@
 					<string>Enum</string>
 					<key>INIntentParameterEnumTypeNamespace</key>
 					<string>9hgJ82</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>unknown</string>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>timePeriod</string>
 					<key>INIntentParameterPromptDialogs</key>
@@ -139,6 +164,8 @@
 							<string>Confirmation</string>
 						</dict>
 					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
 					<key>INIntentParameterTag</key>
 					<integer>2</integer>
 					<key>INIntentParameterType</key>
@@ -150,19 +177,106 @@
 				<key>INIntentResponseCodes</key>
 				<array>
 					<dict>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>You have consumed ${amount} of ${goal} ${units}, ${percent}% of your ${timePeriod} goal.</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>wrddqw</string>
 						<key>INIntentResponseCodeName</key>
 						<string>success</string>
 						<key>INIntentResponseCodeSuccess</key>
 						<true/>
 					</dict>
 					<dict>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>Sorry, unable to retrieve data.</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>wCOsbA</string>
 						<key>INIntentResponseCodeName</key>
 						<string>failure</string>
 					</dict>
 				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>10</integer>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Amount</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>TKYoj8</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>amount</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>3</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Decimal</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Percent</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>lhnqP3</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>2</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>percent</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>5</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Decimal</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Goal</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>RHJUlp</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>3</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>goal</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>7</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Decimal</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Units</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>NqpT50</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>4</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>units</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>8</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>String</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Time Period</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>heQ1ge</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>5</integer>
+						<key>INIntentResponseParameterEnumType</key>
+						<string>Enum</string>
+						<key>INIntentResponseParameterEnumTypeNamespace</key>
+						<string>9hgJ82</string>
+						<key>INIntentResponseParameterName</key>
+						<string>timePeriod</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>10</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Integer</string>
+					</dict>
+				</array>
 			</dict>
 			<key>INIntentTitle</key>
-			<string>Time Period Selection</string>
+			<string>View Intake</string>
 			<key>INIntentTitleID</key>
 			<string>UrDHzO</string>
 			<key>INIntentType</key>

@@ -13,6 +13,11 @@ struct Constants {
     static var selectDay = "Day"
     static var selectWeek = "Week"
     
+    public enum TimePeriod {
+        case daily
+        case weekly
+    }
+    
     static var cups = "cups"
     static var flOzUS = "fl oz"
     static var L = "L"

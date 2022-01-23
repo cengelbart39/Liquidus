@@ -13,7 +13,7 @@ struct IntakeWidget: Widget {
     let kind: String = "IntakeWidget"
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: TimePeriodSelectionIntent.self, provider: Provider(), content: { entry in
+        IntentConfiguration(kind: kind, intent: ViewIntakeIntent.self, provider: Provider(), content: { entry in
             WidgetView(entry: entry)
                 .environmentObject(DrinkModel())
         })

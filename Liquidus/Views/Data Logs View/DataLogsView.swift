@@ -72,7 +72,7 @@ struct DataLogsView: View {
             })
             // CalendarView Sheet
             .sheet(isPresented: $isCalendarViewShowing, content: {
-                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDate, selectedPeriod: Constants.selectWeek)
+                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDate, selectedPeriod: .weekly)
                     .environmentObject(model)
                     .onDisappear {
                         // Update ids show items are tapable

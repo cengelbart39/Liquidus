@@ -14,12 +14,12 @@ struct CalendarView: View {
     @Binding var isPresented: Bool
     
     @Binding var selectedDay: Date
-    var selectedPeriod: String
+    var selectedPeriod: Constants.TimePeriod
     
     var body: some View {
         NavigationView {
                 Form {
-                    Section(footer: selectedPeriod == Constants.selectWeek ? Text("Choose a date within the week you want to view") : Text("")) {
+                    Section(footer: selectedPeriod == .weekly ? Text("Choose a date within the week you want to view") : Text("")) {
                         
                         VStack {
                             // DatePicker
@@ -29,7 +29,7 @@ struct CalendarView: View {
                     }
                 }
 
-            .navigationTitle("Choose a \(selectedPeriod == Constants.selectDay ? "day" : "week")")
+                .navigationTitle("Choose a \(selectedPeriod == .daily ? "day" : "week")")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // "Save" new date/week
@@ -67,7 +67,7 @@ struct CalendarView: View {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(isPresented: .constant(true), selectedDay: .constant(Date()), selectedPeriod: Constants.selectWeek)
+        CalendarView(isPresented: .constant(true), selectedDay: .constant(Date()), selectedPeriod: .weekly)
             .environmentObject(DrinkModel())
     }
 }

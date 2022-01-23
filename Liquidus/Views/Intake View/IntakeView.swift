@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Intents
 
 struct IntakeView: View {
     
@@ -15,7 +16,7 @@ struct IntakeView: View {
     @EnvironmentObject var model: DrinkModel
     
     // Track if looking at by day or by week
-    @State var selectedTimePeriod = Constants.selectDay
+    @State var selectedTimePeriod = Constants.TimePeriod.daily
     
     // Are the sheet views up
     @State var isAddDrinkViewShowing = false
@@ -31,7 +32,7 @@ struct IntakeView: View {
     @State var currentDayWeekButtonID = UUID()
     
     var updateButtons: Bool
-    var updateTimePicker: String
+    var updateTimePicker: Constants.TimePeriod?
     
     // Focus
     @AccessibilityFocusState private var isTimePeriodFocused: Bool
@@ -45,7 +46,7 @@ struct IntakeView: View {
                 
                 ScrollView {
                     // MARK: - Choose Day or Week Data
-                    if selectedTimePeriod == Constants.selectDay {
+                    if selectedTimePeriod == .daily {
                         IntakeDayDataPicker(selectedDate: $selectedDay)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
@@ -76,14 +77,19 @@ struct IntakeView: View {
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
             }
+            .onAppear {
+                if model.drinkData.drinks.count > 0 {
+                    makeDonation(timePeriod: selectedTimePeriod)
+                }
+            }
             .onChange(of: updateButtons) { _ in
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
             }
             .onChange(of: updateTimePicker) { newVal in
-                if newVal != "" {
-                    selectedTimePeriod = newVal
+                if newVal != nil {
+                    selectedTimePeriod = newVal!
                 }
             }
             .onChange(of: selectedDay) { newValue in
@@ -142,7 +148,7 @@ struct IntakeView: View {
                         Image(systemName: "calendar")
                     }
                     .id(self.calendarButtonID)
-                    .accessibilityLabel("Change selected \(selectedTimePeriod == Constants.selectDay ? "date" : "week")")
+                    .accessibilityLabel("Change selected \(selectedTimePeriod == .daily ? "date" : "week")")
                 }
                 
                 // Show Today / This Week Button
@@ -150,8 +156,8 @@ struct IntakeView: View {
                     Button {
                         selectedDay = Date()
                     } label: {
-                        Text(selectedTimePeriod == Constants.selectDay ? "Today" : "This Week")
-                            .accessibilityHint("Show data from \(selectedTimePeriod == Constants.selectDay ? "today" : "this week")")
+                        Text(selectedTimePeriod == .daily ? "Today" : "This Week")
+                            .accessibilityHint("Show data from \(selectedTimePeriod == .daily ? "today" : "this week")")
                     }
                     .id(self.currentDayWeekButtonID)
                     .accessibilityHint("Show data from today or this week")
@@ -178,17 +184,34 @@ struct IntakeView: View {
 
         }
         .accessibilityAction(named: "View by Day") {
-            selectedTimePeriod = Constants.selectDay
+            selectedTimePeriod = .daily
         }
         .accessibilityAction(named: "View By Week") {
-            selectedTimePeriod = Constants.selectWeek
+            selectedTimePeriod = .weekly
+        }
+    }
+    
+    private func makeDonation(timePeriod: Constants.TimePeriod) {
+        let intent = ViewIntakeIntent()
+        intent.suggestedInvocationPhrase = "View \(timePeriod == .daily ? "Daily" : "Weekly") Intake"
+        
+        let interaction = INInteraction(intent: intent, response: nil)
+        
+        interaction.donate { error in
+            if error != nil {
+                if let error = error as NSError? {
+                    print("Donation failed %@" + error.localizedDescription)
+                }
+            } else {
+                print("Successfully donated interaction")
+            }
         }
     }
 }
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeView(updateButtons: false, updateTimePicker: "")
+        IntakeView(updateButtons: false, updateTimePicker: nil)
             .environmentObject(DrinkModel())
     }
 }
