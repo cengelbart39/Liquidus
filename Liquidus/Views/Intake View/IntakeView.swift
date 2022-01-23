@@ -193,6 +193,7 @@ struct IntakeView: View {
     
     private func makeDonation(timePeriod: Constants.TimePeriod) {
         let intent = ViewIntakeIntent()
+        intent.timePeriod = timePeriod == .daily ? .day : .week
         intent.suggestedInvocationPhrase = "View \(timePeriod == .daily ? "Daily" : "Weekly") Intake"
         
         let interaction = INInteraction(intent: intent, response: nil)
