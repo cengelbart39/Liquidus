@@ -30,40 +30,41 @@ struct TrendsView: View {
                     
                     // Loop through drink types
                     ForEach(drinkTypes, id: \.self) { type in
-                        
-                        NavigationLink {
-                            TrendsBarChart(type: type)
-                        } label: {
-                            
-                            ZStack {
-                                // Background
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(Color(.systemGray6))
+                        if model.drinkData.enabled[type] ?? true {
+                            NavigationLink {
+                                TrendsBarChart(type: type)
+                            } label: {
                                 
-                                HStack {
-                                    let avg1 = model.getTypeAverage(type: type, startDate: .now)
-                                    let avg2 = model.getTypeAverage(type: type, startDate: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now) ?? Date())
+                                ZStack {
+                                    // Background
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundColor(Color(.systemGray6))
                                     
-                                    // Trends Symbol
-                                    TrendsSymbolView(type: type, avg1: avg1, avg2: avg2)
-                                    
-                                    // Text
-                                    VStack(alignment: .leading) {
-                                        Text(type)
-                                            .font(self.getTypeFontStyle())
-                                            .foregroundColor(.primary)
+                                    HStack {
+                                        let avg1 = model.getTypeAverage(type: type, startDate: .now)
+                                        let avg2 = model.getTypeAverage(type: type, startDate: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now) ?? Date())
                                         
-                                        TrendsAmountView(type: type, avg1: avg1)
+                                        // Trends Symbol
+                                        TrendsSymbolView(type: type, avg1: avg1, avg2: avg2)
+                                        
+                                        // Text
+                                        VStack(alignment: .leading) {
+                                            Text(type)
+                                                .font(self.getTypeFontStyle())
+                                                .foregroundColor(.primary)
+                                            
+                                            TrendsAmountView(type: type, avg1: avg1)
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(Color(.systemGray2))
                                     }
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(Color(.systemGray2))
+                                    .padding()
                                 }
-                                .padding()
+                                .padding(.horizontal)
                             }
-                            .padding(.horizontal)
                         }
                     }
                     
