@@ -34,12 +34,12 @@ struct TabBar: View {
                 }
                 .tag(0)
             
-            // DataLogsView
-            DataLogsView()
+            // TrendsView
+            TrendsView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "list.bullet")
-                        Text("Logs")
+                        Image(systemName: "chart.bar")
+                        Text("Trends")
                     }
                 }
                 .tag(1)
@@ -48,7 +48,7 @@ struct TabBar: View {
             SettingsView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "gearshape.fill")
+                        Image(systemName: "gearshape")
                         Text("Settings")
                     }
                 }

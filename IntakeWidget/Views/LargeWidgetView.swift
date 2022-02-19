@@ -68,14 +68,14 @@ struct LargeWidgetView: View {
                     
                     // MARK: - Total Info
                     VStack(alignment: .leading) {
-                        let percent = entry.timePeriod == .daily ? model.getTotalPercent(date: entry.date) : model.getTotalPercent(week: model.getDaysInWeek(date: entry.date))
+                        let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(date: entry.date) : model.getTotalPercentByWeek(week: model.getDaysInWeek(date: entry.date))
                         
                         Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                             .font(.title)
                             .bold()
                             .accessibilityLabel(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         
-                        let total = entry.timePeriod == .daily ? model.getTotalAmount(date: entry.date) : model.getTotalAmount(week: model.getDaysInWeek(date: entry.date))
+                        let total = entry.timePeriod == .daily ? model.getTotalAmountByDay(date: entry.date) : model.getTotalAmountByWeek(week: model.getDaysInWeek(date: entry.date))
                         
                         let goal = entry.timePeriod == .daily ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7
                         
@@ -117,9 +117,9 @@ struct LargeWidgetView: View {
                                         .bold()
                                         .font(getTypeNameFontStyle())
                                     
-                                    let typeAmount = entry.timePeriod == .daily ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
-                                    let typePercent = entry.timePeriod == .daily ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typePercent = entry.timePeriod == .daily ? model.getTypePercentByDay(type: type, date: entry.date) : model.getTypePercentByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
                                     Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
                                         .font(getTypeInfoFontStyle())
@@ -141,9 +141,9 @@ struct LargeWidgetView: View {
                                         .bold()
                                         .font(getTypeNameFontStyle())
                                     
-                                    let typeAmount = entry.timePeriod == .daily ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
-                                    let typePercent = entry.timePeriod == .daily ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typePercent = entry.timePeriod == .daily ? model.getTypePercentByDay(type: type, date: entry.date) : model.getTypePercentByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
                                     Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
                                         .font(getTypeInfoFontStyle())
@@ -212,14 +212,14 @@ struct LargeWidgetView: View {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], date: entry.date)
+                progress += model.getTypePercentByDay(type: drinkTypes[index], date: entry.date)
             }
             // If selectedTimePeriod is Week...
         } else {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], week: model.getDaysInWeek(date: entry.date))
+                progress += model.getTypePercentByWeek(type: drinkTypes[index], week: model.getDaysInWeek(date: entry.date))
             }
         }
         
@@ -244,13 +244,13 @@ struct LargeWidgetView: View {
         var nonZeroTypes = [String]()
         
         for type in types {
-            if model.getDrinkTypeAmount(type: type, date: entry.date) > 0.0 {
+            if model.getTypeAmountByDay(type: type, date: entry.date) > 0.0 {
                 nonZeroTypes.append(type)
             }
         }
         
         if !nonZeroTypes.isEmpty {
-            nonZeroTypes.sort { model.getDrinkTypeAmount(type: $0, date: entry.date) > model.getDrinkTypeAmount(type: $1, date: entry.date) }
+            nonZeroTypes.sort { model.getTypeAmountByDay(type: $0, date: entry.date) > model.getTypeAmountByDay(type: $1, date: entry.date) }
         }
         
         return nonZeroTypes

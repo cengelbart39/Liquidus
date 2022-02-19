@@ -28,7 +28,7 @@ class ProviderLogic {
         return filtered.filter { data.enabled[$0.type]! }
     }
     
-    static func getDrinkTypeAmount(type: String, date: Date, data: DrinkData) -> Double {
+    static func getTypeAmountByWeek(type: String, date: Date, data: DrinkData) -> Double {
         // Get the filtered data for the day
         let time = ProviderLogic.filterDataByDay(day: date, data: data)
         
@@ -44,7 +44,7 @@ class ProviderLogic {
         return totalAmount
     }
     
-    static func getTotalAmount(date: Date, data: DrinkData) -> Double {
+    static func getTotalAmountByDay(date: Date, data: DrinkData) -> Double {
         
         var amount = 0.0
         
@@ -53,7 +53,7 @@ class ProviderLogic {
         
         for type in drinkTypes {
             if data.enabled[type]! {
-                amount += ProviderLogic.getDrinkTypeAmount(type: type, date: date, data: data)
+                amount += ProviderLogic.getTypeAmountByWeek(type: type, date: date, data: data)
             }
         }
         
@@ -85,7 +85,7 @@ class ProviderLogic {
         return weekData
     }
     
-    static func getDrinkTypeAmount(type: String, week: [Date], data: DrinkData) -> Double {
+    static func getTypeAmountByWeek(type: String, week: [Date], data: DrinkData) -> Double {
         
         // Get the drink data for the week
         let filtered = ProviderLogic.filterDataByWeek(week: week, data: data)
@@ -102,7 +102,7 @@ class ProviderLogic {
         return totalAmount
     }
     
-    static func getTotalAmount(week: [Date], data: DrinkData) -> Double {
+    static func getTotalAmountByWeek(week: [Date], data: DrinkData) -> Double {
         
         var amount = 0.0
         
@@ -111,7 +111,7 @@ class ProviderLogic {
         
         for type in drinkTypes {
             if data.enabled[type]! {
-                amount += ProviderLogic.getDrinkTypeAmount(type: type, week: week, data: data)
+                amount += ProviderLogic.getTypeAmountByWeek(type: type, week: week, data: data)
             }
         }
         

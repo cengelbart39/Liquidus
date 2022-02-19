@@ -35,12 +35,12 @@ struct IntakeMultiDrinkBreakup: View {
         .accessibilityRotor("Consumed Drink Types") {
             ForEach(model.drinkData.defaultDrinkTypes+model.drinkData.customDrinkTypes, id: \.self) { type in
                 if selectedTimePeriod == .daily {
-                    if model.getDrinkTypeAmount(type: type, date: selectedDay) != 0.0 {
+                    if model.getTypeAmountByDay(type: type, date: selectedDay) != 0.0 {
                         AccessibilityRotorEntry(type, type.self, in: consumedDrinkNamespace)
                     }
                 }
                 if selectedTimePeriod == .weekly {
-                    if model.getDrinkTypeAmount(type: type, week: selectedWeek) != 0.0 {
+                    if model.getTypeAmountByWeek(type: type, week: selectedWeek) != 0.0 {
                         AccessibilityRotorEntry(type, type.self, in: consumedDrinkNamespace)
                     }
                 }

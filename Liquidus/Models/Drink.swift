@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Drink: Decodable, Encodable, Identifiable {
+class Drink: Decodable, Encodable, Equatable, Identifiable {
     var id = UUID()
     var type: String
     var amount: Double
@@ -17,5 +17,13 @@ class Drink: Decodable, Encodable, Identifiable {
         self.type = type
         self.amount = amount
         self.date = date
+    }
+    
+    static func == (lhs: Drink, rhs: Drink) -> Bool {
+        if lhs.type == rhs.type && lhs.amount == rhs.amount && lhs.date == rhs.date {
+            return true
+        } else {
+            return false
+        }
     }
 }

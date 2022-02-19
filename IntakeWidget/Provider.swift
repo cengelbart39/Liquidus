@@ -54,7 +54,7 @@ struct Provider: IntentTimelineProvider {
                     if selectedTimePeriod == .daily {
                         let goal = decoded.dailyGoal
                         
-                        let amount = ProviderLogic.getTotalAmount(date: date, data: decoded)
+                        let amount = ProviderLogic.getTotalAmountByDay(date: date, data: decoded)
                         
                         if amount > goal {
                             return Float(goal) + Float(amount)
@@ -64,7 +64,7 @@ struct Provider: IntentTimelineProvider {
                     } else {
                         let goal = decoded.dailyGoal*7
                         
-                        let amount = ProviderLogic.getTotalAmount(week: ProviderLogic.getDaysInWeek(date: date), data: decoded)
+                        let amount = ProviderLogic.getTotalAmountByWeek(week: ProviderLogic.getDaysInWeek(date: date), data: decoded)
                         
                         if amount > goal {
                             return Float(goal) + Float(amount)

@@ -55,6 +55,20 @@ struct SettingsView: View {
                             Label("Units", systemImage: "ruler")
                         })
                     
+
+                }
+                
+                Section(header: Text("Debug")) {
+                    Button {
+                        model.addYearDrinks()
+                    } label: {
+                        Label {
+                            Text("Add a Year of Drinks")
+                        } icon: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                    
                     Button {
                         model.drinkData.drinks = [Drink]()
                         
@@ -71,6 +85,7 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
                 
                 // MARK: - Apple Health
                 // Don't display button if Apple Health access is granted

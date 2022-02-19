@@ -16,7 +16,14 @@ struct Constants {
     public enum TimePeriod {
         case daily
         case weekly
+        case monthly
+        case halfYearly
+        case yearly
     }
+    
+    static var total = "TOTAL"
+    static var average = "AVERAGE"
+    static var dailyAverage = "DAILY AVERAGE"
     
     static var cups = "cups"
     static var flOzUS = "fl oz"

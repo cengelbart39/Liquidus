@@ -64,7 +64,7 @@ struct IntakeCircularProgressBar: View {
                     }
                     
                     // Get percentage of liquid drank for selectedDay
-                    let percent = model.getTotalPercent(date: selectedDay)
+                    let percent = model.getTotalPercentByDay(date: selectedDay)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(self.getFontStylePercent())
@@ -74,7 +74,7 @@ struct IntakeCircularProgressBar: View {
                         .accessibilitySortPriority(0)
                     
                     // Get the total amount of liquid drank for selectedDay
-                    let total = model.getTotalAmount(date: selectedDay)
+                    let total = model.getTotalAmountByDay(date: selectedDay)
                     
                     Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
                         .font(getFontStyleAmount())
@@ -99,7 +99,7 @@ struct IntakeCircularProgressBar: View {
                     }
                     
                     // Get percentage of liquid drinked over selectedWeek
-                    let percent = model.getTotalPercent(week: selectedWeek)
+                    let percent = model.getTotalPercentByWeek(week: selectedWeek)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(self.getFontStylePercent())
@@ -110,7 +110,7 @@ struct IntakeCircularProgressBar: View {
 
                     
                     // Get the amount of liquid drank over selectedWeek
-                    let total = model.getTotalAmount(week: selectedWeek)
+                    let total = model.getTotalAmountByWeek(week: selectedWeek)
                     
                     Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
                         .font(self.getFontStyleAmount())
@@ -156,14 +156,14 @@ struct IntakeCircularProgressBar: View {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], date: selectedDay)
+                progress += model.getTypePercentByDay(type: drinkTypes[index], date: selectedDay)
             }
         // If selectedTimePeriod is Week...
         } else {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], week: selectedWeek)
+                progress += model.getTypePercentByWeek(type: drinkTypes[index], week: selectedWeek)
             }
         }
         

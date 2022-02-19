@@ -79,7 +79,7 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
         case .weekly:
             return "Weekly"
             
-        @unknown default:
+        default:
             return ""
         }
     }
@@ -110,18 +110,18 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
     private func getAmount(intent: ViewIntakeIntent) -> NSNumber {
         
         if self.timePeriod(for: intent) == .daily {
-            return NSNumber.init(value: IntentLogic.getTotalAmount(date: .now, data: self.data))
+            return NSNumber.init(value: IntentLogic.getTotalAmountByDay(date: .now, data: self.data))
         } else {
             let week = IntentLogic.getDaysInWeek(date: .now)
             
-            return NSNumber.init(value: IntentLogic.getTotalAmount(week: week, data: self.data))
+            return NSNumber.init(value: IntentLogic.getTotalAmountByWeek(week: week, data: self.data))
         }
     }
     
     private func getPercent(intent: ViewIntakeIntent) -> NSNumber {
         
         if self.timePeriod(for: intent) == .daily {
-            let percent = IntentLogic.getTotalPercent(date: .now, data: data)*100
+            let percent = IntentLogic.getTotalPercentByDay(date: .now, data: data)*100
             
             let formatter = NumberFormatter()
             formatter.usesSignificantDigits = true
@@ -137,7 +137,7 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
             
             let week = IntentLogic.getDaysInWeek(date: .now)
             
-            let percent = IntentLogic.getTotalPercent(week: week, data: self.data)
+            let percent = IntentLogic.getTotalPercentByWeek(week: week, data: self.data)
             
             let formatter = NumberFormatter()
             formatter.usesSignificantDigits = true

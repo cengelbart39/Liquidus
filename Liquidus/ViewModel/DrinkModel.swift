@@ -42,6 +42,9 @@ class DrinkModel: ObservableObject {
         self.drinkData = DrinkData()
     }
     
+    /**
+     Save any changes made to Drink Data
+     */
     func save() {
         // Save data to user defaults
         if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
@@ -51,6 +54,9 @@ class DrinkModel: ObservableObject {
         }
     }
     
+    /**
+     Add a drink to Drink Data and save changes. If it's water sync with Apple Health if access is granted. Widgets will be updated as well.
+     */
     func addDrink(drink: Drink) {
         DispatchQueue.main.async {
             // Add drink
@@ -70,21 +76,454 @@ class DrinkModel: ObservableObject {
         
     }
     
-    func isToday() -> Bool {
-        // Get DateFormatter
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
+    func addYearDrinks() {
+        let year = self.getYear(date: .now)
         
-        // If selectedDay and today are different dates
-        if formatter.string(from: self.selectedDay) != formatter.string(from: Date()) {
-            return false
-        } else {
+        var allDrinks = [Drink]()
+        
+        for month in year {
+            for day in month {
+                let rand = Double.random(in: 0...1600)
+                allDrinks.append(Drink(type: Constants.waterKey, amount: rand, date: day))
+            }
+        }
+        
+        self.drinkData.drinks = allDrinks
+    }
+    
+    // MARK: - Data Items
+    /**
+     For a given date and type, return Data Items for each hour in a day
+     */
+    func getDataItemsForDay(date: Date, type: String) -> [DataItem] {
+        // Create an empty date array
+        var dates = [Date]()
+        
+        // Append dates for each hour in the day
+        for num in 0...23 {
+            if let date = Calendar.current.date(bySettingHour: num, minute: 0, second: 0, of: date) {
+                dates.append(date)
+            }
+        }
+        
+        // Create an empty data items array
+        var dataItems = [DataItem]()
+        
+        for hour in dates {
+            let drinks = type == Constants.allKey ? self.filterDataByHour(hour: hour) : self.filterDataByHourAndType(hour: hour, type: type)
+            
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: hour))
+        }
+        
+        return dataItems
+    }
+    
+    /**
+     For a given week and drink type, get and return Data Items for each day in the week.
+     */
+    func getDataItemsForWeek(week: [Date], type: String) -> [DataItem] {
+        
+        // Create Data Items for each day in month
+        var dataItems = [DataItem]()
+        
+        for day in week {
+            let drinks = type == Constants.allKey ? self.filterDataByDay(day: day) : self.filterDataByDayAndType(type: type, day: day)
+            
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: day))
+        }
+        
+        return dataItems
+        
+    }
+    
+    /**
+     For a given month and drink type, get the data items for the month
+     */
+    func getDataItemsForMonth(month: [Date], type: String) -> [DataItem] {
+
+        // Create Data Items for each day in month
+        var dataItems = [DataItem]()
+        
+        for day in month {
+            let drinks = type == Constants.allKey ? self.filterDataByDay(day: day) : self.filterDataByDayAndType(type: type, day: day)
+            
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: day))
+        }
+        
+        return dataItems
+    }
+    
+    /**
+     For a given Half-Year and drink type, get the data items for each week in Half Year
+     */
+    func getDataItemsForHalfYear(halfYear: [[Date]], type: String) -> [DataItem] {
+        // Create empty data items array
+        var dataItems = [DataItem]()
+        
+        // For week in half year get drinks and create data items
+        for week in halfYear {
+            
+            // Get all drinks in halfYear or all drinks of a specific type in halfYear
+            let drinks = type == Constants.allKey ? self.filterDataByWeek(week: week) : self.filterDataByWeekAndType(type: type, week: week)
+            
+            // Append and create data items
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: week[0]))
+        }
+        
+        return dataItems
+    }
+    
+    /**
+     For a given Year and drink type, get the data items for the year
+     */
+    func getDataItemsforYear(year: [[Date]], type: String) -> [DataItem] {
+        // Create empty data items array
+        var dataItems = [DataItem]()
+        
+        // For motnh in year get drinks and create data items
+        for month in year {
+            
+            // Get all drinks in month or all drinks of a specific type in month
+            let drinks = type == Constants.allKey ? self.filterDataByMonth(month: month) : self.filterDataByMonthAndType(type: type, month: month)
+            
+            // Create and append DataItems
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: month[0]))
+        }
+        
+        return dataItems
+    }
+    
+    // MARK: - Time & Time Display Functions
+    /**
+     Checks if the day after the given date has happened yet
+     */
+    func isTomorrow(currentDate: Date) -> Bool {
+        let calendar = Calendar.current
+        
+        // Get the next day and tomorrow date
+        let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .long
+        
+        // If they are the same...
+        if dateFormatter.string(from: nextDay) == dateFormatter.string(from: tomorrow) {
             return true
+        // If not
+        } else {
+            return false
         }
     }
     
+    /**
+     Checks if the week after the given week has happened yet or is happening
+     */
+    func isNextWeek(currentWeek: [Date]) -> Bool {
+        let calendar = Calendar.current
+        
+        // Get the next week per currentWeek and the next week per today
+        let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: currentWeek[0]) ?? Date()
+        let upcomingWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: Date()) ?? Date()
+        
+        // If both dates fall in the same week...
+        if self.doesDateFallInWeek(date1: nextWeek, date2: upcomingWeek) {
+            return true
+        } else {
+            return false
+        }
+        
+    }
+    
+    /**
+     Checks if the month after the given month has happened yet or is happening
+     */
+    func isNextMonth(currentMonth: [Date]) -> Bool {
+        let calendar = Calendar.current
+        
+        // Get the next month per currentMonth and today
+        let nextMonth = calendar.date(byAdding: .month, value: 1, to: currentMonth[0]) ?? Date()
+        let upcomingMonth = calendar.date(byAdding: .month, value: 1, to: .now) ?? Date()
+        
+        // Create date formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        
+        // If both months fall are the same...
+        if formatter.string(from: nextMonth) == formatter.string(from: upcomingMonth) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    /**
+     Check if the next month in the half year has happened yet
+     */
+    func isNextHalfYear(currentHalfYear: [[Date]]) -> Bool {
+        // If the next month hasn't happened yet
+        if let lastMonth = currentHalfYear.last {
+            return self.isNextMonth(currentMonth: lastMonth)
+        }
+        
+        return false
+    }
+    
+    func isNextYear(currentYear: [[Date]]) -> Bool {
+        if let lastMonth = currentYear.last {
+            return self.isNextMonth(currentMonth: lastMonth)
+        }
+        
+        return false
+    }
+    
+    /**
+     Get a week range as a String for the given week
+     */
+    func getWeekText(week: [Date]) -> String {
+        // Create a date formatter
+        let formatter = DateFormatter()
+        
+        // Format for year only
+        formatter.dateFormat = "yyyy"
+        
+        // If the year is the same...
+        if let first = week.first, let last = week.last {
+            if formatter.string(from: first) == formatter.string(from: last) {
+                
+                let year = formatter.string(from: first)
+                
+                // Format for month
+                formatter.dateFormat = "MMM"
+                
+                // If the month is the same...
+                if formatter.string(from: first) == formatter.string(from: last) {
+                    
+                    // Get date1
+                    formatter.dateFormat = "MMM d"
+                    
+                    let date1 = formatter.string(from: first)
+                    
+                    // Get date2
+                    formatter.dateFormat = "d"
+                    
+                    let date2 = formatter.string(from: last)
+                    
+                    return "\(date1)-\(date2), \(year)"
+                    
+                    // If not...
+                } else {
+                    
+                    // Formatt for month and day
+                    formatter.dateFormat = "MMM d"
+                    
+                    // Get dates
+                    let date1 = formatter.string(from: first)
+                    let date2 = formatter.string(from: last)
+                    
+                    return "\(date1) - \(date2), \(year)"
+                    
+                }
+            } else {
+                // Format for month and day
+                formatter.dateFormat = "MMM d, yyyy"
+                
+                // Get dates
+                let date1 = formatter.string(from: first)
+                let date2 = formatter.string(from: last)
+                
+                return "\(date1) - \(date2)"
+            }
+        }
+        
+        return ""
+    }
+    
+    /**
+     Get a week range as a String specifically for Accessibility Labels throughout the app
+     */
+    func getAccessibilityWeekText(week: [Date]) -> String {
+        // Create a date formatter
+        let formatter = DateFormatter()
+        
+        // Format for year only
+        formatter.dateFormat = "yyyy"
+        
+        // If the year is the same...
+        if let first = week.first, let last = week.last {
+            if formatter.string(from: first) == formatter.string(from: last) {
+                
+                let year = formatter.string(from: first)
+                
+                // Format for month
+                formatter.dateFormat = "MMM."
+                
+                // If the month is the same...
+                if formatter.string(from: first) == formatter.string(from: last) {
+                    
+                    // Get date1
+                    formatter.dateFormat = "MMM. d"
+                    
+                    let date1 = formatter.string(from: first)
+                    
+                    // Get date2
+                    formatter.dateFormat = "d"
+                    
+                    let date2 = formatter.string(from: last)
+                    
+                    let suffix1 = getDateSuffix(date: formatter.string(from: first))
+                    let suffix2 = getDateSuffix(date: formatter.string(from: last))
+                    
+                    return "\(date1)\(suffix1) to \(date2)\(suffix2), \(year)"
+                    
+                    // If not...
+                } else {
+                    
+                    // Formatt for month and day
+                    formatter.dateFormat = "MMM. d"
+                    
+                    // Get dates
+                    let date1 = formatter.string(from: first)
+                    let date2 = formatter.string(from: last)
+                    
+                    formatter.dateFormat = "d"
+                    
+                    let suffix1 = self.getDateSuffix(date: formatter.string(from: first))
+                    let suffix2 = self.getDateSuffix(date: formatter.string(from: last))
+                    
+                    return "\(date1)\(suffix1) to \(date2)\(suffix2), \(year)"
+                    
+                }
+            } else {
+                // Format for month and day
+                formatter.dateFormat = "MMM. d"
+                
+                // Get dates
+                let monthDay1 = formatter.string(from: first)
+                let monthDay2 = formatter.string(from: last)
+                
+                formatter.dateFormat = "d"
+                
+                let suffix1 = self.getDateSuffix(date: formatter.string(from: first))
+                let suffix2 = self.getDateSuffix(date: formatter.string(from: last))
+                
+                formatter.dateFormat = "yyyy"
+                
+                let year1 = formatter.string(from: first)
+                let year2 = formatter.string(from: last)
+                
+                return "\(monthDay1)\(suffix1), \(year1) to \(monthDay2)\(suffix2), \(year2)"
+            }
+        }
+        
+        return ""
+    }
+    
+    /**
+     Get a date suffix (st, nd, rd, th). Used exclusively in getAccessibilityWeekText().
+     */
+    func getDateSuffix(date: String) -> String {
+        let count = date.count
+        
+        var num = date
+        if count == 2 {
+            num = String(date.dropFirst(1))
+        }
+        
+        switch num {
+        case "1":
+            return "st"
+        case "2":
+            return "nd"
+        case "3":
+            return "rd"
+        default:
+            return "th"
+        }
+    }
+    
+    /**
+     Get a month range as a string for a given half year
+     */
+    func getHalfYearText(halfYear: [[Date]]) -> String {
+        // Create a date formatter
+        let formatter = DateFormatter()
+        
+        // Format for year only
+        formatter.dateFormat = "yyyy"
+        
+        // If the year is the same...
+        if let first = halfYear.first?.first, let last = halfYear.last?.first {
+            if formatter.string(from: first) == formatter.string(from: last) {
+                
+                let year = formatter.string(from: first)
+                
+                // Format for month
+                formatter.dateFormat = "MMM"
+                
+                let month1 = formatter.string(from: first)
+                let month2 = formatter.string(from: last)
+                
+                return "\(month1) - \(month2), \(year)"
+            } else {
+                // Format for month and day
+                formatter.dateFormat = "MMM yyyy"
+                
+                // Get dates
+                let date1 = formatter.string(from: first)
+                let date2 = formatter.string(from: last)
+                
+                return "\(date1) - \(date2)"
+            }
+        }
+        
+        return ""
+    }
+    
+    /**
+     Get a month range as a String for a given half year exclusively for Accessibility Labels throughout the app
+     */
+    func getAccessibilityHalfYearText(halfYear: [[Date]]) -> String {
+        // Create a date formatter
+        let formatter = DateFormatter()
+        
+        // Format for year only
+        formatter.dateFormat = "yyyy"
+        
+        // If the year is the same...
+        if let first = halfYear.first?.first, let last = halfYear.last?.first {
+            if formatter.string(from: first) == formatter.string(from: last) {
+                
+                let year = formatter.string(from: first)
+                
+                // Format for month
+                formatter.dateFormat = "MMM"
+                
+                let month1 = formatter.string(from: first)
+                let month2 = formatter.string(from: last)
+                
+                return "\(month1) to \(month2), \(year)"
+            } else {
+                // Format for month and day
+                formatter.dateFormat = "MMM yyyy"
+                
+                // Get dates
+                let date1 = formatter.string(from: first)
+                let date2 = formatter.string(from: last)
+                
+                return "\(date1) to \(date2)"
+            }
+        }
+        
+        return ""
+    }
+
+    
     // MARK: - Drink Types
+    /**
+     Delete a custom drink type
+     */
     func deleteCustomDrinks(atOffsets: IndexSet) {
         // Get drinkType
         let drinkType = self.drinkData.customDrinkTypes[atOffsets.first!]
@@ -105,6 +544,9 @@ class DrinkModel: ObservableObject {
         WidgetCenter.shared.reloadAllTimelines()
     }
     
+    /**
+     Update a custom drink type for a name change
+     */
     func editDrinkType(old: String, new: String) {
         // Update colors
         if let entry = self.drinkData.colors.removeValue(forKey: old) {
@@ -136,6 +578,9 @@ class DrinkModel: ObservableObject {
         WidgetCenter.shared.reloadAllTimelines()
     }
     
+    /**
+     For a drink type (as a string) get the associated color. If the color for a default drink type hasn't been changed, return a system color. Otherwise and for custom drink types, return the stored color.
+     */
     func getDrinkTypeColor(type: String) -> Color {
         if !self.drinkData.colorChanged[type]! {
             if type == Constants.waterKey {
@@ -152,6 +597,102 @@ class DrinkModel: ObservableObject {
         return self.drinkData.colors[type]!.getColor()
     }
     
+    /**
+     Get a color gradient based using all drink type colors
+     */
+    func getDrinkTypeGradient() -> LinearGradient {
+        if self.grayscaleEnabled {
+            // Return solid white gradient
+            return LinearGradient(colors: [.white], startPoint: .top, endPoint: .bottom)
+        } else {
+            // Return rainbow gradient
+            return LinearGradient(colors: [.red, .orange, .yellow, .green, .blue, .purple], startPoint: .top, endPoint: .bottom)
+        }
+    }
+    
+    /**
+     Return all drinks of a specific type
+     */
+    func filterByDrinkType(type: String) -> [Drink] {
+        return self.drinkData.drinks.filter { $0.type == type }
+    }
+    
+    /**
+     Return the total amount of all drinks of a specific type
+     */
+    func getTypeAmount(type: String) -> Double {
+        // Get drinks
+        let drinks = self.filterByDrinkType(type: type)
+        
+        // Get amount by looping through drinks
+        var amount = 0.0
+        for drink in drinks {
+            amount += drink.amount
+        }
+        
+        // return amount
+        return amount
+    }
+    
+    /**
+     Return the total amount of all drinks
+     */
+    func getTotalAmount() -> Double {
+        // Loop through drinks to get total amount
+        var amount = 0.0
+        for drink in self.drinkData.drinks {
+            amount += drink.amount
+        }
+        return amount
+    }
+    
+    /**
+     Return the average for all drinks of a specific type
+     */
+    func getTypeAverage(type: String, startDate: Date) -> Double? {
+        // Get total based on passed in type
+        let total = type == Constants.allKey ? self.getTotalAmount() : self.getTypeAmount(type: type)
+        
+        // Get all drinks based on passed in type
+        let drinks = type == Constants.allKey ? self.drinkData.drinks : self.filterByDrinkType(type: type)
+        
+        // Find the minumum date from drinks
+        var minDate = Date()
+        for drink in drinks {
+            if drink.date < minDate {
+                minDate = drink.date
+            }
+        }
+        
+        // Get the difference in months between minDate and startDate
+        let monthDifference = Calendar.current.dateComponents([.month], from: minDate, to: startDate)
+        
+        // Get the date that is three months earlier than startDate
+        if let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: startDate) {
+            
+            // Get the components in days for threeMonthsAgo
+            let threeMonths = Calendar.current.dateComponents([.day], from: threeMonthsAgo, to: .now)
+            
+            // Get the day count and mounth count
+            if let threeDiff = threeMonths.day, let monthDiff = monthDifference.month {
+                
+                // If three or more months have data return the average
+                if monthDiff >= 3 {
+                    return floor(total/Double(threeDiff))
+                
+                // If not return nil
+                } else if monthDiff < 3 {
+                    return nil
+                }
+            }
+        }
+        
+        return 0.0
+    }
+    
+    /**
+     Create a new drink using the given String and Color. Update enabled array, custom drink types array, color array, and colorChanged array.
+     */
     func saveDrinkType(type: String, color: Color) {
         // Seperate type by spaces
         let words = type.split(separator: " ")
@@ -195,7 +736,9 @@ class DrinkModel: ObservableObject {
     }
     
     // MARK: - Units
-    
+    /**
+     For a given amount return a specifier so a double will have 0 or 2 decimal points displayed
+     */
     func getSpecifier(amount: Double) -> String {
         let rounded = amount.rounded()
         
@@ -206,20 +749,9 @@ class DrinkModel: ObservableObject {
         }
     }
     
-    func onboardingGetUnits(name: String) -> String {
-        if name == Constants.cupsUS {
-            return Constants.cups
-        } else if name == Constants.fluidOuncesUS {
-            return Constants.flOzUS
-        } else if name == Constants.liters {
-            return Constants.L
-        } else if name == Constants.milliliters {
-            return Constants.mL
-        } else {
-            return ""
-        }
-    }
-    
+    /**
+     Get the unit abbreviation for the stored unit
+     */
     func getUnits() -> String {
         if self.drinkData.units == Constants.cupsUS {
             return Constants.cups
@@ -233,6 +765,9 @@ class DrinkModel: ObservableObject {
         return ""
     }
     
+    /**
+     For the stored unit return the full name of a unit to be used in Accessibility Support
+     */
     func getAccessibilityUnitLabel() -> String {
         let units = self.drinkData.units
         
@@ -247,6 +782,9 @@ class DrinkModel: ObservableObject {
         }
     }
     
+    /**
+     For an old unit and new unit, convert all measurements to the new unit
+     */
     func convertMeasurements(pastUnit: String, newUnit: String) {
         
         // Get measurement of daily goal from pastUnit
@@ -268,53 +806,59 @@ class DrinkModel: ObservableObject {
     }
     
     // MARK: - Data by Data Functions
+    /**
+     For a given date, return drinks for the date and hour
+     */
+    func filterDataByHour(hour: Date) -> [Drink] {
+        
+        return self.drinkData.drinks.filter {
+            Calendar.current.compare($0.date, to: hour, toGranularity: .hour) == .orderedSame && self.drinkData.enabled[$0.type]!
+        }
+    }
     
+    func filterDataByHourAndType(hour: Date, type: String) -> [Drink] {
+        return self.filterDataByHour(hour: hour).filter { $0.type == type }
+    }
+    
+    
+    /**
+     Filter all drinks by the day from the given date
+     */
     func filterDataByDay(day: Date) -> [Drink] {
-        
-        // Create a date formatter
-        let dateFormatter = DateFormatter()
-        
-        // Only include the date not time
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        
-        // Filter by matching days
-        var filtered = drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: day) }
-        
-        // Filter by times
-        filtered.sort { $0.date > $1.date }
-        
-        // Filter out disabled types
-        return filtered.filter { self.drinkData.enabled[$0.type]! }
+        return self.drinkData.drinks.filter {
+            Calendar.current.compare($0.date, to: day, toGranularity: .day) == .orderedSame && self.drinkData.enabled[$0.type]!
+        }
     }
     
-    func filterByDayAndDrinkType(type: String, day: Date) -> [Drink] {
-        // Filter drinks by drink type
-        let typeFilter = drinkData.drinks.filter { $0.type == type }
-        
-        // Create a date formatter
-        let dateFormatter = DateFormatter()
-        
-        // Only include the date not time
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        
-        // Filter by matching days
-        var dayFilter = typeFilter.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: day) }
-        
-        // Filter by time logged
-        dayFilter.sort { $0.date > $1.date }
-        
-        // Filter out disabled types
-        return dayFilter
+    /**
+     Filter all drinks by the given drink type and date
+     */
+    func filterDataByDayAndType(type: String, day: Date) -> [Drink] {
+        return self.filterDataByDay(day: day).filter { $0.type == type }
     }
     
-    func getDrinkTypeAmount(type: String, date: Date) -> Double {
+    /**
+     Get the amount for the given type for a given date and hour
+     */
+    func getTypeAmountByTime(type: String, time: Date) -> Double {
+        // Get drinks for the hour
+        let drinks = self.filterDataByHour(hour: time).filter { $0.type == type }
+        
+        // Get total amount for the hour
+        var totalAmount = 0.0
+        for drink in drinks {
+            totalAmount += drink.amount
+        }
+        
+        return totalAmount
+    }
+    
+    /**
+     Get the total amount for the given type for a given day
+     */
+    func getTypeAmountByDay(type: String, date: Date) -> Double {
         // Get the filtered data for the day
-        let time = filterDataByDay(day: date)
-        
-        // Filter by the drink type
-        let drinks = time.filter { $0.type == type }
+        let drinks = self.filterDataByDayAndType(type: type, day: date)
         
         // Add up all the amounts
         var totalAmount = 0.0
@@ -325,10 +869,13 @@ class DrinkModel: ObservableObject {
         return totalAmount
     }
     
-    func getDrinkTypePercent(type: String, date: Date) -> Double {
+    /**
+     Get the total percent for the amount consumed vs. the user's daily goal for a given type
+     */
+    func getTypePercentByDay(type: String, date: Date) -> Double {
         
         // Get the amount of liquid consumed by liquid and date
-        let amount = self.getDrinkTypeAmount(type: type, date: date)
+        let amount = self.getTypeAmountByDay(type: type, date: date)
         
         // Get percentage
         let percent = amount / self.drinkData.dailyGoal
@@ -336,26 +883,27 @@ class DrinkModel: ObservableObject {
         return percent
     }
     
-    func getTotalAmount(date: Date) -> Double {
+    /**
+     Get the total amount consumed for the given day
+     */
+    func getTotalAmountByDay(date: Date) -> Double {
         
         var amount = 0.0
         
-        // Get the amount for each drink type
-        let drinkTypes = self.drinkData.defaultDrinkTypes + self.drinkData.customDrinkTypes
-        
-        for type in drinkTypes {
-            if self.drinkData.enabled[type]! {
-                amount += self.getDrinkTypeAmount(type: type, date: date)
-            }
+        for drink in self.filterDataByDay(day: date) {
+            amount += drink.amount
         }
         
         return amount
     }
     
-    func getTotalPercent(date: Date) -> Double {
+    /**
+     Get the total percent for the amount consumed vs. the user's daily goal
+     */
+    func getTotalPercentByDay(date: Date) -> Double {
         
         // Get total amount
-        let totalAmount = getTotalAmount(date: date)
+        let totalAmount = getTotalAmountByDay(date: date)
         
         // Get percentage
         let percent = totalAmount / self.drinkData.dailyGoal
@@ -364,7 +912,9 @@ class DrinkModel: ObservableObject {
     }
     
     // MARK: - Data by Week Functions
-    
+    /**
+     For a given date get the week range (i.e. April 6-12, 2003). Varries for weeks across months and years.
+     */
     func getWeekRange(date: Date) -> [Date] {
         
         // Get the number for the day of the week (Sun = 1 ... Sat = 7)
@@ -407,6 +957,9 @@ class DrinkModel: ObservableObject {
         }
     }
     
+    /**
+     Return an array with each day for the week of a given day
+     */
     func getDaysInWeek(date: Date) -> [Date] {
         // Get the week range
         let weekRange = self.getWeekRange(date: date)
@@ -434,38 +987,31 @@ class DrinkModel: ObservableObject {
         return [Date]()
     }
     
+    /**
+     For all drinks, get the drinks consumed in the given week
+     */
     func filterDataByWeek(week: [Date]) -> [Drink] {
         
-        // Create a date formatter to get dates in Month Day, Year format
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        
-        // Filter the drink data for each day
-        let sunday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[0]) }
-        let monday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[1]) }
-        let tuesday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[2]) }
-        let wednesday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[3]) }
-        let thursday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[4]) }
-        let friday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[5]) }
-        let saturday = self.drinkData.drinks.filter { dateFormatter.string(from: $0.date) == dateFormatter.string(from: week[6]) }
-        
-        // Combine the arrays
-        var weekData = sunday + monday + tuesday + wednesday + thursday + friday + saturday
-        
-        // Sort the array by date
-        weekData.sort { $0.date > $1.date }
-        
-        return weekData
+        return self.drinkData.drinks.filter {
+            Calendar.current.compare(week[0], to: $0.date, toGranularity: .weekOfYear) == .orderedSame && self.drinkData.enabled[$0.type]!
+        }
     }
     
-    func getDrinkTypeAmount(type: String, week: [Date]) -> Double {
+    /**
+     For all drinks, get all drinks in a given week that belong to the given drink type
+     */
+    func filterDataByWeekAndType(type: String, week: [Date]) -> [Drink] {
+        
+        return self.filterDataByWeek(week: week).filter { $0.type == type }
+    }
+    
+    /**
+     For all drinks in given week, get the total amount consumed for a given type
+     */
+    func getTypeAmountByWeek(type: String, week: [Date]) -> Double {
         
         // Get the drink data for the week
-        let data = filterDataByWeek(week: week)
-        
-        // Filter by drink type
-        let drinks = data.filter { $0.type == type }
+        let drinks = self.filterDataByWeekAndType(type: type, week: week)
         
         // Get the total amount
         var totalAmount = 0.0
@@ -476,10 +1022,13 @@ class DrinkModel: ObservableObject {
         return totalAmount
     }
     
-    func getDrinkTypePercent(type: String, week: [Date]) -> Double {
+    /**
+     For all drinks in a given week, get the total percentage of drinks consumed vs. the user's weekly goal for a given type
+     */
+    func getTypePercentByWeek(type: String, week: [Date]) -> Double {
         
         // Get the amount
-        let amount = self.getDrinkTypeAmount(type: type, week: week)
+        let amount = self.getTypeAmountByWeek(type: type, week: week)
         
         // Calculate percentage
         let percent = amount / (self.drinkData.dailyGoal*7)
@@ -487,26 +1036,27 @@ class DrinkModel: ObservableObject {
         return percent
     }
     
-    func getTotalAmount(week: [Date]) -> Double {
+    /**
+     For all drinks in a given week, get the total amount consumed
+     */
+    func getTotalAmountByWeek(week: [Date]) -> Double {
         
         var amount = 0.0
         
-        // Get the amount for each drink type
-        let drinkTypes = self.drinkData.defaultDrinkTypes + self.drinkData.customDrinkTypes
-        
-        for type in drinkTypes {
-            if self.drinkData.enabled[type]! {
-                amount += self.getDrinkTypeAmount(type: type, week: week)
-            }
+        for drink in self.filterDataByWeek(week: week) {
+            amount += drink.amount
         }
         
         return amount
     }
     
-    func getTotalPercent(week: [Date]) -> Double {
+    /**
+     For all drinks in a given week, get the total percentage of drinks consumed vs. the user's weekly goal
+     */
+    func getTotalPercentByWeek(week: [Date]) -> Double {
         
         // Get the total amount
-        let totalAmount = self.getTotalAmount(week: week)
+        let totalAmount = self.getTotalAmountByWeek(week: week)
         
         // Calculate the percentage
         let percent = totalAmount / (self.drinkData.dailyGoal*7)
@@ -514,6 +1064,9 @@ class DrinkModel: ObservableObject {
         return percent
     }
     
+    /**
+     For two dates determine if they are in the same week
+     */
     func doesDateFallInWeek(date1: Date, date2: Date) -> Bool {
         let week1 = self.getDaysInWeek(date: date1)
         let week2 = self.getDaysInWeek(date: date2)
@@ -540,8 +1093,258 @@ class DrinkModel: ObservableObject {
         return false
     }
     
-    // MARK: - HealthKit Methods
+    // MARK: - Data by Month Functions
+    /**
+     For a date, return its month in a Date array
+     */
+    func getMonth(day: Date) -> [Date] {
+        // Date Formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "y"
+        
+        // Get the current year
+        var currentYear = 0
+        if let year = Int(formatter.string(from: day)) {
+            currentYear = year
+        }
+        
+        // Get the current month
+        formatter.dateFormat = "M"
+        var currentMonth = 0
+        if let month = Int(formatter.string(from: day)) {
+            currentMonth = month
+        }
+        
+        // If currentYear and currentMonth are greater than zero...
+        if currentYear > 0 && currentMonth > 0 {
+            // Get date components
+            let components = DateComponents(year: currentYear, month: currentMonth)
+            // Get date from components
+            if let date = Calendar.current.date(from: components) {
+                // Get range for date
+                if let range = Calendar.current.range(of: .day, in: .month, for: date) {
+                    // Get the max of the range
+                    if let max = range.max() {
+                        var dates = [Date]()
+                        
+                        // Generate an array with each date in the month
+                        for index in 1...max {
+                            if let date = Calendar.current.date(from: DateComponents(year: currentYear, month: currentMonth, day: index)) {
+                                dates.append(date)
+                            }
+                        }
+                
+                        return dates
+                    }
+                }
+            }
+        }
+        
+        return [Date]()
+    }
     
+    /**
+     For all drinks, return drinks that were logged in the given month
+     */
+    func filterDataByMonth(month: [Date]) -> [Drink] {
+        return self.drinkData.drinks.filter {
+            Calendar.current.compare(month[0], to: $0.date, toGranularity: .month) == .orderedSame && self.drinkData.enabled[$0.type]!
+        }
+    }
+    
+    /**
+     For all drinks, return drinks in the given month and of the given drink type
+     */
+    func filterDataByMonthAndType(type: String, month: [Date]) -> [Drink] {
+        
+        return self.filterDataByMonth(month: month).filter { $0.type == type }
+    }
+    
+    /**
+     For all drinks get the total amount consumed for the given month and of the given drink type
+     */
+    func getTypeAmountByMonth(type: String, month: [Date]) -> Double {
+        let drinks = self.filterDataByMonthAndType(type: type, month: month)
+        
+        var amount = 0.0
+        for drink in drinks {
+            amount += drink.amount
+        }
+        
+        return amount
+    }
+    
+    // MARK: - Data by Half-Yearly Methods
+    /**
+     For a given date, generate a half year, with the month of given date at the end of the array
+     */
+    func getHalfYear(date: Date) -> [[Date]] {
+        let year = self.getYear(date: date)
+        
+        var halfYear = [[Date]]()
+        
+        for index in 6...11 {
+            halfYear.append(year[index])
+        }
+        
+        return self.getWeeksForHalfYear(halfYear: halfYear)
+    }
+    
+    /**
+     For a given half year, return it with each index of the array corresponding with a week in the 6-month period
+     */
+    func getWeeksForHalfYear(halfYear: [[Date]]) -> [[Date]] {
+        // Dictionary to store dates
+        var weeks = [[Date]]()
+        
+        var monthCount = 0
+        
+        // Loop through halfYear
+        for month in halfYear {
+            // Loop through the indicies of month incrementing by 7
+            for index in stride(from: 0, through: month.count, by: 7) {
+                
+                // If index doesn't exceed the count of month append to dictionary
+                if index < month.count {
+                    weeks.append(self.getDaysInWeek(date: month[index]))
+                } else if index >= month.count {
+                    var i = index
+                    while i >= month.count {
+                        i -= 1
+                    }
+                    weeks.append(self.getDaysInWeek(date: month[i]))
+                }
+                
+            }
+            monthCount += 1
+        }
+        
+        // Remove any dates that are not in the first month
+        weeks[0] = weeks[0].filter { $0 >= halfYear[0].first! }
+        
+        // Get the count of the last month in dictionary
+        let dCount = weeks.count-1
+        
+        // Get the count of the last month in halfYear
+        let hCount = halfYear.count-1
+        
+        // Filter out any
+        weeks[dCount] = weeks[dCount].filter { $0 <= halfYear[hCount].last! }
+        
+        return weeks
+    }
+    
+    /**
+     For all drinks, get the drinks in the given half year
+     */
+    func filterDataByHalfYear(halfYear: [[Date]]) -> [Drink] {
+        
+        var drinks = [Drink]()
+        
+        // Loop through each week and append the drinks that are in each month
+        for week in halfYear {
+            for drink in self.filterDataByWeek(week: week) {
+                drinks.append(drink)
+            }
+        }
+        
+        // Sort drinks by date
+        drinks.sort { $0.date  < $1.date }
+        
+        return drinks
+    }
+    
+    /**
+     For all drinks, get the drinks in the given half year and of the given drink type
+     */
+    func filterDataByHalfYearAndType(type: String, halfYear: [[Date]]) -> [Drink] {
+
+        return self.filterDataByHalfYear(halfYear: halfYear).filter { $0.type == type }
+
+    }
+    
+    /**
+     Get the total amount of drinks consumed for the given half year and of the given type
+     */
+    func getTypeAmountByHalfYear(type: String,  halfYear: [[Date]]) -> Double {
+        // Get the drinks
+        let drinks = self.filterDataByHalfYearAndType(type: type, halfYear: halfYear)
+        
+        // Get the total amount
+        var amount = 0.0
+        for drink in drinks {
+            amount += drink.amount
+        }
+        
+        return amount
+    }
+    
+    // MARK: - Yearly Data Methods
+    /**
+     For a given date, generate a year going back from the month of the given date
+     */
+    func getYear(date: Date) -> [[Date]] {
+        // Get a day in each month of 12-month period
+        var months = [Date]()
+        for index in -11...0 {
+            if let newDate = Calendar.current.date(byAdding: .month, value: index, to: date) {
+                months.append(newDate)
+            }
+        }
+        
+        var output = [[Date]]()
+        // Get the month for each day
+        for month in months {
+            output.append(self.getMonth(day: month))
+        }
+        
+        return output
+    }
+    
+    /**
+     For all drinks, return all drinks consumed in the given year
+     */
+    func filterDataByYear(year: [[Date]]) -> [Drink] {
+        
+        var drinks = [Drink]()
+        
+        for month in year {
+            if let first = month.first {
+                drinks += self.drinkData.drinks.filter {
+                    Calendar.current.compare(first, to: $0.date, toGranularity: .month) == .orderedSame && self.drinkData.enabled[$0.type]!
+                }
+            }
+        }
+        
+        return drinks
+    }
+    
+    /**
+     For all drinks, get the drinks in the given year and of the given drink type
+     */
+    func filterDataByYearAndType(type: String, year: [[Date]]) -> [Drink] {
+        
+        return self.filterDataByYear(year: year).filter { $0.type == type }
+    }
+    
+    /**
+     For a given year, get the total amount consumed of a given drink type
+     */
+    func getTypeAmountByYear(type: String, year: [[Date]]) -> Double {
+        let drinks = self.filterDataByYearAndType(type: type, year: year)
+        
+        var amount = 0.0
+        for drink in drinks {
+            amount += drink.amount
+        }
+        
+        return amount
+    }
+    
+    // MARK: - HealthKit Methods
+    /**
+     Convert stored unit to HKUnit
+     */
     func getHKUnit() -> HKUnit {
         if self.drinkData.units == Constants.cupsUS {
             return HKUnit.cupUS()
@@ -556,6 +1359,9 @@ class DrinkModel: ObservableObject {
         
     }
     
+    /**
+     Retrieve data from HealthKit
+     */
     func retrieveFromHealthKit(_ statsCollection: HKStatisticsCollection) {
         
         // Get start and end date
@@ -581,6 +1387,9 @@ class DrinkModel: ObservableObject {
         }
     }
     
+    /**
+     Checks if a drink exists in local data
+     */
     func doesDrinkExist(drink: Drink) -> Bool {
         
         // Create a date formatter
@@ -600,6 +1409,9 @@ class DrinkModel: ObservableObject {
         return false
     }
     
+    /**
+     Save a drink to HealthKit
+     */
     func saveToHealthKit() {
         
         let waterType = HKSampleType.quantityType(forIdentifier: .dietaryWater)!

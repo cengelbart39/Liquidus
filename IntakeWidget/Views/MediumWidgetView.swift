@@ -73,7 +73,7 @@ struct MediumWidgetView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     if !nonZeroTypes.isEmpty {
                         
-                        let percent = entry.timePeriod == .daily ? model.getTotalPercent(date: entry.date) : model.getTotalPercent(week: model.getDaysInWeek(date: entry.date))
+                        let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(date: entry.date) : model.getTotalPercentByWeek(week: model.getDaysInWeek(date: entry.date))
                         
                         Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                             .font(dynamicType.isAccessibilitySize ? .body : .title3)
@@ -97,9 +97,9 @@ struct MediumWidgetView: View {
                                     .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     .padding(.leading, -5)
                                     
-                                    let typeAmount = entry.timePeriod == .daily ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
-                                    let typePercent = entry.timePeriod == .daily ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typePercent = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypePercentByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
                                     HStack {
                                         Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
@@ -130,9 +130,9 @@ struct MediumWidgetView: View {
                                     }
                                     .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                     
-                                    let typeAmount = entry.timePeriod == .daily ? model.getDrinkTypeAmount(type: type, date: entry.date) : model.getDrinkTypeAmount(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
-                                    let typePercent = entry.timePeriod == .daily ? model.getDrinkTypePercent(type: type, date: entry.date) : model.getDrinkTypePercent(type: type, week: model.getDaysInWeek(date: entry.date))
+                                    let typePercent = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypePercentByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
                                     
                                     HStack {
                                         Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
@@ -197,14 +197,14 @@ struct MediumWidgetView: View {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], date: entry.date)
+                progress += model.getTypePercentByDay(type: drinkTypes[index], date: entry.date)
             }
             // If entry.relevance is Week...
         } else {
             // Loop through type index...
             for index in 0...typeIndex {
                 // To get trim value for type
-                progress += model.getDrinkTypePercent(type: drinkTypes[index], week: model.getDaysInWeek(date: entry.date))
+                progress += model.getTypePercentByWeek(type: drinkTypes[index], week: model.getDaysInWeek(date: entry.date))
             }
         }
         
@@ -231,13 +231,13 @@ struct MediumWidgetView: View {
         var nonZeroTypes = [String]()
         
         for type in types {
-            if model.getDrinkTypeAmount(type: type, date: entry.date) > 0.0 {
+            if model.getTypeAmountByDay(type: type, date: entry.date) > 0.0 {
                 nonZeroTypes.append(type)
             }
         }
         
         if !nonZeroTypes.isEmpty {
-            nonZeroTypes.sort { model.getDrinkTypeAmount(type: $0, date: entry.date) > model.getDrinkTypeAmount(type: $1, date: entry.date) }
+            nonZeroTypes.sort { model.getTypeAmountByDay(type: $0, date: entry.date) > model.getTypeAmountByDay(type: $1, date: entry.date) }
         }
         
         return nonZeroTypes

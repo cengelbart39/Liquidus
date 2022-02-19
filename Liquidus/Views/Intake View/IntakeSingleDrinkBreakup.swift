@@ -42,9 +42,9 @@ struct IntakeSingleDrinkBreakup: View {
                             .bold()
                         
                         // Consumed Amount & Percent
-                        let amount = selectedTimePeriod == .daily ? model.getDrinkTypeAmount(type: drinkType, date: selectedDay) : model.getDrinkTypeAmount(type: drinkType, week: selectedWeek)
+                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, date: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
                         
-                        let percent = selectedTimePeriod == .daily ? model.getDrinkTypePercent(type: drinkType, date: selectedDay) : model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
+                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, date: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
                         
                         HStack {
                             Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
@@ -65,9 +65,9 @@ struct IntakeSingleDrinkBreakup: View {
                             .accessibilityAddTraits(.isHeader)
                         
                         // Consumed Amount & Percent
-                        let amount = selectedTimePeriod == .daily ? model.getDrinkTypeAmount(type: drinkType, date: selectedDay) : model.getDrinkTypeAmount(type: drinkType, week: selectedWeek)
+                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, date: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
                         
-                        let percent = selectedTimePeriod == .daily ? model.getDrinkTypePercent(type: drinkType, date: selectedDay) : model.getDrinkTypePercent(type: drinkType, week: selectedWeek)
+                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, date: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
                         
                        Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
                             .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)

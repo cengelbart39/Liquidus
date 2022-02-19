@@ -24,7 +24,7 @@ struct IntakeDayDataPicker: View {
                 let calendar = Calendar.current
                 selectedDate = calendar.date(byAdding: .day, value: -1, to: selectedDate) ?? Date()
                 // Check if the next day is today or passed
-                isTomorrow = self.isTomorrow(currentDate: selectedDate)
+                isTomorrow = model.isTomorrow(currentDate: selectedDate)
             }, label: {
                 Image(systemName: "chevron.left")
                     .foregroundColor(model.grayscaleEnabled ? .primary : .red)
@@ -49,7 +49,7 @@ struct IntakeDayDataPicker: View {
                     // Update currentDate
                     selectedDate = nextDay
                     // Check if this new day has occured
-                    isTomorrow = self.isTomorrow(currentDate: selectedDate)
+                    isTomorrow = model.isTomorrow(currentDate: selectedDate)
                 }
             }, label: {
                 Image(systemName: "chevron.right")
@@ -61,7 +61,7 @@ struct IntakeDayDataPicker: View {
         .padding(.horizontal)
         .padding(.bottom, 6)
         .onAppear {
-            self.isTomorrow = self.isTomorrow(currentDate: selectedDate)
+            self.isTomorrow = model.isTomorrow(currentDate: selectedDate)
         }
         .accessibilityElement(children: .combine)
         .accessibilityHint("Go forward or back a day")
@@ -71,7 +71,7 @@ struct IntakeDayDataPicker: View {
                 if let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) {
                     if !isTomorrow {
                         selectedDate = newDate
-                        isTomorrow = self.isTomorrow(currentDate: selectedDate)
+                        isTomorrow = model.isTomorrow(currentDate: selectedDate)
                     } else {
                         break
                     }
@@ -81,7 +81,7 @@ struct IntakeDayDataPicker: View {
             case .decrement:
                 if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) {
                     selectedDate = newDate
-                    isTomorrow = self.isTomorrow(currentDate: selectedDate)
+                    isTomorrow = model.isTomorrow(currentDate: selectedDate)
                 } else {
                     break
                 }
@@ -102,25 +102,5 @@ struct IntakeDayDataPicker: View {
         }
         
         return formatter
-    }
-    
-    func isTomorrow(currentDate: Date) -> Bool {
-        let calendar = Calendar.current
-        
-        // Get the next day and tomorrow date
-        let nextDay = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? Date()
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date()) ?? Date()
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .none
-        dateFormatter.dateStyle = .long
-        
-        // If they are the same...
-        if dateFormatter.string(from: nextDay) == dateFormatter.string(from: tomorrow) {
-            return true
-        // If not
-        } else {
-            return false
-        }
     }
 }

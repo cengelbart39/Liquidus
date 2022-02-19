@@ -79,7 +79,8 @@ struct IntakeView: View {
             }
             .onAppear {
                 if model.drinkData.drinks.count > 0 {
-                    makeDonation(timePeriod: selectedTimePeriod)
+                    makeDonation(timePeriod: .daily)
+                    makeDonation(timePeriod: .weekly)
                 }
             }
             .onChange(of: updateButtons) { _ in

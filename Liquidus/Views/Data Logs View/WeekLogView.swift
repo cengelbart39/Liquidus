@@ -58,7 +58,7 @@ struct WeekLogView: View {
             return model.filterDataByDay(day: date)
         // Else, filter data by data and drink type
         } else {
-            return model.filterByDayAndDrinkType(type: sortTag, day: date)
+            return model.filterDataByDayAndType(type: sortTag, day: date)
         }
     }
 }
