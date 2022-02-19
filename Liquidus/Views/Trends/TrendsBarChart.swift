@@ -700,16 +700,25 @@ struct TrendsBarChart: View {
      If the total amount for a Data Items array is not evenly divisble by 3, increment by 100 until it is.
      */
      func horizontalAxisText(dataItems: [DataItem]) -> [String] {
-        var newAmount = self.getOverallAmount(dataItems: dataItems)
+         var newAmount = self.getOverallAmount(dataItems: dataItems)
         
          while Int(ceil(newAmount)) % 3 != 0 {
              newAmount += 100
          }
         
-        let oneThird = Int(newAmount/3)
-        let twoThirds = Int(2*newAmount/3)
-        
-        return [String(Int(ceil(newAmount))), String(twoThirds), String(oneThird), "0"]
+         let one3 = Int(newAmount/3)
+         let two3 = Int(2*newAmount/3)
+         
+         let formatter = NumberFormatter()
+         formatter.numberStyle = .decimal
+         formatter.usesGroupingSeparator = true
+         formatter.maximumSignificantDigits = 2
+         
+         if let one = formatter.string(from: NSNumber(value: Int(ceil(newAmount)))), let twoThirds = formatter.string(from: NSNumber(value: Int(two3))), let oneThird = formatter.string(from: NSNumber(value: Int(one3))) {
+             return [one, twoThirds, oneThird, "0"]
+         }
+         
+         return [String]()
     }
     
     private func getAxisMaxValue(maxValue: Double) -> Double {
