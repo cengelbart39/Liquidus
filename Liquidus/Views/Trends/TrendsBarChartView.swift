@@ -1,5 +1,5 @@
 //
-//  TrendsBarChart.swift
+//  TrendsBarChartView.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 1/24/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrendsBarChart: View {
+struct TrendsBarChartView: View {
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -85,11 +85,10 @@ struct TrendsBarChart: View {
                                 ZStack {
                                     // MARK: Vertical Axis
                                     HStack {
-                                        ForEach(verticalAxisText(dataItems: dataItems), id: \.self) { text in
-                                            TrendsBarVerticalAxisView(text: selectedTimePeriod != .yearly ? text : String(text[0]))
-                                                .dynamicTypeSize(.large)
+                                        ForEach(verticalAxisText(dataItems: dataItems), id: \.self) { _ in
+                                            TrendsBarVerticalAxisView()
                                             
-                                            Spacer ()
+                                            Spacer()
                                         }
                                         
                                         Rectangle()
@@ -127,7 +126,7 @@ struct TrendsBarChart: View {
                                     
                                     // MARK: Bars
                                     VStack(alignment: .leading) {
-                                        HStack(spacing: 5) {
+                                        HStack(spacing: 0) {
                                             ForEach(dataItems) { item in
                                                 
                                                 TrendsBarView(item: item, value: normalizedValue(item: item, maxValue: self.getAxisMaxValue(maxValue: maxValue)), type: type)
@@ -142,10 +141,26 @@ struct TrendsBarChart: View {
                                                             }
                                                         }
                                                     }
+                                                
+                                                Spacer()
+                                                    .frame(maxWidth: self.chartSpacerMaxWidth())
+                                            }
+                                            
+                                        }
+                                        
+                                        HStack {
+                                            ForEach(self.verticalAxisText(dataItems: dataItems), id: \.self) { text in
+                                                
+                                                Text(selectedTimePeriod != .yearly ? text : text[0])
+                                                    .foregroundColor(Color(.systemGray))
+                                                    .font(.caption)
+                                                    .dynamicTypeSize(.large)
+                                                
+                                                Spacer()
+                                                
                                             }
                                         }
                                     }
-                                    .padding(.bottom, 20)
                                 }
                                 
                                 // MARK: Horizontal Axis Text
@@ -652,6 +667,15 @@ struct TrendsBarChart: View {
             return 0
         }
     }
+    
+    func chartSpacerMaxWidth() -> CGFloat {
+        if selectedTimePeriod == .daily || selectedTimePeriod == .weekly {
+            return 10
+        } else {
+            return 5
+        }
+    }
+    
     
     /**
      Return the vertical axis text in a String array depending on the selected time period

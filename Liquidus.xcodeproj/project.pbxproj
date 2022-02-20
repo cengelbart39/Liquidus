@@ -87,7 +87,7 @@
 		9DA8D6ED26E7BCDF00FEEC6C /* DrinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */; };
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
 		9DB24C5D279F5D8C009F265A /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
-		9DB24C5F279F5EFF009F265A /* TrendsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5E279F5EFF009F265A /* TrendsBarChart.swift */; };
+		9DB24C5F279F5EFF009F265A /* TrendsBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5E279F5EFF009F265A /* TrendsBarChartView.swift */; };
 		9DB24C63279F6790009F265A /* TrendsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C62279F6790009F265A /* TrendsBarView.swift */; };
 		9DB24C64279F79D1009F265A /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
 		9DC4CCFE2795EBCD00908E10 /* ProviderLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */; };
@@ -200,7 +200,7 @@
 		9DA8D6EC26E7BCDF00FEEC6C /* DrinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
 		9DB24C5C279F5D8C009F265A /* DataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataItem.swift; sourceTree = "<group>"; };
-		9DB24C5E279F5EFF009F265A /* TrendsBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsBarChart.swift; sourceTree = "<group>"; };
+		9DB24C5E279F5EFF009F265A /* TrendsBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsBarChartView.swift; sourceTree = "<group>"; };
 		9DB24C62279F6790009F265A /* TrendsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsBarView.swift; sourceTree = "<group>"; };
 		9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderLogic.swift; sourceTree = "<group>"; };
 		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -398,7 +398,7 @@
 				9D55EC20279EFDE10019C6FA /* TrendsView.swift */,
 				9D0E8D8427BEFFB200DE66AC /* TrendsAmountView.swift */,
 				9D0E8D8227BEFF8700DE66AC /* TrendsSymbolView.swift */,
-				9DB24C5E279F5EFF009F265A /* TrendsBarChart.swift */,
+				9DB24C5E279F5EFF009F265A /* TrendsBarChartView.swift */,
 				9D72F74127C0670A001326EC /* TrendsBarChartDrag.swift */,
 				9D9B151527BD29A20036491A /* TrendsBarChartAudioGraph.swift */,
 				9D216B8A27AC9953002F2BF6 /* TrendsBarVerticalAxisView.swift */,
@@ -629,7 +629,7 @@
 				9D46BBF02714D88200DB9149 /* OnboardingAppleHealthView.swift in Sources */,
 				9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */,
 				9DA8D6E226E7BA5000FEEC6C /* IntakeTimePickerView.swift in Sources */,
-				9DB24C5F279F5EFF009F265A /* TrendsBarChart.swift in Sources */,
+				9DB24C5F279F5EFF009F265A /* TrendsBarChartView.swift in Sources */,
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
 				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
 				9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */,

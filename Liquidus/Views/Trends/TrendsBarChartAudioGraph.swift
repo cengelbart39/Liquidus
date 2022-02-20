@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension TrendsBarChart: AXChartDescriptorRepresentable {
+extension TrendsBarChartView: AXChartDescriptorRepresentable {
     
     func makeChartDescriptor() -> AXChartDescriptor {
         // Data Items

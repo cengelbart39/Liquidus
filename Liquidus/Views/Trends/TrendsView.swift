@@ -32,7 +32,7 @@ struct TrendsView: View {
                     ForEach(drinkTypes, id: \.self) { type in
                         if model.drinkData.enabled[type] ?? true {
                             NavigationLink {
-                                TrendsBarChart(type: type)
+                                TrendsBarChartView(type: type)
                             } label: {
                                 
                                 ZStack {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension TrendsBarChart {
+extension TrendsBarChartView {
     var drag: some Gesture {
         DragGesture()
             .onEnded { value in
