@@ -1,5 +1,5 @@
 //
-//  TrendsTimePickerView.swift
+//  TrendsDetailTimePickerView.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 2/4/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrendsTimePickerView: View {
+struct TrendsDetailTimePickerView: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     
     @Binding var binding: Constants.TimePeriod

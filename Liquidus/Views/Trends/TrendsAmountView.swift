@@ -29,7 +29,7 @@ struct TrendsAmountView: View {
                     .font(self.getUnitFontStyle())
                     .accessibilityLabel("\(model.getAccessibilityUnitLabel()) per day")
             }
-            .foregroundStyle(type == Constants.allKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+            .foregroundStyle(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
             
         } else {
             Group {
@@ -40,7 +40,7 @@ struct TrendsAmountView: View {
                     .bold()
                     .font(self.getUnitFontStyle())
             }
-            .foregroundStyle(type == Constants.allKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+            .foregroundStyle(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
             .accessibilityLabel("Not Enough Data")
         }
     }

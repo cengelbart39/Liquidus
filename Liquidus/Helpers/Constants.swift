@@ -39,7 +39,7 @@ struct Constants {
     static var coffeeKey = "Coffee"
     static var sodaKey = "Soda"
     static var juiceKey = "Juice"
-    static var allKey = "All"
+    static var totalKey = "Total"
     
     static var savedKey = "SavedKey"
     
@@ -50,10 +50,14 @@ struct Constants {
     static var intakeWeeklyURL = URL(string: "liquidus://intake/weekly")
     static var logDrinkWeeklyURL = URL(string: "liquidus://intake/weekly/log")
     
+    static var trendsURL = URL(string: "liquidus://trends")
+    
     static var unitDictionary: [String:UnitVolume] = [
         Constants.cupsUS:UnitVolume.cups,
         Constants.fluidOuncesUS:UnitVolume.fluidOunces,
         Constants.liters:UnitVolume.liters,
         Constants.milliliters:UnitVolume.milliliters
     ]
+    
+    
 }

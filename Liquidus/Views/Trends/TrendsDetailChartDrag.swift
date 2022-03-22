@@ -1,5 +1,5 @@
 //
-//  TrendsBarChartDrag.swift
+//  TrendsDetailChartDrag.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 2/18/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension TrendsBarChartView {
+extension TrendsDetailView {
     var drag: some Gesture {
         DragGesture()
             .onEnded { value in
@@ -34,6 +34,8 @@ extension TrendsBarChartView {
                                     selectedWeek = model.getDaysInWeek(date: newWeek)
                                 }
                             }
+                            monthOffset += 1
+
                         }
                     } else if selectedTimePeriod == .monthly && !model.isNextMonth(currentMonth: selectedMonth) {
                         if let newMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.selectedMonth[0]) {
@@ -55,6 +57,8 @@ extension TrendsBarChartView {
                                         selectedHalfYear = model.getHalfYear(date: newMonth)
                                     }
                                 }
+                                halfYearOffset += 1
+
                             }
                         }
                     } else if selectedTimePeriod == .yearly && !model.isNextYear(currentYear: selectedYear) {
@@ -93,6 +97,7 @@ extension TrendsBarChartView {
                                     selectedWeek = model.getDaysInWeek(date: newWeek)
                                 }
                             }
+                            monthOffset -= 1
                         }
                     } else if selectedTimePeriod == .monthly {
                         if let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: self.selectedMonth[0]) {
@@ -114,6 +119,8 @@ extension TrendsBarChartView {
                                         selectedHalfYear = model.getHalfYear(date: newMonth)
                                     }
                                 }
+                                halfYearOffset -= 1
+
                             }
                         }
                     } else if selectedTimePeriod == .yearly {

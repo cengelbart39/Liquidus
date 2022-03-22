@@ -1,5 +1,5 @@
 //
-//  TrendsDataListView.swift
+//  TrendsDetailDataListView.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 2/13/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrendsDataListView: View {
+struct TrendsDetailDataListView: View {
     
     @EnvironmentObject var model: DrinkModel
     
@@ -15,7 +15,7 @@ struct TrendsDataListView: View {
     
     var body: some View {
         Form {
-            let drinks = type == Constants.allKey ? model.drinkData.drinks : model.drinkData.drinks.filter { $0.type == type }
+            let drinks = type == Constants.totalKey ? model.drinkData.drinks : model.drinkData.drinks.filter { $0.type == type }
             
             if drinks.count > 0 {
                 Section(header: Text(model.drinkData.units)) {

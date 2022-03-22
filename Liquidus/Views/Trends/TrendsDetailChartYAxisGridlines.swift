@@ -1,5 +1,5 @@
 //
-//  TrendsBarVerticalAxisView.swift
+//  TrendsDetailChartYAxisGridlines.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 2/3/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrendsBarVerticalAxisView: View {
+struct TrendsDetailChartYAxisGridlines: View {
     var body: some View {
         Rectangle()
             .foregroundColor(Color(.systemGray5))

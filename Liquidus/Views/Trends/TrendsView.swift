@@ -22,7 +22,7 @@ struct TrendsView: View {
     var body: some View {
         NavigationView {
             // Get all drink types
-            let drinkTypes = [Constants.allKey] + model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
+            let drinkTypes = [Constants.totalKey] + model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
             
             ScrollView {
                 
@@ -32,7 +32,7 @@ struct TrendsView: View {
                     ForEach(drinkTypes, id: \.self) { type in
                         if model.drinkData.enabled[type] ?? true {
                             NavigationLink {
-                                TrendsBarChartView(type: type)
+                                TrendsDetailView(type: type)
                             } label: {
                                 
                                 ZStack {
