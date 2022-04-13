@@ -4,6 +4,10 @@
 //
 //  Created by Christopher Engelbart on 9/11/21.
 //
+//  Implementation Based Off Of:
+//  - https://developer.apple.com/videos/play/wwdc2020/10664/
+//  - https://youtu.be/ohgrzM9gfvM by azamsharp
+//
 
 import Foundation
 import HealthKit

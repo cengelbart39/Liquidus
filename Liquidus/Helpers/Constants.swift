@@ -26,7 +26,7 @@ struct Constants {
     static var dailyAverage = "DAILY AVERAGE"
     
     static var cups = "cups"
-    static var flOzUS = "fl oz"
+    static var flOzUS = "floz"
     static var L = "L"
     static var mL = "mL"
     

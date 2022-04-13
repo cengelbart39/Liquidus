@@ -19,9 +19,3 @@ struct Liquidus_App: App {
         }
     }
 }
-
-extension String {
-    subscript(i: Int) -> String {
-        return String(self[index(startIndex, offsetBy: i)])
-    }
-}

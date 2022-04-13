@@ -4,6 +4,10 @@
 //
 //  Created by Christopher Engelbart on 3/2/22.
 //
+//  General Implementation based on:
+//  - https://swdevnotes.com/swift/2021/how-to-create-bar-chart-swiftui/ by Eric Callanan
+//  - https://blckbirds.com/post/charts-in-swiftui-part-1-bar-chart/ by Ahmed Mgua
+//
 
 import SwiftUI
 

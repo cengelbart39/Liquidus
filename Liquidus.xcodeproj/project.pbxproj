@@ -37,6 +37,7 @@
 		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
 		9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */; };
 		9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
+		9D400C5127FB83D700A480BA /* WidgetChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D400C5027FB83D700A480BA /* WidgetChartView.swift */; };
 		9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */; };
 		9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */; };
 		9D46BBE42714C1C500DB9149 /* OnboardingDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE32714C1C500DB9149 /* OnboardingDailyGoalView.swift */; };
@@ -63,6 +64,9 @@
 		9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */; };
 		9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */; };
 		9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */; };
+		9D87F54327ED02A500208EB3 /* IntakeCircularProgressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */; };
+		9D87F54427ED047800208EB3 /* IntakeCircularProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */; };
+		9D8B09C127EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */; };
 		9D8E8774278F7E520051D808 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E8773278F7E510051D808 /* SettingsAboutView.swift */; };
 		9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
@@ -93,6 +97,12 @@
 		9DC52F7F27EA363200EB1E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F7D27EA363200EB1E28 /* Constants.swift */; };
 		9DC52F8027EA363200EB1E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F7D27EA363200EB1E28 /* Constants.swift */; };
 		9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* CalendarView.swift */; };
+		9DE2CA2827EA3986009ADE3D /* TrendsDetailChartAudioGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6927EA35BF00EB1E28 /* TrendsDetailChartAudioGraph.swift */; };
+		9DE2CA2927EA3986009ADE3D /* TrendsDetailChartYAxisGridlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6527EA35BF00EB1E28 /* TrendsDetailChartYAxisGridlines.swift */; };
+		9DE2CA2A27EA3986009ADE3D /* TrendsDetailChartBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6727EA35BF00EB1E28 /* TrendsDetailChartBarView.swift */; };
+		9DE2CA2B27EA3986009ADE3D /* TrendsDetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6427EA35BF00EB1E28 /* TrendsDetailChartView.swift */; };
+		9DE2CA2D27EA3A91009ADE3D /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */; };
+		9DE2CA2E27EA3A91009ADE3D /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +162,7 @@
 		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
 		9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkTypeView.swift; sourceTree = "<group>"; };
 		9D395165270A0CFF009E7F40 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
+		9D400C5027FB83D700A480BA /* WidgetChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetChartView.swift; sourceTree = "<group>"; };
 		9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUnitsView.swift; sourceTree = "<group>"; };
 		9D46BBE32714C1C500DB9149 /* OnboardingDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDailyGoalView.swift; sourceTree = "<group>"; };
@@ -179,6 +190,8 @@
 		9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditDefaultTypeView.swift; sourceTree = "<group>"; };
 		9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumWidgetView.swift; sourceTree = "<group>"; };
 		9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeWidgetView.swift; sourceTree = "<group>"; };
+		9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressInfo.swift; sourceTree = "<group>"; };
+		9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressDisplay.swift; sourceTree = "<group>"; };
 		9D8E8773278F7E510051D808 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
 		9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		9D935BEE26ED0E2400CA9C31 /* Liquidus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Liquidus.entitlements; sourceTree = "<group>"; };
@@ -206,6 +219,7 @@
 		9DC52F7A27EA35F000EB1E28 /* DrinkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DC52F7D27EA363200EB1E28 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSubstring.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +271,7 @@
 				9D0309E727932A280034526D /* WidgetView.swift */,
 				9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */,
 				9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */,
+				9D400C5027FB83D700A480BA /* WidgetChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -277,6 +292,7 @@
 			children = (
 				9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */,
 				9D4B983A279783AE0068A486 /* ViewIntake.intentdefinition */,
+				9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */,
 				9D48B39926E65E2C00FEFE49 /* Liquidus */,
 				9D0309D6279329CD0034526D /* IntakeWidget */,
 				9D263EA1279CBA260084FE2E /* ViewIntakeIntent */,
@@ -350,6 +366,8 @@
 				9DA8D6E326E7BAE900FEEC6C /* IntakeDayDataPicker.swift */,
 				9D25E57626EAAEAF00A9CDC8 /* IntakeWeekDataPicker.swift */,
 				9D48B3AB26E6635000FEFE49 /* IntakeCircularProgressBar.swift */,
+				9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */,
+				9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */,
 				9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */,
 				9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */,
 				9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */,
@@ -589,15 +607,22 @@
 				9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */,
 				9DB24C64279F79D1009F265A /* DataItem.swift in Sources */,
 				9D0309E627932A070034526D /* SimpleEntry.swift in Sources */,
+				9DE2CA2A27EA3986009ADE3D /* TrendsDetailChartBarView.swift in Sources */,
 				9DC52F7C27EA35F000EB1E28 /* DrinkModel.swift in Sources */,
 				9D0309EE279334A20034526D /* DrinkData.swift in Sources */,
+				9DE2CA2B27EA3986009ADE3D /* TrendsDetailChartView.swift in Sources */,
 				9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */,
 				9D4B983C279783AE0068A486 /* ViewIntake.intentdefinition in Sources */,
 				9DC52F7F27EA363200EB1E28 /* Constants.swift in Sources */,
+				9D87F54427ED047800208EB3 /* IntakeCircularProgressDisplay.swift in Sources */,
+				9DE2CA2927EA3986009ADE3D /* TrendsDetailChartYAxisGridlines.swift in Sources */,
 				9D0309E4279329EA0034526D /* Provider.swift in Sources */,
+				9DE2CA2827EA3986009ADE3D /* TrendsDetailChartAudioGraph.swift in Sources */,
+				9D400C5127FB83D700A480BA /* WidgetChartView.swift in Sources */,
 				9DC4CCFE2795EBCD00908E10 /* ProviderLogic.swift in Sources */,
 				9D0309E827932A280034526D /* WidgetView.swift in Sources */,
 				9D20175727937CD7008257FA /* HealthStore.swift in Sources */,
+				9DE2CA2E27EA3A91009ADE3D /* StringSubstring.swift in Sources */,
 				9D0309EF279334A40034526D /* Drink.swift in Sources */,
 				9D0309F02793381A0034526D /* CodableColor.swift in Sources */,
 				9D2017522793663D008257FA /* IntakeCircularProgressBarHighlight.swift in Sources */,
@@ -639,6 +664,7 @@
 				9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */,
 				9D8E8774278F7E520051D808 /* SettingsAboutView.swift in Sources */,
 				9DC52F7227EA35C000EB1E28 /* TrendsDetailTimePickerView.swift in Sources */,
+				9D87F54327ED02A500208EB3 /* IntakeCircularProgressInfo.swift in Sources */,
 				9D46BBEC2714D2FE00DB9149 /* OnboardingCustomDrinksView.swift in Sources */,
 				9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */,
 				9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */,
@@ -656,6 +682,7 @@
 				9DC52F7327EA35C000EB1E28 /* TrendsDetailChartBarView.swift in Sources */,
 				9D48B3AC26E6635000FEFE49 /* IntakeCircularProgressBar.swift in Sources */,
 				9DC52F7127EA35C000EB1E28 /* TrendsDetailChartYAxisGridlines.swift in Sources */,
+				9DE2CA2D27EA3A91009ADE3D /* StringSubstring.swift in Sources */,
 				9DB24C5D279F5D8C009F265A /* DataItem.swift in Sources */,
 				9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */,
 				9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */,
@@ -664,6 +691,7 @@
 				9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */,
 				9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */,
 				9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */,
+				9D8B09C127EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift in Sources */,
 				9D48B3AE26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift in Sources */,
 				9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */,
 				9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */,

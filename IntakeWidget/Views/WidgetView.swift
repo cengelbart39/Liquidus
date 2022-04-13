@@ -20,10 +20,30 @@ struct WidgetView : View {
         switch widgetFamily {
         case .systemMedium:
             MediumWidgetView(entry: entry)
+                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
+                    model.grayscaleEnabled.toggle()
+                }
+                .onAppear {
+                    model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                }
+            
         case .systemLarge:
             LargeWidgetView(entry: entry)
+                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
+                    model.grayscaleEnabled.toggle()
+                }
+                .onAppear {
+                    model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                }
+            
         default:
             MediumWidgetView(entry: entry)
+                .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
+                    model.grayscaleEnabled.toggle()
+                }
+                .onAppear {
+                    model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                }
         }
     }
 }

@@ -4,6 +4,13 @@
 //
 //  Created by Christopher Engelbart on 9/7/21.
 //
+//  UserDefaults Implementation Based Off Of:
+//  https://youtu.be/vsL1UemuB3U by Paul Hudson
+//
+//  HealthKit Implementation Based Off Of:
+//  - https://developer.apple.com/videos/play/wwdc2020/10664/
+//  - https://youtu.be/ohgrzM9gfvM by azamsharp
+//
 
 import Foundation
 import SwiftUI
@@ -1371,6 +1378,73 @@ class DrinkModel: ObservableObject {
         
         return amount
     }
+    
+    // MARK: - Progress Bar Methods
+    /**
+     Compute the user's progress to reaching their daily or weekly goal for Progress Bar Display
+     */
+    func getProgressPercent(type: String, dates: Any) -> Double {
+        // Create an empty string array
+        var drinkTypes = [String]()
+        
+        // Loop through default drink types
+        for type in self.drinkData.defaultDrinkTypes {
+            
+            // if drink type is enabled...
+            if self.drinkData.enabled[type]! {
+                // add to drinkTypes
+                drinkTypes += [type]
+            }
+        }
+        
+        // Add custom drink types to drinkTypes
+        drinkTypes += self.drinkData.customDrinkTypes
+        
+        // Get the index of type in drinkTypes
+        let typeIndex = drinkTypes.firstIndex(of: type)!
+        
+        var progress = 0.0
+        
+        // If selectedTimePeriod is Day...
+        if let date = dates as? Date {
+            // Loop through type index...
+            for index in 0...typeIndex {
+                // To get trim value for type
+                progress += self.getTypePercentByDay(type: drinkTypes[index], date: date)
+            }
+        // If selectedTimePeriod is Week...
+        } else if let dates = dates as? [Date] {
+            // Loop through type index...
+            for index in 0...typeIndex {
+                // To get trim value for type
+                progress += self.getTypePercentByWeek(type: drinkTypes[index], week: dates)
+            }
+        }
+        
+        return progress
+        
+    }
+    
+    /**
+     For a given type and Date or [Date] get the highlight color for use in the Progress Bar
+     */
+    func getHighlightColor(type: String, dates: Any) -> Color {
+        let totalPercent = self.getProgressPercent(type: type, dates: dates)
+        
+        if totalPercent >= 1.0 {
+            return Color("GoalGreen")
+            
+        } else {
+            if self.grayscaleEnabled {
+                return .primary
+                
+            } else {
+                return self.getDrinkTypeColor(type: type)
+                
+            }
+        }
+    }
+    
     
     // MARK: - Trends Chart Method
     /**

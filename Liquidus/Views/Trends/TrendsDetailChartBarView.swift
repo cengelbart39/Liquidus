@@ -17,7 +17,7 @@ struct TrendsDetailChartBarView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: isWidget ? 4 : 8)
-            .fill(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+            .fill(self.getFill())
             .scaleEffect(CGSize(width: 1, height: value), anchor: .bottom)
     }
     
@@ -29,5 +29,17 @@ struct TrendsDetailChartBarView: View {
         formatter.dateFormat = "ha"
         
         return formatter.string(from: item.date)
+    }
+    
+    func getFill() -> LinearGradient {
+        if model.grayscaleEnabled {
+            return LinearGradient(colors: [.primary], startPoint: .top, endPoint: .bottom)
+            
+        } else if type == Constants.totalKey {
+            return model.getDrinkTypeGradient()
+            
+        } else {
+            return LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom)
+        }
     }
 }

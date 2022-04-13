@@ -4,6 +4,9 @@
 //
 //  Created by Christopher Engelbart on 1/22/22.
 //
+//  Implementation Based Off Of:
+//  https://www.answertopia.com/swiftui/a-swiftui-siri-shortcut-tutorial/
+//
 
 import Intents
 import SwiftUI

@@ -13,79 +13,108 @@ struct LargeWidgetView: View {
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.dynamicTypeSize) var dynamicType
+    @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    
+    var shapes = ["circle", "square", "triangle", "diamond"]
     
     var entry: SimpleEntry
     
-    @ScaledMetric(relativeTo: .subheadline) var symbolSize = 15
-    @ScaledMetric(relativeTo: .subheadline) var symbolSize2 = 12
-    @ScaledMetric(relativeTo: .subheadline) var symbolSize3 = 8
-    @ScaledMetric(relativeTo: .subheadline) var symbolSize4 = 7
-
-    @ScaledMetric(relativeTo: .caption2) var fontSize1 = 7
-    @ScaledMetric(relativeTo: .caption2) var fontSize2 = 6
-    @ScaledMetric(relativeTo: .caption2) var fontSize3 = 5
-    @ScaledMetric(relativeTo: .caption2) var fontSize4 = 4
-    
     var body: some View {
+        let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
+        
+        let nonZeroTypes = self.nonZeroTypes(types: drinkTypes)
+        
         GeometryReader { geo in
-            VStack {
+            VStack(spacing: 5) {
                 
                 HStack {
                     
                     Spacer()
                     
                     // MARK: - Circular Progress Bar
-                    ZStack {
-                        // Create circle background
-                        Circle()
-                            .stroke(lineWidth: 20)
-                            .foregroundColor(Color(.systemGray6))
-                            .scaledToFit()
-                        
-                        // Get all drink types
-                        let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-                        
-                        // Get total percentage of liquid consumed
-                        let totalPercent = self.getProgressPercent(type: drinkTypes.last!)
-                        
-                        // Get the outline fill for each type
-                        ForEach(drinkTypes.reversed(), id: \.self) { type in
-                            
-                            // If the drink type is enabled...
-                            if model.drinkData.enabled[type]! {
-                                // Get color for highlight
-                                // Use drink type color if goal isn't reached
-                                // Use "GoalGreen" if goal is reached
-                                let color = totalPercent >= 1.0 ? self.getHighlightColor(type: drinkTypes.last!) : self.getHighlightColor(type: type)
-                                
-                                IntakeCircularProgressBarHighlight(progress: self.getProgressPercent(type: type), color: color, width: 20)
-                            }
-                        }
-                    }
-                    .padding(.trailing)
+                    IntakeCircularProgressDisplay(
+                        timePeriod: entry.timePeriod,
+                        day: .now,
+                        week: model.getDaysInWeek(date: .now),
+                        drinkTypes: drinkTypes,
+                        totalPercent: model.getProgressPercent(
+                            type: drinkTypes.last!,
+                            dates: entry.timePeriod == .daily ? Date.now : model.getDaysInWeek(date: .now)),
+                        width: 20
+                    )
+                    .frame(maxWidth: geo.size.width/2)
+                    .accessibilityHidden(true)
+                    .padding(.top, 21)
+                    .padding(.bottom, 10)
+                    .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
                     
                     Spacer()
+                        .frame(width: 20)
                     
                     // MARK: - Total Info
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(date: entry.date) : model.getTotalPercentByWeek(week: model.getDaysInWeek(date: entry.date))
                         
                         Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                             .font(.title)
                             .bold()
-                            .accessibilityLabel(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
+                            .accessibilityLabel("\(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0)) of Goal")
+                            .padding(.bottom, -2)
+                            .dynamicTypeSize(.xSmall ... .xxLarge)
                         
-                        let total = entry.timePeriod == .daily ? model.getTotalAmountByDay(date: entry.date) : model.getTotalAmountByWeek(week: model.getDaysInWeek(date: entry.date))
+                        let c1 = Array(repeating: GridItem(.flexible(maximum: geo.size.width/2)), count: 2)
                         
-                        let goal = entry.timePeriod == .daily ? model.drinkData.dailyGoal : model.drinkData.dailyGoal*7
+                        if let first = self.getFirstFourTypes(types: nonZeroTypes) {
                         
-                        Text("\(total, specifier: model.getSpecifier(amount: total)) / \(goal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal)) \(model.getUnits())")
-                            .foregroundColor(.gray)
-                            .accessibilityLabel("\(total, specifier: model.getSpecifier(amount: total)) out of \(goal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal)) \(model.getAccessibilityUnitLabel())")
+                            LazyVGrid(columns: c1, alignment: .leading, spacing: 2) {
+                                
+                                ForEach(first, id: \.self) { type in
+                                    
+                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: .now) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: .now))
+                                    
+                                    if (differentiateWithoutColor) {
+                                        
+                                        HStack {
+                                            Image(systemName: shapes[first.firstIndex(of: type)!])
+                                                .symbolVariant(.fill)
+                                                .font(.caption.weight(.bold))
+                                                .accessibilityHidden(true)
+                                            
+                                            VStack(alignment: .leading, spacing: 0) {
+                                                Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount))")
+                                                    .bold()
+                                                    .font(differentiateWithoutColor ? .caption : .subheadline)
+
+                                                Text(model.getUnits().uppercased())
+                                                    .font(differentiateWithoutColor ? .caption : .subheadline)
+                                                    .bold()
+                                            }
+                                        }
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                        .dynamicTypeSize(.xSmall ... .xLarge)
+                                        .accessibilityLabel("\(type), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
+                                         
+                                        
+                                    } else {
+                                        Group {
+                                            Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount))")
+                                                .font(.subheadline)
+                                                .bold()
+                                            + Text(model.getUnits().uppercased())
+                                                .font(.footnote)
+                                                .bold()
+                                        }
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                        .dynamicTypeSize(.xSmall ... .xxLarge)
+                                        .accessibilityLabel("\(type), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
+                                    }
+                                }
+                                
+                            }
+                        }
                         
                     }
-                    .frame(width: geo.size.width/2)
-                    .accessibilityElement(children: .combine)
+                    .frame(width: geo.size.width/1.6)
                     
                     Spacer()
                     
@@ -95,75 +124,26 @@ struct LargeWidgetView: View {
                 .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
                 
                 Divider()
-                    .padding(.vertical, 10)
+                    .padding(.bottom, 10)
                 
                 // MARK: - Drink Type Detail
-                let columns = Array(repeating: GridItem(.flexible(minimum: geo.size.width/4)), count: 2)
+                let c2 = Array(repeating: GridItem(.flexible(maximum: geo.size.width/2.1)), count: 2)
                 
-                let allTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-                
-                let nonZeroTypes = self.nonZeroTypes(types: allTypes)
-                
-                if !nonZeroTypes.isEmpty {
-                    LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
-                        if nonZeroTypes.count > 4 {
-                            
-                            let viewableTypes = [nonZeroTypes[0], nonZeroTypes[1], nonZeroTypes[2], nonZeroTypes[3]]
-                            
-                            ForEach(viewableTypes, id: \.self) { type in
-                                VStack(alignment: .leading, spacing: 0) {
-                                   Text(type)
-                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                        .bold()
-                                        .font(getTypeNameFontStyle())
-                                    
-                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
-                                    
-                                    let typePercent = entry.timePeriod == .daily ? model.getTypePercentByDay(type: type, date: entry.date) : model.getTypePercentByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
-                                    
-                                    Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
-                                        .font(getTypeInfoFontStyle())
-                                        .accessibilityLabel("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
-                                                
-                                    Text("\(typePercent*100, specifier: "%.2f")%")
-                                        .font(getTypeInfoFontStyle())
-                                        .accessibilityLabel("\(typePercent*100, specifier: "%.2f")%")
-                                }
-                                .padding(.horizontal, 10)
-                                .padding(.bottom)
-                                .accessibilityElement(children: .combine)
-                            }
-                        } else {
-                            ForEach(nonZeroTypes, id: \.self) { type in
-                                VStack(alignment: .leading, spacing: 0) {
-                                    Text(type)
-                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                        .bold()
-                                        .font(getTypeNameFontStyle())
-                                    
-                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
-                                    
-                                    let typePercent = entry.timePeriod == .daily ? model.getTypePercentByDay(type: type, date: entry.date) : model.getTypePercentByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
-                                    
-                                    Text("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getUnits())")
-                                        .font(getTypeInfoFontStyle())
-                                        .accessibilityLabel("\(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
-                                            
-                                    Text("\(typePercent*100, specifier: "%.2f")%")
-                                        .font(getTypeInfoFontStyle())
-                                        .accessibilityLabel("\(typePercent*100, specifier: "%.2f")%")
-
-                                }
-                                .padding(.horizontal, 10)
-                                .padding(.bottom)
-                                .accessibilityElement(children: .combine)
-
-                            }
-                        }
-                    }
-                    .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
+                if let first = self.getFirstFourTypes(types: nonZeroTypes) {
                     
-                    Spacer()
+                    let max = self.getMaxDataType(types: first)
+                    
+                    LazyVGrid(columns: c2, alignment: .leading, spacing: 10) {
+                        
+                        ForEach(first, id: \.self) { type in
+                            
+                            WidgetChartView(entry: entry, type: type, maxVal: max, shape: shapes[first.firstIndex(of: type)!])
+                                .frame(height: geo.size.height/4.2)
+                                .dynamicTypeSize(differentiateWithoutColor ? .xSmall ... .xLarge : .xSmall ... .xxLarge)
+                            
+                        }
+                        
+                    }
                 } else {
                     VStack {
                         Spacer()
@@ -185,61 +165,20 @@ struct LargeWidgetView: View {
         .padding()
     }
     
-    private func getProgressPercent(type: String) -> Double {
-        // Create an empty string array
-        var drinkTypes = [String]()
+    private func getFirstFourTypes(types: [String]) -> [String]? {
+        let t = types.prefix(4)
         
-        // Loop through default drink types
-        for type in model.drinkData.defaultDrinkTypes {
+        if t == ArraySlice([]) {
+            return nil
             
-            // if drink type is enabled...
-            if model.drinkData.enabled[type]! {
-                // add to drinkTypes
-                drinkTypes += [type]
-            }
-        }
-        
-        // Add custom drink types to drinkTypes
-        drinkTypes += model.drinkData.customDrinkTypes
-        
-        // Get the index of type in drinkTypes
-        let typeIndex = drinkTypes.firstIndex(of: type)!
-        
-        var progress = 0.0
-        
-        // If selectedTimePeriod is Day...
-        if entry.timePeriod == .daily {
-            // Loop through type index...
-            for index in 0...typeIndex {
-                // To get trim value for type
-                progress += model.getTypePercentByDay(type: drinkTypes[index], date: entry.date)
-            }
-            // If selectedTimePeriod is Week...
         } else {
-            // Loop through type index...
-            for index in 0...typeIndex {
-                // To get trim value for type
-                progress += model.getTypePercentByWeek(type: drinkTypes[index], week: model.getDaysInWeek(date: entry.date))
-            }
-        }
-        
-        return progress
-    }
-    
-    private func getHighlightColor(type: String) -> Color {
-        let totalPercent = self.getProgressPercent(type: type)
-        
-        if totalPercent >= 1.0 {
-            return Color("GoalGreen")
-        } else {
-            if model.grayscaleEnabled {
-                return .primary
-            } else {
-                return model.getDrinkTypeColor(type: type)
-            }
+            return Array(t)
+            
         }
     }
     
+    // Filters out drink types based on if the user has consumed any
+    // Then sorts by the greatest amount
     private func nonZeroTypes(types: [String]) -> [String] {
         var nonZeroTypes = [String]()
         
@@ -256,45 +195,16 @@ struct LargeWidgetView: View {
         return nonZeroTypes
     }
     
-    private func getSymbolSize() -> Double {
-        if !dynamicType.isAccessibilitySize {
-            return symbolSize
-        } else if dynamicType > .xxxLarge && dynamicType < .accessibility3 {
-            return symbolSize2
-        } else if dynamicType > .accessibility2 && dynamicType < .accessibility5 {
-            return symbolSize3
-        } else {
-            return symbolSize4
+    private func getMaxDataType(types: [String]) -> Double {
+        var maxes = [Double]()
+        
+        for type in types {
+            let dataItems = entry.timePeriod == .daily ? model.getDataItemsForDay(date: .now, type: type) : model.getDataItemsForWeek(week: model.getDaysInWeek(date: .now), type: type)
+            
+            maxes.append(model.getMaxValue(dataItems: dataItems, timePeriod: entry.timePeriod))
         }
+        
+        return maxes.max()!
     }
-    
-    private func getTypeNameFontStyle() -> Font {
-        if dynamicType < .xLarge {
-            return .body
-        } else if dynamicType > .large && dynamicType < .xxxLarge {
-            return .callout
-        } else if dynamicType == .xxxLarge {
-            return .footnote
-        } else {
-            return .caption2
-        }
-    }
-    
-    private func getTypeInfoFontStyle() -> Font {
-        if dynamicType < .xLarge {
-            return .subheadline
-        } else if dynamicType > .large && dynamicType < .xxxLarge {
-            return .caption
-        } else if dynamicType == .xxxLarge {
-            return .caption2
-        } else if dynamicType > .xxxLarge && dynamicType < .accessibility3 {
-            return Font.system(size: fontSize1)
-        } else if dynamicType == .accessibility3 {
-            return Font.system(size: fontSize2)
-        } else if dynamicType == .accessibility4 {
-            return Font.system(size: fontSize3)
-        } else {
-            return Font.system(size: fontSize4)
-        }
-    }
+
 }
