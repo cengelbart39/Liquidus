@@ -13,7 +13,6 @@ struct DailyIntakeInfoView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var color: Color
-    
     var units: String? = nil
     
     var body: some View {

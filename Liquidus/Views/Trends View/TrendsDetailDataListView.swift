@@ -11,11 +11,11 @@ struct TrendsDetailDataListView: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    var type: String
+    var type: DrinkType
     
     var body: some View {
         Form {
-            let drinks = type == Constants.totalKey ? model.drinkData.drinks : model.drinkData.drinks.filter { $0.type == type }
+            let drinks = type.name == Constants.totalKey ? model.drinkData.drinks : model.drinkData.drinks.filter { $0.type == type }
             
             if drinks.count > 0 {
                 Section(header: Text(model.drinkData.units)) {

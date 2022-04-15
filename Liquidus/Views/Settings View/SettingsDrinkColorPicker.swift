@@ -11,27 +11,25 @@ struct SettingsDrinkColorPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    var drinkType: String
+    var drinkType: DrinkType
     @State var color = Color.black
     
     var body: some View {
         
-        ColorPicker(drinkType, selection: $color, supportsOpacity: false)
+        ColorPicker(drinkType.name, selection: $color, supportsOpacity: false)
             // When the color changes, update model
             .onChange(of: color) { newValue in
-                model.drinkData.colors[drinkType]! = CodableColor(color: UIColor(color))
+                if let index = model.drinkData.drinkTypes.firstIndex(of: drinkType) {
+                    model.drinkData.drinkTypes[index].color = CodableColor(color: UIColor(color))
+                    model.drinkData.drinkTypes[index].colorChanged = true
+                }
             }
             // When view appears, update color to drinkType's color
             .onAppear {
-                color = model.drinkData.colors[drinkType]!.getColor()
+                if let index = model.drinkData.drinkTypes.firstIndex(of: drinkType) {
+                    color = model.drinkData.drinkTypes[index].color.getColor()
+                }
             }
         
-    }
-}
-
-struct SettingsDrinkColorPicker_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsDrinkColorPicker(drinkType: "Water")
-            .environmentObject(DrinkModel())
     }
 }

@@ -17,7 +17,6 @@ struct IntakeCircularProgressDisplay: View {
     var timePeriod: Constants.TimePeriod
     var day: Date
     var week: [Date]
-    var drinkTypes: [String]
     var totalPercent: Double
     var width: CGFloat
     
@@ -31,14 +30,14 @@ struct IntakeCircularProgressDisplay: View {
                 .scaledToFit()
             
             // Get the outline fill for each type
-            ForEach(drinkTypes.reversed(), id: \.self) { type in
+            ForEach(model.drinkData.drinkTypes.reversed()) { type in
                 
                 // If the drink type is enabled...
-                if model.drinkData.enabled[type]! {
+                if type.enabled {
                     // Get color for highlight
                     // Use drink type color if goal isn't reached
                     // Use "GoalGreen" if goal is reached
-                    let color = totalPercent >= 1.0 ? model.getHighlightColor(type: drinkTypes.last!, dates: self.getDates()) : model.getHighlightColor(type: type, dates: self.getDates())
+                    let color = totalPercent >= 1.0 ? model.getHighlightColor(type: type, dates: self.getDates()) : model.getHighlightColor(type: type, dates: self.getDates())
 
                     IntakeCircularProgressBarHighlight(progress: model.getProgressPercent(type: type, dates: timePeriod == .daily ? day : week), color: color, width: width)
                 }

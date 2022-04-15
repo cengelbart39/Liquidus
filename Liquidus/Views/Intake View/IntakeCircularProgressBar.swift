@@ -22,13 +22,10 @@ struct IntakeCircularProgressBar: View {
         
         ZStack {
             
-            // Get all drink types
-            let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-            
             // Get total percentage of liquid consumed
-            let totalPercent = model.getProgressPercent(type: drinkTypes.last!, dates: selectedTimePeriod == .daily ? selectedDay : selectedWeek)
+            let totalPercent = model.getProgressPercent(type: model.drinkData.drinkTypes.last!, dates: selectedTimePeriod == .daily ? selectedDay : selectedWeek)
             
-            IntakeCircularProgressDisplay(timePeriod: selectedTimePeriod, day: selectedDay, week: selectedWeek, drinkTypes: drinkTypes, totalPercent: totalPercent, width: 30)
+            IntakeCircularProgressDisplay(timePeriod: selectedTimePeriod, day: selectedDay, week: selectedWeek, totalPercent: totalPercent, width: 30)
 
             // If a day display the daily percent
             IntakeCircularProgressInfo(timePeriod: selectedTimePeriod, day: selectedDay, week: selectedWeek, totalPercent: totalPercent)

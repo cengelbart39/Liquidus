@@ -16,7 +16,7 @@ struct TrendsDetailChartView: View {
     @EnvironmentObject var model: DrinkModel
     
     var timePeriod: Constants.TimePeriod
-    var type: String
+    var type: DrinkType
     var dataItems: [DataItem]
 
     var amount: Double

@@ -14,7 +14,7 @@ struct WidgetChartView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     
     var entry: SimpleEntry
-    var type: String
+    var type: DrinkType
     var maxVal: Double
     var shape: String
     
@@ -37,7 +37,7 @@ struct WidgetChartView: View {
                         .padding(.leading, 10)
                 }
                 
-                Text(type)
+                Text(type.name)
                     .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                     .font(.subheadline)
                     .bold()
@@ -63,7 +63,7 @@ struct WidgetChartView: View {
             
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(type) Intake Graph")
+        .accessibilityLabel("\(type.name) Intake Graph")
 
         
     }

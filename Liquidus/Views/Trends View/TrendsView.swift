@@ -22,15 +22,15 @@ struct TrendsView: View {
     var body: some View {
         NavigationView {
             // Get all drink types
-            let drinkTypes = [Constants.totalKey] + model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
+            let drinkTypes = [Constants.totalType] + model.drinkData.drinkTypes
             
             ScrollView {
                 
                 VStack(alignment: .leading) {
                     
                     // Loop through drink types
-                    ForEach(drinkTypes, id: \.self) { type in
-                        if model.drinkData.enabled[type] ?? true {
+                    ForEach(drinkTypes) { type in
+                        if type.enabled {
                             NavigationLink {
                                 TrendsDetailView(type: type)
                             } label: {
@@ -49,7 +49,7 @@ struct TrendsView: View {
                                         
                                         // Text
                                         VStack(alignment: .leading) {
-                                            Text(type)
+                                            Text(type.name)
                                                 .font(self.getTypeFontStyle())
                                                 .foregroundColor(.primary)
                                             

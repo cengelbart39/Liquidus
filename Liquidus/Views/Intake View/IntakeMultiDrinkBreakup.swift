@@ -18,30 +18,26 @@ struct IntakeMultiDrinkBreakup: View {
     var selectedWeek: [Date]
     
     var body: some View {
-        
-        // Get all drink types
-        let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-        
         VStack(alignment: .leading) {
-            ForEach(drinkTypes, id: \.self) { type in
+            ForEach(model.drinkData.drinkTypes) { type in
                 // if type is enabled...
-                if model.drinkData.enabled[type]! {
+                if type.enabled {
                     IntakeSingleDrinkBreakup(color: model.getDrinkTypeColor(type: type), drinkType: type, selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
                         .padding(.leading)
-                        .accessibilityRotorEntry(id: type.self, in: consumedDrinkNamespace)
+                        .accessibilityRotorEntry(id: type.id, in: consumedDrinkNamespace)
                 }
             }
         }
         .accessibilityRotor("Consumed Drink Types") {
-            ForEach(model.drinkData.defaultDrinkTypes+model.drinkData.customDrinkTypes, id: \.self) { type in
+            ForEach(model.drinkData.drinkTypes) { type in
                 if selectedTimePeriod == .daily {
                     if model.getTypeAmountByDay(type: type, date: selectedDay) != 0.0 {
-                        AccessibilityRotorEntry(type, type.self, in: consumedDrinkNamespace)
+                        AccessibilityRotorEntry(type.name, type.id, in: consumedDrinkNamespace)
                     }
                 }
                 if selectedTimePeriod == .weekly {
                     if model.getTypeAmountByWeek(type: type, week: selectedWeek) != 0.0 {
-                        AccessibilityRotorEntry(type, type.self, in: consumedDrinkNamespace)
+                        AccessibilityRotorEntry(type.name, type.id, in: consumedDrinkNamespace)
                     }
                 }
             }

@@ -57,7 +57,7 @@ struct OnboardingDefaultDrinksView: View {
             // Drink Toggles
             Section {
                 List {
-                    ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
+                    ForEach(model.drinkData.drinkTypes.filter { $0.isDefault }) { type in
                         OnboardingToggleDrinksView(type: type)
                     }
                 }

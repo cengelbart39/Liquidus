@@ -18,41 +18,43 @@ struct CustomDrinkTypeView: View {
     var body: some View {
         
         // If there are custom drinks...
-        if model.drinkData.customDrinkTypes.count > 0 {
+        if model.drinkData.drinkTypes.filter({ !$0.isDefault }).count > 0 {
             
             List {
                 // Loop through custom drinks
-                ForEach(model.drinkData.customDrinkTypes, id: \.self) { type in
+                ForEach(model.drinkData.drinkTypes) { type in
                     
-                    NavigationLink {
-                        // Go to Edit view
-                        SettingsEditCustomTypeView(type: type, color: model.getDrinkTypeColor(type: type))
-                    } label: {
-                        // If Dynamic Type is accessibility xLarge, xxLarge, or xxxLarge...
-                        if dynamicType == .accessibility3 || dynamicType == .accessibility4 || dynamicType == .accessibility5 {
-                            
-                            VStack(alignment: .leading, spacing: 10) {
-                                Image("custom.drink.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: symbolSize, height: symbolSize)
-                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                    if (!type.isDefault) {
+                        NavigationLink {
+                            // Go to Edit view
+                            SettingsEditCustomTypeView(type: type, color: model.getDrinkTypeColor(type: type))
+                        } label: {
+                            // If Dynamic Type is accessibility xLarge, xxLarge, or xxxLarge...
+                            if dynamicType == .accessibility3 || dynamicType == .accessibility4 || dynamicType == .accessibility5 {
                                 
-                                // Type Name
-                                Text(type)
-                                
-                            }
-                        } else {
-                            HStack {
-                                // Show type color
-                                Image("custom.drink.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: symbolSize, height: symbolSize)
-                                    .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                                
-                                // Type Name
-                                Text(type)
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Image("custom.drink.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: symbolSize, height: symbolSize)
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                    
+                                    // Type Name
+                                    Text(type.name)
+                                    
+                                }
+                            } else {
+                                HStack {
+                                    // Show type color
+                                    Image("custom.drink.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: symbolSize, height: symbolSize)
+                                        .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
+                                    
+                                    // Type Name
+                                    Text(type.name)
+                                }
                             }
                         }
                     }
@@ -79,7 +81,10 @@ struct CustomDrinkTypeView: View {
         model.deleteCustomDrinks(atOffsets: offsets)
         
         // Remove drink type from customDrinkTypes
-        model.drinkData.customDrinkTypes.remove(atOffsets: offsets)
+        model.drinkData.drinkTypes.remove(atOffsets: offsets)
+        
+        // Tell views to update
+        model.objectWillChange.send()
     }
 }
         

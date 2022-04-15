@@ -10,7 +10,7 @@
 import Foundation
 import SwiftUI
 
-public struct CodableColor {
+public struct CodableColor: Hashable {
     var color: UIColor
     
     func getColor() -> Color {

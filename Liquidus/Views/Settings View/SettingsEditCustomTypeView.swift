@@ -18,7 +18,7 @@ struct SettingsEditCustomTypeView: View {
     
     @GestureState private var dragOffSet = CGSize.zero
     
-    var type: String
+    var type: DrinkType
     var color: Color
     
     @State var newColor = Color.black
@@ -49,17 +49,17 @@ struct SettingsEditCustomTypeView: View {
         }
         .onAppear {
             // Update variables
-            name = type
+            name = type.name
             newColor = model.getDrinkTypeColor(type: type)
         }
-        .navigationTitle("Edit \"\(type)\"")
+        .navigationTitle("Edit \"\(type.name)\"")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    // Update color in model
-                    model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
                     // Edit existing drinks of type
                     model.editDrinkType(old: type, new: name)
+                    // Tell views to update
+                    model.objectWillChange.send()
                     // Update Widget
                     WidgetCenter.shared.reloadAllTimelines()
                     // Dismiss view
@@ -82,10 +82,10 @@ struct SettingsEditCustomTypeView: View {
             }
         }
         .accessibilityAction(named: "Save") {
-            // Update color in model
-            model.drinkData.colors[type]! = CodableColor(color: UIColor(newColor))
             // Edit existing drinks of type
             model.editDrinkType(old: type, new: name)
+            // Tell views to update
+            model.objectWillChange.send()
             // Update Widget
             WidgetCenter.shared.reloadAllTimelines()
             // Dismiss view
@@ -93,11 +93,4 @@ struct SettingsEditCustomTypeView: View {
         }
     }
     
-}
-
-struct EditDrinkTypeView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsEditCustomTypeView(type: Constants.waterKey, color: Color(.systemTeal))
-            .environmentObject(DrinkModel())
-    }
 }

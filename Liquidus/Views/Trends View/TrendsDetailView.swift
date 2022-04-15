@@ -14,7 +14,7 @@ struct TrendsDetailView: View {
     
     @AccessibilityFocusState var isHeaderFocused: Bool
     
-    var type: String
+    var type: DrinkType
     
     // MARK: - State Variables
     @State var selectedTimePeriod = Constants.TimePeriod.daily
@@ -99,7 +99,7 @@ struct TrendsDetailView: View {
                 }
             }
         }
-        .navigationTitle(type)
+        .navigationTitle(type.name)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             isHeaderFocused = false

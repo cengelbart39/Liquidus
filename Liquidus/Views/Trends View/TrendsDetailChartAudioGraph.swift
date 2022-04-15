@@ -167,7 +167,7 @@ extension TrendsDetailChartView: AXChartDescriptorRepresentable {
                 if let first = model.getMonth(day: startDate).first {
                     
                     // If all data is selected
-                    if type == Constants.totalKey {
+                    if type.name == Constants.totalKey {
                         return NSAttributedString(string: "Data representing your data on \(formatter.string(from: first))")
                         
                     // If a specific drink type is selected

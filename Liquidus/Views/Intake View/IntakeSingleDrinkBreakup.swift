@@ -14,7 +14,7 @@ struct IntakeSingleDrinkBreakup: View {
     @Environment(\.dynamicTypeSize) var dynamicType
     
     var color: Color
-    var drinkType: String
+    var drinkType: DrinkType
     var selectedTimePeriod: Constants.TimePeriod
     var selectedDay: Date
     var selectedWeek: [Date]
@@ -37,7 +37,7 @@ struct IntakeSingleDrinkBreakup: View {
                 if !dynamicType.isAccessibilitySize {
                     VStack(alignment: .leading) {
                         // Drink Name
-                        Text(drinkType)
+                        Text(drinkType.name)
                             .font(.title)
                             .bold()
                         
@@ -59,7 +59,7 @@ struct IntakeSingleDrinkBreakup: View {
                 } else {
                     VStack(alignment: .leading) {
                         // Drink Name
-                        Text(drinkType)
+                        Text(drinkType.name)
                             .font(.title)
                             .bold()
                             .accessibilityAddTraits(.isHeader)
@@ -71,11 +71,11 @@ struct IntakeSingleDrinkBreakup: View {
                         
                        Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
                             .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)
-                            .accessibilityLabel("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getAccessibilityUnitLabel()) of \(drinkType)")
+                            .accessibilityLabel("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getAccessibilityUnitLabel()) of \(drinkType.name)")
 
                         Text("\(percent*100, specifier: "%.2f")%")
                             .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)
-                            .accessibilityLabel("\(percent*100, specifier: "%.2f")% \(drinkType)")
+                            .accessibilityLabel("\(percent*100, specifier: "%.2f")% \(drinkType.name)")
                     }
                 }
                 
@@ -88,7 +88,7 @@ struct IntakeSingleDrinkBreakup: View {
 
 struct IntakeSingleDrinkBreakup_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeSingleDrinkBreakup(color: Color(.systemTeal), drinkType: Constants.waterKey, selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
+        IntakeSingleDrinkBreakup(color: Color(.systemCyan), drinkType: DrinkModel().drinkData.drinkTypes.first!, selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
             .environmentObject(DrinkModel())
     }
 }

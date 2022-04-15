@@ -32,13 +32,13 @@ struct SettingsDrinkTypeView: View {
             // MARK: - Default Drinks
             Section(header: Text("Default")) {
                 // Loop through default drinks
-                ForEach(model.drinkData.defaultDrinkTypes, id: \.self) { type in
+                ForEach(model.drinkData.drinkTypes.filter { $0.isDefault }) { type in
                     
                     NavigationLink {
                         // Go to Edit view
                         SettingsEditDefaultTypeView(type: type)
                     } label: {
-                        if model.drinkData.enabled[type]! {
+                        if type.enabled {
                             HStack {
                                 Image("custom.drink.fill")
                                     .resizable()
@@ -48,10 +48,10 @@ struct SettingsDrinkTypeView: View {
                                     .accessibilityHidden(true)
                                 
                                 // Type Name
-                                Text(type)
+                                Text(type.name)
                             }
                             // Show color or grayscale variant if enabled
-                            .saturation(model.drinkData.enabled[type]! ? 1 : 0)
+                            .saturation(type.enabled ? 1 : 0)
                         } else {
                             if dynamicType.isAccessibilitySize {
                                 VStack(alignment: .leading) {
@@ -64,21 +64,21 @@ struct SettingsDrinkTypeView: View {
                                         .accessibilityHidden(true)
                                     
                                     // Type Name
-                                    Text(type)
+                                    Text(type.name)
                                     // Accessibility Label should only include "Type Disabled"
                                     // when the type is disabled, when Differenitiate without Color
                                     // is disabled, and when the Grayscale Color Filter is disabled
-                                        .accessibilityLabel("\(type)\((!model.drinkData.enabled[type]! && !differentiateWithoutColor && !model.grayscaleEnabled) ? ", Type Disabled" : "")")
+                                        .accessibilityLabel("\(type.name)\((!type.enabled && !differentiateWithoutColor && !model.grayscaleEnabled) ? ", Type Disabled" : "")")
                                     
                                     // Check if Differentiate without Color or Grayscale Color Filter
                                     // is enabled and the type is disabled
-                                    if (differentiateWithoutColor || model.grayscaleEnabled) && !model.drinkData.enabled[type]! {
+                                    if (differentiateWithoutColor || model.grayscaleEnabled) && !type.enabled {
                                         
                                         Text("Disabled")
                                         
                                     }
                                 }
-                                .saturation(model.drinkData.enabled[type]! ? 1 : 0)
+                                .saturation(type.enabled ? 1 : 0)
                             } else {
                                 HStack {
                                     // Color
@@ -90,15 +90,15 @@ struct SettingsDrinkTypeView: View {
                                         .accessibilityHidden(true)
                                     
                                     // Type Name
-                                    Text(type)
+                                    Text(type.name)
                                     // Accessibility Label should only include "Type Disabled"
                                     // when the type is disabled, when Differenitiate without Color
                                     // is disabled, and when the Grayscale Color Filter is disabled
-                                        .accessibilityLabel("\(type)\((!model.drinkData.enabled[type]! && !differentiateWithoutColor && !model.grayscaleEnabled) ? ", Type Disabled" : "")")
+                                        .accessibilityLabel("\(type.name)\((!type.enabled && !differentiateWithoutColor && !model.grayscaleEnabled) ? ", Type Disabled" : "")")
                                     
                                     // Check if Differentiate without Color or Grayscale Color Filter
                                     // is enabled and the type is disabled
-                                    if (differentiateWithoutColor || model.grayscaleEnabled) && !model.drinkData.enabled[type]! {
+                                    if (differentiateWithoutColor || model.grayscaleEnabled) && !type.enabled {
                                         
                                         Spacer()
                                         
@@ -107,7 +107,7 @@ struct SettingsDrinkTypeView: View {
                                     }
                                 }
                                 // Show color or grayscale variant if enabled
-                                .saturation(model.drinkData.enabled[type]! ? 1 : 0)
+                                .saturation(type.enabled ? 1 : 0)
                             }
                         }
                     }
@@ -160,14 +160,6 @@ struct SettingsDrinkTypeView: View {
         .accessibilityAction(named: "Edit Custom Types") {
             editMode.wrappedValue.toggle()
         }
-    }
-    
-    func deleteCustom(at offsets: IndexSet) {
-        // Delete drinks of custom drink type
-        model.deleteCustomDrinks(atOffsets: offsets)
-        
-        // Remove drink type from customDrinkTypes
-        model.drinkData.customDrinkTypes.remove(atOffsets: offsets)
     }
 }
 

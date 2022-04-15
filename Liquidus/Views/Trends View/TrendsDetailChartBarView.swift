@@ -12,7 +12,7 @@ struct TrendsDetailChartBarView: View {
     
     var item: DataItem
     var value: Double
-    var type: String
+    var type: DrinkType
     var isWidget: Bool
     
     var body: some View {
@@ -35,7 +35,7 @@ struct TrendsDetailChartBarView: View {
         if model.grayscaleEnabled {
             return LinearGradient(colors: [.primary], startPoint: .top, endPoint: .bottom)
             
-        } else if type == Constants.totalKey {
+        } else if type.name == Constants.totalKey {
             return model.getDrinkTypeGradient()
             
         } else {

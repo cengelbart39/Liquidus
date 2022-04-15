@@ -20,9 +20,7 @@ struct LargeWidgetView: View {
     var entry: SimpleEntry
     
     var body: some View {
-        let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-        
-        let nonZeroTypes = self.nonZeroTypes(types: drinkTypes)
+        let nonZeroTypes = self.nonZeroTypes()
         
         GeometryReader { geo in
             VStack(spacing: 5) {
@@ -36,9 +34,8 @@ struct LargeWidgetView: View {
                         timePeriod: entry.timePeriod,
                         day: .now,
                         week: model.getDaysInWeek(date: .now),
-                        drinkTypes: drinkTypes,
                         totalPercent: model.getProgressPercent(
-                            type: drinkTypes.last!,
+                            type: model.drinkData.drinkTypes.last!,
                             dates: entry.timePeriod == .daily ? Date.now : model.getDaysInWeek(date: .now)),
                         width: 20
                     )
@@ -92,7 +89,7 @@ struct LargeWidgetView: View {
                                         }
                                         .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                         .dynamicTypeSize(.xSmall ... .xLarge)
-                                        .accessibilityLabel("\(type), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
+                                        .accessibilityLabel("\(type.name), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
                                          
                                         
                                     } else {
@@ -106,7 +103,7 @@ struct LargeWidgetView: View {
                                         }
                                         .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
                                         .dynamicTypeSize(.xSmall ... .xxLarge)
-                                        .accessibilityLabel("\(type), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
+                                        .accessibilityLabel("\(type.name), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
                                     }
                                 }
                                 
@@ -165,7 +162,7 @@ struct LargeWidgetView: View {
         .padding()
     }
     
-    private func getFirstFourTypes(types: [String]) -> [String]? {
+    private func getFirstFourTypes(types: [DrinkType]) -> [DrinkType]? {
         let t = types.prefix(4)
         
         if t == ArraySlice([]) {
@@ -179,10 +176,10 @@ struct LargeWidgetView: View {
     
     // Filters out drink types based on if the user has consumed any
     // Then sorts by the greatest amount
-    private func nonZeroTypes(types: [String]) -> [String] {
-        var nonZeroTypes = [String]()
+    private func nonZeroTypes() -> [DrinkType] {
+        var nonZeroTypes = [DrinkType]()
         
-        for type in types {
+        for type in model.drinkData.drinkTypes {
             if model.getTypeAmountByDay(type: type, date: entry.date) > 0.0 {
                 nonZeroTypes.append(type)
             }
@@ -195,7 +192,7 @@ struct LargeWidgetView: View {
         return nonZeroTypes
     }
     
-    private func getMaxDataType(types: [String]) -> Double {
+    private func getMaxDataType(types: [DrinkType]) -> Double {
         var maxes = [Double]()
         
         for type in types {

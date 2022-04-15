@@ -13,7 +13,7 @@ struct TrendsSymbolView: View {
     
     @Environment(\.dynamicTypeSize) var dynamicType
     
-    var type: String
+    var type: DrinkType
     var avg1: Double?
     var avg2: Double?
     
@@ -30,7 +30,7 @@ struct TrendsSymbolView: View {
                     .resizable()
                     .scaledToFit()
                     .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+                    .foregroundStyle(type.name == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
                     .frame(height: self.getSymbolSize())
                     .accessibilityLabel("Up Trend")
                 
@@ -39,7 +39,7 @@ struct TrendsSymbolView: View {
                     .resizable()
                     .scaledToFit()
                     .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+                    .foregroundStyle(type.name == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
                     .frame(height: self.getSymbolSize())
                     .accessibilityLabel("Down Trend")
                 
@@ -48,7 +48,7 @@ struct TrendsSymbolView: View {
                     .resizable()
                     .scaledToFit()
                     .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+                    .foregroundStyle(type.name == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
                     .frame(height: self.getSymbolSize())
                     .accessibilityLabel("No Trend")
             }
@@ -57,7 +57,7 @@ struct TrendsSymbolView: View {
                 .resizable()
                 .scaledToFit()
                 .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(type == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+                .foregroundStyle(type.name == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
                 .frame(height: self.getSymbolSize())
                 .accessibilityLabel("No Trend")
         }

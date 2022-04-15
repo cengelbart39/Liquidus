@@ -23,10 +23,7 @@ struct MediumWidgetView: View {
     @ScaledMetric(relativeTo: .footnote) var symbolSize3 = 7
     
     var body: some View {
-        
-        let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
-        
-        let nonZeroTypes = self.nonZeroTypes(types: drinkTypes)
+        let nonZeroTypes = self.nonZeroTypes()
         
         GeometryReader { geo in
             HStack {
@@ -38,9 +35,8 @@ struct MediumWidgetView: View {
                         timePeriod: entry.timePeriod,
                         day: .now,
                         week: model.getDaysInWeek(date: .now),
-                        drinkTypes: drinkTypes,
                         totalPercent: model.getProgressPercent(
-                            type: drinkTypes.last!,
+                            type: model.drinkData.drinkTypes.last!,
                             dates: entry.timePeriod == .daily ? Date.now : model.getDaysInWeek(date: .now)),
                         width: 13
                     )
@@ -87,7 +83,7 @@ struct MediumWidgetView: View {
                                 }
                             }
                             .foregroundColor(model.grayscaleEnabled ? .primary : model.getDrinkTypeColor(type: type))
-                            .accessibilityLabel("\(type), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
+                            .accessibilityLabel("\(type.name), \(typeAmount, specifier: model.getSpecifier(amount: typeAmount)) \(model.getAccessibilityUnitLabel())")
                             .accessibilitySortPriority(1)
 
                         }
@@ -137,10 +133,10 @@ struct MediumWidgetView: View {
     
     // Filters out drink types based on if the user has consumed any
     // Then sorts by the greatest amount
-    private func nonZeroTypes(types: [String]) -> [String] {
-        var nonZeroTypes = [String]()
+    private func nonZeroTypes() -> [DrinkType] {
+        var nonZeroTypes = [DrinkType]()
         
-        for type in types {
+        for type in model.drinkData.drinkTypes {
             if model.getTypeAmountByDay(type: type, date: entry.date) > 0.0 {
                 nonZeroTypes.append(type)
             }
@@ -153,7 +149,7 @@ struct MediumWidgetView: View {
         return nonZeroTypes
     }
     
-    private func getFirstTwoTypes(types: [String]) -> [String]? {
+    private func getFirstTwoTypes(types: [DrinkType]) -> [DrinkType]? {
         let t = types.prefix(2)
         
         if t == ArraySlice([]) {
@@ -175,7 +171,7 @@ struct MediumWidgetView: View {
         }
     }
     
-    private func getMaxDataType(types: [String]) -> Double {
+    private func getMaxDataType(types: [DrinkType]) -> Double {
         var maxes = [Double]()
         
         for type in types {

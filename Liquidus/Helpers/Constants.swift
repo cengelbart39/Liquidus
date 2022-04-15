@@ -41,6 +41,8 @@ struct Constants {
     static var juiceKey = "Juice"
     static var totalKey = "Total"
     
+    static var totalType = DrinkType(name: "Total", color: CodableColor(color: .systemRed), isDefault: true, enabled: true, colorChanged: false)
+    
     static var savedKey = "SavedKey"
     
     static var sharedKey = "group.com.cengelbart.Liquidus.shared"

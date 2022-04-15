@@ -24,10 +24,10 @@ class IntentLogic {
         filtered.sort { $0.date > $1.date }
         
         // Filter out disabled types
-        return filtered.filter { data.enabled[$0.type]! }
+        return filtered.filter { $0.type.enabled }
     }
     
-    static func getTypeAmountByWeek(type: String, date: Date, data: DrinkData) -> Double {
+    static func getTypeAmountByWeek(type: DrinkType, date: Date, data: DrinkData) -> Double {
         // Get the filtered data for the day
         let time = ProviderLogic.filterDataByDay(day: date, data: data)
         
@@ -48,10 +48,8 @@ class IntentLogic {
         var amount = 0.0
         
         // Get the amount for each drink type
-        let drinkTypes = data.defaultDrinkTypes + data.customDrinkTypes
-        
-        for type in drinkTypes {
-            if data.enabled[type]! {
+        for type in data.drinkTypes {
+            if type.enabled {
                 amount += ProviderLogic.getTypeAmountByWeek(type: type, date: date, data: data)
             }
         }
@@ -95,7 +93,7 @@ class IntentLogic {
         return weekData
     }
     
-    static func getTypeAmountByWeek(type: String, week: [Date], data: DrinkData) -> Double {
+    static func getTypeAmountByWeek(type: DrinkType, week: [Date], data: DrinkData) -> Double {
         
         // Get the drink data for the week
         let filtered = ProviderLogic.filterDataByWeek(week: week, data: data)
@@ -117,10 +115,8 @@ class IntentLogic {
         var amount = 0.0
         
         // Get the amount for each drink type
-        let drinkTypes = data.defaultDrinkTypes + data.customDrinkTypes
-        
-        for type in drinkTypes {
-            if data.enabled[type]! {
+        for type in data.drinkTypes {
+            if type.enabled {
                 amount += ProviderLogic.getTypeAmountByWeek(type: type, week: week, data: data)
             }
         }

@@ -9,11 +9,11 @@ import Foundation
 
 class Drink: Decodable, Encodable, Equatable, Identifiable {
     var id = UUID()
-    var type: String
+    var type: DrinkType
     var amount: Double
     var date: Date
     
-    init(type: String, amount: Double, date: Date) {
+    init(type: DrinkType, amount: Double, date: Date) {
         self.type = type
         self.amount = amount
         self.date = date

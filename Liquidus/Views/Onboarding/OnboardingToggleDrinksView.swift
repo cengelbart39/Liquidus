@@ -11,21 +11,16 @@ struct OnboardingToggleDrinksView: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    var type: String
+    var type: DrinkType
     
     @State var isEnabled = true
     
     var body: some View {
-        Toggle(type, isOn: $isEnabled)
+        Toggle(type.name, isOn: $isEnabled)
             .onChange(of: isEnabled) { newValue in
                 // When isEnabled changes update model
-                model.drinkData.enabled[type]! = isEnabled
+                let index = model.drinkData.drinkTypes.firstIndex(of: type)!
+                model.drinkData.drinkTypes[index].enabled.toggle()
             }
-    }
-}
-
-struct OnboardingToggleDrinksView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingToggleDrinksView(type: Constants.waterKey)
     }
 }

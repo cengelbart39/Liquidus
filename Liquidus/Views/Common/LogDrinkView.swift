@@ -18,7 +18,7 @@ struct LogDrinkView: View {
     
     @Binding var isPresented: Bool
     
-    @State var drinkType = Constants.waterKey
+    @State var drinkType = DrinkType()
     @State var amount = ""
     @State var timeSelection = Date()
         
@@ -36,14 +36,14 @@ struct LogDrinkView: View {
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
-                    let drinkTypes = model.drinkData.defaultDrinkTypes + model.drinkData.customDrinkTypes
+                    let types = model.drinkData.drinkTypes.filter { $0.enabled }
                     
                     Form {
                         // Drink Type Picker
                         Section(header: Text("Drink Type")) {
-                            Picker(drinkType, selection: $drinkType) {
-                                ForEach(drinkTypes, id: \.self) { type in
-                                    Text(type)
+                            Picker(drinkType.name, selection: $drinkType) {
+                                ForEach(types) { type in
+                                    Text(type.name)
                                         .tag(type)
                                 }
                             }
@@ -134,6 +134,9 @@ struct LogDrinkView: View {
             .accessibilityAction(named: "Cancel") {
                 isPresented = false
             }
+        }
+        .onAppear {
+            drinkType = model.drinkData.drinkTypes.filter { $0.enabled }.first!
         }
     }
 }

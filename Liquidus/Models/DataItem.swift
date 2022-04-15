@@ -10,7 +10,7 @@ import Foundation
 struct DataItem: Equatable, Identifiable {
     var id = UUID()
     var drinks: [Drink]?
-    var type: String
+    var type: DrinkType
     var date: Date
     
     /**
@@ -99,14 +99,16 @@ struct DataItem: Equatable, Identifiable {
         
         var drinks = [Drink]()
         
+        let water = DrinkType(name: Constants.waterKey, color: CodableColor(color: .systemCyan), isDefault: true, enabled: true, colorChanged: false)
+        
         for date in dates {
-            drinks.append(Drink(type: Constants.waterKey, amount: Double(Int.random(in: 250...1500)), date: date))
+            drinks.append(Drink(type: water, amount: Double(Int.random(in: 250...1500)), date: date))
         }
         
         var dataItems = [DataItem]()
         
         for index in 0...23 {
-            dataItems.append(DataItem(drinks: [drinks[index]], type: Constants.waterKey, date: dates[index]))
+            dataItems.append(DataItem(drinks: [drinks[index]], type: water, date: dates[index]))
         }
         
         return dataItems
