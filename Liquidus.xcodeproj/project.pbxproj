@@ -21,6 +21,7 @@
 		9D070CEC280768F900C92EE6 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D070CEB280768F900C92EE6 /* DrinkType.swift */; };
 		9D070CED280768F900C92EE6 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D070CEB280768F900C92EE6 /* DrinkType.swift */; };
 		9D070CEE280768F900C92EE6 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D070CEB280768F900C92EE6 /* DrinkType.swift */; };
+		9D110E7A281C7C29006A54A5 /* DMUnitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D110E79281C7C29006A54A5 /* DMUnitsTests.swift */; };
 		9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
 		9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */; };
 		9D2017522793663D008257FA /* IntakeCircularProgressBarHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */; };
@@ -38,8 +39,15 @@
 		9D263ECD279CBB4E0084FE2E /* IntentLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D263ECC279CBB4E0084FE2E /* IntentLogic.swift */; };
 		9D263ECF279CBB8E0084FE2E /* ProviderLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */; };
 		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
+		9D308CED280B469100BC7350 /* DrinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CEC280B469100BC7350 /* DrinkTests.swift */; };
+		9D308CEF280B492C00BC7350 /* DrinkTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CEE280B492C00BC7350 /* DrinkTypeTests.swift */; };
+		9D308CF1280B4C9600BC7350 /* DataItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF0280B4C9600BC7350 /* DataItemTests.swift */; };
+		9D308CF3280B501200BC7350 /* DrinkDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF2280B501200BC7350 /* DrinkDataTests.swift */; };
+		9D308CF6280B51C200BC7350 /* DMDataItemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF5280B51C200BC7350 /* DMDataItemsTests.swift */; };
 		9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */; };
 		9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
+		9D3B49C22832CDC000C34E98 /* DMUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3B49C12832CDC000C34E98 /* DMUserDefaultsTests.swift */; };
+		9D3B49C42832D30300C34E98 /* DMAddDrinkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3B49C32832D30300C34E98 /* DMAddDrinkTest.swift */; };
 		9D400C5127FB83D700A480BA /* WidgetChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D400C5027FB83D700A480BA /* WidgetChartView.swift */; };
 		9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */; };
 		9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */; };
@@ -64,7 +72,16 @@
 		9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */; };
 		9D4B983B279783AE0068A486 /* ViewIntake.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9D4B983A279783AE0068A486 /* ViewIntake.intentdefinition */; };
 		9D4B983C279783AE0068A486 /* ViewIntake.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9D4B983A279783AE0068A486 /* ViewIntake.intentdefinition */; };
+		9D5609FE2823202F007FFFE1 /* SampleDataItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5609FD2823202F007FFFE1 /* SampleDataItems.swift */; };
+		9D560A0028232055007FFFE1 /* SampleDrinkAmounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5609FF28232055007FFFE1 /* SampleDrinkAmounts.swift */; };
+		9D60620F281DC87400883DCC /* DMConvertMeasurementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D60620E281DC87400883DCC /* DMConvertMeasurementsTests.swift */; };
+		9D606211281DCCB000883DCC /* DMDataByDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D606210281DCCB000883DCC /* DMDataByDayTests.swift */; };
+		9D74DA6128188F5A0087C326 /* DMTimeDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D74DA6028188F5A0087C326 /* DMTimeDisplayTests.swift */; };
+		9D765CDC2821EF8D00C61C2E /* DMConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D765CDB2821EF8D00C61C2E /* DMConstructor.swift */; };
+		9D765CDE2821F05800C61C2E /* DMProgressBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D765CDD2821F05800C61C2E /* DMProgressBarTests.swift */; };
 		9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */; };
+		9D7E11CB280F72B600F549A1 /* SampleDrinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E11CA280F72B600F549A1 /* SampleDrinks.swift */; };
+		9D8037DD28206331003F018C /* DMDataByHalfYearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8037DC28206331003F018C /* DMDataByHalfYearTests.swift */; };
 		9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */; };
 		9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */; };
 		9D87F54327ED02A500208EB3 /* IntakeCircularProgressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */; };
@@ -74,6 +91,10 @@
 		9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
 		9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */; };
+		9D97063C2821CC5D00460834 /* DMDataByYearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D97063B2821CC5D00460834 /* DMDataByYearTests.swift */; };
+		9D9FBECE281F33AF00235525 /* DMDataByHourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FBECD281F33AF00235525 /* DMDataByHourTests.swift */; };
+		9D9FBED0281F353C00235525 /* DMDataByWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FBECF281F353C00235525 /* DMDataByWeekTests.swift */; };
+		9DA67BE8283008E00027260E /* DMHealthKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA67BE7283008E00027260E /* DMHealthKitTests.swift */; };
 		9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */; };
 		9DA8D6E226E7BA5000FEEC6C /* IntakeTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E126E7BA5000FEEC6C /* IntakeTimePickerView.swift */; };
 		9DA8D6E426E7BAE900FEEC6C /* IntakeDayDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* IntakeDayDataPicker.swift */; };
@@ -81,6 +102,8 @@
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
 		9DB24C5D279F5D8C009F265A /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
 		9DB24C64279F79D1009F265A /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
+		9DB7C68B282D47EB00F1C6C1 /* SampleAXDataPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7C68A282D47EB00F1C6C1 /* SampleAXDataPoints.swift */; };
+		9DC413DF282D57410012E55E /* AXDataPointEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC413DE282D57410012E55E /* AXDataPointEquatable.swift */; };
 		9DC4CCFE2795EBCD00908E10 /* ProviderLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */; };
 		9DC52F6E27EA35C000EB1E28 /* TrendsAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6227EA35BF00EB1E28 /* TrendsAmountView.swift */; };
 		9DC52F6F27EA35C000EB1E28 /* TrendsDetailDataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6327EA35BF00EB1E28 /* TrendsDetailDataListView.swift */; };
@@ -99,6 +122,8 @@
 		9DC52F7E27EA363200EB1E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F7D27EA363200EB1E28 /* Constants.swift */; };
 		9DC52F7F27EA363200EB1E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F7D27EA363200EB1E28 /* Constants.swift */; };
 		9DC52F8027EA363200EB1E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F7D27EA363200EB1E28 /* Constants.swift */; };
+		9DCEFAA92822E59F00D8A56A /* DMTrendsChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCEFAA82822E59F00D8A56A /* DMTrendsChartTests.swift */; };
+		9DD2D22128203F94008FB162 /* DMDataByMonthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2D22028203F94008FB162 /* DMDataByMonthTests.swift */; };
 		9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* CalendarView.swift */; };
 		9DE2CA2827EA3986009ADE3D /* TrendsDetailChartAudioGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6927EA35BF00EB1E28 /* TrendsDetailChartAudioGraph.swift */; };
 		9DE2CA2927EA3986009ADE3D /* TrendsDetailChartYAxisGridlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6527EA35BF00EB1E28 /* TrendsDetailChartYAxisGridlines.swift */; };
@@ -106,6 +131,7 @@
 		9DE2CA2B27EA3986009ADE3D /* TrendsDetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC52F6427EA35BF00EB1E28 /* TrendsDetailChartView.swift */; };
 		9DE2CA2D27EA3A91009ADE3D /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */; };
 		9DE2CA2E27EA3A91009ADE3D /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */; };
+		9DE79BA5281B157300EA78F3 /* DMDrinkTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE79BA4281B157300EA78F3 /* DMDrinkTypeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +148,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9D263E9E279CBA260084FE2E;
 			remoteInfo = ViewIntakeIntent;
+		};
+		9D308CE7280B466900BC7350 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D48B38F26E65E2C00FEFE49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D48B39626E65E2C00FEFE49;
+			remoteInfo = Liquidus;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -153,6 +186,7 @@
 		9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntakeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		9D070CEB280768F900C92EE6 /* DrinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkType.swift; sourceTree = "<group>"; };
 		9D0ACC5B279CA8A4005BEDE9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		9D110E79281C7C29006A54A5 /* DMUnitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMUnitsTests.swift; sourceTree = "<group>"; };
 		9D1A0DD8279B808400BB8548 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		9D1C3BB526E8012600D03771 /* DrinkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkData.swift; sourceTree = "<group>"; };
 		9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeSingleDrinkBreakup.swift; sourceTree = "<group>"; };
@@ -164,8 +198,16 @@
 		9D263ECA279CBA9B0084FE2E /* ViewIntakeIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ViewIntakeIntent.entitlements; sourceTree = "<group>"; };
 		9D263ECC279CBB4E0084FE2E /* IntentLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentLogic.swift; sourceTree = "<group>"; };
 		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
+		9D308CE3280B466900BC7350 /* LiquidusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiquidusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D308CEC280B469100BC7350 /* DrinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTests.swift; sourceTree = "<group>"; };
+		9D308CEE280B492C00BC7350 /* DrinkTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTypeTests.swift; sourceTree = "<group>"; };
+		9D308CF0280B4C9600BC7350 /* DataItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataItemTests.swift; sourceTree = "<group>"; };
+		9D308CF2280B501200BC7350 /* DrinkDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDataTests.swift; sourceTree = "<group>"; };
+		9D308CF5280B51C200BC7350 /* DMDataItemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataItemsTests.swift; sourceTree = "<group>"; };
 		9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkTypeView.swift; sourceTree = "<group>"; };
 		9D395165270A0CFF009E7F40 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
+		9D3B49C12832CDC000C34E98 /* DMUserDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMUserDefaultsTests.swift; sourceTree = "<group>"; };
+		9D3B49C32832D30300C34E98 /* DMAddDrinkTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAddDrinkTest.swift; sourceTree = "<group>"; };
 		9D400C5027FB83D700A480BA /* WidgetChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetChartView.swift; sourceTree = "<group>"; };
 		9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUnitsView.swift; sourceTree = "<group>"; };
@@ -191,7 +233,16 @@
 		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
 		9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDrinkView.swift; sourceTree = "<group>"; };
 		9D4B983A279783AE0068A486 /* ViewIntake.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = ViewIntake.intentdefinition; sourceTree = "<group>"; };
+		9D5609FD2823202F007FFFE1 /* SampleDataItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataItems.swift; sourceTree = "<group>"; };
+		9D5609FF28232055007FFFE1 /* SampleDrinkAmounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDrinkAmounts.swift; sourceTree = "<group>"; };
+		9D60620E281DC87400883DCC /* DMConvertMeasurementsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMConvertMeasurementsTests.swift; sourceTree = "<group>"; };
+		9D606210281DCCB000883DCC /* DMDataByDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByDayTests.swift; sourceTree = "<group>"; };
+		9D74DA6028188F5A0087C326 /* DMTimeDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMTimeDisplayTests.swift; sourceTree = "<group>"; };
+		9D765CDB2821EF8D00C61C2E /* DMConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMConstructor.swift; sourceTree = "<group>"; };
+		9D765CDD2821F05800C61C2E /* DMProgressBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProgressBarTests.swift; sourceTree = "<group>"; };
 		9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditDefaultTypeView.swift; sourceTree = "<group>"; };
+		9D7E11CA280F72B600F549A1 /* SampleDrinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDrinks.swift; sourceTree = "<group>"; };
+		9D8037DC28206331003F018C /* DMDataByHalfYearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByHalfYearTests.swift; sourceTree = "<group>"; };
 		9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumWidgetView.swift; sourceTree = "<group>"; };
 		9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeWidgetView.swift; sourceTree = "<group>"; };
 		9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressInfo.swift; sourceTree = "<group>"; };
@@ -201,12 +252,18 @@
 		9D935BEE26ED0E2400CA9C31 /* Liquidus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Liquidus.entitlements; sourceTree = "<group>"; };
 		9D935BF026ED0E2400CA9C31 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeMultiDrinkBreakup.swift; sourceTree = "<group>"; };
+		9D97063B2821CC5D00460834 /* DMDataByYearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByYearTests.swift; sourceTree = "<group>"; };
+		9D9FBECD281F33AF00235525 /* DMDataByHourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByHourTests.swift; sourceTree = "<group>"; };
+		9D9FBECF281F353C00235525 /* DMDataByWeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByWeekTests.swift; sourceTree = "<group>"; };
+		9DA67BE7283008E00027260E /* DMHealthKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMHealthKitTests.swift; sourceTree = "<group>"; };
 		9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDrinkTypeView.swift; sourceTree = "<group>"; };
 		9DA8D6E126E7BA5000FEEC6C /* IntakeTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeTimePickerView.swift; sourceTree = "<group>"; };
 		9DA8D6E326E7BAE900FEEC6C /* IntakeDayDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeDayDataPicker.swift; sourceTree = "<group>"; };
 		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
 		9DB24C5C279F5D8C009F265A /* DataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataItem.swift; sourceTree = "<group>"; };
+		9DB7C68A282D47EB00F1C6C1 /* SampleAXDataPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAXDataPoints.swift; sourceTree = "<group>"; };
+		9DC413DE282D57410012E55E /* AXDataPointEquatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXDataPointEquatable.swift; sourceTree = "<group>"; };
 		9DC4CCFC2795E9A200908E10 /* ProviderLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderLogic.swift; sourceTree = "<group>"; };
 		9DC52F6227EA35BF00EB1E28 /* TrendsAmountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsAmountView.swift; sourceTree = "<group>"; };
 		9DC52F6327EA35BF00EB1E28 /* TrendsDetailDataListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsDetailDataListView.swift; sourceTree = "<group>"; };
@@ -222,8 +279,11 @@
 		9DC52F6D27EA35C000EB1E28 /* TrendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		9DC52F7A27EA35F000EB1E28 /* DrinkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinkModel.swift; sourceTree = "<group>"; };
 		9DC52F7D27EA363200EB1E28 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9DCEFAA82822E59F00D8A56A /* DMTrendsChartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMTrendsChartTests.swift; sourceTree = "<group>"; };
+		9DD2D22028203F94008FB162 /* DMDataByMonthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByMonthTests.swift; sourceTree = "<group>"; };
 		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSubstring.swift; sourceTree = "<group>"; };
+		9DE79BA4281B157300EA78F3 /* DMDrinkTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDrinkTypeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +301,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D263EA0279CBA260084FE2E /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D308CE0280B466900BC7350 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +358,39 @@
 			path = ViewIntakeIntent;
 			sourceTree = "<group>";
 		};
+		9D308CE4280B466900BC7350 /* LiquidusTests */ = {
+			isa = PBXGroup;
+			children = (
+				9D308CF4280B510300BC7350 /* Model Tests */,
+				9D74DA5D28188E160087C326 /* DrinkModel Tests */,
+				9D3B49C02832CBD300C34E98 /* Sample Items */,
+			);
+			path = LiquidusTests;
+			sourceTree = "<group>";
+		};
+		9D308CF4280B510300BC7350 /* Model Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9D308CF0280B4C9600BC7350 /* DataItemTests.swift */,
+				9D308CF2280B501200BC7350 /* DrinkDataTests.swift */,
+				9D308CEC280B469100BC7350 /* DrinkTests.swift */,
+				9D308CEE280B492C00BC7350 /* DrinkTypeTests.swift */,
+			);
+			path = "Model Tests";
+			sourceTree = "<group>";
+		};
+		9D3B49C02832CBD300C34E98 /* Sample Items */ = {
+			isa = PBXGroup;
+			children = (
+				9D5609FF28232055007FFFE1 /* SampleDrinkAmounts.swift */,
+				9D7E11CA280F72B600F549A1 /* SampleDrinks.swift */,
+				9D5609FD2823202F007FFFE1 /* SampleDataItems.swift */,
+				9DB7C68A282D47EB00F1C6C1 /* SampleAXDataPoints.swift */,
+				9DC413DE282D57410012E55E /* AXDataPointEquatable.swift */,
+			);
+			path = "Sample Items";
+			sourceTree = "<group>";
+		};
 		9D48B38E26E65E2C00FEFE49 = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +400,7 @@
 				9D48B39926E65E2C00FEFE49 /* Liquidus */,
 				9D0309D6279329CD0034526D /* IntakeWidget */,
 				9D263EA1279CBA260084FE2E /* ViewIntakeIntent */,
+				9D308CE4280B466900BC7350 /* LiquidusTests */,
 				9D48B39826E65E2C00FEFE49 /* Products */,
 				9D935BEF26ED0E2400CA9C31 /* Frameworks */,
 			);
@@ -311,6 +412,7 @@
 				9D48B39726E65E2C00FEFE49 /* Liquidus.app */,
 				9D0309D1279329CD0034526D /* IntakeWidgetExtension.appex */,
 				9D263E9F279CBA260084FE2E /* ViewIntakeIntent.appex */,
+				9D308CE3280B466900BC7350 /* LiquidusTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -435,6 +537,30 @@
 			path = "Trends View";
 			sourceTree = "<group>";
 		};
+		9D74DA5D28188E160087C326 /* DrinkModel Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9D765CDB2821EF8D00C61C2E /* DMConstructor.swift */,
+				9D3B49C12832CDC000C34E98 /* DMUserDefaultsTests.swift */,
+				9D3B49C32832D30300C34E98 /* DMAddDrinkTest.swift */,
+				9D74DA6028188F5A0087C326 /* DMTimeDisplayTests.swift */,
+				9DE79BA4281B157300EA78F3 /* DMDrinkTypeTests.swift */,
+				9D110E79281C7C29006A54A5 /* DMUnitsTests.swift */,
+				9D60620E281DC87400883DCC /* DMConvertMeasurementsTests.swift */,
+				9D9FBECD281F33AF00235525 /* DMDataByHourTests.swift */,
+				9D606210281DCCB000883DCC /* DMDataByDayTests.swift */,
+				9D9FBECF281F353C00235525 /* DMDataByWeekTests.swift */,
+				9DD2D22028203F94008FB162 /* DMDataByMonthTests.swift */,
+				9D8037DC28206331003F018C /* DMDataByHalfYearTests.swift */,
+				9D97063B2821CC5D00460834 /* DMDataByYearTests.swift */,
+				9D765CDD2821F05800C61C2E /* DMProgressBarTests.swift */,
+				9D308CF5280B51C200BC7350 /* DMDataItemsTests.swift */,
+				9DCEFAA82822E59F00D8A56A /* DMTrendsChartTests.swift */,
+				9DA67BE7283008E00027260E /* DMHealthKitTests.swift */,
+			);
+			path = "DrinkModel Tests";
+			sourceTree = "<group>";
+		};
 		9D935BEF26ED0E2400CA9C31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,6 +643,24 @@
 			productReference = 9D263E9F279CBA260084FE2E /* ViewIntakeIntent.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		9D308CE2280B466900BC7350 /* LiquidusTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D308CEB280B466A00BC7350 /* Build configuration list for PBXNativeTarget "LiquidusTests" */;
+			buildPhases = (
+				9D308CDF280B466900BC7350 /* Sources */,
+				9D308CE0280B466900BC7350 /* Frameworks */,
+				9D308CE1280B466900BC7350 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9D308CE8280B466900BC7350 /* PBXTargetDependency */,
+			);
+			name = LiquidusTests;
+			productName = LiquidusTests;
+			productReference = 9D308CE3280B466900BC7350 /* LiquidusTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9D48B39626E65E2C00FEFE49 /* Liquidus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D48B3A626E65E2F00FEFE49 /* Build configuration list for PBXNativeTarget "Liquidus" */;
@@ -543,7 +687,7 @@
 		9D48B38F26E65E2C00FEFE49 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					9D0309D0279329CD0034526D = {
@@ -551,6 +695,10 @@
 					};
 					9D263E9E279CBA260084FE2E = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					9D308CE2280B466900BC7350 = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = 9D48B39626E65E2C00FEFE49;
 					};
 					9D48B39626E65E2C00FEFE49 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -573,6 +721,7 @@
 				9D48B39626E65E2C00FEFE49 /* Liquidus */,
 				9D0309D0279329CD0034526D /* IntakeWidgetExtension */,
 				9D263E9E279CBA260084FE2E /* ViewIntakeIntent */,
+				9D308CE2280B466900BC7350 /* LiquidusTests */,
 			);
 		};
 /* End PBXProject section */
@@ -587,6 +736,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9D263E9D279CBA260084FE2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D308CE1280B466900BC7350 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -650,6 +806,39 @@
 				9D263EC2279CBA760084FE2E /* CodableColor.swift in Sources */,
 				9D263EC6279CBA7E0084FE2E /* Drink.swift in Sources */,
 				9DC52F8027EA363200EB1E28 /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D308CDF280B466900BC7350 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D110E7A281C7C29006A54A5 /* DMUnitsTests.swift in Sources */,
+				9D765CDC2821EF8D00C61C2E /* DMConstructor.swift in Sources */,
+				9D5609FE2823202F007FFFE1 /* SampleDataItems.swift in Sources */,
+				9D9FBECE281F33AF00235525 /* DMDataByHourTests.swift in Sources */,
+				9D308CF3280B501200BC7350 /* DrinkDataTests.swift in Sources */,
+				9D560A0028232055007FFFE1 /* SampleDrinkAmounts.swift in Sources */,
+				9DC413DF282D57410012E55E /* AXDataPointEquatable.swift in Sources */,
+				9D60620F281DC87400883DCC /* DMConvertMeasurementsTests.swift in Sources */,
+				9DCEFAA92822E59F00D8A56A /* DMTrendsChartTests.swift in Sources */,
+				9D308CED280B469100BC7350 /* DrinkTests.swift in Sources */,
+				9D74DA6128188F5A0087C326 /* DMTimeDisplayTests.swift in Sources */,
+				9DA67BE8283008E00027260E /* DMHealthKitTests.swift in Sources */,
+				9D308CF1280B4C9600BC7350 /* DataItemTests.swift in Sources */,
+				9D308CF6280B51C200BC7350 /* DMDataItemsTests.swift in Sources */,
+				9D8037DD28206331003F018C /* DMDataByHalfYearTests.swift in Sources */,
+				9D9FBED0281F353C00235525 /* DMDataByWeekTests.swift in Sources */,
+				9D765CDE2821F05800C61C2E /* DMProgressBarTests.swift in Sources */,
+				9D606211281DCCB000883DCC /* DMDataByDayTests.swift in Sources */,
+				9D7E11CB280F72B600F549A1 /* SampleDrinks.swift in Sources */,
+				9D97063C2821CC5D00460834 /* DMDataByYearTests.swift in Sources */,
+				9D308CEF280B492C00BC7350 /* DrinkTypeTests.swift in Sources */,
+				9DD2D22128203F94008FB162 /* DMDataByMonthTests.swift in Sources */,
+				9D3B49C22832CDC000C34E98 /* DMUserDefaultsTests.swift in Sources */,
+				9D3B49C42832D30300C34E98 /* DMAddDrinkTest.swift in Sources */,
+				9DE79BA5281B157300EA78F3 /* DMDrinkTypeTests.swift in Sources */,
+				9DB7C68B282D47EB00F1C6C1 /* SampleAXDataPoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +917,11 @@
 			isa = PBXTargetDependency;
 			target = 9D263E9E279CBA260084FE2E /* ViewIntakeIntent */;
 			targetProxy = 9D263EB5279CBA260084FE2E /* PBXContainerItemProxy */;
+		};
+		9D308CE8280B466900BC7350 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D48B39626E65E2C00FEFE49 /* Liquidus */;
+			targetProxy = 9D308CE7280B466900BC7350 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -845,6 +1039,46 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9D308CE9280B466A00BC7350 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DS9W86UXV;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cengelbart.LiquidusTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Liquidus.app/Liquidus";
+			};
+			name = Debug;
+		};
+		9D308CEA280B466A00BC7350 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DS9W86UXV;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cengelbart.LiquidusTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Liquidus.app/Liquidus";
 			};
 			name = Release;
 		};
@@ -1029,6 +1263,15 @@
 			buildConfigurations = (
 				9D263EB8279CBA260084FE2E /* Debug */,
 				9D263EB9279CBA260084FE2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9D308CEB280B466A00BC7350 /* Build configuration list for PBXNativeTarget "LiquidusTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D308CE9280B466A00BC7350 /* Debug */,
+				9D308CEA280B466A00BC7350 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

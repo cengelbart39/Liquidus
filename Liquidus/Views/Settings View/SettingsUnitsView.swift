@@ -34,7 +34,7 @@ struct SettingsUnitsView: View {
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.cupsUS)
                         
                         // Save model
-                        model.save()
+                        model.save(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -77,7 +77,7 @@ struct SettingsUnitsView: View {
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.fluidOuncesUS)
                         
                         // Save model
-                        model.save()
+                        model.save(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -120,7 +120,7 @@ struct SettingsUnitsView: View {
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.liters)
                         
                         // Save model
-                        model.save()
+                        model.save(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -165,7 +165,7 @@ struct SettingsUnitsView: View {
                         model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.milliliters)
                         
                         // Save model
-                        model.save()
+                        model.save(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -204,6 +204,6 @@ struct SettingsUnitsView: View {
 struct SettingsUnitsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsUnitsView()
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

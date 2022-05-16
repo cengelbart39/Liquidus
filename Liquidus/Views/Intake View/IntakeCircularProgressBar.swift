@@ -41,8 +41,8 @@ struct IntakeCircularProgressBar: View {
 
 struct IntakeCircularProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeCircularProgressBar(selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
+        IntakeCircularProgressBar(selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel(test: false, suiteName: nil).getWeekRange(date: Date()))
             .environment(\.sizeCategory, .large)
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

@@ -30,6 +30,7 @@ class HealthStore {
     init() {
         // Check if there is authorization to access Health data
         if HKHealthStore.isHealthDataAvailable() {
+            // If so, create a HKHealthStore
             healthStore = HKHealthStore()
         }
     }

@@ -95,6 +95,6 @@ struct DailyIntakeInfoView: View {
 struct DailyIntakeInfoView_Previews: PreviewProvider {
     static var previews: some View {
         DailyIntakeInfoView(color: Color(.systemGray6))
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

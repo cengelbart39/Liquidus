@@ -144,6 +144,6 @@ struct LogDrinkView: View {
 struct LogDrinkView_Previews: PreviewProvider {
     static var previews: some View {
         LogDrinkView(isPresented: .constant(true))
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

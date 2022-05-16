@@ -24,7 +24,7 @@ struct WidgetChartView: View {
             
             let dataItems = model.getDataItemsForDay(date: .now, type: type)
             
-            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: entry.date))
+            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getWeek(date: entry.date))
             
             HStack {
             

@@ -15,7 +15,7 @@ struct Liquidus_App: App {
     var body: some Scene {
         WindowGroup {
             LaunchView()
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
         }
     }
 }

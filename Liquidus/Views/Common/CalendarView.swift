@@ -68,6 +68,6 @@ struct CalendarView: View {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarView(isPresented: .constant(true), selectedDay: .constant(Date()), selectedPeriod: .weekly)
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

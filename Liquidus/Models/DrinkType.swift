@@ -7,13 +7,18 @@
 
 import Foundation
 
-class DrinkType: Decodable, Encodable, Equatable, Hashable, Identifiable {
+class DrinkType: CustomStringConvertible, Decodable, Encodable, Equatable, Hashable, Identifiable {
+    
     var id = UUID()
     var name: String
     var color: CodableColor
     var isDefault: Bool
     var enabled: Bool
     var colorChanged: Bool
+    
+    public var description: String {
+        return "DrinkType(name: \(name), enabled: \(enabled), isDefault: \(isDefault), colorChanged: \(colorChanged))"
+    }
     
     init() {
         self.name = "temp"
@@ -58,5 +63,9 @@ class DrinkType: Decodable, Encodable, Equatable, Hashable, Identifiable {
         hasher.combine(self.enabled)
         hasher.combine(self.isDefault)
         hasher.combine(self.colorChanged)
+    }
+    
+    static func getWater() -> DrinkType {
+        return DrinkType(name: Constants.waterKey, color: CodableColor(color: .systemTeal), isDefault: true, enabled: true, colorChanged: false)
     }
 }

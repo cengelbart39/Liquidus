@@ -97,10 +97,10 @@ struct OnboardingCustomDrinksView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             OnboardingCustomDrinksView()
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
             OnboardingCustomDrinksView()
                 .preferredColorScheme(.dark)
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
     }

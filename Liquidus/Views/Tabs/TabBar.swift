@@ -114,6 +114,6 @@ struct TabBar: View {
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
         TabBar()
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

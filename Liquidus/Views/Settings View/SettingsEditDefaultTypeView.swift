@@ -67,7 +67,7 @@ struct SettingsEditDefaultTypeView: View {
                         }
                             
                         // Save information
-                        model.save()
+                        model.save(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -93,7 +93,7 @@ struct SettingsEditDefaultTypeView: View {
                 }
                 
                 // Save information
-                model.save()
+                model.save(test: false)
                 
                 // Update Widget
                 WidgetCenter.shared.reloadAllTimelines()

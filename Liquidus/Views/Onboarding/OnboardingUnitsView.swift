@@ -84,7 +84,7 @@ struct OnboardingUnitsView: View {
         .onDisappear {
             // Update and save model
             model.drinkData.units = selectedUnit
-            model.save()
+            model.save(test: false)
         }
     }
 }
@@ -94,10 +94,10 @@ struct OnboardingUnitsView: View {
             Group {
                 OnboardingUnitsView()
                     .environment(\.sizeCategory, .extraExtraExtraLarge)
-                    .environmentObject(DrinkModel())
+                    .environmentObject(DrinkModel(test: false, suiteName: nil))
                 OnboardingUnitsView()
                     .preferredColorScheme(.dark)
-                    .environmentObject(DrinkModel())
+                    .environmentObject(DrinkModel(test: false, suiteName: nil))
             }
         }
     }

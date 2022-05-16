@@ -72,7 +72,7 @@ struct SettingsView: View {
                     Button {
                         model.drinkData.drinks = [Drink]()
                         
-                        model.save()
+                        model.save(test: false)
                         
                         WidgetCenter.shared.reloadAllTimelines()
                     } label: {
@@ -162,6 +162,6 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

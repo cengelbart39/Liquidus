@@ -31,7 +31,7 @@ struct IntakeWeekDataPicker: View {
             Button(action: {
                 let calendar = Calendar.current
                 // Get each day of the week
-                self.currentWeek = model.getDaysInWeek(date: calendar.date(byAdding: .day, value: -1, to: self.currentWeek[0]) ?? Date())
+                self.currentWeek = model.getWeek(date: calendar.date(byAdding: .day, value: -1, to: self.currentWeek[0]) ?? Date())
                 // Check if any day in the next week has occured
                 self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
             }, label: {
@@ -56,7 +56,7 @@ struct IntakeWeekDataPicker: View {
                 // If next week hasn't occured...
                 if !self.isNextWeek {
                     // Update current week
-                    self.currentWeek = model.getDaysInWeek(date: nextWeek)
+                    self.currentWeek = model.getWeek(date: nextWeek)
                     // Check if any day in the next week has occured
                     self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
                 }
@@ -79,7 +79,7 @@ struct IntakeWeekDataPicker: View {
             case .increment:
                 if let newWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.currentWeek[0]) {
                     if !self.isNextWeek {
-                        self.currentWeek = model.getDaysInWeek(date: newWeek)
+                        self.currentWeek = model.getWeek(date: newWeek)
                         self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
                     } else {
                         break
@@ -125,7 +125,7 @@ struct IntakeWeekDataPicker: View {
 
 struct WeekDataPicker_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeWeekDataPicker(currentWeek: .constant(DrinkModel().getWeekRange(date: Date())))
-            .environmentObject(DrinkModel())
+        IntakeWeekDataPicker(currentWeek: .constant(DrinkModel(test: false, suiteName: nil).getWeekRange(date: Date())))
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

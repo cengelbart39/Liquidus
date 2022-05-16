@@ -173,6 +173,6 @@ struct SettingsDrinkTypeView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsDrinkTypeView()
             .preferredColorScheme(.dark)
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

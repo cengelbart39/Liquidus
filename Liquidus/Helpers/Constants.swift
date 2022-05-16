@@ -46,6 +46,7 @@ struct Constants {
     static var savedKey = "SavedKey"
     
     static var sharedKey = "group.com.cengelbart.Liquidus.shared"
+    static var unitTestingKey = "group.com.cengelbart.LiquidusTests"
     
     static var intakeDailyURL = URL(string: "liquidus://intake/daily")!
     static var logDrinkDailyURL = URL(string: "liquidus://intake/daily/log")!

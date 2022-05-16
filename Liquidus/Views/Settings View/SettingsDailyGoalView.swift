@@ -67,7 +67,7 @@ struct SettingsDailyGoalView: View {
                         // Update daily goal
                         model.drinkData.dailyGoal = num
                         // Save to user defaults
-                        model.save()
+                        model.save(test: false)
                         // Update Widget
                         WidgetCenter.shared.reloadAllTimelines()
                         // Dismiss screen
@@ -95,7 +95,7 @@ struct SettingsDailyGoalView: View {
                 // Update daily goal
                 model.drinkData.dailyGoal = num
                 // Save to user defaults
-                model.save()
+                model.save(test: false)
                 // Dismiss screen
                 presentationMode.wrappedValue.dismiss()
             }
@@ -106,6 +106,6 @@ struct SettingsDailyGoalView: View {
 struct SettingsDailyGoalView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsDailyGoalView()
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

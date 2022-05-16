@@ -80,9 +80,6 @@ struct CustomDrinkTypeView: View {
         // Delete drinks of custom drink type
         model.deleteCustomDrinks(atOffsets: offsets)
         
-        // Remove drink type from customDrinkTypes
-        model.drinkData.drinkTypes.remove(atOffsets: offsets)
-        
         // Tell views to update
         model.objectWillChange.send()
     }
@@ -91,6 +88,6 @@ struct CustomDrinkTypeView: View {
 struct CustomDrinkTypeDisplay_Previews: PreviewProvider {
     static var previews: some View {
         CustomDrinkTypeView()
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

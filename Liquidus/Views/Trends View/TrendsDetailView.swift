@@ -40,7 +40,7 @@ struct TrendsDetailView: View {
                     
                     let dataItems = self.getDataItems()
 
-                    let amount = touchLocation == -1 ? model.getOverallAmount(dataItems: dataItems, type: type, timePeriod: selectedTimePeriod, dates: self.getDates()) : self.getIndividualAmount(dataItems: dataItems)
+                    let amount = touchLocation == -1 ? model.getOverallAmount(type: type, timePeriod: selectedTimePeriod, dates: self.getDates()) : self.getIndividualAmount(dataItems: dataItems)
                     
                     TrendsDetailInfoView(dataItems: dataItems, amount: amount, amountTypeText: self.getAmontTypeText(), amountText: self.getAmountText(amount: amount, dataItems: dataItems), timeRangeText: self.getTimeRangeText())
                         .accessibilityFocused($isHeaderFocused)
@@ -103,7 +103,7 @@ struct TrendsDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             isHeaderFocused = false
-            selectedWeek = model.getDaysInWeek(date: selectedDay)
+            selectedWeek = model.getWeek(date: selectedDay)
             selectedMonth = model.getMonth(day: selectedDay)
             selectedHalfYear = model.getHalfYear(date: selectedDay)
             selectedYear = model.getYear(date: selectedDay)
@@ -336,7 +336,7 @@ struct TrendsDetailView: View {
      */
     private func getIndividualAmount(dataItems: [DataItem]) -> Double {
         if selectedTimePeriod == .daily {
-            return model.getTypeAmountByTime(type: type, time: dataItems[touchLocation].date)
+            return model.getTypeAmountByHour(type: type, time: dataItems[touchLocation].date)
             
         } else if selectedTimePeriod == .weekly {
             return model.getTypeAmountByDay(type: type, date: selectedWeek[touchLocation])

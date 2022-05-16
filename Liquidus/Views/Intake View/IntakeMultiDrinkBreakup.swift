@@ -47,7 +47,7 @@ struct IntakeMultiDrinkBreakup: View {
 
 struct IntakeMultiDrinkBreakup_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeMultiDrinkBreakup(selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
-            .environmentObject(DrinkModel())
+        IntakeMultiDrinkBreakup(selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel(test: false, suiteName: nil).getWeekRange(date: Date()))
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

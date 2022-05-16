@@ -137,7 +137,7 @@ struct OnboardingDailyGoalView: View {
         .onDisappear {
             if let num = Double(dailyGoal) {
                 model.drinkData.dailyGoal = num
-                model.save()
+                model.save(test: false)
             }
         }
     }

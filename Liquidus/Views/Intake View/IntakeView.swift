@@ -72,7 +72,7 @@ struct IntakeView: View {
             }
             .onAppear {
                 // Update selectedWeek as soon as view appears
-                selectedWeek = model.getDaysInWeek(date: selectedDay)
+                selectedWeek = model.getWeek(date: selectedDay)
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
@@ -95,7 +95,7 @@ struct IntakeView: View {
             }
             .onChange(of: selectedDay) { newValue in
                 // Update selectedWeek when selectedDay updates
-                selectedWeek = model.getDaysInWeek(date: selectedDay)
+                selectedWeek = model.getWeek(date: selectedDay)
             }
             .onChange(of: selectedTimePeriod) { _ in
                 isTimePeriodFocused = true
@@ -214,6 +214,6 @@ struct IntakeView: View {
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
         IntakeView(updateButtons: false, updateTimePicker: nil)
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

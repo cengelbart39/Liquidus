@@ -53,6 +53,6 @@ struct TrendsDetailInfoView: View {
 struct TrendsDetailInfoView_Previews: PreviewProvider {
     static var previews: some View {
         TrendsDetailInfoView(dataItems: DataItem.dailySampleData(), amount: 1500, amountTypeText: "DAILY", amountText: 1500, timeRangeText: "March 2, 2022")
-            .environmentObject(DrinkModel())
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

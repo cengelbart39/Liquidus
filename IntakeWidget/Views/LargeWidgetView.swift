@@ -33,10 +33,10 @@ struct LargeWidgetView: View {
                     IntakeCircularProgressDisplay(
                         timePeriod: entry.timePeriod,
                         day: .now,
-                        week: model.getDaysInWeek(date: .now),
+                        week: model.getWeek(date: .now),
                         totalPercent: model.getProgressPercent(
                             type: model.drinkData.drinkTypes.last!,
-                            dates: entry.timePeriod == .daily ? Date.now : model.getDaysInWeek(date: .now)),
+                            dates: entry.timePeriod == .daily ? Date.now : model.getWeek(date: .now)),
                         width: 20
                     )
                     .frame(maxWidth: geo.size.width/2)
@@ -50,7 +50,7 @@ struct LargeWidgetView: View {
                     
                     // MARK: - Total Info
                     VStack(alignment: .leading, spacing: 5) {
-                        let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(date: entry.date) : model.getTotalPercentByWeek(week: model.getDaysInWeek(date: entry.date))
+                        let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(date: entry.date) : model.getTotalPercentByWeek(week: model.getWeek(date: entry.date))
                         
                         Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                             .font(.title)
@@ -67,7 +67,7 @@ struct LargeWidgetView: View {
                                 
                                 ForEach(first, id: \.self) { type in
                                     
-                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: .now) : model.getTypeAmountByWeek(type: type, week: model.getDaysInWeek(date: .now))
+                                    let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: .now) : model.getTypeAmountByWeek(type: type, week: model.getWeek(date: .now))
                                     
                                     if (differentiateWithoutColor) {
                                         
@@ -196,7 +196,7 @@ struct LargeWidgetView: View {
         var maxes = [Double]()
         
         for type in types {
-            let dataItems = entry.timePeriod == .daily ? model.getDataItemsForDay(date: .now, type: type) : model.getDataItemsForWeek(week: model.getDaysInWeek(date: .now), type: type)
+            let dataItems = entry.timePeriod == .daily ? model.getDataItemsForDay(date: .now, type: type) : model.getDataItemsForWeek(week: model.getWeek(date: .now), type: type)
             
             maxes.append(model.getMaxValue(dataItems: dataItems, timePeriod: entry.timePeriod))
         }

@@ -88,7 +88,7 @@ struct IntakeSingleDrinkBreakup: View {
 
 struct IntakeSingleDrinkBreakup_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeSingleDrinkBreakup(color: Color(.systemCyan), drinkType: DrinkModel().drinkData.drinkTypes.first!, selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel().getWeekRange(date: Date()))
-            .environmentObject(DrinkModel())
+        IntakeSingleDrinkBreakup(color: Color(.systemCyan), drinkType: DrinkModel(test: false, suiteName: nil).drinkData.drinkTypes.first!, selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel(test: false, suiteName: nil).getWeekRange(date: Date()))
+            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

@@ -27,7 +27,7 @@ extension TrendsDetailChartView: AXChartDescriptorRepresentable {
         let series = AXDataSeriesDescriptor(
             attributedName: NSAttributedString(string: ""),
             isContinuous: false,
-            dataPoints: model.seriesDataPoints(dataItems: dataItems, timePeriod: timePeriod, halfYearOffset: halfYearOffset))
+            dataPoints: model.seriesDataPoints(dataItems: dataItems, timePeriod: timePeriod, halfYearOffset: halfYearOffset, test: false))
         
         return AXChartDescriptor(
             attributedTitle: NSAttributedString(string: chartAccessibilityLabel),

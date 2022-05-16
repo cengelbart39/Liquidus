@@ -15,7 +15,7 @@ extension TrendsDetailView {
                 if value.translation.width < 0 {
                     // If advancing a day/week/month/half-year, check if the day has happened yet
                     // If it has happened update the appropriate property, if not, don't
-                    if selectedTimePeriod == .daily && !model.isTomorrow(currentDate: selectedDay) {
+                    if selectedTimePeriod == .daily && !Calendar.current.isDateInTomorrow(selectedDay) {
                         if let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDay) {
                             if reduceMotion {
                                 selectedDay = newDate
@@ -28,10 +28,10 @@ extension TrendsDetailView {
                     } else if selectedTimePeriod == .weekly && !model.isNextWeek(currentWeek: selectedWeek) {
                         if let newWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.selectedWeek[0]) {
                             if reduceMotion {
-                                selectedWeek = model.getDaysInWeek(date: newWeek)
+                                selectedWeek = model.getWeek(date: newWeek)
                             } else {
                                 withAnimation(.spring()) {
-                                    selectedWeek = model.getDaysInWeek(date: newWeek)
+                                    selectedWeek = model.getWeek(date: newWeek)
                                 }
                             }
                             monthOffset += 1
@@ -91,10 +91,10 @@ extension TrendsDetailView {
                     } else if selectedTimePeriod == .weekly {
                         if let newWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self.selectedWeek[0]) {
                             if reduceMotion {
-                                selectedWeek = model.getDaysInWeek(date: newWeek)
+                                selectedWeek = model.getWeek(date: newWeek)
                             } else {
                                 withAnimation(.spring()) {
-                                    selectedWeek = model.getDaysInWeek(date: newWeek)
+                                    selectedWeek = model.getWeek(date: newWeek)
                                 }
                             }
                             monthOffset -= 1

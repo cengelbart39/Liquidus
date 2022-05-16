@@ -97,7 +97,7 @@ struct OnboardingAppleHealthView: View {
                 Button {
                     // Update and save onboarding status
                     model.drinkData.isOnboarding = false
-                    model.save()
+                    model.save(test: false)
                 } label: {
                     if healthKitEnabled {
                         Text("Done")
@@ -114,10 +114,10 @@ struct OnboardingAppleHealthView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             OnboardingAppleHealthView()
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
             OnboardingAppleHealthView()
                 .preferredColorScheme(.dark)
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
         }
     }
 }

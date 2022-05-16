@@ -24,7 +24,7 @@ struct IntakeDayDataPicker: View {
                 let calendar = Calendar.current
                 selectedDate = calendar.date(byAdding: .day, value: -1, to: selectedDate) ?? Date()
                 // Check if the next day is today or passed
-                isTomorrow = model.isTomorrow(currentDate: selectedDate)
+                isTomorrow = Calendar.current.isDateInTomorrow(selectedDate)
             }, label: {
                 Image(systemName: "chevron.left")
                     .foregroundColor(model.grayscaleEnabled ? .primary : .red)
@@ -49,7 +49,7 @@ struct IntakeDayDataPicker: View {
                     // Update currentDate
                     selectedDate = nextDay
                     // Check if this new day has occured
-                    isTomorrow = model.isTomorrow(currentDate: selectedDate)
+                    isTomorrow = Calendar.current.isDateInTomorrow(selectedDate)
                 }
             }, label: {
                 Image(systemName: "chevron.right")
@@ -61,7 +61,7 @@ struct IntakeDayDataPicker: View {
         .padding(.horizontal)
         .padding(.bottom, 6)
         .onAppear {
-            self.isTomorrow = model.isTomorrow(currentDate: selectedDate)
+            self.isTomorrow = Calendar.current.isDateInTomorrow(selectedDate)
         }
         .accessibilityElement(children: .combine)
         .accessibilityHint("Go forward or back a day")
@@ -71,7 +71,7 @@ struct IntakeDayDataPicker: View {
                 if let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) {
                     if !isTomorrow {
                         selectedDate = newDate
-                        isTomorrow = model.isTomorrow(currentDate: selectedDate)
+                        isTomorrow = Calendar.current.isDateInTomorrow(selectedDate)
                     } else {
                         break
                     }
@@ -81,7 +81,7 @@ struct IntakeDayDataPicker: View {
             case .decrement:
                 if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) {
                     selectedDate = newDate
-                    isTomorrow = model.isTomorrow(currentDate: selectedDate)
+                    isTomorrow = Calendar.current.isDateInTomorrow(selectedDate)
                 } else {
                     break
                 }

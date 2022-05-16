@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct DrinkData: Decodable, Encodable {
+struct DrinkData: Decodable, Encodable, Equatable {
     
     var isOnboarding = true
     

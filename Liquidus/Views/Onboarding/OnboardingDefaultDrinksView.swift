@@ -74,7 +74,7 @@ struct OnboardingDefaultDrinksView: View {
         }
         .onDisappear {
             // Save changes
-            model.save()
+            model.save(test: false)
         }
     }
 }
@@ -83,10 +83,10 @@ struct OnboardingDefaultDrinksView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             OnboardingDefaultDrinksView()
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
             OnboardingDefaultDrinksView()
                 .preferredColorScheme(.dark)
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
                 .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
         }
     }

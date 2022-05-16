@@ -7,11 +7,15 @@
 
 import Foundation
 
-class Drink: Decodable, Encodable, Equatable, Identifiable {
+class Drink: CustomStringConvertible, Decodable, Encodable, Equatable, Identifiable {
     var id = UUID()
     var type: DrinkType
     var amount: Double
     var date: Date
+    
+    var description: String {
+        return "Drink(type: \(type), amount: \(amount), date: \(date.description)"
+    }
     
     init(type: DrinkType, amount: Double, date: Date) {
         self.type = type
@@ -20,10 +24,22 @@ class Drink: Decodable, Encodable, Equatable, Identifiable {
     }
     
     static func == (lhs: Drink, rhs: Drink) -> Bool {
-        if lhs.type == rhs.type && lhs.amount == rhs.amount && lhs.date == rhs.date {
+        if lhs.type == rhs.type && lhs.amount == rhs.amount && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .nanosecond) == .orderedSame {
             return true
         } else {
             return false
         }
+    }
+    
+    static func getWaterSampleDrinks() -> [Drink] {
+        var drinks = [Drink]()
+        
+        let amounts: [Double] = [100, 200, 300, 400, 500, 400, 300, 200, 100]
+        
+        for amount in amounts {
+            drinks.append(Drink(type: DrinkType.getWater(), amount: amount, date: .now))
+        }
+        
+        return drinks
     }
 }

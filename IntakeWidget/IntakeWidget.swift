@@ -15,7 +15,7 @@ struct IntakeWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ViewIntakeIntent.self, provider: Provider(), content: { entry in
             WidgetView(entry: entry)
-                .environmentObject(DrinkModel())
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
         })
         .configurationDisplayName("Intake Widget")
         .description("See your daily or weekly intake. ")

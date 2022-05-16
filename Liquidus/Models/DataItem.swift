@@ -7,11 +7,19 @@
 
 import Foundation
 
-struct DataItem: Equatable, Identifiable {
+struct DataItem: CustomStringConvertible, Equatable, Identifiable {
     var id = UUID()
     var drinks: [Drink]?
     var type: DrinkType
     var date: Date
+    
+    var description: String {
+        if let drinks = drinks {
+            return "DataItem(drinks: \(drinks), type: \(type), date: \(date.description)"
+        }
+        
+        return "DataItem(drinks: nil, type: \(type), date: \(date.description)"
+    }
     
     /**
      For drinks (if they exist), in a DataItem, get the maximum value
@@ -64,29 +72,6 @@ struct DataItem: Equatable, Identifiable {
         
         return total
     }
-    
-    /**
-     For a DataItem array, get the total amount of all drinks (if they exist)
-     */
-    static func getTotalAmountByWeek(items: [DataItem]) -> Double {
-        var total = 0.0
-        
-        // Loop through items
-        for item in items {
-            
-            // Get drinks
-            if let drinks = item.drinks {
-                
-                // Loop through drinks and add to total
-                for drink in drinks {
-                    total += drink.amount
-                }
-            }
-        }
-        
-        return total
-    }
-    
     /**
      Generate a random array of DataItem
      */
@@ -115,7 +100,7 @@ struct DataItem: Equatable, Identifiable {
     }
     
     static func == (lhs: DataItem, rhs: DataItem) -> Bool {
-        if lhs.type == rhs.type && lhs.date == rhs.date {
+        if lhs.type == rhs.type && lhs.date.description == rhs.date.description {
             if let l = lhs.drinks, let r = rhs.drinks {
                 for drink in l {
                     if !r.contains(drink) {
