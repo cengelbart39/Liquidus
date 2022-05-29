@@ -10,12 +10,11 @@
 
 import SwiftUI
 
-struct IntakeCircularProgressDisplay<T: DatesProtocol>: View {
+struct IntakeCircularProgressDisplay: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    var timePeriod: TimePeriod
-    var datePeriod: T
+    var day: Day
     var totalPercent: Double
     var width: CGFloat
     @Binding var trigger: Bool
@@ -37,9 +36,9 @@ struct IntakeCircularProgressDisplay<T: DatesProtocol>: View {
                     // Get color for highlight
                     // Use drink type color if goal isn't reached
                     // Use "GoalGreen" if goal is reached
-                    let color = model.getHighlightColor(type: type, dates: datePeriod)
+                    let color = model.getHighlightColor(type: type, date: day)
                         
-                    IntakeCircularProgressBarHighlight(progress: model.getProgressPercent(type: type, dates: datePeriod), color: color, width: width, trigger: $trigger)
+                    IntakeCircularProgressBarHighlight(progress: model.getProgressPercent(type: type, date: day), color: color, width: width, trigger: $trigger)
                 }
             }
         }

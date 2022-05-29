@@ -24,26 +24,15 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
         return self
     }
     
+    
     func handle(intent: ViewIntakeIntent, completion: @escaping (ViewIntakeIntentResponse) -> Void) {
-        guard let _ = timePeriod(for: intent) else {
-            completion(ViewIntakeIntentResponse(code: .failure, userActivity: nil))
-            return
-        }
         
         let result = getData()
         
         if result {
-            completion(ViewIntakeIntentResponse.success(amount: self.getAmount(intent: intent), goal: self.getGoal(intent: intent), units: self.getUnits(), percent: self.getPercent(intent: intent), timePeriod: intent.timePeriod))
+            completion(ViewIntakeIntentResponse.success(amount: self.getAmount(intent: intent), goal: self.getGoal(intent: intent), units: self.getUnits(), percent: self.getPercent(intent: intent)))
         } else {
             completion(ViewIntakeIntentResponse(code: .failure, userActivity: nil))
-        }
-    }
-    
-    func resolveTimePeriod(for intent: ViewIntakeIntent, with completion: @escaping (EnumResolutionResult) -> Void) {
-        if let _ = timePeriod(for: intent) {
-            completion(EnumResolutionResult.success(with: intent.timePeriod))
-        } else {
-            completion(EnumResolutionResult.needsValue())
         }
     }
     
@@ -65,22 +54,6 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
             }
         }
         return false
-    }
-    
-    /**
-     Converts `ViewIntakeIntent.timePeriod` to `TimePeriod`
-     - Parameter configuration: The `ViewIntakeIntent`
-     - Returns: The appropriate `TimePeriod`; `nil` if there is an unrecognized `configuration.timePeriod` case
-     */
-    private func timePeriod(for configuration: ViewIntakeIntent) -> TimePeriod? {
-        switch configuration.timePeriod {
-        case .day:
-            return .daily
-        case .week:
-            return .weekly
-        default:
-            return nil
-        }
     }
     
     /**
@@ -131,12 +104,7 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
     private func getGoal(intent: ViewIntakeIntent) -> NSNumber {
         let goal = self.data.dailyGoal
         
-        if self.timePeriod(for: intent) == .daily {
-            return NSNumber.init(value: goal)
-            
-        } else {
-            return NSNumber.init(value: goal*7)
-        }
+        return NSNumber.init(value: goal)
     }
     
     /**
@@ -146,26 +114,11 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
      */
     private func getAmount(intent: ViewIntakeIntent) -> NSNumber {
         
-        // If the timePeriod is daily
-        if self.timePeriod(for: intent) == .daily {
-            
-            // Get the total amount
-            let totalAmount = IntentLogic.getTotalAmountByDay(date: .now, data: self.data)
-            
-            // Return totalAmount as a NSNumber
-            return NSNumber.init(value: totalAmount)
-           
-        // If timePeriod is weekly
-        } else {
-            // Get the current week
-            let week = IntentLogic.getDaysInWeek(date: .now)
-            
-            // Get the total amount
-            let totalAmount = IntentLogic.getTotalAmountByWeek(week: week, data: self.data)
-            
-            // Return totalAmount as a NSNumber
-            return NSNumber.init(value: totalAmount)
-        }
+        // Get the total amount
+        let totalAmount = IntentLogic.getTotalAmountByDay(date: .now, data: self.data)
+        
+        // Return totalAmount as a NSNumber
+        return NSNumber.init(value: totalAmount)
     }
     
     /**
@@ -175,61 +128,29 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
      */
     private func getPercent(intent: ViewIntakeIntent) -> NSNumber {
         
-        // If timePeriod is daily
-        if self.timePeriod(for: intent) == .daily {
+        
+        // Get the percentage
+        let percent = IntentLogic.getTotalPercentByDay(date: .now, data: data)*100
+        
+        // Configure Number formatter
+        let formatter = NumberFormatter()
+        formatter.usesSignificantDigits = true
+        formatter.maximumSignificantDigits = 2
+        formatter.minimumSignificantDigits = 2
+        
+        // Convert the percent to a formatted string
+        if let str = formatter.string(from: NSNumber.init(value: percent)) {
             
-            // Get the percentage
-            let percent = IntentLogic.getTotalPercentByDay(date: .now, data: data)*100
-            
-            // Configure Number formatter
-            let formatter = NumberFormatter()
-            formatter.usesSignificantDigits = true
-            formatter.maximumSignificantDigits = 2
-            formatter.minimumSignificantDigits = 2
-            
-            // Convert the percent to a formatted string
-            if let str = formatter.string(from: NSNumber.init(value: percent)) {
+            // Convert String to Double
+            if let double = Double(str) {
                 
-                // Convert String to Double
-                if let double = Double(str) {
-                    
-                    // Return Double as NSNumber
-                    return NSNumber.init(value: double)
-                }
+                // Return Double as NSNumber
+                return NSNumber.init(value: double)
             }
-            
-            // If ether if-let fails return 0
-            return 0.0
-            
-        } else {
-            
-            // Get days in week
-            let week = IntentLogic.getDaysInWeek(date: .now)
-            
-            // Get percentage
-            let percent = IntentLogic.getTotalPercentByWeek(week: week, data: self.data)
-            
-            // Configure Number Formatter
-            let formatter = NumberFormatter()
-            formatter.usesSignificantDigits = true
-            formatter.maximumSignificantDigits = 2
-            formatter.minimumSignificantDigits = 2
-            
-            // Convert percentage to formatted string
-            if let str = formatter.string(from: NSNumber.init(value: percent)) {
-                
-                // Convert String to Double
-                if let double = Double(str) {
-                    
-                    // Return Double as NSNumber
-                    return NSNumber.init(value: double)
-                }
-                
-            }
-
-            // If either if-let fails return 0
-            return 0
         }
+        
+        // If ether if-let fails return 0
+        return 0.0
     }
     
 }

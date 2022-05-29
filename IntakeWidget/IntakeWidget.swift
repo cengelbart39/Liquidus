@@ -13,12 +13,12 @@ struct IntakeWidget: Widget {
     let kind: String = "IntakeWidget"
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ViewIntakeIntent.self, provider: Provider(), content: { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             WidgetView(entry: entry)
                 .environmentObject(DrinkModel(test: false, suiteName: nil))
-        })
-        .configurationDisplayName("Intake Widget")
-        .description("See your daily or weekly intake. ")
+        }
+        .configurationDisplayName("Daily Intake Widget")
+        .description("See your daily intake. ")
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }

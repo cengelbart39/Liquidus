@@ -10,5 +10,4 @@ import WidgetKit
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let relevance: TimelineEntryRelevance?
-    let timePeriod: TimePeriod
 }

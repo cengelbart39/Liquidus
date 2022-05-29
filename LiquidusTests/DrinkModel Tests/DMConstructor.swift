@@ -24,13 +24,6 @@ class DMConstructor: XCTestCase {
         // Check for default DrinkData
         XCTAssertEqual(model.drinkData, DrinkData())
         
-        // Check that selectedDay has the same day, month, and year as
-        // the current day
-        XCTAssertTrue(Calendar.current.compare(model.selectedDay.data, to: Date.now, toGranularity: .day) == .orderedSame && Calendar.current.compare(model.selectedDay.data, to: Date.now, toGranularity: .month) == .orderedSame && Calendar.current.compare(model.selectedDay.data, to: Date.now, toGranularity: .year) == .orderedSame)
-        
-        // Check that selectedWeek is empty
-        XCTAssertEqual(model.selectedWeek.data.count, 7)
-        
         // Check that healthStore exists
         XCTAssertNotNil(model.healthStore)
     }

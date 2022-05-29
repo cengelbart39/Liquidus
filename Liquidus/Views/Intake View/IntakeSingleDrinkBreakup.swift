@@ -15,9 +15,7 @@ struct IntakeSingleDrinkBreakup: View {
     
     var color: Color
     var drinkType: DrinkType
-    var selectedTimePeriod: TimePeriod
-    var selectedDay: Day
-    var selectedWeek: Week
+    var day: Day
     @Binding var trigger: Bool
         
     @ScaledMetric(relativeTo: .body) var symbolSize = 35
@@ -43,9 +41,9 @@ struct IntakeSingleDrinkBreakup: View {
                             .bold()
                         
                         // Consumed Amount & Percent
-                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, day: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
+                        let amount = model.getTypeAmountByDay(type: drinkType, day: day)
                         
-                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, day: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
+                        let percent = model.getTypePercentByDay(type: drinkType, day: day)
                         
                         HStack {
                             Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
@@ -66,9 +64,9 @@ struct IntakeSingleDrinkBreakup: View {
                             .accessibilityAddTraits(.isHeader)
                         
                         // Consumed Amount & Percent
-                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, day: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
+                        let amount = model.getTypeAmountByDay(type: drinkType, day: day)
                         
-                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, day: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
+                        let percent = model.getTypePercentByDay(type: drinkType, day: day)
                         
                        Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
                             .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)

@@ -24,12 +24,6 @@ class DrinkModel: ObservableObject {
     
     /// The user's data
     @Published var drinkData = DrinkData()
-
-    /// The day selected by the user
-    @Published var selectedDay = Day()
-    
-    /// The week selected by the user
-    @Published var selectedWeek = Week()
     
     /// The HealthKit data access point, if granted access to HealthKit Data
     @Published var healthStore: HealthStore?
@@ -676,56 +670,6 @@ class DrinkModel: ObservableObject {
         return totalAmount
     }
     
-    /**
-     Get the total percentage of drinks consumed of a given `DrinkType` and during a given `Week` over the user's weekly goal
-     - Parameter type: The `DrinkType` to get the percentage for
-     - Parameter week: The `Week` to get the percentage for
-     - Returns: The total percentage of drinks consumed of `type` during `week` over the user's weekly goal
-     */
-    func getTypePercentByWeek(type: DrinkType, week: Week) -> Double {
-        
-        // Get the amount
-        let amount = self.getTypeAmountByWeek(type: type, week: week)
-        
-        // Calculate percentage
-        let percent = amount / (self.drinkData.dailyGoal*7)
-        
-        return percent
-    }
-    
-    /**
-     Get the total amount of `Drink`s consumed during a given `Week`
-     - Parameter week: The `Week` to get the total amount for
-     - Returns: The total amount of `Drink`s consumed during `week`
-     */
-    func getTotalAmountByWeek(week: Week) -> Double {
-        // Track the total amount
-        var amount = 0.0
-        
-        // Loop through drinks in week and add to amount
-        for drink in self.filterDataByWeek(week: week) {
-            amount += drink.amount
-        }
-        
-        return amount
-    }
-    
-    /**
-     Get the total percentage of drinks consumed during a given `Week` over the user's weekly goal
-     - Parameter week: The Week to get the total percentage for
-     - Returns: The total percentage of drinks consumed during `week` over the user's weekly goal
-     */
-    func getTotalPercentByWeek(week: Week) -> Double {
-        
-        // Get the total amount
-        let totalAmount = self.getTotalAmountByWeek(week: week)
-        
-        // Calculate the percentage
-        let percent = totalAmount / (self.drinkData.dailyGoal*7)
-        
-        return percent
-    }
-    
     // MARK: - Data by Month Functions
     /**
      Get the `Drink`s that were consumed during a given `Month`
@@ -909,43 +853,24 @@ class DrinkModel: ObservableObject {
      Compute the user's progress to reaching their daily or weekly goal for Progress Bar Display
      - Parameters:
         - type: The `DrinkType` to get the user's progress for
-        - dates: An object conformant to `DatesProtocol`
-     - Requires: `dates` is a `Day` or `Week` to return a non-zero value
+        - date: A `Day` to get the user's progress for
      - Returns: The progress percent towards the user's daily goal
      */
-    func getProgressPercent<T: DatesProtocol>(type: DrinkType, dates: T) -> Double {
+    func getProgressPercent(type: DrinkType, date: Day) -> Double {
         // Get the index of type in drinkTypes
         let typeIndex = self.drinkData.drinkTypes.firstIndex(of: type)!
         
         // Create progress to 0.0
         var progress = 0.0
         
-        // If selectedTimePeriod is Day...
-        if let date = dates as? Day {
+        // Loop through type index...
+        for index in 0...typeIndex {
             
-            // Loop through type index...
-            for index in 0...typeIndex {
+            // If the drink is enabled...
+            if (self.drinkData.drinkTypes[index].enabled) {
                 
-                // If the drink is enabled...
-                if (self.drinkData.drinkTypes[index].enabled) {
-                    
-                    // Add the type's percent to progress
-                    progress += self.getTypePercentByDay(type: self.drinkData.drinkTypes[index], day: date)
-                }
-            }
-            
-        // If selectedTimePeriod is Week...
-        } else if let dates = dates as? Week {
-            
-            // Loop through type index...
-            for index in 0...typeIndex {
-                
-                // If the drink is enabled...
-                if (self.drinkData.drinkTypes[index].enabled) {
-                    
-                    // Add the type's percent to progress
-                    progress += self.getTypePercentByWeek(type: self.drinkData.drinkTypes[index], week: dates)
-                }
+                // Add the type's percent to progress
+                progress += self.getTypePercentByDay(type: self.drinkData.drinkTypes[index], day: date)
             }
         }
         
@@ -954,15 +879,15 @@ class DrinkModel: ObservableObject {
     }
     
     /**
-     For a given type and Date or [Date] get the highlight color for use in the Progress Bar
+     For a given `DrinkType` and `Day` get the highlight color for use in the Progress Bar
      - Parameters:
         - type: A `DrinkType`
-        - dates: An object conformant to `DatesProtocol`
+        - date: A `Day`
      - Returns: `"GoalGreen"` if Goal is met; `Color.primary` if grayscale is enabled; result of `getDrinkTypeColor()` otherwise
      */
-    func getHighlightColor<T: DatesProtocol>(type: DrinkType, dates: T) -> Color {
+    func getHighlightColor(type: DrinkType, date: Day) -> Color {
         // Get the total percent using type and dates
-        let totalPercent = self.getProgressPercent(type: type, dates: dates)
+        let totalPercent = self.getProgressPercent(type: type, date: date)
         
         // Return "GoalGreen" if the user's goal is met or exceeded
         if totalPercent >= 1.0 {

@@ -80,16 +80,10 @@ struct Constants {
     static var unitTestingKey = "group.com.cengelbart.LiquidusTests"
     
     /// The `URL` used to view Daily Intake from the Widget
-    static var intakeDailyURL = URL(string: "liquidus://intake/daily")!
+    static var intakeURL = URL(string: "liquidus://intake")!
     
     /// The `URL` used to view the Drink Logging Form from the Widget
-    static var logDrinkDailyURL = URL(string: "liquidus://intake/daily/log")!
-    
-    /// The `URL` used to view Weekly Intake from the Widget
-    static var intakeWeeklyURL = URL(string: "liquidus://intake/weekly")
-    
-    /// The `URL` used to view the Drink Logging Form from the Widget
-    static var logDrinkWeeklyURL = URL(string: "liquidus://intake/weekly/log")
+    static var logDrinkURL = URL(string: "liquidus://intake/log")!
         
     /// Unit Dictionary used for Unit Conversion
     static var unitDictionary: [String:UnitVolume] = [

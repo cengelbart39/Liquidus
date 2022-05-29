@@ -17,13 +17,12 @@ struct TabBar: View {
     @State var isLogDrinkViewShowing = false
     
     @State var updateButtons = false
-    @State var timePeriod = TimePeriod.daily
     
     var body: some View {
         
         TabView(selection: $selectedTab) {
             // IntakeView
-            IntakeView(updateButtons: updateButtons, updateTimePicker: timePeriod)
+            IntakeView(updateButtons: updateButtons)
                 .tabItem {
                     VStack {
                         Image("custom.drink.fill")
@@ -55,20 +54,10 @@ struct TabBar: View {
                 .tag(2)
         }
         .onOpenURL(perform: { url in
-            if url == Constants.intakeDailyURL {
+            if url == Constants.intakeURL {
                 selectedTab = 0
-                timePeriod = .daily
-            } else if url == Constants.logDrinkDailyURL {
+            } else if url == Constants.logDrinkURL {
                 selectedTab = 0
-                timePeriod = .daily
-                isLogDrinkViewShowing = true
-                updateButtons = true
-            } else if url == Constants.intakeWeeklyURL {
-                selectedTab = 0
-                timePeriod = .weekly
-            } else if url == Constants.logDrinkWeeklyURL {
-                selectedTab = 0
-                timePeriod = .weekly
                 isLogDrinkViewShowing = true
                 updateButtons = true
             }

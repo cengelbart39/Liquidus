@@ -33,44 +33,24 @@ struct MediumWidgetView: View {
                 VStack(alignment: .leading) {
                     
                     let day = Day(date: entry.date)
-                    let week = Week(date: entry.date)
                     
                     // MARK: - Circular Progress Bar
-                    if entry.timePeriod == .daily {
-                        IntakeCircularProgressDisplay(
-                            timePeriod: .daily,
-                            datePeriod: day,
-                            totalPercent: model.getProgressPercent(type: model.drinkData.drinkTypes.last!, dates: day),
-                            width: 13,
-                            trigger: $hiddenTrigger
-                        )
-                        .accessibilityHidden(true)
-                        .padding(.top, 21)
-                        .padding(.bottom, 10)
-                        .widgetURL(Constants.intakeDailyURL)
-                        .frame(maxWidth: geo.size.width/5)
-                        .frame(maxHeight: 2*geo.size.height/2)
-                        
-                    } else if entry.timePeriod == .weekly {
-                        IntakeCircularProgressDisplay(
-                            timePeriod: .weekly,
-                            datePeriod: week,
-                            totalPercent: model.getProgressPercent(type: model.drinkData.drinkTypes.last!, dates: week),
-                            width: 13,
-                            trigger: $hiddenTrigger
-                        )
-                        .accessibilityHidden(true)
-                        .padding(.top, 21)
-                        .padding(.bottom, 10)
-                        .widgetURL(Constants.intakeWeeklyURL)
-                        .frame(maxWidth: geo.size.width/5)
-                        .frame(maxHeight: 2*geo.size.height/2)
-                    }
-                    
+                    IntakeCircularProgressDisplay(
+                        day: day,
+                        totalPercent: model.getProgressPercent(type: model.drinkData.drinkTypes.last!, date: day),
+                        width: 13,
+                        trigger: $hiddenTrigger
+                    )
+                    .accessibilityHidden(true)
+                    .padding(.top, 21)
+                    .padding(.bottom, 10)
+                    .widgetURL(Constants.intakeURL)
+                    .frame(maxWidth: geo.size.width/5)
+                    .frame(maxHeight: 2*geo.size.height/2)
                     
                     Spacer()
                     
-                    let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(day: day) : model.getTotalPercentByWeek(week: week)
+                    let percent = model.getTotalPercentByDay(day: day)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(.title3)
@@ -82,7 +62,7 @@ struct MediumWidgetView: View {
                     
                         ForEach(first, id: \.self) { type in
                             
-                            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, day: day) : model.getTypeAmountByWeek(type: type, week: week)
+                            let typeAmount = model.getTypeAmountByDay(type: type, day: day)
                             
                             HStack {
                             
@@ -133,13 +113,13 @@ struct MediumWidgetView: View {
                             
                             Spacer()
                             
-                            Text("Log a drink in the app to reach your \(entry.timePeriod == .daily ? "daily" : "weekly") goal.")
+                            Text("Log a drink in the app to reach your daily goal.")
                                 .font(.body)
                             
                             Spacer()
                         }
                         .accessibilitySortPriority(0)
-                        .widgetURL(entry.timePeriod == .daily ? Constants.logDrinkDailyURL : Constants.logDrinkWeeklyURL)
+                        .widgetURL(Constants.logDrinkURL)
                         
                     }
                 }
@@ -231,16 +211,15 @@ struct MediumWidgetView: View {
         
         // Get a Day and Week
         let day = Day(date: entry.date)
-        let week = Week(date: entry.date)
         
         // Loop through types
         for type in types {
             
             // Get the DataItems by Day or Week depending on timePeriod
-            let dataItems = entry.timePeriod == .daily ? model.getDataItemsForDay(day: day, type: type) : model.getDataItemsForWeek(week: week, type: type)
+            let dataItems = model.getDataItemsForDay(day: day, type: type)
             
             // Append the maxValue of the DataItems
-            maxes.append(model.getMaxValue(dataItems: dataItems, timePeriod: entry.timePeriod))
+            maxes.append(model.getMaxValue(dataItems: dataItems, timePeriod: .daily))
         }
         
         // Return the max of the maxes array

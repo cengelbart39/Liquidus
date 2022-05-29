@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct IntakeCircularProgressBar<T: DatesProtocol>: View {
+struct IntakeCircularProgressBar: View {
     
     @EnvironmentObject var model: DrinkModel
     
     @AccessibilityFocusState private var isIntakeInfoFocused: Bool
     
-    var selectedTimePeriod: TimePeriod
-    var datePeriod: T
+    var day: Day
     @Binding var trigger: Bool
     
     var body: some View {
@@ -22,12 +21,12 @@ struct IntakeCircularProgressBar<T: DatesProtocol>: View {
         ZStack {
             
             // Get total percentage of liquid consumed
-            let totalPercent = model.getProgressPercent(type: model.drinkData.drinkTypes.last!, dates: datePeriod)
+            let totalPercent = model.getProgressPercent(type: model.drinkData.drinkTypes.last!, date: day)
             
-            IntakeCircularProgressDisplay(timePeriod: selectedTimePeriod, datePeriod: datePeriod, totalPercent: totalPercent, width: 30, trigger: $trigger)
+            IntakeCircularProgressDisplay(day: day, totalPercent: totalPercent, width: 30, trigger: $trigger)
 
             // If a day display the daily percent
-            IntakeCircularProgressInfo(timePeriod: selectedTimePeriod, datePeriod: datePeriod, totalPercent: totalPercent, trigger: $trigger)
+            IntakeCircularProgressInfo(day: day, totalPercent: totalPercent, trigger: $trigger)
                 .accessibilityFocused($isIntakeInfoFocused)
         }
         .padding(.horizontal)

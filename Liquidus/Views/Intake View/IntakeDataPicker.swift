@@ -1,5 +1,5 @@
 //
-//  IntakeDayDataPicker.swift
+//  IntakeDataPicker.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 9/7/21.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct IntakeDayDataPicker: View {
+struct IntakeDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.dynamicTypeSize) var dynamicType
     
-    @Binding var selectedDate: Day
+    @Binding var day: Day
 
     @State var isTomorrow = false
     @Binding var trigger: Bool
@@ -23,9 +23,9 @@ struct IntakeDayDataPicker: View {
         HStack {
             Button(action: {
                 // Set new date
-                selectedDate.prevDay()
+                day.prevDay()
                 // Check if the next day is today or passed
-                isTomorrow = selectedDate.isTomorrow()
+                isTomorrow = day.isTomorrow()
                 // Update view
                 trigger.toggle()
             }, label: {
@@ -37,9 +37,9 @@ struct IntakeDayDataPicker: View {
             Spacer()
             
             // Display Month Day, Year
-            Text(selectedDate.description)
+            Text(day.description)
                 .foregroundColor(.primary)
-                .accessibilityLabel(selectedDate.accessibilityDescription)
+                .accessibilityLabel(day.accessibilityDescription)
             
             Spacer()
             
@@ -47,9 +47,9 @@ struct IntakeDayDataPicker: View {
                 // If this day is/has occured...
                 if !isTomorrow {
                     // Update currentDate
-                    selectedDate.nextDay()
+                    day.nextDay()
                     // Check if this new day has occured
-                    isTomorrow = selectedDate.isTomorrow()
+                    isTomorrow = day.isTomorrow()
                     // Update view
                     trigger.toggle()
                 }
@@ -63,11 +63,11 @@ struct IntakeDayDataPicker: View {
         .padding(.horizontal)
         .padding(.bottom, 6)
         .onAppear {
-            self.isTomorrow = selectedDate.isTomorrow()
+            self.isTomorrow = day.isTomorrow()
         }
         .onChange(of: trigger, perform: { _ in
             // Updates view based on Today trigger
-            isTomorrow = selectedDate.isTomorrow()
+            isTomorrow = day.isTomorrow()
         })
         .accessibilityElement(children: .combine)
         .accessibilityHint("Go forward or back a day")
@@ -75,8 +75,8 @@ struct IntakeDayDataPicker: View {
             switch direction {
             case .increment:
                 if !isTomorrow {
-                    selectedDate.nextDay()
-                    self.isTomorrow = Calendar.current.isDateInTomorrow(selectedDate.data)
+                    day.nextDay()
+                    self.isTomorrow = Calendar.current.isDateInTomorrow(day.data)
                     trigger.toggle()
                 
                 } else {
@@ -85,8 +85,8 @@ struct IntakeDayDataPicker: View {
  
             case .decrement:
                 
-                selectedDate.prevDay()
-                self.isTomorrow = Calendar.current.isDateInTomorrow(selectedDate.data)
+                day.prevDay()
+                self.isTomorrow = Calendar.current.isDateInTomorrow(day.data)
                 trigger.toggle()
 
                 

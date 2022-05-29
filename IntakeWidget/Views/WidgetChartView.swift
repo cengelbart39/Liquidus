@@ -23,11 +23,10 @@ struct WidgetChartView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             let day = Day(date: entry.date)
-            let week = Week(date: entry.date)
             
             let dataItems = model.getDataItemsForDay(day: day, type: type)
             
-            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, day: day) : model.getTypeAmountByWeek(type: type, week: week)
+            let typeAmount = model.getTypeAmountByDay(type: type, day: day)
             
             HStack {
             

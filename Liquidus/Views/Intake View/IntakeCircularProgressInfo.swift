@@ -7,94 +7,50 @@
 
 import SwiftUI
 
-struct IntakeCircularProgressInfo<T: DatesProtocol>: View {
+struct IntakeCircularProgressInfo: View {
     
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.dynamicTypeSize) var dynamicType
     
-    var timePeriod: TimePeriod
-    var datePeriod: T
+    var day: Day
     var totalPercent: Double
     @Binding var trigger: Bool
     
     var body: some View {
-        
-        if let day = datePeriod as? Day {
-            
-            VStack {
-                // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
-                if (self.differentiateWithoutColor || model.grayscaleEnabled) && totalPercent >= 1.0 {
-                    Image(systemName: "flag.fill")
-                        .foregroundColor(.primary)
-                        .font(self.getFontStyleAmount())
-                        .padding(.bottom, 0.5)
-                        .accessibilityHidden(true)
-                }
-                
-                // Get percentage of liquid drank for day
-                let percent = model.getTotalPercentByDay(day: day)
-                
-                Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
-                    .font(self.getFontStylePercent())
-                    .bold()
-                    .padding(.bottom, 5)
-                    .accessibilityLabel("\(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))\(totalPercent >= 1.0 ? ", Daily Goal Reached" : "")")
-                    .accessibilitySortPriority(0)
-                
-                // Get the total amount of liquid drank for day
-                let total = model.getTotalAmountByDay(day: day)
-                
-                Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
-                    .font(getFontStyleAmount())
-                    .foregroundColor(Color(.systemGray))
-                    .accessibilityLabel("\(total, specifier: model.getSpecifier(amount: total)) \(model.getAccessibilityUnitLabel())")
-                    .accessibilitySortPriority(1)
-            }
-            .accessibilityElement(children: .combine)
-            .onChange(of: trigger) { newValue in
-                trigger = newValue
-            }
-            
-        // If a week display the weekly percent
-        } else if let week = datePeriod as? Week {
-            
-            VStack {
-                // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
-                if (self.differentiateWithoutColor || model.grayscaleEnabled) && totalPercent >= 1.0 {
-                    Image(systemName: "flag.fill")
-                        .foregroundColor(.primary)
-                        .font(self.getFontStyleAmount())
-                        .padding(.bottom, 0.5)
-                        .accessibilityHidden(true)
-                }
-                
-                // Get percentage of liquid drinked over week
-                let percent = model.getTotalPercentByWeek(week: week)
-                
-                Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
-                    .font(self.getFontStylePercent())
-                    .bold()
-                    .padding(.bottom, 5)
-                    .accessibilityLabel("\(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))\(totalPercent >= 1.0 ? ", Weekly Goal Reached" : "")")
-                    .accessibilitySortPriority(0)
-
-                
-                // Get the amount of liquid drank over week
-                let total = model.getTotalAmountByWeek(week: week)
-                
-                Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
+        VStack {
+            // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
+            if (self.differentiateWithoutColor || model.grayscaleEnabled) && totalPercent >= 1.0 {
+                Image(systemName: "flag.fill")
+                    .foregroundColor(.primary)
                     .font(self.getFontStyleAmount())
-                    .foregroundColor(Color(.systemGray))
-                    .accessibilityLabel("\(total, specifier: model.getSpecifier(amount: total)) \(model.getAccessibilityUnitLabel()) consumed")
-                    .accessibilitySortPriority(1)
-            }
-            .accessibilityElement(children: .combine)
-            .onChange(of: trigger) { newValue in
-                trigger = newValue
+                    .padding(.bottom, 0.5)
+                    .accessibilityHidden(true)
             }
             
+            // Get percentage of liquid drank for day
+            let percent = model.getTotalPercentByDay(day: day)
+            
+            Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
+                .font(self.getFontStylePercent())
+                .bold()
+                .padding(.bottom, 5)
+                .accessibilityLabel("\(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))\(totalPercent >= 1.0 ? ", Daily Goal Reached" : "")")
+                .accessibilitySortPriority(0)
+            
+            // Get the total amount of liquid drank for day
+            let total = model.getTotalAmountByDay(day: day)
+            
+            Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
+                .font(getFontStyleAmount())
+                .foregroundColor(Color(.systemGray))
+                .accessibilityLabel("\(total, specifier: model.getSpecifier(amount: total)) \(model.getAccessibilityUnitLabel())")
+                .accessibilitySortPriority(1)
+        }
+        .accessibilityElement(children: .combine)
+        .onChange(of: trigger) { newValue in
+            trigger = newValue
         }
     }
     

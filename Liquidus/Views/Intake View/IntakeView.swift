@@ -15,16 +15,12 @@ struct IntakeView: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    // Track if looking at by day or by week
-    @State var selectedTimePeriod = TimePeriod.daily
-    
     // Are the sheet views up
     @State var isAddDrinkViewShowing = false
     @State var isCalendarViewShowing = false
     
-    // Current day/week selected
+    // Current day selected
     @State var selectedDay = Day()
-    @State var selectedWeek = Week()
         
     @State var hiddenTrigger = false
     
@@ -34,7 +30,6 @@ struct IntakeView: View {
     @State var currentDayWeekButtonID = UUID()
     
     var updateButtons: Bool
-    var updateTimePicker: TimePeriod?
     
     // Focus
     @AccessibilityFocusState private var isTimePeriodFocused: Bool
@@ -42,39 +37,22 @@ struct IntakeView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                
-                // MARK: - Day/Week Picker
-                IntakeTimePickerView(picker: $selectedTimePeriod)
-                
+
                 ScrollView {
                     // MARK: - Choose Day or Week Data
-                    if selectedTimePeriod == .daily {
-                        IntakeDayDataPicker(selectedDate: $selectedDay, trigger: $hiddenTrigger)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom)
-                            .accessibilityFocused($isTimePeriodFocused)
-                        
-                    } else {
-                        IntakeWeekDataPicker(currentWeek: $selectedWeek, trigger: $hiddenTrigger)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom)
-                            .accessibilityFocused($isTimePeriodFocused)
-                    }
+                    IntakeDataPicker(day: $selectedDay, trigger: $hiddenTrigger)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 5)
+                        .padding(.bottom)
+                        .accessibilityFocused($isTimePeriodFocused)
                     
                     // MARK: - Progress Bar
-                    if selectedTimePeriod == .daily {
-                        IntakeCircularProgressBar(selectedTimePeriod: .daily, datePeriod: selectedDay, trigger: $hiddenTrigger)
-                            .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
-                            .padding(.vertical)
-                    
-                    } else if selectedTimePeriod == .weekly {
-                        IntakeCircularProgressBar(selectedTimePeriod: .weekly, datePeriod: selectedWeek, trigger: $hiddenTrigger)
-                            .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
-                            .padding(.vertical)
-                    }
+                    IntakeCircularProgressBar(day: selectedDay, trigger: $hiddenTrigger)
+                        .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
+                        .padding(.vertical)
                     
                     // MARK: - Drink Type Breakup
-                    IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek, trigger: $hiddenTrigger)
+                    IntakeMultiDrinkBreakup(day: selectedDay, trigger: $hiddenTrigger)
                 }
                 
                 Spacer()
@@ -82,7 +60,6 @@ struct IntakeView: View {
             }
             .onAppear {
                 // Update selectedWeek as soon as view appears
-                selectedWeek = Week(date: selectedDay.data)
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
@@ -98,24 +75,8 @@ struct IntakeView: View {
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
             }
-            .onChange(of: updateTimePicker) { newVal in
-                if newVal != nil {
-                    selectedTimePeriod = newVal!
-                }
-            }
             .onChange(of: selectedDay) { newValue in
-                // Update selectedWeek when selectedDay updates
-                selectedWeek.update(date: newValue.data)
                 hiddenTrigger.toggle()
-            }
-            .onChange(of: selectedTimePeriod) { _ in
-                isTimePeriodFocused = true
-            }
-            .onChange(of: selectedDay) { _ in
-                isTimePeriodFocused = true
-            }
-            .onChange(of: selectedWeek) { _ in
-                isTimePeriodFocused = true
             }
             .sheet(isPresented: $isAddDrinkViewShowing, content: {
                 // Show LogDrinkView
@@ -130,7 +91,7 @@ struct IntakeView: View {
             })
             .sheet(isPresented: $isCalendarViewShowing, content: {
                 // Show CalendarView
-                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay, selectedWeek: $selectedWeek, selectedPeriod: selectedTimePeriod, trigger: $hiddenTrigger)
+                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay,trigger: $hiddenTrigger)
                     .environmentObject(model)
                     .onDisappear {
                         // Updates ids so buttons are tapable
@@ -160,7 +121,7 @@ struct IntakeView: View {
                         Image(systemName: "calendar")
                     }
                     .id(self.calendarButtonID)
-                    .accessibilityLabel("Change selected \(selectedTimePeriod == .daily ? "date" : "week")")
+                    .accessibilityLabel("Change selected date")
                 }
                 
                 // Show Today / This Week Button
@@ -169,21 +130,21 @@ struct IntakeView: View {
                         selectedDay = Day()
                         hiddenTrigger.toggle()
                     } label: {
-                        Text(selectedTimePeriod == .daily ? "Today" : "This Week")
-                            .accessibilityHint("Show data from \(selectedTimePeriod == .daily ? "today" : "this week")")
+                        Text("Today")
+                            .accessibilityHint("Show data for today")
                     }
                     .id(self.currentDayWeekButtonID)
-                    .accessibilityHint("Show data from today or this week")
+                    .accessibilityHint("Show data from today")
                 }
             }
-            .accessibilityAction(named: "Today / This Week") {
+            .accessibilityAction(named: "Today") {
                 selectedDay = Day()
                 hiddenTrigger.toggle()
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
             }
-            .accessibilityAction(named: "Change Date / Week") {
+            .accessibilityAction(named: "Change Date") {
                 isCalendarViewShowing = true
                 hiddenTrigger.toggle()
                 addDrinkButtonID = UUID()
@@ -198,12 +159,6 @@ struct IntakeView: View {
             }
 
         }
-        .accessibilityAction(named: "View by Day") {
-            selectedTimePeriod = .daily
-        }
-        .accessibilityAction(named: "View By Week") {
-            selectedTimePeriod = .weekly
-        }
     }
     
     /**
@@ -212,8 +167,7 @@ struct IntakeView: View {
      */
     private func makeDonation(timePeriod: TimePeriod) {
         let intent = ViewIntakeIntent()
-        intent.timePeriod = timePeriod == .daily ? .day : .week
-        intent.suggestedInvocationPhrase = "View \(timePeriod == .daily ? "Daily" : "Weekly") Intake"
+        intent.suggestedInvocationPhrase = "View Daily Intake"
         
         let interaction = INInteraction(intent: intent, response: nil)
         
@@ -231,7 +185,7 @@ struct IntakeView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        IntakeView(updateButtons: false, updateTimePicker: nil)
+        IntakeView(updateButtons: false)
             .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }
