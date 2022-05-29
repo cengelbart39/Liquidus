@@ -1,6 +1,6 @@
 //
 //  TabBar.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //
@@ -17,7 +17,7 @@ struct TabBar: View {
     @State var isLogDrinkViewShowing = false
     
     @State var updateButtons = false
-    @State var timePeriod = Constants.TimePeriod.daily
+    @State var timePeriod = TimePeriod.daily
     
     var body: some View {
         
@@ -100,11 +100,13 @@ struct TabBar: View {
         .navigationBarHidden(true)
     }
     
+    /**
+     Checks if the Water DrinkType is enabled
+     - Returns: True if enabled; False if not
+     */
     func waterEnabled() -> Bool {
-        if let water = model.drinkData.drinkTypes.filter({ $0.name == Constants.waterKey}).first {
-            
+        if let water = model.drinkData.drinkTypes.first {
             return water.enabled
-            
         }
         
         return false

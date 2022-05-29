@@ -15,7 +15,7 @@ struct TrendsDetailChartView: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    var timePeriod: Constants.TimePeriod
+    var timePeriod: TimePeriod
     var type: DrinkType
     var dataItems: [DataItem]
 
@@ -64,6 +64,7 @@ struct TrendsDetailChartView: View {
                             .frame(width: 1.5)
                             .padding(.bottom, isWidget ? 0 : 20)
                     }
+                    .padding(.bottom, isWidget ? 0 : 20)
                     
                     // MARK: Horizontal Axis Lines
                     VStack {
@@ -97,7 +98,12 @@ struct TrendsDetailChartView: View {
                         HStack(spacing: 0) {
                             ForEach(dataItems) { item in
                                 
-                                TrendsDetailChartBarView(item: item, value: normalizedValue(item: item, maxValue: self.getAxisMaxValue(maxValue: maxValue)), type: type, isWidget: isWidget)
+                                TrendsDetailChartBarView(
+                                    item: item,
+                                    value: normalizedValue(item: item, maxValue: self.getAxisMaxValue(maxValue: maxValue)),
+                                    type: type,
+                                    isWidget: isWidget
+                                )
                                     .accessibilityChartDescriptor(self)
                                     .opacity(touchLocation == -1 ? 1 : (touchLocation == dataItems.firstIndex(of: item) ? 1 : 0.7))
                                     .onTapGesture {
@@ -120,7 +126,7 @@ struct TrendsDetailChartView: View {
                             HStack {
                                 ForEach(verticalAxisText, id: \.self) { text in
                                     
-                                    Text(timePeriod != .yearly ? text : text[0])
+                                    Text(text)
                                         .foregroundColor(Color(.systemGray))
                                         .font(.caption)
                                         .dynamicTypeSize(.large)
@@ -170,7 +176,11 @@ struct TrendsDetailChartView: View {
     }
     
     /**
-     For a data item and max value, divide the data item's total amount by the max value and return this value. When a data item has no amount, return 0.
+     Normalize the total amount of a drink consumed in a `DataItem` relative to the maximum value of a of the amount of a drink consumed for `self.dataItems`
+     - Parameters:
+        - item: A `DataItem` to get a normalized value for
+        - maxValue: The max value of the amount of a drink consumed for `self.dataItems`
+     - Returns: A normalized value; 0 is always returned if `maxValue` is 0
      */
     func normalizedValue(item: DataItem, maxValue: Double) -> Double {
         // If max zero isn't zero divide
@@ -183,6 +193,11 @@ struct TrendsDetailChartView: View {
         }
     }
     
+    /**
+     Get the maximum value for the vertical axis scale
+     - Parameter maxValue: The max value of the amount of a drink consumed for `self.dataItems`
+     - Returns: The maximum value on the vertical axis scale
+     */
     private func getAxisMaxValue(maxValue: Double) -> Double {
         var newAmount = maxValue
         while Int(ceil(newAmount)) % 3 != 0 {

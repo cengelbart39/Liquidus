@@ -10,7 +10,7 @@ import SwiftUI
 struct TrendsDetailTimePickerView: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     
-    @Binding var binding: Constants.TimePeriod
+    @Binding var binding: TimePeriod
     
     @State var hash = 0
     @Binding var touchLocation: Int
@@ -20,23 +20,23 @@ struct TrendsDetailTimePickerView: View {
         Picker("Select Time Period", selection: $hash) {
             Text("D")
                 .accessibilityLabel("Daily")
-                .tag(Constants.TimePeriod.daily.hashValue)
+                .tag(TimePeriod.daily.hashValue)
             
             Text("W")
                 .accessibilityLabel("Weekly")
-                .tag(Constants.TimePeriod.weekly.hashValue)
+                .tag(TimePeriod.weekly.hashValue)
             
             Text("M")
                 .accessibilityLabel("Monthly")
-                .tag(Constants.TimePeriod.monthly.hashValue)
+                .tag(TimePeriod.monthly.hashValue)
             
             Text("6M")
                 .accessibilityLabel("Half Yearly")
-                .tag(Constants.TimePeriod.halfYearly.hashValue)
+                .tag(TimePeriod.halfYearly.hashValue)
             
             Text("Y")
                 .accessibilityLabel("Yearly")
-                .tag(Constants.TimePeriod.yearly.hashValue)
+                .tag(TimePeriod.yearly.hashValue)
         }
         .pickerStyle(SegmentedPickerStyle())
         .dynamicTypeSize(.large)
@@ -48,29 +48,29 @@ struct TrendsDetailTimePickerView: View {
         .onChange(of: hash, perform: { newValue in
             if reduceMotion {
                 touchLocation = -1
-                if newValue == Constants.TimePeriod.daily.hashValue {
+                if newValue == TimePeriod.daily.hashValue {
                     binding = .daily
-                } else if newValue == Constants.TimePeriod.weekly.hashValue {
+                } else if newValue == TimePeriod.weekly.hashValue {
                     binding = .weekly
-                } else if newValue == Constants.TimePeriod.monthly.hashValue {
+                } else if newValue == TimePeriod.monthly.hashValue {
                     binding = .monthly
-                } else if newValue == Constants.TimePeriod.halfYearly.hashValue {
+                } else if newValue == TimePeriod.halfYearly.hashValue {
                     binding = .halfYearly
-                } else if newValue == Constants.TimePeriod.yearly.hashValue {
+                } else if newValue == TimePeriod.yearly.hashValue {
                     binding = .yearly
                 }
             } else {
                 withAnimation(.spring()) {
                     touchLocation = -1
-                    if newValue == Constants.TimePeriod.daily.hashValue {
+                    if newValue == TimePeriod.daily.hashValue {
                         binding = .daily
-                    } else if newValue == Constants.TimePeriod.weekly.hashValue {
+                    } else if newValue == TimePeriod.weekly.hashValue {
                         binding = .weekly
-                    } else if newValue == Constants.TimePeriod.monthly.hashValue {
+                    } else if newValue == TimePeriod.monthly.hashValue {
                         binding = .monthly
-                    } else if newValue == Constants.TimePeriod.halfYearly.hashValue {
+                    } else if newValue == TimePeriod.halfYearly.hashValue {
                         binding = .halfYearly
-                    } else if newValue == Constants.TimePeriod.yearly.hashValue {
+                    } else if newValue == TimePeriod.yearly.hashValue {
                         binding = .yearly
                     }
                 }

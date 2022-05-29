@@ -164,16 +164,15 @@ extension TrendsDetailChartView: AXChartDescriptorRepresentable {
             if let startDate = Calendar.current.date(byAdding: .month, value: monthOffset, to: .now) {
                 
                 // Get first element
-                if let first = model.getMonth(day: startDate).first {
+                let first = Month(date: startDate).firstDay()
                     
-                    // If all data is selected
-                    if type.name == Constants.totalKey {
-                        return NSAttributedString(string: "Data representing your data on \(formatter.string(from: first))")
-                        
-                    // If a specific drink type is selected
-                    } else {
-                        return NSAttributedString(string: "Data representing your \(type) data on \(formatter.string(from: first))")
-                    }
+                // If all data is selected
+                if type.name == Constants.totalKey {
+                    return NSAttributedString(string: "Data representing your data on \(formatter.string(from: first))")
+                    
+                // If a specific drink type is selected
+                } else {
+                    return NSAttributedString(string: "Data representing your \(type) data on \(formatter.string(from: first))")
                 }
             }
             

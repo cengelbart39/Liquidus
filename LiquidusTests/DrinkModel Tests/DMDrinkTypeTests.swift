@@ -35,7 +35,7 @@ class DMDrinkTypeTests: XCTestCase {
         model.drinkData.drinkTypes.append(newType)
         
         // Generate week
-        let week = model.getWeek(date: .now)
+        let week = Week()
         
         // Get sample drinks
         var sampleDrinks = SampleDrinks.week(week, type: newType)
@@ -95,7 +95,7 @@ class DMDrinkTypeTests: XCTestCase {
     
     func testFilterByDrinkType() {
         // Get the current week
-        let week = model.getWeek(date: .now)
+        let week = Week()
         
         // Add sample drinks to drink store
         model.drinkData.drinks = SampleDrinks.week(week)
@@ -119,7 +119,7 @@ class DMDrinkTypeTests: XCTestCase {
     
     func testGetTypeAmount() {
         // Get current week
-        let week = model.getWeek(date: .now)
+        let week = Week()
         
         // Add sample drinks to data store
         model.drinkData.drinks = SampleDrinks.week(week)
@@ -133,7 +133,7 @@ class DMDrinkTypeTests: XCTestCase {
     
     func testGetTotalAmount() {
         // Add drinks
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
         
         // Test
         XCTAssertEqual(model.getTotalAmount(), 1600.0)
@@ -141,7 +141,7 @@ class DMDrinkTypeTests: XCTestCase {
     
     func testGetTypeAverageNil() {
         // Add the sample drinks
-        model.drinkData.drinks = SampleDrinks.month(model.getMonth(day: .now))
+        model.drinkData.drinks = SampleDrinks.month(Month())
         
         // Get a date for April 1, 2022
         let currentDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!
@@ -161,10 +161,10 @@ class DMDrinkTypeTests: XCTestCase {
         let jan = Calendar.current.date(from: DateComponents(year: 2022, month: 1, day: 1))!
         
         // Get the dates for the whole months
-        let april = model.getMonth(day: apr)
-        let march = model.getMonth(day: mar)
-        let february = model.getMonth(day: feb)
-        let january = model.getMonth(day: jan)
+        let april = Month(date: apr)
+        let march = Month(date: mar)
+        let february = Month(date: feb)
+        let january = Month(date: jan)
         
         // Add sample drinks for all months
         model.drinkData.drinks = SampleDrinks.month(january) + SampleDrinks.month(february) + SampleDrinks.month(march) + SampleDrinks.month(april)
@@ -176,7 +176,7 @@ class DMDrinkTypeTests: XCTestCase {
         XCTAssertNotNil(test)
         
         // Assert test returns 142
-        XCTAssertEqual(test!, 142)
+        XCTAssertEqual(test!, 140)
     }
     
     func testSaveDrinkType() {

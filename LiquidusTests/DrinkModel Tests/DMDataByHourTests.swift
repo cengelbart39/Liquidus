@@ -22,22 +22,22 @@ class DMDataByHourTests: XCTestCase {
 
     func testFilterByHour() {
         // Get testHour
-        let testHour = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: .now)!
+        let testHour = Hour(date: Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: .now)!)
         
         // Test that the function will return an empty array
         XCTAssertTrue(model.filterDataByHour(hour: testHour).isEmpty)
         
         // Add drinks for yesterday
-        model.drinkData.drinks = SampleDrinks.day(Calendar.current.date(byAdding: .day, value: -1, to: .now)!)
+        model.drinkData.drinks = SampleDrinks.day(Day(date: Calendar.current.date(byAdding: .day, value: -1, to: .now)!))
         
         // Test that the function will return an empty array
         XCTAssertTrue(model.filterDataByHour(hour: testHour).isEmpty)
         
         // Add drinks for today
-        model.drinkData.drinks = SampleDrinks.day(.now)
+        model.drinkData.drinks = SampleDrinks.day(Day())
         
         // Create test drink
-        let testDrink = Drink(type: model.drinkData.drinkTypes[0], amount: 600, date: testHour)
+        let testDrink = Drink(type: model.drinkData.drinkTypes[0], amount: 600, date: testHour.data)
         
         // Set expected drink
         let expected1 = [testDrink]
@@ -57,22 +57,22 @@ class DMDataByHourTests: XCTestCase {
     
     func testFilterByHourAndType() {
         // Get testHour
-        let testHour = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: .now)!
+        let testHour = Hour(date: Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: .now)!)
         
         // Test that the function will return an empty array
         XCTAssertTrue(model.filterDataByHourAndType(hour: testHour, type: model.drinkData.drinkTypes[0]).isEmpty)
         
         // Add drinks for yesterday
-        model.drinkData.drinks = SampleDrinks.day(Calendar.current.date(byAdding: .day, value: -1, to: .now)!)
+        model.drinkData.drinks = SampleDrinks.day(Day(date: Calendar.current.date(byAdding: .day, value: -1, to: .now)!))
         
         // Test that the function will return an empty array
         XCTAssertTrue(model.filterDataByHourAndType(hour: testHour, type: model.drinkData.drinkTypes[0]).isEmpty)
         
         // Add drinks for today
-        model.drinkData.drinks = SampleDrinks.day(.now)
+        model.drinkData.drinks = SampleDrinks.day(Day())
         
         // Create test drink
-        let testDrink = Drink(type: model.drinkData.drinkTypes[0], amount: 600, date: testHour)
+        let testDrink = Drink(type: model.drinkData.drinkTypes[0], amount: 600, date: testHour.data)
         
         // Set expected drink
         let expected1 = [testDrink]
@@ -98,36 +98,36 @@ class DMDataByHourTests: XCTestCase {
 
     func testGetTypeAmountByHour() {
         // Get testHour
-        let testHour = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: .now)!
+        let testHour = Hour(date: Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: .now)!)
         
         // Test that 0.0 is returned
-        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], time: testHour), 0.0)
+        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], hour: testHour), 0.0)
         
         // Add drinks for last week
-        model.drinkData.drinks = SampleDrinks.day(Calendar.current.date(byAdding: .day, value: -1, to: .now)!)
+        model.drinkData.drinks = SampleDrinks.day(Day(date: Calendar.current.date(byAdding: .day, value: -1, to: .now)!))
         
         // Test that 0.0 is returned
-        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], time: testHour), 0.0)
+        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], hour: testHour), 0.0)
         
         // Add drinks for today
-        model.drinkData.drinks = SampleDrinks.day(.now)
+        model.drinkData.drinks = SampleDrinks.day(Day())
         
         // Create test drink
-        let testDrink = Drink(type: model.drinkData.drinkTypes[0], amount: 600, date: testHour)
+        let testDrink = Drink(type: model.drinkData.drinkTypes[0], amount: 600, date: testHour.data)
         
         // Test that the amount returned is 600.0
-        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], time: testHour), 600.0)
+        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], hour: testHour), 600.0)
         
         // Test that the amount returned is 0.0
-        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[1], time: testHour), 0.0)
+        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[1], hour: testHour), 0.0)
         
         model.drinkData.drinks.append(testDrink)
         
         // Test that the amount returned is 1200.0
-        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], time: testHour), 1200.0)
+        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[0], hour: testHour), 1200.0)
         
         // Test that the amount returned is 0.0
-        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[1], time: testHour), 0.0)
+        XCTAssertEqual(model.getTypeAmountByHour(type: model.drinkData.drinkTypes[1], hour: testHour), 0.0)
     }
 
 }

@@ -64,7 +64,8 @@ struct TrendsSymbolView: View {
     }
     
     /**
-     Based on Dynamic Type Size, return one of the pre-defined @ScaledMetric properties
+     Based on Dynamic Type Size, return one of the pre-defined `@ScaledMetric` properties
+     - Returns:The appropriate symbol size
      */
     func getSymbolSize() -> Double {
         if !dynamicType.isAccessibilitySize {

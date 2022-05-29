@@ -1,6 +1,6 @@
 //
 //  CodableColor.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 10/3/21.
 //
@@ -10,9 +10,17 @@
 import Foundation
 import SwiftUI
 
+/**
+ Represents a `Color` that can be saved along other information in `DrinkData`
+ */
 public struct CodableColor: Hashable {
+    /// The`UIColor` representative
     var color: UIColor
     
+    /**
+     Returns the stored `UIColor` as a `Color`
+     - Returns: A `UIColor` converted to a `Color`
+     */
     func getColor() -> Color {
         return Color(self.color)
     }
@@ -20,6 +28,10 @@ public struct CodableColor: Hashable {
 
 extension CodableColor: Encodable {
     
+    /**
+     Encodes a `CodableColor
+     - Parameter encoder: An `Encoder` to encode a `CodableColor`
+     */
     public func encode(to encoder: Encoder) throws {
         let nsCoder = NSKeyedArchiver(requiringSecureCoding: true)
         color.encode(with: nsCoder)
@@ -30,6 +42,11 @@ extension CodableColor: Encodable {
 
 extension CodableColor: Decodable {
     
+    /**
+     Decodes a `CodableColor`
+     - Parameter decoder: A `Decoder` to decode `Data` to a `CodableColor`
+     - Throws: `UnexpectedlyFoundNilError` if can't code a `UIColor`
+     */
     public init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
         let decodedData = try container.decode(Data.self)
@@ -48,6 +65,10 @@ extension CodableColor: Decodable {
 
 public extension UIColor {
     
+    /**
+     Converts a `UIColor` to a `CodableColor`
+     - Returns: A converted `UIColor`
+     */
     func codable() -> CodableColor {
         return CodableColor(color: self)
     }

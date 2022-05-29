@@ -27,7 +27,7 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0...3 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: 3*hourOffset, to: currentDate)!
-            let relevance = TimelineEntryRelevance(score: getScore(selectedTimePeriod: selectedTimePeriod, date: entryDate))
+            let relevance = TimelineEntryRelevance(score: getScore(timePeriod: selectedTimePeriod, date: entryDate))
             let entry = SimpleEntry(date: entryDate, relevance: relevance, timePeriod: selectedTimePeriod)
             entries.append(entry)
         }
@@ -36,7 +36,12 @@ struct Provider: IntentTimelineProvider {
         completion(timeline)
     }
     
-    private func timePeriod(for configuration: ViewIntakeIntent) -> Constants.TimePeriod {
+    /**
+     Convert the `timePeriod` in `ViewIntakeIntent` to `TimePeriod`
+     - Parameter configuration: A `ViewIntakeIntent`
+     - Returns: `TimePeriod` equivalent with `configuration`
+     */
+    private func timePeriod(for configuration: ViewIntakeIntent) -> TimePeriod {
         switch configuration.timePeriod {
         case .day:
             return .daily
@@ -47,24 +52,33 @@ struct Provider: IntentTimelineProvider {
         }
     }
     
-    private func getScore(selectedTimePeriod: Constants.TimePeriod, date: Date) -> Float {
+    /**
+     Get the Relevance Score for the Widget
+     - Parameters:
+        - timePeriod: The selected time period
+        - date: The current day
+     - Returns: A Score relative to the user's goal and the amount consumed on `date`
+     - Note: `0` is always returned if data cannot be fetched
+     */
+    private func getScore(timePeriod: TimePeriod, date: Date) -> Float {
         if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
             if let data = userDefaults.data(forKey: Constants.savedKey) {
                 if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
-                    if selectedTimePeriod == .daily {
+                    if timePeriod == .daily {
                         let goal = decoded.dailyGoal
                         
-                        let amount = ProviderLogic.getTotalAmountByDay(date: date, data: decoded)
+                        let amount = IntentLogic.getTotalAmountByDay(date: date, data: decoded)
                         
                         if amount > goal {
                             return Float(goal) + Float(amount)
                         } else {
                             return Float(goal) - Float(amount)
                         }
+                        
                     } else {
                         let goal = decoded.dailyGoal*7
                         
-                        let amount = ProviderLogic.getTotalAmountByWeek(week: ProviderLogic.getDaysInWeek(date: date), data: decoded)
+                        let amount = IntentLogic.getTotalAmountByWeek(week: IntentLogic.getDaysInWeek(date: date), data: decoded)
                         
                         if amount > goal {
                             return Float(goal) + Float(amount)

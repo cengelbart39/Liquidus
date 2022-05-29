@@ -23,13 +23,13 @@ class DMProgressBarTests: XCTestCase {
 
     func testGetProgressPercent() {
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for that week
         model.drinkData.drinks = SampleDrinks.week(testWeek)
         
         // Create a date for April 3, 2022
-        let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!
+        let testDate = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!)
         
         // Set expected1 result
         let expected1 = 100.0/2000.0
@@ -70,7 +70,7 @@ class DMProgressBarTests: XCTestCase {
 
     func testGetHighlightColor() {
         // Get the week of April 8, 2022
-        let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDate = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Set grayscale property to true
         model.grayscaleEnabled = true
@@ -79,7 +79,7 @@ class DMProgressBarTests: XCTestCase {
         XCTAssertEqual(model.getHighlightColor(type: model.drinkData.drinkTypes.first!, dates: testDate), Color.primary)
         
         // Add a drink with an amount greater than the daily goal (2,000)
-        model.drinkData.drinks.append(Drink(type: model.drinkData.drinkTypes.first!, amount: 2100, date: testDate))
+        model.drinkData.drinks.append(Drink(type: model.drinkData.drinkTypes.first!, amount: 2100, date: testDate.data))
         
         // Assert the method returns the "GoalGreen" color
         XCTAssertEqual(model.getHighlightColor(type: model.drinkData.drinkTypes.first!, dates: testDate), Color("GoalGreen"))
@@ -89,7 +89,7 @@ class DMProgressBarTests: XCTestCase {
         model.grayscaleEnabled = false
         
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: testDate)
+        let testWeek = Week(date: testDate.data)
         
         // Add sample drinks for that week
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -107,7 +107,7 @@ class DMProgressBarTests: XCTestCase {
         XCTAssertEqual(model.getHighlightColor(type: model.drinkData.drinkTypes[3], dates: testWeek), Color(.systemOrange))
         
         // Add a drink with an amount greater than the daily goal (2,000)
-        model.drinkData.drinks.append(Drink(type: model.drinkData.drinkTypes.first!, amount: 2100, date: testDate))
+        model.drinkData.drinks.append(Drink(type: model.drinkData.drinkTypes.first!, amount: 2100, date: testDate.data))
 
         // Assert the color returned for Water is "GoalGreen"
         XCTAssertEqual(model.getHighlightColor(type: model.drinkData.drinkTypes[0], dates: testDate), Color("GoalGreen"))

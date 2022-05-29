@@ -17,17 +17,19 @@ struct TrendsDetailView: View {
     var type: DrinkType
     
     // MARK: - State Variables
-    @State var selectedTimePeriod = Constants.TimePeriod.daily
+    @State var selectedTimePeriod = TimePeriod.daily
     
-    @State var selectedDay = Date()
-    @State var selectedWeek = [Date]()
-    @State var selectedMonth = [Date]()
-    @State var selectedHalfYear = [[Date]]()
-    @State var selectedYear = [[Date]]()
+    @State var selectedDay = Day()
+    @State var selectedWeek = Week()
+    @State var selectedMonth = Month()
+    @State var selectedHalfYear = HalfYear()
+    @State var selectedYear = Year()
         
     @State var touchLocation = -1
     @State var halfYearOffset = 0
     @State var monthOffset = 0
+    
+    @State var hiddenTrigger = false
 
     // MARK: - Body
     var body: some View {
@@ -40,10 +42,11 @@ struct TrendsDetailView: View {
                     
                     let dataItems = self.getDataItems()
 
-                    let amount = touchLocation == -1 ? model.getOverallAmount(type: type, timePeriod: selectedTimePeriod, dates: self.getDates()) : self.getIndividualAmount(dataItems: dataItems)
+                    let amount = touchLocation == -1 ? model.getOverallAmount(type: type, dates: self.getDates()) : self.getIndividualAmount(dataItems: dataItems)
                     
-                    TrendsDetailInfoView(dataItems: dataItems, amount: amount, amountTypeText: self.getAmontTypeText(), amountText: self.getAmountText(amount: amount, dataItems: dataItems), timeRangeText: self.getTimeRangeText())
+                    TrendsDetailInfoView(dataItems: dataItems, amount: amount, amountTypeText: self.getAmontTypeText(), amountText: self.getAmountText(amount: amount, dataItems: dataItems), timeRangeText: self.getTimeRangeText(), trigger: $hiddenTrigger)
                         .accessibilityFocused($isHeaderFocused)
+                        .opacity(hiddenTrigger ? 1 : 1)
                     
                     let maxValue = model.getMaxValue(dataItems: dataItems, timePeriod: selectedTimePeriod)
                     
@@ -56,15 +59,15 @@ struct TrendsDetailView: View {
                             amount: amount,
                             maxValue: maxValue,
                             verticalAxisText: model.verticalAxisText(dataItems: dataItems, timePeriod: selectedTimePeriod),
-                            horizontalAxisText: model.horizontalAxisText(dataItems: dataItems, type: type, timePeriod: selectedTimePeriod, dates: self.getDates()),
-                            chartAccessibilityLabel: model.getChartAccessibilityLabel(timePeriod: selectedTimePeriod, type: type, dates: self.getDates()),
+                            horizontalAxisText: model.horizontalAxisText(type: type, dates: self.getDates()),
+                            chartAccessibilityLabel: model.getChartAccessibilityLabel(type: type, dates: self.getDates()),
                             chartSpacerWidth: model.chartSpacerMaxWidth(timePeriod: selectedTimePeriod, isWidget: false),
                             isWidget: false,
                             isYear: selectedTimePeriod == .yearly ? true : false,
                             halfYearOffset: $halfYearOffset,
                             monthOffset: $monthOffset,
                             touchLocation: $touchLocation)
-                            .accessibilityLabel(model.getChartAccessibilityLabel(timePeriod: selectedTimePeriod, type: type, dates: self.getDates()))
+                            .accessibilityLabel(model.getChartAccessibilityLabel(type: type, dates: self.getDates()))
                             .simultaneousGesture(self.drag)
                             .frame(height: geo.size.height/1.75)
                             .padding(.horizontal)
@@ -103,10 +106,10 @@ struct TrendsDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             isHeaderFocused = false
-            selectedWeek = model.getWeek(date: selectedDay)
-            selectedMonth = model.getMonth(day: selectedDay)
-            selectedHalfYear = model.getHalfYear(date: selectedDay)
-            selectedYear = model.getYear(date: selectedDay)
+            selectedWeek = Week(date: selectedDay.data)
+            selectedMonth = Month(date: selectedDay.data)
+            selectedHalfYear = HalfYear(date: selectedDay.data)
+            selectedYear = Year(date: selectedDay.data)
         }
         .onChange(of: selectedTimePeriod) { _ in
             touchLocation = -1
@@ -117,15 +120,23 @@ struct TrendsDetailView: View {
         }
     }
     
+    /**
+     Returns the appropriate `selected___` for the `selectedTimePeriod`
+     - Returns: `selectedDay`, `selectedWeek`, `selectedMonth`, `selectedHalfYear`, `selectedYear` or `nil`
+     */
     func getDates() -> Any? {
         if selectedTimePeriod == .daily {
             return selectedDay
+
         } else if selectedTimePeriod == .weekly {
             return selectedWeek
+
         } else if selectedTimePeriod == .monthly {
             return selectedMonth
+
         } else if selectedTimePeriod == .halfYearly {
             return selectedHalfYear
+
         } else if selectedTimePeriod == .yearly {
             return selectedYear
         }
@@ -135,7 +146,8 @@ struct TrendsDetailView: View {
     
     // MARK: - Header Text Methods
     /**
-     Returns "TOTAL",  "AVERAGE", or "DAILY AVERAGE" depending on selectedTimePeriod and touchLocation
+     Returns "TOTAL",  "AVERAGE", or "DAILY AVERAGE" depending on `selectedTimePeriod` and `touchLocation`
+     - Returns: "TOTAL", "AVERAGE", or "DAILY AVERAGE"
      */
     private func getAmontTypeText() -> String {
         // If data is day or (week and no selected bar) or (month and no selected bar) return "TOTAL"
@@ -152,7 +164,11 @@ struct TrendsDetailView: View {
         }
     }
     /**
-     Takes in an amount, Double, and dataItems, [DataItem], and returns an amount or average
+     Takes in an amount, `Double`, and `dataItems`, a `[DataItem]`, and returns an amount or average
+     - Parameter amount: The Total Amount
+     - Parameter dataItems: Used to calculate the average and daily average
+     - Returns: The appropriate Total, Average, or Daily Average Amount
+     - Requires: getAmontTypeText() to return "TOTAL", "AVERAGE", OR "DAILY AVERAGE" to return a non-zero number
      */
     private func getAmountText(amount: Double, dataItems: [DataItem]) -> Double {
         // Get the header text type
@@ -179,17 +195,32 @@ struct TrendsDetailView: View {
     }
     
     /**
-     Returns a range, in the form of a String, for the displayed or selected data
+     Returns a range, in the form of a `String`, for the displayed or selected data
+     - Returns: A description for the `selectedTimePeriod` based on `touchLocation`
      */
     private func getTimeRangeText() -> String {
         // If no bar is selected return the time period range
         if touchLocation == -1 {
-            return model.timePeriodText(timePeriod: selectedTimePeriod, dates: self.getDates())
+            if selectedTimePeriod == .daily {
+                return selectedDay.description
+            
+            } else if selectedTimePeriod == .weekly {
+                return selectedWeek.description
+                
+            } else if selectedTimePeriod == .monthly {
+                return selectedMonth.description
+                
+            } else if selectedTimePeriod == .halfYearly {
+                return selectedHalfYear.description
+                
+            } else if selectedTimePeriod == .yearly {
+                return selectedYear.description
+            }
 
         } else {
             // If time period is day, return in format of "April 8, 2003, 5 PM"
             if selectedTimePeriod == .daily {
-                return "\(model.timePeriodText(timePeriod: selectedTimePeriod, dates: selectedDay)), \(hourRangeText())"
+                return "\(selectedDay.description), \(hourRangeText())"
                 
             // If week or month return in the format of "April 8, 2003"
             } else if selectedTimePeriod == .weekly || selectedTimePeriod == .monthly {
@@ -211,6 +242,8 @@ struct TrendsDetailView: View {
     
     /**
      Assuming daily data is being shown and a bar is selected, return a hour range (i.e. 12-1 AM) based on touchLocation
+     - Precondition: `touchLocation` ≠ -1
+     - Returns: An hour range
      */
     private func hourRangeText() -> String {
         switch touchLocation {
@@ -268,7 +301,9 @@ struct TrendsDetailView: View {
     }
     
     /**
-     Assuming weekly or monthly data is being shown and a bar is selected,  return a day in the form of "April 8, 2003" as a String
+     Assuming weekly or monthly data is being shown and a bar is selected,  return a day in the form of "April 8, 2003" as a `String`
+     - Precondition: `selectedTimePeriod == .weekly` or `.monthly`
+     - Returns: A formatted `Date` in a `Week` or `Month`
      */
     private func dayRangeText() -> String {
         // Date Formatter
@@ -279,29 +314,36 @@ struct TrendsDetailView: View {
         
         // Return the selected day as a string
         if selectedTimePeriod == .weekly {
-            return formatter.string(from: selectedWeek[touchLocation])
+            return formatter.string(from: selectedWeek.data[touchLocation].data)
+            
         } else if selectedTimePeriod == .monthly {
-            return formatter.string(from: selectedMonth[touchLocation])
+            return formatter.string(from: selectedMonth.data[touchLocation].data)
+            
         }
+        
         return ""
     }
     
     /**
      Assuming half-yearly data is being shown and bar is being selected, return a week range (i.e. "April 6-12, 2003") as a String. Format varies for a week spanning different months and years.
+     - Requires: `touchLocation > -1`
+     - Returns: The description of a `Week` in a `HalfYear`
      */
     private func weekRangeText() -> String {
-        return model.getWeekText(week: selectedHalfYear[touchLocation])
+        return selectedHalfYear.data[touchLocation].description
     }
     
     /**
-     Assuming uearly data is being shown and a bar is selected, return a month range (i.e. "April 2003")
+     Assuming uearly data is being shown and a bar is selected, return a month range
+     - Requires: `touchLocation > -1`
+     - Returns: A String in the format of "April 2003"
      */
     private func monthRangeText() -> String {
-        if let day = selectedYear[touchLocation].first {
+        if let day = selectedYear.data[touchLocation].data.first {
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM y"
             
-            return formatter.string(from: day)
+            return formatter.string(from: day.data)
         }
         
         return ""
@@ -310,10 +352,12 @@ struct TrendsDetailView: View {
     // MARK: - Data Methods
     /**
      Depending on the selected time period, return the data items for the associated selected time range. For example, if daily data is chosen, it returns the Data Items, by hour, for a chosen day.
+     - Returns: An array of `DataItem`s based on `selectedTimePeriod`.
+     - Note: An empty `[DataItem]` is only returned if there is an unrecognized `TimePeriod` case
      */
     func getDataItems() -> [DataItem] {
         if selectedTimePeriod == .daily {
-            return model.getDataItemsForDay(date: selectedDay, type: type)
+            return model.getDataItemsForDay(day: selectedDay, type: type)
             
         } else if selectedTimePeriod == .weekly {
             return model.getDataItemsForWeek(week: selectedWeek, type: type)
@@ -333,22 +377,25 @@ struct TrendsDetailView: View {
     
     /**
      Assuming a bar is selected, return the amount of a drink type consumed over some time period for a given drink type.
+     - Requires: `touchLocation != -1`
+     - Parameter dataItems: An array of `DataItem`s
+     - Returns: The Type Amount for the given selected date period
      */
     private func getIndividualAmount(dataItems: [DataItem]) -> Double {
         if selectedTimePeriod == .daily {
-            return model.getTypeAmountByHour(type: type, time: dataItems[touchLocation].date)
+            return model.getTypeAmountByHour(type: type, hour: Hour(date: dataItems[touchLocation].date))
             
         } else if selectedTimePeriod == .weekly {
-            return model.getTypeAmountByDay(type: type, date: selectedWeek[touchLocation])
+            return model.getTypeAmountByDay(type: type, day: selectedWeek.data[touchLocation])
 
         } else if selectedTimePeriod == .monthly {
-            return model.getTypeAmountByDay(type: type, date: selectedMonth[touchLocation])
+            return model.getTypeAmountByDay(type: type, day: selectedMonth.data[touchLocation])
 
         } else if selectedTimePeriod == .halfYearly {
-            return model.getTypeAmountByWeek(type: type, week: selectedHalfYear[touchLocation])
+            return model.getTypeAmountByWeek(type: type, week: selectedHalfYear.data[touchLocation])
 
         } else if selectedTimePeriod == .yearly {
-            return model.getTypeAmountByMonth(type: type, month: selectedYear[touchLocation])
+            return model.getTypeAmountByMonth(type: type, month: selectedYear.data[touchLocation])
         }
         
         return 0.0
@@ -356,6 +403,8 @@ struct TrendsDetailView: View {
     
     /**
      Assuming half-yearly data is chosen, get the daily average depending on if a bar is selected
+     - Parameter dataItems: `DataItem`s to get a Daily Average for
+     - Precondition: `selectedTimePeriod` is `.halfYearly` or `.yearly` for a non-zero return
      */
     private func getDailyAverage(dataItems: [DataItem]) -> Double {
         var sum = 0.0
@@ -383,14 +432,14 @@ struct TrendsDetailView: View {
                 
                 // Get the count of each week in the half year
                 if selectedTimePeriod == .halfYearly {
-                    for week in selectedHalfYear {
-                        dividend += Double(week.count)
+                    for week in selectedHalfYear.data {
+                        dividend += Double(week.data.count)
                     }
                     
                 // Get the count of each month in the year
                 } else if selectedTimePeriod == .yearly {
-                    for month in selectedYear {
-                        dividend += Double(month.count)
+                    for month in selectedYear.data {
+                        dividend += Double(month.data.count)
                     }
                 }
             
@@ -412,9 +461,9 @@ struct TrendsDetailView: View {
                 
                 // Set dividend to the count of days at the selected bar
                 if selectedTimePeriod == .halfYearly {
-                    dividend = Double(selectedHalfYear[touchLocation].count)
+                    dividend = Double(selectedHalfYear.data[touchLocation].data.count)
                 } else if selectedTimePeriod == .yearly {
-                    dividend = Double(selectedYear[touchLocation].count)
+                    dividend = Double(selectedYear.data[touchLocation].data.count)
                 }
                 
                 return sum/dividend

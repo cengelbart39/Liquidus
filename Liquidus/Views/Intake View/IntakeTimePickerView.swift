@@ -1,6 +1,6 @@
 //
 //  IntakeTimePickerView.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/7/21.
 //
@@ -9,7 +9,7 @@ import SwiftUI
 
 struct IntakeTimePickerView: View {
     
-    @Binding var picker: Constants.TimePeriod
+    @Binding var picker: TimePeriod
     
     @State var hash = 0
     
@@ -17,10 +17,10 @@ struct IntakeTimePickerView: View {
         
         Picker("Select Time Period", selection: $hash) {
             Text(Constants.selectDay)
-                .tag(Constants.TimePeriod.daily.hashValue)
+                .tag(TimePeriod.daily.hashValue)
             
             Text(Constants.selectWeek)
-                .tag(Constants.TimePeriod.weekly.hashValue)
+                .tag(TimePeriod.weekly.hashValue)
         }
         .pickerStyle(SegmentedPickerStyle())
         .padding(.horizontal)
@@ -29,7 +29,7 @@ struct IntakeTimePickerView: View {
             hash = picker.hashValue
         })
         .onChange(of: hash, perform: { newValue in
-            if newValue == Constants.TimePeriod.daily.hashValue {
+            if newValue == TimePeriod.daily.hashValue {
                 picker = .daily
             } else {
                 picker = .weekly

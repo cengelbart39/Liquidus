@@ -75,7 +75,11 @@ struct CustomDrinkTypeView: View {
             }
         }
     }
-            
+    
+    /**
+     Remove a Custom Drink Type when deleted by the user
+     - Parameter offsets: The index in `model.drinkData.drinkTypes` where the to-be-deleted `DrinkType` is stored
+     */
     func deleteCustom(at offsets: IndexSet) {
         // Delete drinks of custom drink type
         model.deleteCustomDrinks(atOffsets: offsets)

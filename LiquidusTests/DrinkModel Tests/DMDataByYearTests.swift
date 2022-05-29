@@ -25,7 +25,7 @@ class DMDataByYearTests: XCTestCase {
         let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
         
         // Fetch the returned year
-        let result = model.getYear(date: testDate)
+        let result = Year(date: testDate)
         
         // Get the expected year
         let expected = self.getExpectedYear()
@@ -34,23 +34,23 @@ class DMDataByYearTests: XCTestCase {
         for i1 in 0..<expected.count {
             
             // Loop through expected[i1]
-            for i2 in 0..<expected[i1].count {
+            for i2 in 0..<expected[i1].data.count {
                 
                 // Assert at the same [i1][i2] the result and expected arrays return the same value
-                XCTAssertTrue(result[i1][i2].compare(expected[i1][i2]) == .orderedSame, "at i1 \(i1), i2 \(i2)")
+                XCTAssertEqual(result.data[i1].data[i2], expected[i1].data[i2], "at i1 \(i1), i2 \(i2)")
             }
         }
     }
     
     func testFilterByYear() {
         // Get 12 months from May 2021 to April 2022
-        let testYear = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testYear = Year(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Assert the method returns an empty array
         XCTAssertEqual(model.filterDataByYear(year: testYear), [])
         
         // Get 12 months from May 2020 to April 2021
-        let lastYear = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2021, month: 4, day: 8))!)
+        let lastYear = Year(date: Calendar.current.date(from: DateComponents(year: 2021, month: 4, day: 8))!)
         
         // Add sample drinks from May 2020 to April 2021
         model.drinkData.drinks = SampleDrinks.year(lastYear)
@@ -75,13 +75,13 @@ class DMDataByYearTests: XCTestCase {
     
     func testFilterByYearAndType() {
         // Get 12 months from May 2021 to April 2022
-        let testYear = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testYear = Year(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Assert the method returns an empty array
         XCTAssertEqual(model.filterDataByYearAndType(type: model.drinkData.drinkTypes.first!, year: testYear), [])
         
         // Get 12 months from May 2020 to April 2021
-        let lastYear = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2021, month: 4, day: 8))!)
+        let lastYear = Year(date: Calendar.current.date(from: DateComponents(year: 2021, month: 4, day: 8))!)
         
         // Add sample drinks from May 2020 to April 2021
         model.drinkData.drinks = SampleDrinks.year(lastYear)
@@ -106,13 +106,13 @@ class DMDataByYearTests: XCTestCase {
     
     func testGetTypeAmountByYear() {
         // Get 12 months from May 2021 to April 2022
-        let testYear = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testYear = Year(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Assert the method returns 0.0
         XCTAssertEqual(model.getTypeAmountByYear(type: model.drinkData.drinkTypes.first!, year: testYear), 0.0)
         
         // Get 12 months from May 2020 to April 2021
-        let lastYear = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2021, month: 4, day: 8))!)
+        let lastYear = Year(date: Calendar.current.date(from: DateComponents(year: 2021, month: 4, day: 8))!)
         
         // Add sample drinks from May 2020 to April 2021
         model.drinkData.drinks = SampleDrinks.year(lastYear)
@@ -133,31 +133,31 @@ class DMDataByYearTests: XCTestCase {
     /**
      Returns a 2D array with the months in May 2021 to April 2022
      */
-    private func getExpectedYear() -> [[Date]] {
+    private func getExpectedYear() -> [Month] {
         // Get the days in the following months
-        let may21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 5, day: 1))!)
+        let may21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 5, day: 1))!)
         
-        let jun21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 6, day: 1))!)
+        let jun21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 6, day: 1))!)
         
-        let jul21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 7, day: 1))!)
+        let jul21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 7, day: 1))!)
         
-        let aug21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 8, day: 1))!)
+        let aug21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 8, day: 1))!)
         
-        let sep21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 9, day: 1))!)
+        let sep21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 9, day: 1))!)
         
-        let oct21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 10, day: 1))!)
+        let oct21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 10, day: 1))!)
         
-        let nov21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 11, day: 1))!)
+        let nov21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 11, day: 1))!)
         
-        let dec21 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2021, month: 12, day: 1))!)
+        let dec21 = Month(date: Calendar.current.date(from: DateComponents(year: 2021, month: 12, day: 1))!)
         
-        let jan22 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 1, day: 1))!)
+        let jan22 = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 1, day: 1))!)
         
-        let feb22 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 2, day: 1))!)
+        let feb22 = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 2, day: 1))!)
         
-        let mar22 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
+        let mar22 = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
         
-        let apr22 = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!)
+        let apr22 = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!)
         
         return [may21, jun21, jul21, aug21, sep21, oct21, nov21, dec21, jan22, feb22, mar22, apr22]
     }
@@ -167,7 +167,7 @@ class DMDataByYearTests: XCTestCase {
      */
     private func getExpectedDrinks() -> [Drink] {
         // Get 12 months from May 2021 to April 2022
-        let year = model.getYear(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let year = Year(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Create an empty drink array
         var drinks = [Drink]()
@@ -180,13 +180,13 @@ class DMDataByYearTests: XCTestCase {
         var amountIndex = 0
         
         // Loop through months in year
-        for month in year {
+        for month in year.data {
             
             // Loop through day in month
-            for day in month {
+            for day in month.data {
                 
                 // Create a drink using the values of typeIndex, amountIndex, and day
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
+                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
                 
                 // Increment indicies
                 typeIndex += 1

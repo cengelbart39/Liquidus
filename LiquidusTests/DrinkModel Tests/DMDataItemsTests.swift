@@ -22,13 +22,13 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForDayTotal() {
         // Add sample drinks for today
-        model.drinkData.drinks = SampleDrinks.day(.now)
+        model.drinkData.drinks = SampleDrinks.day(Day())
         
         // Get the expected result
         let expected = self.DataItemsDayExpected(type: Constants.totalType)
         
         // Fetch the function return
-        let result = model.getDataItemsForDay(date: .now, type: Constants.totalType)
+        let result = model.getDataItemsForDay(day: Day(), type: Constants.totalType)
         
         // Assert at the same index the test and expected arrays return the same value
         for index in 0..<expected.count {
@@ -38,13 +38,13 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForDaySpecific() {
         // Add sample drinks for today
-        model.drinkData.drinks = SampleDrinks.day(.now)
+        model.drinkData.drinks = SampleDrinks.day(Day())
         
         // Get the expected result
         let expected = self.DataItemsDayExpected(type: model.drinkData.drinkTypes[0])
         
         // Fetch the function return
-        let result = model.getDataItemsForDay(date: .now, type: model.drinkData.drinkTypes[0])
+        let result = model.getDataItemsForDay(day: Day(), type: model.drinkData.drinkTypes[0])
         
         // Assert at the same index the test and expected arrays return the same value
         for index in 0..<expected.count {
@@ -144,13 +144,13 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForWeekTotal() {
         // Get sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
         
         // Get expected result
         let expected = self.DataItemsWeekExpected(type: Constants.totalType)
         
         // Get method return
-        let result = model.getDataItemsForWeek(week: model.getWeek(date: .now), type: Constants.totalType)
+        let result = model.getDataItemsForWeek(week: Week(), type: Constants.totalType)
         
         // Assert at the same index the test and expected arrays return the same value
         for index in 0..<expected.count {
@@ -160,13 +160,13 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForWeekSpecific() {
         // Set sample drinks for current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
         
         // Get expected result
         let expected = self.DataItemsWeekExpected(type: model.drinkData.drinkTypes[0])
         
         // Get method return
-        let result = model.getDataItemsForWeek(week: model.getWeek(date: .now), type: model.drinkData.drinkTypes[0])
+        let result = model.getDataItemsForWeek(week: Week(), type: model.drinkData.drinkTypes[0])
         
         // Assert at the same index the test and expected arrays return the same value
         for index in 0..<expected.count {
@@ -185,27 +185,27 @@ class DMDataItemsTests: XCTestCase {
         let types = model.drinkData.drinkTypes
         
         // Get current week
-        let week = model.getWeek(date: .now)
+        let week = Week()
         
         // Loop through the indices of week
-        for index in 0..<week.count {
+        for index in 0..<week.data.count {
             
             // Check for Total Drink Type
             if type == Constants.totalType {
                 
                 // Append a DataItem based on the current index
-                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.week[index], date: week[index])], type: type, date: week[index]))
+                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index].data)], type: type, date: week.data[index].data))
             
             } else {
                 // Check to filter out any drink type than Water
                 if index % 4 == 0 {
                     
                     // Append a DataItem based on the current index (always Water)
-                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.week[index], date: week[index])], type: type, date: week[index]))
+                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.week[index], date: week.data[index].data)], type: type, date: week.data[index].data))
 
                 // If false the append a DataItem with the drink parameter set to nil
                 } else {
-                    items.append(DataItem(type: type, date: week[index]))
+                    items.append(DataItem(type: type, date: week.data[index].data))
 
                 }
             }
@@ -217,7 +217,7 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForMonthTotal() {
         // Get days in current month
-        let month = model.getMonth(day: .now)
+        let month = Month()
         
         // Get sample drinks for the current month
         model.drinkData.drinks = SampleDrinks.month(month)
@@ -236,7 +236,7 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForMonthSpecific() {
         // Get days in current month
-        let month = model.getMonth(day: .now)
+        let month = Month()
         
         // Get sample drinks for the current month
         model.drinkData.drinks = SampleDrinks.month(month)
@@ -258,19 +258,19 @@ class DMDataItemsTests: XCTestCase {
         var items = [DataItem]()
         
         // Get current month
-        let month = model.getMonth(day: .now)
+        let month = Month()
 
         // Get drink types
         let types = model.drinkData.drinkTypes
         
         // Loop through the indices of month
-        for index in 0..<month.count {
+        for index in 0..<month.data.count {
             
             // Check for Total Drink Type
             if type == Constants.totalType {
                 
                 // Append a DataItem based on the current index
-                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.month[index], date: month[index])], type: type, date: month[index]))
+                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index].data)], type: type, date: month.data[index].data))
             
             } else {
                 
@@ -278,11 +278,11 @@ class DMDataItemsTests: XCTestCase {
                 if index % 4 == 0 {
                     
                     // Append a DataItem based on the current index
-                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.month[index], date: month[index])], type: type, date: month[index]))
+                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.month[index], date: month.data[index].data)], type: type, date: month.data[index].data))
 
                 // If false the append a DataItem with the drink parameter set to nil
                 } else {
-                    items.append(DataItem(type: type, date: month[index]))
+                    items.append(DataItem(type: type, date: month.data[index].data))
 
                 }
             }
@@ -294,7 +294,7 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForHalfYearTotal() {
         // Get weeks in current half year (current month is the last month)
-        let halfYear = model.getHalfYear(date: .now)
+        let halfYear = HalfYear()
         
         // Get sample drinks for the current half year
         model.drinkData.drinks = SampleDrinks.halfYear(halfYear)
@@ -314,7 +314,7 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForHalfYearSpecific() {
         // Get weeks in current half year (current month is the last month)
-        let halfYear = model.getHalfYear(date: .now)
+        let halfYear = HalfYear()
         
         // Get sample drinks for the current half year
         model.drinkData.drinks = SampleDrinks.halfYear(halfYear)
@@ -337,7 +337,7 @@ class DMDataItemsTests: XCTestCase {
         var items = [DataItem]()
         
         // Get current half year
-        let halfYear = model.getHalfYear(date: .now)
+        let halfYear = HalfYear()
 
         // Get drink types
         let types = model.drinkData.drinkTypes
@@ -347,24 +347,24 @@ class DMDataItemsTests: XCTestCase {
         var amountIndex = 0
         
         // Loop through the weeks in halfYear
-        for week in halfYear {
+        for week in halfYear.data {
             // Create empty drink array
             var drinks = [Drink]()
             
             // Loop through days in week
-            for day in week {
+            for day in week.data {
                 
                 // Check for Total Drink Type
                 if type == Constants.totalType {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day.data))
                 
                 // Check to filter out any drink type than Water
                 } else if typeIndex % 4 == 0 {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day.data))
                 
                 }
                 
@@ -374,7 +374,7 @@ class DMDataItemsTests: XCTestCase {
             }
             
             // Append a DataItem using the drink array (nil if empty)
-            items.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: week[0]))
+            items.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: week.firstDay()))
         }
         
         // Return items array
@@ -383,7 +383,7 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForYearTotal() {
         // Get months in current year (current month is the last month)
-        let year = model.getYear(date: .now)
+        let year = Year()
         
         // Get sample drinks for the current year
         model.drinkData.drinks = SampleDrinks.year(year)
@@ -402,7 +402,7 @@ class DMDataItemsTests: XCTestCase {
     
     func testGetDataItemsForYearSpecific() {
         // Get months in current year (current month is the last month)
-        let year = model.getYear(date: .now)
+        let year = Year()
         
         // Get sample drinks for the current year
         model.drinkData.drinks = SampleDrinks.year(year)
@@ -424,7 +424,7 @@ class DMDataItemsTests: XCTestCase {
         var items = [DataItem]()
         
         // Get current year
-        let year = model.getYear(date: .now)
+        let year = Year()
         
         // Get drink types
         let types = model.drinkData.drinkTypes
@@ -434,25 +434,25 @@ class DMDataItemsTests: XCTestCase {
         var amountIndex = 0
         
         // Loop through the months in year
-        for month in year {
+        for month in year.data {
             
             // Create empty drink array
             var drinks = [Drink]()
 
             // Loop through days in month
-            for day in month {
+            for day in month.data {
                 
                 // Check for Total Drink Type
                 if type == Constants.totalType {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
                 
                 // Check to filter out any drink type than Water
                 } else if typeIndex % 4 == 0 {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
 
                 }
                 
@@ -465,7 +465,7 @@ class DMDataItemsTests: XCTestCase {
             amountIndex = 0
             
             // Append a DataItem using the drink array (nil if empty)
-            items.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: month.first!))
+            items.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: month.data.first!.data))
         }
         
         // Return items array

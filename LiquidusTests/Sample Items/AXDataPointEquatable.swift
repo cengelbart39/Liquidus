@@ -10,6 +10,21 @@ import SwiftUI
 
 extension AXDataPoint {
     static func == (lhs: AXDataPoint, rhs: AXDataPoint) -> Bool {
-        return lhs.xValue.description == rhs.xValue.description && lhs.yValue?.description == rhs.yValue?.description
+        
+        if lhs.xValue.description == rhs.xValue.description {
+            
+            if let lhsYDescr = lhs.yValue?.description, let rhsYDescr = rhs.yValue?.description {
+                
+                if lhsYDescr == rhsYDescr { return true }
+                
+            } else if lhs.yValue == nil && rhs.yValue == nil {
+                
+                return true
+                
+            }
+            
+        }
+        
+        return false
     }
 }

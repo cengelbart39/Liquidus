@@ -19,67 +19,22 @@ class DMDataByWeekTests: XCTestCase {
     override func tearDown() {
         self.model = nil
     }
-
-    func testGetWeekRange() {
-        // Create a date for April 8, 2022
-        let testDate1 = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
-        
-        // Create a date for April 9, 2022
-        let testDate2 = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!
-        
-        // Create a date for April 3, 2022
-        let testDate3 = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!
-
-        // Set expected result
-        let expected = [
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!
-        ]
-
-        // Assert the results for each testDate is the expected result
-        XCTAssertEqual(model.getWeekRange(date: testDate1).description, expected.description)
-        
-        XCTAssertEqual(model.getWeekRange(date: testDate2).description, expected.description)
-        
-        XCTAssertEqual(model.getWeekRange(date: testDate3).description, expected.description)
-        
-    }
-
-    func testGetWeek() {
-        // Create a date for April 8, 2022
-        let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
-        
-        // Create the expected array of dates
-        let expected = [
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!,
-            testDate,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!
-        ]
-        
-        // Assert the fetched week is the same as the expected week
-        XCTAssertEqual(model.getWeek(date: testDate).description, expected.description)
-
-    }
     
     func testFilterByWeek() {
         // Assert that the method returns an empty array
-        XCTAssertTrue(model.filterDataByWeek(week: model.getWeek(date: .now)).isEmpty)
+        XCTAssertTrue(model.filterDataByWeek(week: Week()).isEmpty)
         
         // Add sample drinks on the day a week ago (i.e. if today is April 8, 2022, create a date for April 1, 2022)
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
+        model.drinkData.drinks = SampleDrinks.week(Week(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
         
         // Assert that the method returns an empty array
-        XCTAssertTrue(model.filterDataByWeek(week: model.getWeek(date: .now)).isEmpty)
+        XCTAssertTrue(model.filterDataByWeek(week: Week()).isEmpty)
 
         // Add sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
 
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for testWeek
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -89,13 +44,13 @@ class DMDataByWeekTests: XCTestCase {
         
         // Set the expected drink array
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek[0]),
-            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek[1]),
-            Drink(type: model.drinkData.drinkTypes[2], amount: 300, date: testWeek[2]),
-            Drink(type: model.drinkData.drinkTypes[3], amount: 400, date: testWeek[3]),
-            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek[4]),
-            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek[5]),
-            Drink(type: model.drinkData.drinkTypes[2], amount: 100, date: testWeek[6])
+            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek.data[0].data),
+            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek.data[1].data),
+            Drink(type: model.drinkData.drinkTypes[2], amount: 300, date: testWeek.data[2].data),
+            Drink(type: model.drinkData.drinkTypes[3], amount: 400, date: testWeek.data[3].data),
+            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek.data[4].data),
+            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek.data[5].data),
+            Drink(type: model.drinkData.drinkTypes[2], amount: 100, date: testWeek.data[6].data)
         ]
         
         // Assert each index of the expected and result arrays are equal
@@ -106,19 +61,19 @@ class DMDataByWeekTests: XCTestCase {
     
     func testFilterByWeekAndType() {
         // Assert the method returns an empty array
-        XCTAssertTrue(model.filterDataByWeekAndType(type: model.drinkData.drinkTypes[0], week: model.getWeek(date: .now)).isEmpty)
+        XCTAssertTrue(model.filterDataByWeekAndType(type: model.drinkData.drinkTypes[0], week: Week()).isEmpty)
         
         // Add sample drinks on the day a week ago (i.e. if today is April 8, 2022, create a date for April 1, 2022)
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
+        model.drinkData.drinks = SampleDrinks.week(Week(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
         
         // Assert the method returns an empty array
-        XCTAssertTrue(model.filterDataByWeekAndType(type: model.drinkData.drinkTypes[0], week: model.getWeek(date: .now)).isEmpty)
+        XCTAssertTrue(model.filterDataByWeekAndType(type: model.drinkData.drinkTypes[0], week: Week()).isEmpty)
 
         // Add sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
 
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for testWeek
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -129,8 +84,8 @@ class DMDataByWeekTests: XCTestCase {
         
         // Set the expected drink array
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek[0]),
-            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek[4])
+            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek.data[0].data),
+            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek.data[4].data)
         ]
         
         // Assert result1 is equal to the expected array
@@ -142,19 +97,19 @@ class DMDataByWeekTests: XCTestCase {
     
     func testGetTypeAmountByWeek() {
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTypeAmountByWeek(type: model.drinkData.drinkTypes[0], week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTypeAmountByWeek(type: model.drinkData.drinkTypes[0], week: Week()), 0.0)
         
         // Add sample drinks on the day a week ago (i.e. if today is April 8, 2022, create a date for April 1, 2022)
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
+        model.drinkData.drinks = SampleDrinks.week(Week(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
         
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTypeAmountByWeek(type: model.drinkData.drinkTypes[0], week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTypeAmountByWeek(type: model.drinkData.drinkTypes[0], week: Week()), 0.0)
         
         // Add sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
 
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for testWeek
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -171,19 +126,19 @@ class DMDataByWeekTests: XCTestCase {
     
     func testGetTypePercentByWeek() {
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTypePercentByWeek(type: model.drinkData.drinkTypes[0], week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTypePercentByWeek(type: model.drinkData.drinkTypes[0], week: Week()), 0.0)
         
         // Add sample drinks on the day a week ago (i.e. if today is April 8, 2022, create a date for April 1, 2022)
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
+        model.drinkData.drinks = SampleDrinks.week(Week(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
 
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTypePercentByWeek(type: model.drinkData.drinkTypes[0], week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTypePercentByWeek(type: model.drinkData.drinkTypes[0], week: Week()), 0.0)
 
         // Add sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
 
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for testWeek
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -203,19 +158,19 @@ class DMDataByWeekTests: XCTestCase {
     
     func testGetTotalAmountByWeek() {
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTotalAmountByWeek(week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTotalAmountByWeek(week: Week()), 0.0)
         
         // Add sample drinks on the day a week ago (i.e. if today is April 8, 2022, create a date for April 1, 2022)
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
+        model.drinkData.drinks = SampleDrinks.week(Week(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
         
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTotalAmountByWeek(week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTotalAmountByWeek(week: Week()), 0.0)
 
         // Add sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
 
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for testWeek
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -226,19 +181,19 @@ class DMDataByWeekTests: XCTestCase {
     
     func testGetTotalPercentByWeek() {
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTotalPercentByWeek(week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTotalPercentByWeek(week: Week()), 0.0)
         
         // Add sample drinks on the day a week ago (i.e. if today is April 8, 2022, create a date for April 1, 2022)
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
+        model.drinkData.drinks = SampleDrinks.week(Week(date: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now)!))
         
         // Assert the method returns 0.0
-        XCTAssertEqual(model.getTotalPercentByWeek(week: model.getWeek(date: .now)), 0.0)
+        XCTAssertEqual(model.getTotalPercentByWeek(week: Week()), 0.0)
 
         // Add sample drinks for the current week
-        model.drinkData.drinks = SampleDrinks.week(model.getWeek(date: .now))
+        model.drinkData.drinks = SampleDrinks.week(Week())
 
         // Get the week of April 8, 2022
-        let testWeek = model.getWeek(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for testWeek
         model.drinkData.drinks = SampleDrinks.week(testWeek)
@@ -248,18 +203,5 @@ class DMDataByWeekTests: XCTestCase {
         
         // Assert the method returns expected
         XCTAssertEqual(model.getTotalPercentByWeek(week: testWeek), expected)
-    }
-
-    func testDoesDateFallInSameWeek() {
-        // Set dates
-        let testDate1 = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
-        
-        let testDate2 = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!
-
-        // Assert the current date and testDate1 do not fall in the same week
-        XCTAssertFalse(model.doesDateFallInSameWeek(date1: testDate1, date2: .now))
-        
-        // Assert the testDates fall in the same week
-        XCTAssertTrue(model.doesDateFallInSameWeek(date1: testDate1, date2: testDate2))
     }
 }

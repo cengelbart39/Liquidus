@@ -19,169 +19,102 @@ class DMTrendsChartTests: XCTestCase {
     override func tearDown() {
         self.model = nil
     }
-
-    func testTimePeriodText() {
-        // Day Test
-        // Get a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
-        
-        // Get function return
-        let testDayText = model.timePeriodText(timePeriod: .daily, dates: testDay)
-        
-        // Get expected result
-        let expectedDayText = "April 8, 2022"
-        
-        // Assert they are equal
-        XCTAssertEqual(testDayText, expectedDayText)
-        
-        // Week Test
-        // Get the week of April 8, 2022 (April 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
-        
-        // Get function return
-        let testWeekText = model.timePeriodText(timePeriod: .weekly, dates: testWeek)
-        
-        // Get expected result
-        let expectedWeekText = "Apr 3-9, 2022"
-        
-        // Assert they are equal
-        XCTAssertEqual(testWeekText, expectedWeekText)
-        
-        // Month Test
-        // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
-        
-        // Get function return
-        let testMonthText = model.timePeriodText(timePeriod: .monthly, dates: testMonth)
-        
-        // Get expected result
-        let expectedMonthText = "April 2022"
-        
-        // Assert they are equal
-        XCTAssertEqual(testMonthText, expectedMonthText)
-        
-        // Half Year Test
-        // Get the half year from Nov 2021 to April 2022
-        let testHalfYear = model.getHalfYear(date: testDay)
-        
-        // Get function return
-        let testHalfYearText = model.timePeriodText(timePeriod: .halfYearly, dates: testHalfYear)
-        
-        // Get expected result
-        let expectedHalfYearText = "Nov 2021 - Apr 2022"
-        
-        // Assert they are equal
-        XCTAssertEqual(testHalfYearText, expectedHalfYearText)
-        
-        // Year Test
-        // Get the year from May 2021 to April 2022
-        let testYear = model.getYear(date: testDay)
-        
-        // Get function return
-        let testYearText = model.timePeriodText(timePeriod: .yearly, dates: testYear)
-        
-        // Get expected result
-        let expectedYearText = "May 2021 - Apr 2022"
-        
-        // Assert they are equal
-        XCTAssertEqual(testYearText, expectedYearText)
-    }
     
     func testGetOverallAmount() {
         // Day Tests
         // Get a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
 
         // Add sample drinks for the day
         model.drinkData.drinks = SampleDrinks.day(testDay)
                 
         // Assert Water returns 1,950
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], timePeriod: .daily, dates: testDay), 1950.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], dates: testDay), 1950.0)
         
         // Assert Coffee returns 1,950
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], timePeriod: .daily, dates: testDay), 1950.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], dates: testDay), 1950.0)
         
         // Assert Soda returns 1,950
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], timePeriod: .daily, dates: testDay), 1950.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], dates: testDay), 1950.0)
 
         // Assert Juice returns 1,950
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], timePeriod: .daily, dates: testDay), 1950.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], dates: testDay), 1950.0)
 
         // Week Tests
         // Get the week of April 8, 2022 (Apr 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
+        let testWeek = Week(date: testDay.data)
         
         // Add sample drinks for the week
         model.drinkData.drinks = SampleDrinks.week(testWeek)
         
         // Assert Water return 400.0
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], timePeriod: .weekly, dates: testWeek), 400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], dates: testWeek), 400.0)
         
         // Assert Coffee return 400.0
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], timePeriod: .weekly, dates: testWeek), 400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], dates: testWeek), 400.0)
         
         // Assert Soda return 400.0
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], timePeriod: .weekly, dates: testWeek), 400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], dates: testWeek), 400.0)
         
         // Assert Juice return 400.0
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], timePeriod: .weekly, dates: testWeek), 400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], dates: testWeek), 400.0)
 
         // Month Test
         // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
+        let testMonth = Month(date: testDay.data)
 
         // Add sample drinks for the month
         model.drinkData.drinks = SampleDrinks.month(testMonth)
 
         // Assert Water return 3,200
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], timePeriod: .monthly, dates: testMonth), 3200.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], dates: testMonth), 3200.0)
         
         // Assert Coffee return 3,200
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], timePeriod: .monthly, dates: testMonth), 3200.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], dates: testMonth), 3200.0)
         
         // Assert Soda return 3,150
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], timePeriod: .monthly, dates: testMonth), 3150.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], dates: testMonth), 3150.0)
         
         // Assert Juice return 3,200
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], timePeriod: .monthly, dates: testMonth), 3200.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], dates: testMonth), 3200.0)
 
         // Half Year Tests
         // Get the half year for Nov 2021 to Apr 2022
-        let testHalfYear = model.getHalfYear(date: testDay)
+        let testHalfYear = HalfYear(date: testDay.data)
 
         // Add sample drinks for the half year
         model.drinkData.drinks = SampleDrinks.halfYear(testHalfYear)
         
         // Assert Water returns 10,400
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], timePeriod: .halfYearly, dates: testHalfYear), 10400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], dates: testHalfYear), 10400.0)
 
         // Assert Coffee returns 10,300
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], timePeriod: .halfYearly, dates: testHalfYear), 10300.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], dates: testHalfYear), 10300.0)
 
         // Assert Soda returns 10,400
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], timePeriod: .halfYearly, dates: testHalfYear), 10400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], dates: testHalfYear), 10400.0)
 
         // Assert Juice returns 10,400
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], timePeriod: .halfYearly, dates: testHalfYear), 10400.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], dates: testHalfYear), 10400.0)
         
         // Year Tests
         // Get the year for May 2021 to Apr 2022
-        let testYear = model.getYear(date: testDay)
+        let testYear = Year(date: testDay.data)
 
         // Add sample drinks for the year
         model.drinkData.drinks = SampleDrinks.year(testYear)
 
         // Assert Water returns 19,050
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], timePeriod: .halfYearly, dates: testHalfYear), 19050.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[0], dates: testYear), 38250.0)
 
         // Assert Coffee returns 19,050
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], timePeriod: .halfYearly, dates: testHalfYear), 19050.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[1], dates: testYear), 38150.0)
 
         // Assert Soda returns 19,100
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], timePeriod: .halfYearly, dates: testHalfYear), 19100.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[2], dates: testYear), 38300.0)
 
         // Assert Juice returns 19,250
-        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], timePeriod: .halfYearly, dates: testHalfYear), 19250.0)
+        XCTAssertEqual(model.getOverallAmount(type: model.drinkData.drinkTypes[3], dates: testYear), 38400.0)
     }
     
     func testChartSpacerMaxWidth() {
@@ -201,14 +134,14 @@ class DMTrendsChartTests: XCTestCase {
         // Assert, when is Widget is false, all other time periods
         // return 5
         XCTAssertEqual(model.chartSpacerMaxWidth(timePeriod: .monthly, isWidget: false), CGFloat(5))
-        XCTAssertEqual(model.chartSpacerMaxWidth(timePeriod: .halfYearly, isWidget: false), CGFloat(5))
+        XCTAssertEqual(model.chartSpacerMaxWidth(timePeriod: .halfYearly, isWidget: false), CGFloat(2))
         XCTAssertEqual(model.chartSpacerMaxWidth(timePeriod: .yearly, isWidget: false), CGFloat(5))
     }
     
     func testGetMaxValue() {
         // Day Test
         // Create a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Get sample data items for this day
         let dayItems = SampleDataItems.day(testDay)
@@ -221,7 +154,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Week Test
         // Get the week of April 8, 2022 (April 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
+        let testWeek = Week(date: testDay.data)
         
         // Get sample data items for this week
         let weekItems = SampleDataItems.week(testWeek)
@@ -234,7 +167,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Month Test
         // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
+        let testMonth = Month(date: testDay.data)
         
         // Get sample data items for the month
         let monthItems = SampleDataItems.month(testMonth)
@@ -247,7 +180,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Half Year Test
         // Get the half year from Nov 2021 to Apr 2022
-        let testHalfYear = model.getHalfYear(date: testDay)
+        let testHalfYear = HalfYear(date: testDay.data)
         
         // Get sample data items for the half year
         let halfYearItems = SampleDataItems.halfYear(testHalfYear)
@@ -260,7 +193,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Year Test
         // Get the year for May 2021 to April 2022
-        let testYear = model.getYear(date: testDay)
+        let testYear = Year(date: testDay.data)
         
         // Get sample data items for the year
         let yearItems = SampleDataItems.year(testYear)
@@ -274,11 +207,11 @@ class DMTrendsChartTests: XCTestCase {
     
     func testGetAverage() {
         // Create a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Week Test
         // Get the week for April 8, 2022 (April 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
+        let testWeek = Week(date: testDay.data)
         
         // Get sample data items for this week
         let weekItems = SampleDataItems.week(testWeek)
@@ -294,7 +227,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Month Test
         // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
+        let testMonth = Month(date: testDay.data)
         
         // Get sample data items for the month
         let monthItems = SampleDataItems.month(testMonth)
@@ -312,7 +245,7 @@ class DMTrendsChartTests: XCTestCase {
     func testVerticalAxisText() {
         // Day Test
         // Create a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Get sample data items for the day
         let dayItems = SampleDataItems.day(testDay)
@@ -325,7 +258,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Week Test
         // Get the week of April 8, 2022 (April 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
+        let testWeek = Week(date: testDay.data)
         
         // Get sample data items for the week
         let weekItems = SampleDataItems.week(testWeek)
@@ -338,7 +271,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Month Test
         // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
+        let testMonth = Month(date: testDay.data)
         
         // Get sample data items for the month
         let monthItems = SampleDataItems.month(testMonth)
@@ -351,7 +284,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Half Year Test
         // Get the half year of Nov 2021 to Apr 2022
-        let testHalfYear = model.getHalfYear(date: testDay)
+        let testHalfYear = HalfYear(date: testDay.data)
         
         // Get sample data items for the half year
         let halfYearItems = SampleDataItems.halfYear(testHalfYear)
@@ -360,11 +293,11 @@ class DMTrendsChartTests: XCTestCase {
         let halfYearResult = model.verticalAxisText(dataItems: halfYearItems, timePeriod: .halfYearly)
         
         // Assert the function returns the expected result
-        XCTAssertEqual(halfYearResult, ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"])
+        XCTAssertEqual(halfYearResult, ["N", "D", "J", "F", "M", "A"])
         
         // Year Test
         // Get the year of May 2021 to Apr 2022
-        let testYear = model.getYear(date: testDay)
+        let testYear = Year(date: testDay.data)
         
         // Get sample data items for the year
         let yearItems = SampleDataItems.year(testYear)
@@ -373,22 +306,19 @@ class DMTrendsChartTests: XCTestCase {
         let yearResult = model.verticalAxisText(dataItems: yearItems, timePeriod: .yearly)
         
         // Assert the function returns the expected result
-        XCTAssertEqual(yearResult, ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"])
+        XCTAssertEqual(yearResult, ["M", "J", "J", "A", "S", "O", "N", "D", "J", "F", "M", "A"])
     }
     
     func testHorizontalAxisText() {
         // Day Test
         // Create a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
-        
-        // Get sample data items for the day
-        let dayItems = SampleDataItems.day(testDay)
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Add sample drinks for the day
         model.drinkData.drinks = SampleDrinks.day(testDay)
         
         // Get function return
-        let dayResult = model.horizontalAxisText(dataItems: dayItems, type: Constants.totalType, timePeriod: .daily, dates: testDay)
+        let dayResult = model.horizontalAxisText(type: Constants.totalType, dates: testDay)
         
         // Set expected result
         let dayExpected = ["7,800", "5,200", "2,600", "0"]
@@ -398,16 +328,13 @@ class DMTrendsChartTests: XCTestCase {
         
         // Week Test
         // Get the week of April 8, 2022 (April 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
-        
-        // Get sample data items for the week
-        let weekItems = SampleDataItems.week(testWeek)
+        let testWeek = Week(date: testDay.data)
         
         // Add sample drinks for the week
         model.drinkData.drinks = SampleDrinks.week(testWeek)
         
         // Get function return
-        let weekResult = model.horizontalAxisText(dataItems: weekItems, type: Constants.totalType, timePeriod: .weekly, dates: testWeek)
+        let weekResult = model.horizontalAxisText(type: Constants.totalType, dates: testWeek)
         
         // Set expected result
         let weekExpected = ["1,800", "1,200", "600", "0"]
@@ -417,16 +344,13 @@ class DMTrendsChartTests: XCTestCase {
         
         // Month Test
         // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
-        
-        // Get sample data items for the month
-        let monthItems = SampleDataItems.month(testMonth)
+        let testMonth = Month(date: testDay.data)
         
         // Add sample drinks for the month
         model.drinkData.drinks = SampleDrinks.month(testMonth)
         
         // Get function return
-        let monthResult = model.horizontalAxisText(dataItems: monthItems, type: Constants.totalType, timePeriod: .monthly, dates: testMonth)
+        let monthResult = model.horizontalAxisText(type: Constants.totalType, dates: testMonth)
         
         // Set expected result
         let monthExpected = ["13,000", "8,500", "4,200", "0"]
@@ -436,16 +360,13 @@ class DMTrendsChartTests: XCTestCase {
         
         // Half Year Test
         // Get the half year of Nov 2021 to Apr 2022
-        let testHalfYear = model.getHalfYear(date: testDay)
-        
-        // Get sample data items for the half year
-        let halfYearItems = SampleDataItems.halfYear(testHalfYear)
+        let testHalfYear = HalfYear(date: testDay.data)
         
         // Add sample drinks for the half year
         model.drinkData.drinks = SampleDrinks.halfYear(testHalfYear)
         
         // Get function return
-        let halfYearResult = model.horizontalAxisText(dataItems: halfYearItems, type: Constants.totalType, timePeriod: .halfYearly, dates: testHalfYear)
+        let halfYearResult = model.horizontalAxisText(type: Constants.totalType, dates: testHalfYear)
         
         // Set expected result
         let halfYearExpected = ["42,000", "28,000", "14,000", "0"]
@@ -455,16 +376,13 @@ class DMTrendsChartTests: XCTestCase {
         
         // Year Test
         // Get the year of May 2021 to Apr 2022
-        let testYear = model.getYear(date: testDay)
-        
-        // Get sample data items for the year
-        let yearItems = SampleDataItems.year(testYear)
+        let testYear = Year(date: testDay.data)
         
         // Add sample drinks for the year
         model.drinkData.drinks = SampleDrinks.year(testYear)
         
         // Get function return
-        let yearResult = model.horizontalAxisText(dataItems: yearItems, type: Constants.totalType, timePeriod: .yearly, dates: testYear)
+        let yearResult = model.horizontalAxisText(type: Constants.totalType, dates: testYear)
         
         // Set expected result
         let yearExpected = ["150,000", "100,000", "51,000", "0"]
@@ -476,7 +394,7 @@ class DMTrendsChartTests: XCTestCase {
     func testSeriesDataPoints() {
         // Day Test
         // Create a date for April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Get sample data items for the day
         let dayItems = SampleDataItems.day(testDay)
@@ -494,7 +412,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Week Test
         // Get the week of April 8, 2022 (April 3-9, 2022)
-        let testWeek = model.getWeek(date: testDay)
+        let testWeek = Week(date: testDay.data)
         
         // Get sample data items for the week
         let weekItems = SampleDataItems.week(testWeek)
@@ -512,7 +430,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Month Test
         // Get the month of April 2022
-        let testMonth = model.getMonth(day: testDay)
+        let testMonth = Month(date: testDay.data)
         
         // Get sample data items for the month
         let monthItems = SampleDataItems.month(testMonth)
@@ -530,13 +448,13 @@ class DMTrendsChartTests: XCTestCase {
         
         // Half Year Test
         // Get the half year of Nov 2021 to Apr 2022
-        let testHalfYear = model.getHalfYear(date: testDay)
+        let testHalfYear = HalfYear(date: testDay.data)
         
         // Get sample data items for the half year
         let halfYearItems = SampleDataItems.halfYear(testHalfYear)
         
         // Get half year offset
-        let offset = Calendar.current.dateComponents([.month], from: testDay, to: .now).month!
+        let offset = Calendar.current.dateComponents([.month], from: testDay.data, to: .now).month!
         
         // Get function return
         let halfYearResult = model.seriesDataPoints(dataItems: halfYearItems, timePeriod: .halfYearly, halfYearOffset: offset, test: true)
@@ -551,7 +469,7 @@ class DMTrendsChartTests: XCTestCase {
         
         // Year Test
         // Get the year of May 2021 to Apr 2022
-        let testYear = model.getYear(date: testDay)
+        let testYear = Year(date: testDay.data)
         
         // Get sample data items for the year
         let yearItems = SampleDataItems.year(testYear)
@@ -570,7 +488,7 @@ class DMTrendsChartTests: XCTestCase {
     
     func testDataPointHourRangeText() {
         // Create a date for April 8, 2022
-        let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
+        let testDate = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Get sample data items for the day
         let dayItems = SampleDataItems.day(testDate)
@@ -607,7 +525,7 @@ class DMTrendsChartTests: XCTestCase {
         let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
 
         // Get the half year from Nov 2021 to Apr 2022
-        let testHalfYear = model.getHalfYear(date: testDate)
+        let testHalfYear = HalfYear(date: testDate)
         
         // Get data items for the half year
         let halfYearItems = SampleDataItems.halfYear(testHalfYear)
@@ -633,43 +551,43 @@ class DMTrendsChartTests: XCTestCase {
     
     func testGetChartAccessibilityLabel() {
         // Test for Today for Total Type
-        let r1 = model.getChartAccessibilityLabel(timePeriod: .daily, type: Constants.totalType, dates: Date.now)
-        XCTAssertEqual(r1, "Data representing your intake Today")
+        let r1 = model.getChartAccessibilityLabel(type: Constants.totalType, dates: Day())
+        XCTAssertEqual(r1, "Data representing your intake Today.")
         
         // Test for Today for Water Type
-        let r2 = model.getChartAccessibilityLabel(timePeriod: .daily, type: model.drinkData.drinkTypes.first!, dates: Date.now)
-        XCTAssertEqual(r2, "Data representing your Water intake Today")
+        let r2 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: Day())
+        XCTAssertEqual(r2, "Data representing your Water intake Today.")
         
         // Test for Yesterday for Water Type
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)
-        let r3 = model.getChartAccessibilityLabel(timePeriod: .daily, type: model.drinkData.drinkTypes.first!, dates: yesterday)
-        XCTAssertEqual(r3, "Data representing your Water intake Yesterday")
+        let yesterday = Day(date: Calendar.current.date(byAdding: .day, value: -1, to: .now)!)
+        let r3 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: yesterday)
+        XCTAssertEqual(r3, "Data representing your Water intake Yesterday.")
         
         // Create day, week, month, half, and year from April 8, 2022
-        let testDay = Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!
-        let testWeek = model.getWeek(date: testDay)
-        let testMonth = model.getMonth(day: testDay)
-        let testHalfYear = model.getHalfYear(date: testDay)
-        let testYear = model.getYear(date: testDay)
+        let testDay = Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testWeek = Week(date: testDay.data)
+        let testMonth = Month(date: testDay.data)
+        let testHalfYear = HalfYear(date: testDay.data)
+        let testYear = Year(date: testDay.data)
         
         // Test for April 8, 2022 for Water Type
-        let r4 = model.getChartAccessibilityLabel(timePeriod: .daily, type: model.drinkData.drinkTypes.first!, dates: testDay)
-        XCTAssertEqual(r4, "Data representing your Water intake on April 8, 2022.")
+        let r4 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: testDay)
+        XCTAssertEqual(r4, "Data representing your Water intake on Apr 8, 2022.")
         
         // Test for April 3-9, 2022 Week for Water Type
-        let r5 = model.getChartAccessibilityLabel(timePeriod: .weekly, type: model.drinkData.drinkTypes.first!, dates: testWeek)
+        let r5 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: testWeek)
         XCTAssertEqual(r5, "Data representing your Water intake from Apr 3rd to 9th, 2022.")
         
         // Test for April 2022 Month for Water Type
-        let r6 = model.getChartAccessibilityLabel(timePeriod: .monthly, type: model.drinkData.drinkTypes.first!, dates: testMonth)
+        let r6 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: testMonth)
         XCTAssertEqual(r6, "Data representing your Water intake on April 2022.")
         
         // Test for Nov 2021 to Apr 2022 Half Year for Water Type
-        let r7 = model.getChartAccessibilityLabel(timePeriod: .halfYearly, type: model.drinkData.drinkTypes.first!, dates: testHalfYear)
+        let r7 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: testHalfYear)
         XCTAssertEqual(r7, "Data representing your Water intake from Nov 2021 to Apr 2022.")
 
         // Test for May 2021 to Apr 2022 Year for Water Type
-        let r8 = model.getChartAccessibilityLabel(timePeriod: .yearly, type: model.drinkData.drinkTypes.first!, dates: testYear)
+        let r8 = model.getChartAccessibilityLabel(type: model.drinkData.drinkTypes.first!, dates: testYear)
         XCTAssertEqual(r8, "Data representing your Water intake from May 2021 to Apr 2022.")
     }
 }

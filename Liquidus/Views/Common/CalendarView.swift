@@ -12,9 +12,14 @@ struct CalendarView: View {
     @EnvironmentObject var model: DrinkModel
     
     @Binding var isPresented: Bool
+    @Binding var selectedDay: Day
+    @Binding var selectedWeek: Week
     
-    @Binding var selectedDay: Date
-    var selectedPeriod: Constants.TimePeriod
+    var selectedPeriod: TimePeriod
+    
+    @Binding var trigger: Bool
+    
+    @State var chosenDate = Date()
     
     var body: some View {
         NavigationView {
@@ -23,51 +28,60 @@ struct CalendarView: View {
                         
                         VStack {
                             // DatePicker
-                            DatePicker("", selection: $selectedDay, in: ...Date(), displayedComponents: .date)
+                            DatePicker("", selection: $chosenDate, in: ...Date(), displayedComponents: .date)
                                 .datePickerStyle(.graphical)
                         }
                     }
                 }
 
                 .navigationTitle("Choose a \(selectedPeriod == .daily ? "day" : "week")")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                // "Save" new date/week
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        isPresented = false
-                    } label: {
-                        Text("Save")
-                            .foregroundColor(.blue)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    // "Save" new date/week
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            isPresented = false
+                        } label: {
+                            Text("Save")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    
+                    // Cancel selection
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            isPresented = false
+                        } label: {
+                            Text("Cancel")
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
-                
-                // Cancel selection
-                ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        isPresented = false
-                    } label: {
-                        Text("Cancel")
-                            .foregroundColor(.blue)
-                    }
+                .onAppear {
+                    chosenDate = selectedDay.data
                 }
-            }
-            .onDisappear {
-                isPresented = false
-            }
-            .accessibilityAction(named: "Cancel") {
-                isPresented = false
-            }
-            .accessibilityAction(named: "Save") {
-                isPresented = false
-            }
+                .onChange(of: chosenDate, perform: { newDate in
+                    
+                    if selectedPeriod == .daily {
+                        selectedDay.update(date: newDate)
+                    
+                    } else {
+                        selectedWeek.update(date: newDate)
+                    
+                    }
+                    
+                    trigger.toggle()
+                })
+                .onDisappear {
+                    isPresented = false
+                }
+                .accessibilityAction(named: "Cancel") {
+                    isPresented = false
+                }
+                .accessibilityAction(named: "Save") {
+                    isPresented = false
+                    trigger.toggle()
+                }
         }
-    }
-}
-
-struct CalendarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarView(isPresented: .constant(true), selectedDay: .constant(Date()), selectedPeriod: .weekly)
-            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

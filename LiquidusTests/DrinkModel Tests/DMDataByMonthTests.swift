@@ -23,56 +23,56 @@ class DMDataByMonthTests: XCTestCase {
     func testGetMonth() {
         // Set expected Date array with each day of April 2022
         let expected = [
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 2))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 10))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 11))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 12))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 13))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 14))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 15))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 16))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 17))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 18))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 19))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 20))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 21))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 22))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 23))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 24))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 25))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 26))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 27))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 28))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 29))!,
-            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 30))!
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 2))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 10))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 11))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 12))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 13))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 14))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 15))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 16))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 17))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 18))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 19))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 20))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 21))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 22))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 23))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 24))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 25))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 26))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 27))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 28))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 29))!),
+            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 30))!)
         ]
         
         // Get the method return
-        let test = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!)
+        let test = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!)
         
         // Assert at the same index the test and expected arrays return the same value
         for index in 0..<expected.count {
-            XCTAssertTrue(test[index].compare(expected[index]) == .orderedSame, "failed at index \(index)")
+            XCTAssertEqual(test.data[index], expected[index], "failed at index \(index)")
         }
     }
 
     func testFilerByMonth() {
         // Get the days in April 2022
-        let testMonth = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testMonth = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
         
         // Assert the method returns an empty array
         XCTAssertTrue(model.filterDataByMonth(month: testMonth).isEmpty)
         
         // Get the days in March 2022
-        let lastMonth = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
+        let lastMonth = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
         
         // Add sample drinks for March 2022
         model.drinkData.drinks = SampleDrinks.month(lastMonth)
@@ -97,13 +97,13 @@ class DMDataByMonthTests: XCTestCase {
     
     func testFilterByMonthAndType() {
         // Get the days in April 2022
-        let testMonth = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testMonth = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
 
         // Assert the method returns an empty array
         XCTAssertTrue(model.filterDataByMonthAndType(type: model.drinkData.drinkTypes[0], month: testMonth).isEmpty)
         
         // Get the days in March 2022
-        let lastMonth = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
+        let lastMonth = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
 
         // Add sample drinks for March 2022
         model.drinkData.drinks = SampleDrinks.month(lastMonth)
@@ -136,13 +136,13 @@ class DMDataByMonthTests: XCTestCase {
     
     func testGetTypeAmountByMonth() {
         // Get the days in April 2022
-        let testMonth = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
+        let testMonth = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)
 
         // Assert the method returns 0.0
         XCTAssertEqual(model.getTypeAmountByMonth(type: model.drinkData.drinkTypes[0], month: testMonth), 0.0)
         
         // Get the days in March 2022
-        let lastMonth = model.getMonth(day: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
+        let lastMonth = Month(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 1))!)
         
         // Add sample drinks for March 2022
         model.drinkData.drinks = SampleDrinks.month(lastMonth)

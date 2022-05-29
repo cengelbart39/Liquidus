@@ -81,6 +81,7 @@ struct TrendsView: View {
     
     /**
      Based on selected dynamic type size return a Font Style or Size
+     - Returns: The appropriate Font Style/Size for the Dynamic Type Size
      */
     func getTypeFontStyle() -> Font {
         if !dynamicType.isAccessibilitySize {

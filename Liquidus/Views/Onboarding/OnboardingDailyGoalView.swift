@@ -142,7 +142,12 @@ struct OnboardingDailyGoalView: View {
         }
     }
     
-    // Get unit abbreviation
+    /**
+     Get unit abbreviation
+     - Parameter unitName: The non-abbreviated name of the unit
+     - Requires: unitName to have an equivalent in Constants.swift to have a non-empty return
+     - Returns: The associated unit abbreviation
+     */
     func getUnits(unitName: String) -> String {
         if unitName == Constants.milliliters {
             return Constants.mL

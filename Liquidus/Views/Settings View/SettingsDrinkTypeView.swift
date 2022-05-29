@@ -1,6 +1,6 @@
 //
 //  SettingsDrinkTypeView.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 10/3/21.
 //

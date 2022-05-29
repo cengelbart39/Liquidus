@@ -1,6 +1,6 @@
 //
 //  LogDrinkView.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //

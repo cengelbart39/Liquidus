@@ -22,9 +22,12 @@ struct WidgetChartView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            let dataItems = model.getDataItemsForDay(date: .now, type: type)
+            let day = Day(date: entry.date)
+            let week = Week(date: entry.date)
             
-            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getWeek(date: entry.date))
+            let dataItems = model.getDataItemsForDay(day: day, type: type)
+            
+            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, day: day) : model.getTypeAmountByWeek(type: type, week: week)
             
             HStack {
             
@@ -52,8 +55,8 @@ struct WidgetChartView: View {
                 amount: typeAmount,
                 maxValue: maxVal,
                 verticalAxisText: model.verticalAxisText(dataItems: dataItems, timePeriod: .daily),
-                horizontalAxisText: model.horizontalAxisText(dataItems: dataItems, type: type, timePeriod: .daily, dates: Date.now),
-                chartAccessibilityLabel: model.getChartAccessibilityLabel(timePeriod: .daily, type: type, dates: Date.now),
+                horizontalAxisText: model.horizontalAxisText(type: type, dates: Date.now),
+                chartAccessibilityLabel: model.getChartAccessibilityLabel(type: type, dates: Date.now),
                 chartSpacerWidth: model.chartSpacerMaxWidth(timePeriod: .daily, isWidget: true),
                 isWidget: true,
                 isYear: false,

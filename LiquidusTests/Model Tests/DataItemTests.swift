@@ -42,7 +42,7 @@ class DataItemTests: XCTestCase {
         dataItem.drinks = Drink.getWaterSampleDrinks()
         
         // Assert the max value is 500
-        XCTAssertEqual(dataItem.getMaxValue(), 500.0)
+        XCTAssertEqual(dataItem.getMaxValue(), 2500.0)
     }
     
     func testGetMinValue() {

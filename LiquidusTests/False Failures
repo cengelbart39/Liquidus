@@ -1,0 +1,15 @@
+Unit Tests False Failures
+------
+
+Some Unit Tests utilize Date.now
+This use can cause Unit Tests to sometimes fail when the expected return and sample drinks are set relative to Date.now
+Rerunning the failed test can resolve the issue
+
+Example:
+Say you run some test that utlizies Date.now
+At the time of running it is 5:30:59
+
+The Sample Drinks use 5:30:59
+The Expected Result uses 5:31:00
+
+

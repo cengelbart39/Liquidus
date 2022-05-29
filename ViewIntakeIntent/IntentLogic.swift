@@ -8,6 +8,14 @@
 import Foundation
 
 class IntentLogic {
+    
+    /**
+     Get the `Drink`s consumed during the given `Date`
+     - Parameters:
+        - day: The `Date` to filter by
+        - data: The User's Data
+     - Returns: The `Drink`s consumed during `day`
+     */
     static func filterDataByDay(day: Date, data: DrinkData) -> [Drink] {
         
         // Create a date formatter
@@ -27,9 +35,17 @@ class IntentLogic {
         return filtered.filter { $0.type.enabled }
     }
     
-    static func getTypeAmountByWeek(type: DrinkType, date: Date, data: DrinkData) -> Double {
+    /**
+     Get the total amount of `Drink`s consumed of a given `DrinkType` during a given `Date`
+     - Parameters:
+        - type: The `DrinkType` to filter for
+        - date: The `Date` to filter for
+        - data: The User's Data
+     - Returns: The `Drink`s consumed of `type` during `day`
+     */
+    static func getTypeAmountByDay(type: DrinkType, date: Date, data: DrinkData) -> Double {
         // Get the filtered data for the day
-        let time = ProviderLogic.filterDataByDay(day: date, data: data)
+        let time = IntentLogic.filterDataByDay(day: date, data: data)
         
         // Filter by the drink type
         let drinks = time.filter { $0.type == type }
@@ -43,6 +59,13 @@ class IntentLogic {
         return totalAmount
     }
     
+    /**
+     Get the total amount of `Drink`s consumed during the given `Date`
+     - Parameters:
+        - date: The `Date` to get the total amount for
+        - data: The User's Data
+     - Returns: The total amount of `Drink`s consumed during `date`
+    */
     static func getTotalAmountByDay(date: Date, data: DrinkData) -> Double {
         
         var amount = 0.0
@@ -50,13 +73,20 @@ class IntentLogic {
         // Get the amount for each drink type
         for type in data.drinkTypes {
             if type.enabled {
-                amount += ProviderLogic.getTypeAmountByWeek(type: type, date: date, data: data)
+                amount += IntentLogic.getTypeAmountByDay(type: type, date: date, data: data)
             }
         }
         
         return amount
     }
     
+    /**
+     Get the total percent of the user's progress towards their daily goal
+     - Parameters:
+        - date: The date to get the percent for
+        - data: The User's Data
+     - Returns: The total percent of the user's progress towards their daily goal
+     */
     static func getTotalPercentByDay(date: Date, data: DrinkData) -> Double {
         
         // Get total amount
@@ -68,6 +98,13 @@ class IntentLogic {
         return percent
     }
     
+    /**
+     Get the `Drink`s consumed during the given `[Date]`
+     - Parameters:
+        - week: The week to filter for
+        - data: The User's Data
+     - Returns: The `Drink`s consumed during the given `[Date]`
+     */
     static func filterDataByWeek(week: [Date], data: DrinkData) -> [Drink] {
         
         // Create a date formatter to get dates in Month Day, Year format
@@ -93,10 +130,18 @@ class IntentLogic {
         return weekData
     }
     
+    /**
+     Get the total amount of `Drink`s consumed of a given `DrinkType` during a given `[Date]`
+     - Parameters:
+        - type: The `DrinkType` to get the type amount for
+        - week: The `[Date]` to get the type amount for
+        - data: The User's Data
+     - Returns: The total amount of `Drink`s consumed of `type` during `week`
+     */
     static func getTypeAmountByWeek(type: DrinkType, week: [Date], data: DrinkData) -> Double {
         
         // Get the drink data for the week
-        let filtered = ProviderLogic.filterDataByWeek(week: week, data: data)
+        let filtered = IntentLogic.filterDataByWeek(week: week, data: data)
         
         // Filter by drink type
         let drinks = filtered.filter { $0.type == type }
@@ -110,6 +155,13 @@ class IntentLogic {
         return totalAmount
     }
     
+    /**
+     Get the total amount of `Drink`s consumed during a given `[Data]`
+     - Parameters:
+        - week: A `[Date]` with each day of the week
+        - data: The user's data
+     - Returns: The total amount of `Drink`s consumed during `week`
+     */
     static func getTotalAmountByWeek(week: [Date], data: DrinkData) -> Double {
         
         var amount = 0.0
@@ -117,13 +169,18 @@ class IntentLogic {
         // Get the amount for each drink type
         for type in data.drinkTypes {
             if type.enabled {
-                amount += ProviderLogic.getTypeAmountByWeek(type: type, week: week, data: data)
+                amount += IntentLogic.getTypeAmountByWeek(type: type, week: week, data: data)
             }
         }
         
         return amount
     }
     
+    /**
+     Get the Sunday and Saturday of the week of a given `Date`
+     - Parameter date: The `Date` to get the week from
+     - Returns: A 2-element `[Date]` with the Sunday and Saturday of `date`'s week
+     */
     static func getWeekRange(date: Date) -> [Date] {
         
         // Get the number for the day of the week (Sun = 1 ... Sat = 7)
@@ -166,9 +223,14 @@ class IntentLogic {
         }
     }
     
+    /**
+     Get the days in the week, relative to the given `Date`
+     - Parameter date: The `Date` to get the `[Date]` for
+     - Returns: The days in the week of `date`
+     */
     static func getDaysInWeek(date: Date) -> [Date] {
         // Get the week range
-        let weekRange = ProviderLogic.getWeekRange(date: date)
+        let weekRange = IntentLogic.getWeekRange(date: date)
         
         // If the array isn't empty...
         if weekRange.count == 2 {
@@ -189,6 +251,13 @@ class IntentLogic {
         return [Date]()
     }
     
+    /**
+     Get the total percent of the user's progress towards their weekly goal
+     - Parameters:
+        - date: The week `[Date]` to get the percent for
+        - data: The User's Data
+     - Returns: The total percent of the user's progress towards their weekly goal
+     */
     static func getTotalPercentByWeek(week: [Date], data: DrinkData) -> Double {
         
         // Get the total amount

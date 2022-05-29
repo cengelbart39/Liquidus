@@ -41,7 +41,9 @@ struct TrendsDetailDataListView: View {
     }
     
     /**
-     Get date text in the form of "Apr 8, 2003"
+     Get a formatted String representation of a date
+     - Parameter date: A Date to format a String to
+     - Returns: A String formatted as "April 8, 2003"
      */
     private func getDateText(date: Date) -> String {
         let formatter = DateFormatter()

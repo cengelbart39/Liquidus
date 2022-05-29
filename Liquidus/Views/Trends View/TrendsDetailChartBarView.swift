@@ -22,15 +22,9 @@ struct TrendsDetailChartBarView: View {
     }
     
     /**
-     Get display text in the form of "12A"
+     Returns an appropriate fill for a Rounded Rectangle
+     - Returns: A solid gradient or a rainbow gradient, dependent on if grayscale is enabled and the value of `self.type`
      */
-    func displayText() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "ha"
-        
-        return formatter.string(from: item.date)
-    }
-    
     func getFill() -> LinearGradient {
         if model.grayscaleEnabled {
             return LinearGradient(colors: [.primary], startPoint: .top, endPoint: .bottom)

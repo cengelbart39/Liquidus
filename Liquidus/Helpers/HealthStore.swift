@@ -1,6 +1,6 @@
 //
 //  HealthStore.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/11/21.
 //
@@ -19,14 +19,21 @@ extension Date {
     }
 }
 
+/**
+ A class representing HealthKit-related data and methods
+ */
 class HealthStore {
     
+    /// Store for all HealthKit Data granted access to
     var healthStore: HKHealthStore?
+    
+    /// Water Data retrieved from Apple Health (if there is any)
     var waterQuery: HKStatisticsCollectionQuery?
-    var caffeineQuery: HKStatisticsCollectionQuery?
-    var lastSaved: Date? = nil
     
-    
+    /**
+     Create a `HKHealthStore`
+     - Precondition: The user authorized access to Apple Health data
+     */
     init() {
         // Check if there is authorization to access Health data
         if HKHealthStore.isHealthDataAvailable() {
@@ -35,6 +42,11 @@ class HealthStore {
         }
     }
     
+    /**
+     Retrieve Water data from HealthKit
+     - Parameter completion: An `@escaping HKStatisticsCollection?` that returns retrived HealthKit data
+     - Precondition: User has granted access to HealthKit
+     */
     func getHealthKitData(completion: @escaping (HKStatisticsCollection?) -> Void) {
         
         // Set what data to pull
@@ -64,6 +76,10 @@ class HealthStore {
         
     }
     
+    /**
+     Requests authorization to access HealthKit data
+     - Parameter completion: Returns whether or not the user granted HealthKit access
+     */
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         
         // Set HealthKit data types

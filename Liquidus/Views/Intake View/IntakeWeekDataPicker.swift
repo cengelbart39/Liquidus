@@ -1,6 +1,6 @@
 //
 //  IntakeWeekDataPicker.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/7/21.
 //
@@ -11,29 +11,20 @@ struct IntakeWeekDataPicker: View {
     
     @EnvironmentObject var model: DrinkModel
     
-    @Binding var currentWeek: [Date]
-    @State var selectedDay = Date()
+    @Binding var currentWeek: Week
+    @Binding var trigger: Bool
     
     @State var isNextWeek = false
     
-    let dateFormatter: DateFormatter = { () -> DateFormatter in
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .long
-        return formatter
-    }()
-    
     var body: some View {
-        
-        let displayText = model.getWeekText(week: currentWeek)
-        
         HStack {
             Button(action: {
-                let calendar = Calendar.current
                 // Get each day of the week
-                self.currentWeek = model.getWeek(date: calendar.date(byAdding: .day, value: -1, to: self.currentWeek[0]) ?? Date())
+                self.currentWeek.prevWeek()
                 // Check if any day in the next week has occured
-                self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
+                self.isNextWeek = currentWeek.isNextWeek()
+                // Update view
+                trigger.toggle()
             }, label: {
                 Image(systemName: "chevron.left")
                     .foregroundColor(model.grayscaleEnabled ? .primary : .red)
@@ -43,22 +34,20 @@ struct IntakeWeekDataPicker: View {
             Spacer()
             
             // Display week range
-            Text(displayText)
-                .accessibilityLabel(model.getAccessibilityWeekText(week: currentWeek))
+            Text(currentWeek.description)
+                .accessibilityLabel(currentWeek.accessibilityDescription)
             
             Spacer()
             
             Button(action: {
-                let calendar = Calendar.current
-                // Set next week
-                let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: self.currentWeek[0]) ?? Date()
-                
                 // If next week hasn't occured...
                 if !self.isNextWeek {
                     // Update current week
-                    self.currentWeek = model.getWeek(date: nextWeek)
+                    self.currentWeek.nextWeek()
                     // Check if any day in the next week has occured
-                    self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
+                    self.isNextWeek = currentWeek.isNextWeek()
+                    // Update view
+                    trigger.toggle()
                 }
             }, label: {
                 Image(systemName: "chevron.right")
@@ -70,62 +59,34 @@ struct IntakeWeekDataPicker: View {
         .padding(.horizontal)
         .padding(.bottom, 6)
         .onAppear {
-            self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
+            self.isNextWeek = currentWeek.isNextWeek()
         }
+        .onChange(of: trigger, perform: { _ in
+            isNextWeek = currentWeek.isNextWeek()
+        })
         .accessibilityElement(children: .combine)
         .accessibilityHint("Go forward or back a week")
         .accessibilityAdjustableAction { direction in
             switch direction {
             case .increment:
-                if let newWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.currentWeek[0]) {
-                    if !self.isNextWeek {
-                        self.currentWeek = model.getWeek(date: newWeek)
-                        self.isNextWeek = model.isNextWeek(currentWeek: self.currentWeek)
-                    } else {
-                        break
-                    }
+                if !isNextWeek {
+                    currentWeek.nextWeek()
+                    isNextWeek = currentWeek.isNextWeek()
+                    trigger.toggle()
+                
                 } else {
                     break
                 }
                 
             case .decrement:
-                if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: self.currentWeek[0]) {
-                    let newWeek = model.getWeekRange(date: newDate)
-                    self.currentWeek = newWeek
-                    self.isNextWeek = model.isNextWeek(currentWeek: newWeek)
-                } else {
-                    break
-                }
+                
+                currentWeek.prevWeek()
+                isNextWeek = currentWeek.isNextWeek()
+                trigger.toggle()
             
             @unknown default:
                 break
             }
         }
-    }
-    func getDateSuffix(date: String) -> String {
-        let count = date.count
-        
-        var num = date
-        if count == 2 {
-            num = String(date.dropFirst(1))
-        }
-        
-        switch num {
-        case "1":
-            return "st"
-        case "2":
-            return "nd"
-        case "3":
-            return "rd"
-        default:
-            return "th"
-        }
-    }
-}
-
-struct WeekDataPicker_Previews: PreviewProvider {
-    static var previews: some View {
-        IntakeWeekDataPicker(currentWeek: .constant(DrinkModel(test: false, suiteName: nil).getWeekRange(date: Date())))
-            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

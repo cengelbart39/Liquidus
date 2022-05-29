@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct IntakeCircularProgressInfo: View {
+struct IntakeCircularProgressInfo<T: DatesProtocol>: View {
     
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.dynamicTypeSize) var dynamicType
     
-    var timePeriod: Constants.TimePeriod
-    var day: Date
-    var week: [Date]
+    var timePeriod: TimePeriod
+    var datePeriod: T
     var totalPercent: Double
+    @Binding var trigger: Bool
     
     var body: some View {
         
-        if timePeriod == .daily {
+        if let day = datePeriod as? Day {
             
             VStack {
                 // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
@@ -34,7 +34,7 @@ struct IntakeCircularProgressInfo: View {
                 }
                 
                 // Get percentage of liquid drank for day
-                let percent = model.getTotalPercentByDay(date: day)
+                let percent = model.getTotalPercentByDay(day: day)
                 
                 Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                     .font(self.getFontStylePercent())
@@ -44,7 +44,7 @@ struct IntakeCircularProgressInfo: View {
                     .accessibilitySortPriority(0)
                 
                 // Get the total amount of liquid drank for day
-                let total = model.getTotalAmountByDay(date: day)
+                let total = model.getTotalAmountByDay(day: day)
                 
                 Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
                     .font(getFontStyleAmount())
@@ -53,9 +53,12 @@ struct IntakeCircularProgressInfo: View {
                     .accessibilitySortPriority(1)
             }
             .accessibilityElement(children: .combine)
+            .onChange(of: trigger) { newValue in
+                trigger = newValue
+            }
             
         // If a week display the weekly percent
-        } else if timePeriod == .weekly {
+        } else if let week = datePeriod as? Week {
             
             VStack {
                 // Show a flag symbol when the goal is reached and Differentiate Without Color is enabled
@@ -88,9 +91,17 @@ struct IntakeCircularProgressInfo: View {
                     .accessibilitySortPriority(1)
             }
             .accessibilityElement(children: .combine)
+            .onChange(of: trigger) { newValue in
+                trigger = newValue
+            }
+            
         }
     }
     
+    /**
+     For the percentage, return a Font Style
+     - Returns: A Font Style based on Dynamic Type Size
+     */
     private func getFontStylePercent() -> SwiftUI.Font {
         if !dynamicType.isAccessibilitySize {
             return .largeTitle
@@ -107,6 +118,10 @@ struct IntakeCircularProgressInfo: View {
         }
     }
     
+    /**
+     For the amount consumed; Returns the appropriate Font Style
+     - Returns: An appropriate Font Style based on Dynamic Type Size
+     */
     private func getFontStyleAmount() -> SwiftUI.Font {
         if !dynamicType.isAccessibilitySize || dynamicType == .accessibility1 || dynamicType == .accessibility2 {
             return .body

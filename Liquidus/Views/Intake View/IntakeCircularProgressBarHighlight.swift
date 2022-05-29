@@ -1,6 +1,6 @@
 //
 //  IntakeCircularProgressBarHighlight.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //
@@ -14,6 +14,7 @@ struct IntakeCircularProgressBarHighlight: View {
     var progress: Double
     var color: Color
     var width: CGFloat
+    @Binding var trigger: Bool
     
     var body: some View {
         
@@ -24,5 +25,8 @@ struct IntakeCircularProgressBarHighlight: View {
             .foregroundColor(color)
             .rotationEffect(Angle(degrees: 270.0))
             .animation(reduceMotion ? .none : .linear, value: progress)
+            .onChange(of: trigger) { newValue in
+                trigger = newValue
+            }
     }
 }

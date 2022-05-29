@@ -1,6 +1,6 @@
 //
 //  IntakeView.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //
@@ -16,23 +16,25 @@ struct IntakeView: View {
     @EnvironmentObject var model: DrinkModel
     
     // Track if looking at by day or by week
-    @State var selectedTimePeriod = Constants.TimePeriod.daily
+    @State var selectedTimePeriod = TimePeriod.daily
     
     // Are the sheet views up
     @State var isAddDrinkViewShowing = false
     @State var isCalendarViewShowing = false
     
     // Current day/week selected
-    @State var selectedDay = Date()
-    @State var selectedWeek = [Date]()
+    @State var selectedDay = Day()
+    @State var selectedWeek = Week()
         
+    @State var hiddenTrigger = false
+    
     // Button IDs
     @State var addDrinkButtonID = UUID()
     @State var calendarButtonID = UUID()
     @State var currentDayWeekButtonID = UUID()
     
     var updateButtons: Bool
-    var updateTimePicker: Constants.TimePeriod?
+    var updateTimePicker: TimePeriod?
     
     // Focus
     @AccessibilityFocusState private var isTimePeriodFocused: Bool
@@ -47,24 +49,32 @@ struct IntakeView: View {
                 ScrollView {
                     // MARK: - Choose Day or Week Data
                     if selectedTimePeriod == .daily {
-                        IntakeDayDataPicker(selectedDate: $selectedDay)
+                        IntakeDayDataPicker(selectedDate: $selectedDay, trigger: $hiddenTrigger)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
                             .accessibilityFocused($isTimePeriodFocused)
+                        
                     } else {
-                        IntakeWeekDataPicker(currentWeek: $selectedWeek)
+                        IntakeWeekDataPicker(currentWeek: $selectedWeek, trigger: $hiddenTrigger)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
                             .accessibilityFocused($isTimePeriodFocused)
                     }
                     
                     // MARK: - Progress Bar
-                    IntakeCircularProgressBar(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
-                        .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
-                        .padding(.vertical)
+                    if selectedTimePeriod == .daily {
+                        IntakeCircularProgressBar(selectedTimePeriod: .daily, datePeriod: selectedDay, trigger: $hiddenTrigger)
+                            .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
+                            .padding(.vertical)
+                    
+                    } else if selectedTimePeriod == .weekly {
+                        IntakeCircularProgressBar(selectedTimePeriod: .weekly, datePeriod: selectedWeek, trigger: $hiddenTrigger)
+                            .padding(.horizontal, dynamicType.isAccessibilitySize ? 20 : 40)
+                            .padding(.vertical)
+                    }
                     
                     // MARK: - Drink Type Breakup
-                    IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek)
+                    IntakeMultiDrinkBreakup(selectedTimePeriod: selectedTimePeriod, selectedDay: selectedDay, selectedWeek: selectedWeek, trigger: $hiddenTrigger)
                 }
                 
                 Spacer()
@@ -72,7 +82,7 @@ struct IntakeView: View {
             }
             .onAppear {
                 // Update selectedWeek as soon as view appears
-                selectedWeek = model.getWeek(date: selectedDay)
+                selectedWeek = Week(date: selectedDay.data)
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
@@ -95,7 +105,8 @@ struct IntakeView: View {
             }
             .onChange(of: selectedDay) { newValue in
                 // Update selectedWeek when selectedDay updates
-                selectedWeek = model.getWeek(date: selectedDay)
+                selectedWeek.update(date: newValue.data)
+                hiddenTrigger.toggle()
             }
             .onChange(of: selectedTimePeriod) { _ in
                 isTimePeriodFocused = true
@@ -119,7 +130,7 @@ struct IntakeView: View {
             })
             .sheet(isPresented: $isCalendarViewShowing, content: {
                 // Show CalendarView
-                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay, selectedPeriod: selectedTimePeriod)
+                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay, selectedWeek: $selectedWeek, selectedPeriod: selectedTimePeriod, trigger: $hiddenTrigger)
                     .environmentObject(model)
                     .onDisappear {
                         // Updates ids so buttons are tapable
@@ -155,7 +166,8 @@ struct IntakeView: View {
                 // Show Today / This Week Button
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
-                        selectedDay = Date()
+                        selectedDay = Day()
+                        hiddenTrigger.toggle()
                     } label: {
                         Text(selectedTimePeriod == .daily ? "Today" : "This Week")
                             .accessibilityHint("Show data from \(selectedTimePeriod == .daily ? "today" : "this week")")
@@ -165,13 +177,15 @@ struct IntakeView: View {
                 }
             }
             .accessibilityAction(named: "Today / This Week") {
-                selectedDay = Date()
+                selectedDay = Day()
+                hiddenTrigger.toggle()
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
             }
             .accessibilityAction(named: "Change Date / Week") {
                 isCalendarViewShowing = true
+                hiddenTrigger.toggle()
                 addDrinkButtonID = UUID()
                 calendarButtonID = UUID()
                 currentDayWeekButtonID = UUID()
@@ -192,7 +206,11 @@ struct IntakeView: View {
         }
     }
     
-    private func makeDonation(timePeriod: Constants.TimePeriod) {
+    /**
+     Donates a Shortcut to the Shortcuts App
+     - Parameter timePeriod: The current TimePeriod; Determines intent configuration
+     */
+    private func makeDonation(timePeriod: TimePeriod) {
         let intent = ViewIntakeIntent()
         intent.timePeriod = timePeriod == .daily ? .day : .week
         intent.suggestedInvocationPhrase = "View \(timePeriod == .daily ? "Daily" : "Weekly") Intake"

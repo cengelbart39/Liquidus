@@ -1,6 +1,6 @@
 //
 //  IntakeSingleDrinkBreakup.swift
-//  Hydration App
+//  Liquidus
 //
 //  Created by Christopher Engelbart on 9/10/21.
 //
@@ -15,9 +15,10 @@ struct IntakeSingleDrinkBreakup: View {
     
     var color: Color
     var drinkType: DrinkType
-    var selectedTimePeriod: Constants.TimePeriod
-    var selectedDay: Date
-    var selectedWeek: [Date]
+    var selectedTimePeriod: TimePeriod
+    var selectedDay: Day
+    var selectedWeek: Week
+    @Binding var trigger: Bool
         
     @ScaledMetric(relativeTo: .body) var symbolSize = 35
     
@@ -42,9 +43,9 @@ struct IntakeSingleDrinkBreakup: View {
                             .bold()
                         
                         // Consumed Amount & Percent
-                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, date: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
+                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, day: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
                         
-                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, date: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
+                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, day: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
                         
                         HStack {
                             Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
@@ -65,9 +66,9 @@ struct IntakeSingleDrinkBreakup: View {
                             .accessibilityAddTraits(.isHeader)
                         
                         // Consumed Amount & Percent
-                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, date: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
+                        let amount = selectedTimePeriod == .daily ? model.getTypeAmountByDay(type: drinkType, day: selectedDay) : model.getTypeAmountByWeek(type: drinkType, week: selectedWeek)
                         
-                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, date: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
+                        let percent = selectedTimePeriod == .daily ? model.getTypePercentByDay(type: drinkType, day: selectedDay) : model.getTypePercentByWeek(type: drinkType, week: selectedWeek)
                         
                        Text("\(amount, specifier: model.getSpecifier(amount: amount)) \(model.getUnits())")
                             .font(dynamicType == .accessibility4 || dynamicType == .accessibility5 ? .caption2 : .title2)
@@ -83,12 +84,8 @@ struct IntakeSingleDrinkBreakup: View {
             }
         }
         .accessibilityElement(children: .combine)
-    }
-}
-
-struct IntakeSingleDrinkBreakup_Previews: PreviewProvider {
-    static var previews: some View {
-        IntakeSingleDrinkBreakup(color: Color(.systemCyan), drinkType: DrinkModel(test: false, suiteName: nil).drinkData.drinkTypes.first!, selectedTimePeriod: .daily, selectedDay: Date(), selectedWeek: DrinkModel(test: false, suiteName: nil).getWeekRange(date: Date()))
-            .environmentObject(DrinkModel(test: false, suiteName: nil))
+        .onChange(of: trigger) { newValue in
+            trigger = newValue
+        }
     }
 }

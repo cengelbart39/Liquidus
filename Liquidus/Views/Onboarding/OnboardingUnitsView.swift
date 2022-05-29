@@ -78,7 +78,7 @@ struct OnboardingUnitsView: View {
                 } label: {
                     Text("Next")
                 }
-
+                
             }
         }
         .onDisappear {
@@ -88,16 +88,16 @@ struct OnboardingUnitsView: View {
         }
     }
 }
-    
-    struct OnboardingUnitsView_Previews: PreviewProvider {
-        static var previews: some View {
-            Group {
-                OnboardingUnitsView()
-                    .environment(\.sizeCategory, .extraExtraExtraLarge)
-                    .environmentObject(DrinkModel(test: false, suiteName: nil))
-                OnboardingUnitsView()
-                    .preferredColorScheme(.dark)
-                    .environmentObject(DrinkModel(test: false, suiteName: nil))
-            }
+
+struct OnboardingUnitsView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            OnboardingUnitsView()
+                .environment(\.sizeCategory, .extraExtraExtraLarge)
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
+            OnboardingUnitsView()
+                .preferredColorScheme(.dark)
+                .environmentObject(DrinkModel(test: false, suiteName: nil))
         }
     }
+}

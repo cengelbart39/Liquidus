@@ -18,6 +18,8 @@ struct MediumWidgetView: View {
     
     var shapes = ["circle", "square", "triangle", "diamond"]
     
+    @State var hiddenTrigger = false
+    
     @ScaledMetric(relativeTo: .footnote) var symbolSize1 = 15
     @ScaledMetric(relativeTo: .footnote) var symbolSize2 = 10
     @ScaledMetric(relativeTo: .footnote) var symbolSize3 = 7
@@ -30,26 +32,45 @@ struct MediumWidgetView: View {
                 
                 VStack(alignment: .leading) {
                     
+                    let day = Day(date: entry.date)
+                    let week = Week(date: entry.date)
+                    
                     // MARK: - Circular Progress Bar
-                    IntakeCircularProgressDisplay(
-                        timePeriod: entry.timePeriod,
-                        day: .now,
-                        week: model.getWeek(date: .now),
-                        totalPercent: model.getProgressPercent(
-                            type: model.drinkData.drinkTypes.last!,
-                            dates: entry.timePeriod == .daily ? Date.now : model.getWeek(date: .now)),
-                        width: 13
-                    )
-                    .accessibilityHidden(true)
-                    .padding(.top, 21)
-                    .padding(.bottom, 10)
-                    .widgetURL(entry.timePeriod == .daily ? Constants.intakeDailyURL : Constants.intakeWeeklyURL)
-                    .frame(maxWidth: geo.size.width/5)
-                    .frame(maxHeight: 2*geo.size.height/2)
+                    if entry.timePeriod == .daily {
+                        IntakeCircularProgressDisplay(
+                            timePeriod: .daily,
+                            datePeriod: day,
+                            totalPercent: model.getProgressPercent(type: model.drinkData.drinkTypes.last!, dates: day),
+                            width: 13,
+                            trigger: $hiddenTrigger
+                        )
+                        .accessibilityHidden(true)
+                        .padding(.top, 21)
+                        .padding(.bottom, 10)
+                        .widgetURL(Constants.intakeDailyURL)
+                        .frame(maxWidth: geo.size.width/5)
+                        .frame(maxHeight: 2*geo.size.height/2)
+                        
+                    } else if entry.timePeriod == .weekly {
+                        IntakeCircularProgressDisplay(
+                            timePeriod: .weekly,
+                            datePeriod: week,
+                            totalPercent: model.getProgressPercent(type: model.drinkData.drinkTypes.last!, dates: week),
+                            width: 13,
+                            trigger: $hiddenTrigger
+                        )
+                        .accessibilityHidden(true)
+                        .padding(.top, 21)
+                        .padding(.bottom, 10)
+                        .widgetURL(Constants.intakeWeeklyURL)
+                        .frame(maxWidth: geo.size.width/5)
+                        .frame(maxHeight: 2*geo.size.height/2)
+                    }
+                    
                     
                     Spacer()
                     
-                    let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(date: entry.date) : model.getTotalPercentByWeek(week: model.getWeek(date: entry.date))
+                    let percent = entry.timePeriod == .daily ? model.getTotalPercentByDay(day: day) : model.getTotalPercentByWeek(week: week)
                     
                     Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                         .font(.title3)
@@ -61,7 +82,7 @@ struct MediumWidgetView: View {
                     
                         ForEach(first, id: \.self) { type in
                             
-                            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, date: entry.date) : model.getTypeAmountByWeek(type: type, week: model.getWeek(date: entry.date))
+                            let typeAmount = entry.timePeriod == .daily ? model.getTypeAmountByDay(type: type, day: day) : model.getTypeAmountByWeek(type: type, week: week)
                             
                             HStack {
                             
@@ -131,55 +152,98 @@ struct MediumWidgetView: View {
         }
     }
     
-    // Filters out drink types based on if the user has consumed any
-    // Then sorts by the greatest amount
+    /**
+     Filters out `DrinkType`s based on if the user has consumed any `Drink`s and sorts by the greatest amount
+     - Returns: The `DrinkType`s that the user have consumed a `Drink` in
+     */
     private func nonZeroTypes() -> [DrinkType] {
+        // Create a DrinkType array
         var nonZeroTypes = [DrinkType]()
         
+        // Get a Day
+        let day = Day(date: entry.date)
+        
+        // Loop through all DrinkTypes
         for type in model.drinkData.drinkTypes {
-            if model.getTypeAmountByDay(type: type, date: entry.date) > 0.0 {
+            
+            // Append to nonZeroTypes if any Drinks of type were consumed
+            if model.getTypeAmountByDay(type: type, day: day) > 0.0 {
                 nonZeroTypes.append(type)
             }
         }
         
+        // If nonZeroTypes isn't empty
         if !nonZeroTypes.isEmpty {
-            nonZeroTypes.sort { model.getTypeAmountByDay(type: $0, date: entry.date) > model.getTypeAmountByDay(type: $1, date: entry.date) }
+            
+            // Sort by the greatest amount consumed on day
+            nonZeroTypes.sort {
+                model.getTypeAmountByDay(type: $0, day: day) > model.getTypeAmountByDay(type: $1, day: day)
+            }
         }
         
         return nonZeroTypes
     }
     
+    /**
+     Get the first two elements of a `DrinkType` array
+     - Parameter types: A `DrinkType` array
+     - Returns: A `DrinkType` array with the first two `DrinkType`s; `nil` if `types` is empty
+     */
     private func getFirstTwoTypes(types: [DrinkType]) -> [DrinkType]? {
+        // Get the Array Slice
         let t = types.prefix(2)
         
+        // If it is empty, return nil
         if t == ArraySlice([]) {
             return nil
             
+        // Otherwise cast to Array and return
         } else {
             return Array(t)
             
         }
     }
     
+    /**
+     Based on Dynamic Type Size, return the appropriate symbol size
+     - Returns: The appropriate symbol size
+     */
     private func getSymbolSize() -> Double {
         if !dynamicType.isAccessibilitySize {
             return symbolSize1
+            
         } else if dynamicType > .xxxLarge && dynamicType < .accessibility3 {
             return symbolSize2
+            
         } else {
             return symbolSize3
         }
     }
     
+    /**
+     Get the maximum amount of the `DrinkType` with the greater amount consumed during `entry.date`
+     - Parameter types: A 2-element or less `DrinkType` array
+     - Precondition: Assumes `types` is a 2-element, or less, array
+     - Returns: The maximum amount of the `DrinkType` with the greater amount consumed during `entry.date`
+     */
     private func getMaxDataType(types: [DrinkType]) -> Double {
         var maxes = [Double]()
         
+        // Get a Day and Week
+        let day = Day(date: entry.date)
+        let week = Week(date: entry.date)
+        
+        // Loop through types
         for type in types {
-            let dataItems = entry.timePeriod == .daily ? model.getDataItemsForDay(date: .now, type: type) : model.getDataItemsForWeek(week: model.getWeek(date: .now), type: type)
             
+            // Get the DataItems by Day or Week depending on timePeriod
+            let dataItems = entry.timePeriod == .daily ? model.getDataItemsForDay(day: day, type: type) : model.getDataItemsForWeek(week: week, type: type)
+            
+            // Append the maxValue of the DataItems
             maxes.append(model.getMaxValue(dataItems: dataItems, timePeriod: entry.timePeriod))
         }
         
+        // Return the max of the maxes array
         return maxes.max()!
     }
 }

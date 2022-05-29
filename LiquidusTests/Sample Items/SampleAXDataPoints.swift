@@ -7,21 +7,23 @@
 
 import Foundation
 import SwiftUI
+@testable import Liquidus
 
+/**
+ A container class for static methods that generate a set of `AXDataPoint`s for objects conformant to `DatesProtocol`
+ */
 class SampleAXDataPoints {
-    static func day(_ day: Date) -> [AXDataPoint] {
+    /**
+     Gets a sample set of `AXDataPoint`s with a `AXDataPoint` for every `Hour` in the `Day`
+     - Parameter day: The `Day` to create `AXDataPoint`s for
+     - Returns: A sample set of `AXDataPoint`s
+     */
+    static func day(_ day: Day) -> [AXDataPoint] {
         // Empty AXDataPoint array
         var dataPoints = [AXDataPoint]()
-
-        // Create an empty date array
-        var dates = [Date]()
         
         // Append dates for each hour in the day
-        for num in 0...23 {
-            if let date = Calendar.current.date(bySettingHour: num, minute: 0, second: 0, of: day) {
-                dates.append(date)
-            }
-        }
+        let hours = day.getHours()
         
         // Set X-Axis Text
         let text = [
@@ -52,7 +54,7 @@ class SampleAXDataPoints {
         ]
         
         // Loop through dates array
-        for index in 0..<dates.count {
+        for index in 0..<hours.count {
             
             // Append AXDataPoint based on index
             dataPoints.append(AXDataPoint(x: text[index], y: SampleDrinkAmounts.day[index]))
@@ -62,7 +64,12 @@ class SampleAXDataPoints {
         return dataPoints
     }
     
-    static func week(_ week: [Date]) -> [AXDataPoint] {
+    /**
+     Gets a sample set of `AXDataPoint`s with a `AXDataPoint` for every `Day` in the `Week`
+     - Parameter day: The `Week` to create `AXDataPoint`s for
+     - Returns: A sample set of `AXDataPoint`s
+     */
+    static func week(_ week: Week) -> [AXDataPoint] {
         // Empty AXDataPoint array
         var dataPoints = [AXDataPoint]()
 
@@ -78,7 +85,7 @@ class SampleAXDataPoints {
         ]
         
         // Loop through weeks array
-        for index in 0..<week.count {
+        for index in 0..<week.data.count {
             
             // Append AXDataPoint based on index
             dataPoints.append(AXDataPoint(x: text[index], y: SampleDrinkAmounts.week[index]))
@@ -88,7 +95,12 @@ class SampleAXDataPoints {
         return dataPoints
     }
     
-    static func month(_ month: [Date]) -> [AXDataPoint] {
+    /**
+     Gets a sample set of `AXDataPoint`s with a `AXDataPoint` for every `Day` in the `Month`
+     - Parameter day: The `Month` to create `AXDataPoint`s for
+     - Returns: A sample set of `AXDataPoint`s
+     */
+    static func month(_ month: Month) -> [AXDataPoint] {
         // Empty AXDataPoint array
         var dataPoints = [AXDataPoint]()
         
@@ -127,7 +139,7 @@ class SampleAXDataPoints {
         ]
         
         // Loop through months array
-        for index in 0..<month.count {
+        for index in 0..<month.data.count {
             
             // Append AXDataPoint based on index
             dataPoints.append(AXDataPoint(x: text[index], y: SampleDrinkAmounts.month[index]))
@@ -137,7 +149,12 @@ class SampleAXDataPoints {
         return dataPoints
     }
     
-    static func halfYear(_ halfYear: [[Date]]) -> [AXDataPoint] {
+    /**
+     Gets a sample set of `AXDataPoint`s with a `AXDataPoint` for every `Week` in the `HalfYear`
+     - Parameter day: The `HalfYear` to create `AXDataPoint`s for
+     - Returns: A sample set of `AXDataPoint`s
+     */
+    static func halfYear(_ halfYear: HalfYear) -> [AXDataPoint] {
         // Empty AXDataPoint array
         var dataPoints = [AXDataPoint]()
         
@@ -172,12 +189,12 @@ class SampleAXDataPoints {
         ]
         
         // Loop through halfYear
-        for i1 in 0..<halfYear.count {
+        for i1 in 0..<halfYear.data.count {
             // Create weekAmount
             var weekAmount = 0.0
             
             // Loop through halfYear[i1]
-            for i2 in 0..<halfYear[i1].count {
+            for i2 in 0..<halfYear.data[i1].data.count {
                 
                 // Cut off for Oct 31 so it starts at 200 instead of 100
                 if (i1 == 0 && i2 < 6) {
@@ -197,7 +214,12 @@ class SampleAXDataPoints {
         return dataPoints
     }
     
-    static func year(_ year: [[Date]]) -> [AXDataPoint] {
+    /**
+     Gets a sample set of `AXDataPoint`s with a `AXDataPoint` for every `Month` in the `Year`
+     - Parameter day: The `Year` to create `AXDataPoint`s for
+     - Returns: A sample set of `AXDataPoint`s
+     */
+    static func year(_ year: Year) -> [AXDataPoint] {
         // Empty AXDataPoint array
         var dataPoints = [AXDataPoint]()
         
@@ -218,12 +240,12 @@ class SampleAXDataPoints {
         ]
         
         // Loop through year
-        for i1 in 0..<year.count {
+        for i1 in 0..<year.data.count {
             // Create drinkAmount
             var drinkAmount = 0.0
             
             // Loop through year[i1] and add to drinkAmount
-            for i2 in 0..<year[i1].count {
+            for i2 in 0..<year.data[i1].data.count {
                 drinkAmount += SampleDrinkAmounts.month[i2]
             }
             
