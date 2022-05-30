@@ -106,10 +106,6 @@ struct TrendsDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             isHeaderFocused = false
-            selectedWeek = Week(date: selectedDay.data)
-            selectedMonth = Month(date: selectedDay.data)
-            selectedHalfYear = HalfYear(date: selectedDay.data)
-            selectedYear = Year(date: selectedDay.data)
         }
         .onChange(of: selectedTimePeriod) { _ in
             touchLocation = -1
@@ -294,7 +290,7 @@ struct TrendsDetailView: View {
         case 22:
             return "10-11 PM"
         case 23:
-            return "11 PM -12 AM"
+            return "11 PM - 12 AM"
         default:
             return ""
         }

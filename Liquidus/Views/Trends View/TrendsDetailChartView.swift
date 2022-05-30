@@ -126,10 +126,22 @@ struct TrendsDetailChartView: View {
                             HStack {
                                 ForEach(verticalAxisText, id: \.self) { text in
                                     
-                                    Text(text)
-                                        .foregroundColor(Color(.systemGray))
-                                        .font(.caption)
-                                        .dynamicTypeSize(.large)
+                                    if timePeriod == .halfYearly || timePeriod == .yearly {
+                                        
+                                        Text(text[0])
+                                            .foregroundColor(Color(.systemGray))
+                                            .font(.caption)
+                                            .dynamicTypeSize(.large)
+                                        
+                                    } else {
+                                        
+                                        Text(text)
+                                            .foregroundColor(Color(.systemGray))
+                                            .font(.caption)
+                                            .dynamicTypeSize(.large)
+                                        
+                                    }
+                                    
                                     
                                     Spacer()
                                     

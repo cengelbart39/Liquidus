@@ -42,7 +42,7 @@ class Year: YearMethods, DatesProtocol {
         super.init()
         
         // Set properties
-        self.data = super.getYear(date: date)
+        self.data = self.getYear(date: date)
         self.description = super.getDescription(date: date, offset: 12)
         self.accessibilityDescription = super.getAccessibilityDescription(date: date, offset: 12)
     }
@@ -86,7 +86,7 @@ class Year: YearMethods, DatesProtocol {
         if let lastYear = Calendar.current.date(byAdding: .month, value: -1, to: lastDay) {
         
             // Update properties
-            self.data = super.getYear(date: lastYear)
+            self.data = self.getYear(date: lastYear)
             self.description = super.getDescription(date: lastYear, offset: 11)
             self.accessibilityDescription = super.getAccessibilityDescription(date: lastYear, offset: 11)
         }
@@ -103,7 +103,7 @@ class Year: YearMethods, DatesProtocol {
         if let lastYear = Calendar.current.date(byAdding: .month, value: 1, to: lastDay) {
         
             // Update properties
-            self.data = super.getYear(date: lastYear)
+            self.data = self.getYear(date: lastYear)
             self.description = super.getDescription(date: lastYear, offset: 11)
             self.accessibilityDescription = super.getAccessibilityDescription(date: lastYear, offset: 11)
         }
@@ -121,6 +121,25 @@ class Year: YearMethods, DatesProtocol {
         
         // If can't, always return false
         return false
+    }
+    
+    /**
+     Get the `Year` for a given `Date`
+     - Parameter date: A `Date`
+     - Returns: A `[Month]` for each month in the `Year`
+     */
+    private func getYear(date: Date) -> [Month] {
+        // Create an empty array for the months in the year
+        var output = [Month]()
+        
+        // Get a day in each month of 12-month period
+        for index in -11...0 {
+            if let newDate = Calendar.current.date(byAdding: .month, value: index, to: date) {
+                output.append(Month(date: newDate))
+            }
+        }
+        
+        return output
     }
     
     /**

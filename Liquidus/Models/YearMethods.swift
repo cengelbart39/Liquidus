@@ -12,25 +12,6 @@ import Foundation
  */
 class YearMethods {
     /**
-     Get the `Year` for a given `Date`
-     - Parameter date: A `Date`
-     - Returns: A `[Month]` for each month in the `Year`
-     */
-    func getYear(date: Date) -> [Month] {
-        // Create an empty array for the months in the year
-        var output = [Month]()
-        
-        // Get a day in each month of 12-month period
-        for index in -11...0 {
-            if let newDate = Calendar.current.date(byAdding: .month, value: index, to: date) {
-                output.append(Month(date: newDate))
-            }
-        }
-        
-        return output
-    }
-    
-    /**
      Get the Description of a `HalfYear` or `Year`
      - Parameter date: A `Date`
      - Parameter offset: The number of months to set back date by

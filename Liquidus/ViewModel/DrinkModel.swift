@@ -84,18 +84,16 @@ class DrinkModel: ObservableObject {
      - Parameter drink: `Drink` to be saved
      */
     func addDrink(drink: Drink) {
-        DispatchQueue.main.async {
-            // Add drink
-            self.drinkData.drinks.append(drink)
-            
-            // If it's water, save to HealthKit
-            if drink.type.name == Constants.waterKey && drink.type.enabled {
-                self.saveToHealthKit()
-            }
-            
-            // Save to UserDefaults
-            self.save(test: false)
+        // Add drink
+        self.drinkData.drinks.append(drink)
+        
+        // If it's water, save to HealthKit
+        if drink.type.name == Constants.waterKey && drink.type.enabled {
+            self.saveToHealthKit()
         }
+        
+        // Save to UserDefaults
+        self.save(test: false)
         
         // Update widget
         WidgetCenter.shared.reloadAllTimelines()
@@ -624,10 +622,13 @@ class DrinkModel: ObservableObject {
      */
     func filterDataByWeek(week: Week) -> [Drink] {
         
-        // Filter drinks in the same week and those that have an enabled type
-        return self.drinkData.drinks.filter {
-            Calendar.current.compare(week.firstDay(), to: $0.date, toGranularity: .weekOfYear) == .orderedSame && $0.type.enabled
+        var drinks = [Drink]()
+        
+        for day in week.data {
+            drinks += self.filterDataByDay(day: day)
         }
+        
+        return drinks
     }
     
     /**
@@ -1239,14 +1240,7 @@ class DrinkModel: ObservableObject {
                 }
             }
             
-            var output = [String]()
-            
-            for item in text {
-                output.append(item[0])
-            }
-            
-            // Return String array
-            return output
+            return text
         }
         
         // Return empty array if none of the if-statements trigger

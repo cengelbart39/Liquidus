@@ -293,7 +293,7 @@ class DMTrendsChartTests: XCTestCase {
         let halfYearResult = model.verticalAxisText(dataItems: halfYearItems, timePeriod: .halfYearly)
         
         // Assert the function returns the expected result
-        XCTAssertEqual(halfYearResult, ["N", "D", "J", "F", "M", "A"])
+        XCTAssertEqual(halfYearResult, ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"])
         
         // Year Test
         // Get the year of May 2021 to Apr 2022
@@ -306,7 +306,7 @@ class DMTrendsChartTests: XCTestCase {
         let yearResult = model.verticalAxisText(dataItems: yearItems, timePeriod: .yearly)
         
         // Assert the function returns the expected result
-        XCTAssertEqual(yearResult, ["M", "J", "J", "A", "S", "O", "N", "D", "J", "F", "M", "A"])
+        XCTAssertEqual(yearResult, ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"])
     }
     
     func testHorizontalAxisText() {

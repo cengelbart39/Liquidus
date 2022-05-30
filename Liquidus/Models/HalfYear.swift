@@ -42,7 +42,7 @@ class HalfYear: YearMethods, DatesProtocol {
         super.init()
         
         // Set Properties
-        self.data = self.getWeeksForHalfYear(months: super.getYear(date: date))
+        self.data = self.getHalfYear(date: date)
         self.description = super.getDescription(date: date, offset: 6)
         self.accessibilityDescription = super.getAccessibilityDescription(date: date, offset: 6)
     }
@@ -80,15 +80,14 @@ class HalfYear: YearMethods, DatesProtocol {
      */
     func prevHalfYear() {
         // Get the first day of the last month of the Half Year
-        let lastDay = self.lastMonth()
+        let firstMonth = self.firstMonth()
+        let lastMonth = self.lastMonth()
         
-        // Set lastDay by back a month
-        if let lastHalfYear = Calendar.current.date(byAdding: .month, value: -1, to: lastDay) {
-        
-            // Update properties
-            self.data = self.getWeeksForHalfYear(months: super.getYear(date: lastHalfYear))
-            self.description = super.getDescription(date: lastHalfYear, offset: 6)
-            self.accessibilityDescription = super.getAccessibilityDescription(date: lastHalfYear, offset: 6)
+        if let newStart = Calendar.current.date(byAdding: .month, value: -1, to: firstMonth), let newEnd = Calendar.current.date(byAdding: .day, value: -1, to: lastMonth) {
+            
+            self.data = self.updateDataPrevious(start: newStart, end: newEnd)
+            self.description = super.getDescription(date: newEnd, offset: 6)
+            self.accessibilityDescription = super.getAccessibilityDescription(date: newEnd, offset: 6)
         }
     }
     
@@ -97,15 +96,17 @@ class HalfYear: YearMethods, DatesProtocol {
      */
     func nextHalfYear() {
         // Get the first day of the last month of the Half Year
-        let lastDay = self.lastMonth()
+        let firstMonth = self.firstMonth()
+        let lastMonth = self.lastMonth()
         
-        // Set lastDay forward by a month
-        if let lastHalfYear = Calendar.current.date(byAdding: .month, value: 1, to: lastDay) {
-        
-            // Update properties
-            self.data = self.getWeeksForHalfYear(months: super.getYear(date: lastHalfYear))
-            self.description = super.getDescription(date: lastHalfYear, offset: 6)
-            self.accessibilityDescription = super.getAccessibilityDescription(date: lastHalfYear, offset: 6)
+        if let nextMonth = Calendar.current.date(byAdding: .month, value: 2, to: lastMonth) {
+            
+            if let newStart = Calendar.current.date(byAdding: .month, value: 1, to: firstMonth), let newEnd = Calendar.current.date(byAdding: .day, value: -1, to: nextMonth) {
+            
+                self.data = self.updateDataNext(start: newStart, end: newEnd)
+                self.description = super.getDescription(date: newEnd, offset: 6)
+                self.accessibilityDescription = super.getAccessibilityDescription(date: newEnd, offset: 6)
+            }
         }
     }
     
@@ -122,73 +123,147 @@ class HalfYear: YearMethods, DatesProtocol {
     }
     
     /**
-     Convert a `[Month]` to a `[Week]` cutting off dates not in range
-     - Parameter months: A 12-element `[Month]`
-     - Returns: A `[Week]` retaining the last 6 months of `months`
+     Get a `[Week]` with the days during the last 5 months, relative to a `Date`, cutting off dates not in range
+     - Parameter date: A day in the last month of the `HalfYear`
+     - Returns: A `[Week]` with the days during the last 5 months, relative to a `date`
      */
-    private func getWeeksForHalfYear(months: [Month]) -> [Week] {
+    private func getHalfYear(date: Date) -> [Week] {
         // Array to store weeks
         var weeks = [Week]()
         
-        var usedMonths = [Month]()
-        for index in 6...11 {
-            usedMonths.append(months[index])
-        }
+        let components = Calendar.current.dateComponents([.year, .month], from: date)
         
-        // Tracks how many months are processed
-        var monthCount = 0
-        
-        // Loop through halfYear
-        for i1 in 0..<usedMonths.count {
+        if let year = components.year, let month = components.month {
             
-            // Loop through the indicies of month incrementing by 7
-            for i2 in stride(from: 0, through: usedMonths[i1].data.count, by: 7) {
+            let firstDayCurrMonth = Calendar.current.date(from: DateComponents(year: year, month: month, day: 1))!
+            
+            let fiveMonthsAgo = Calendar.current.date(byAdding: .month, value: -5, to: firstDayCurrMonth)!
+
+            var lastDayCurrMonth = Calendar.current.date(byAdding: .month, value: 1, to: firstDayCurrMonth)!
+            lastDayCurrMonth = Calendar.current.date(byAdding: .day, value: -1, to: lastDayCurrMonth)!
+            
+            var currentDay = Day(date: fiveMonthsAgo)
+            
+            while (!weeks.contains(where: { w in
+                w.data.contains(Day(date: lastDayCurrMonth))
+            })) {
+                let newWeek = Week(date: currentDay.data)
                 
-                // When i1 is 0 and i2 is not 0 OR the last week contains the associated day
-                if !(i1 > 0 && i2 == 0) || !(weeks.last?.data.contains(usedMonths[i1].data[i2]) ?? true) {
-                    // If index doesn't exceed the count of month
-                    if i2 < usedMonths[i1].data.count {
-                        
-                        // Append the week for the specified day using i1 and i2
-                        weeks.append(Week(date: usedMonths[i1].data[i2].data))
-                        
-                    // If index is the same or exceeds the count of month
-                    } else if i2 >= usedMonths[i1].data.count {
-                        
-                        // Assign i2 a new variable
-                        var i = i2
-                        
-                        // Decrement i until i is less than the count of the given week
-                        while i >= usedMonths[i1].data.count {
-                            i -= 1
-                        }
-                        
-                        // Append the week for the specified day using i1 and i
-                        weeks.append(Week(date: usedMonths[i1].data[i].data))
-                    }
-                }
+                weeks.append(newWeek)
+                
+                currentDay = Day(date: Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDay.data)!)
             }
             
-            // Increment monthCount
-            monthCount += 1
+            let firstWeek = weeks[0].data.filter {
+                $0.data >= fiveMonthsAgo
+            }
+            
+            weeks[0] = Week(days: firstWeek)
+            
+            let lastIndex = weeks.count-1
+            
+            let lastWeek = weeks[lastIndex].data.filter {
+                $0.data <= lastDayCurrMonth
+            }
+            
+            weeks[lastIndex] = Week(days: lastWeek)
         }
-        
-        // Remove any dates that are not in the first month
-        weeks[0].data = weeks[0].data.filter { $0.data >= usedMonths[0].firstDay() }
-        weeks[0] = Week(days: weeks[0].data)
-        
-        // Get the count of the last month in dictionary
-        let dCount = weeks.count-1
-        
-        // Get the count of the last month in halfYear
-        let hCount = usedMonths.count-1
-        
-        // Filter out any days past the last day in the half year
-        weeks[dCount].data = weeks[dCount].data.filter { $0.data <= usedMonths[hCount].lastDay() }
-        weeks[dCount] = Week(days: weeks[dCount].data)
         
         // Return week arangement of the half year
         return weeks
+    }
+    
+    /**
+     Updates the current data when progressing to the next `HalfYear` using the pre-exisiting data
+     - Parameters:
+        - start: The new start date for data
+        - end: The new end date for data
+     - Returns: Updated data
+     */
+    private func updateDataNext(start: Date, end: Date) -> [Week] {
+        let data = self.data
+        
+        var startIndex = 0
+        for index in 0..<data.count {
+            if data[index].data.contains(Day(date: start)) {
+                startIndex = index
+                break
+            }
+        }
+        
+        var newData = data
+        newData.removeSubrange(0..<startIndex)
+        
+        let first = newData[0].data.filter { $0.data >= start }
+        newData[0] = Week(days: first)
+        
+        let endIndex = newData.count-1
+        var currentDay = newData[endIndex].firstDay()
+        
+        newData[endIndex] = Week(date: currentDay)
+        
+        while (!newData.contains(where: { w in
+            w.data.contains(Day(date: end))
+        })) {
+            
+            currentDay = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDay)!
+            
+            newData.append(Week(date: currentDay))
+        }
+        
+        let last = newData[newData.endIndex-1].data.filter { $0.data <= end }
+        newData[newData.endIndex-1] = Week(days: last)
+        
+        return newData
+    }
+    
+    /**
+     Updates the current data when progressing to the previous `HalfYear` using the pre-exisiting data
+     - Parameters:
+        - start: The new start date for data
+        - end: The new end date for data
+     - Returns: Updated data
+     */
+    private func updateDataPrevious(start: Date, end: Date) -> [Week] {
+        let data = self.data
+        
+        var endIndex = data.endIndex-1
+        for index in stride(from: data.endIndex-1, to: 0, by: -1) {
+            if data[index].data.contains(Day(date: end)) {
+                endIndex = index
+                break
+            }
+        }
+                
+        var newData = data
+        newData.removeSubrange((endIndex+1)...(newData.endIndex-1))
+        
+        let last = newData[newData.endIndex-1].data.filter {
+            $0.data <= end
+        }
+        newData[newData.endIndex-1] = Week(days: last)
+        
+        let lastDay = newData[0].firstDay()
+        var currentDay = Calendar.current.date(byAdding: .month, value: -1, to: lastDay)!
+        
+        var newMonth = [Week]()
+        
+        while (!newMonth.contains(where: { w in
+            w.data.contains(Day(date: lastDay))
+        })) {
+            
+            newMonth.append(Week(date: currentDay))
+            
+            currentDay = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDay)!
+        }
+        
+        let first = newMonth[0].data.filter { $0.data >= start }
+        newMonth[0] = Week(days: first)
+        
+        newData.removeFirst()
+        newData = newMonth + newData
+        
+        return newData
     }
     
     /**
