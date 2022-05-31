@@ -64,7 +64,7 @@ class SampleDataItems {
         for index in 0..<week.data.count {
             
             // Append drink based on index and typeIndex
-            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index].data)], type: types[typeIndex % 4], date: week.data[index].data))
+            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index])], type: types[typeIndex % 4], date: week.data[index]))
             
             // Increment typeIndex
             typeIndex += 1
@@ -93,7 +93,7 @@ class SampleDataItems {
         for index in 0..<month.data.count {
             
             // Append drink based on index and typeIndex
-            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index].data)], type: types[typeIndex % 4], date: month.data[index].data))
+            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index])], type: types[typeIndex % 4], date: month.data[index]))
 
             // Increment typeIndex
             typeIndex += 1
@@ -128,7 +128,7 @@ class SampleDataItems {
             for day in week.data {
                 
                 // Append drink based on typeIndex and amountIndex
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day.data))
+                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
                 
                 // Increment indices
                 typeIndex += 1
@@ -169,7 +169,7 @@ class SampleDataItems {
             for day in month.data {
                 
                 // Append drink based on typeIndex and amountIndex
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
+                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
                 
                 // Increment indices
                 typeIndex += 1

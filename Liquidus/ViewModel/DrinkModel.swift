@@ -122,7 +122,7 @@ class DrinkModel: ObservableObject {
                 let rand = Double.random(in: 0...1600)
                 
                 // Append a Drink
-                allDrinks.append(Drink(type: water, amount: rand, date: day.data))
+                allDrinks.append(Drink(type: water, amount: rand, date: day))
             }
         }
         
@@ -625,7 +625,7 @@ class DrinkModel: ObservableObject {
         var drinks = [Drink]()
         
         for day in week.data {
-            drinks += self.filterDataByDay(day: day)
+            drinks += self.filterDataByDay(day: Day(date: day))
         }
         
         return drinks
@@ -950,10 +950,10 @@ class DrinkModel: ObservableObject {
         for day in week.data {
             
             // Get the drinks based on the presense of the Total Type
-            let drinks = type.name == Constants.totalKey ? self.filterDataByDay(day: day) : self.filterDataByDayAndType(type: type, day: day)
+            let drinks = type.name == Constants.totalKey ? self.filterDataByDay(day: Day(date: day)) : self.filterDataByDayAndType(type: type, day: Day(date: day))
             
             // Append the DataItem, using nil for drinks if drink array is empty
-            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: day.data))
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: day))
         }
         
         return dataItems
@@ -976,10 +976,10 @@ class DrinkModel: ObservableObject {
         for day in month.data {
             
             // Get the drinks based on the presense of the Total Type
-            let drinks = type.name == Constants.totalKey ? self.filterDataByDay(day: day) : self.filterDataByDayAndType(type: type, day: day)
+            let drinks = type.name == Constants.totalKey ? self.filterDataByDay(day: Day(date: day)) : self.filterDataByDayAndType(type: type, day: Day(date: day))
             
             // Append the DataItem, using nil for drinks if drink array is empty
-            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: day.data))
+            dataItems.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: day))
         }
         
         // Return data items
@@ -1438,12 +1438,12 @@ class DrinkModel: ObservableObject {
                 
                 // Filter out days earlier than start
                 let firstWeek = week.data.filter {
-                    Calendar.current.compare(start.data, to: $0.data, toGranularity: .month) == .orderedSame && Calendar.current.compare(start.data, to: $0.data, toGranularity: .year) == .orderedSame
+                    Calendar.current.compare(start, to: $0, toGranularity: .month) == .orderedSame && Calendar.current.compare(start, to: $0, toGranularity: .year) == .orderedSame
                 }
                 
                 // Filter out days later than end
                 let secondWeek = week.data.filter {
-                    Calendar.current.compare(end.data, to: $0.data, toGranularity: .month) == .orderedSame && Calendar.current.compare(end.data, to: $0.data, toGranularity: .year) == .orderedSame
+                    Calendar.current.compare(end, to: $0, toGranularity: .month) == .orderedSame && Calendar.current.compare(end, to: $0, toGranularity: .year) == .orderedSame
                 }
                                 
                 // If firstWeek is empty and secondWeek isn't use secondWeek

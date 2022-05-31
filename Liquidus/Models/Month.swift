@@ -12,13 +12,13 @@ import Foundation
  */
 class Month: DatesProtocol {
     /// The type of the `data` property
-    typealias DatesData = [Day]
+    typealias DatesData = [Date]
     
     /// The unique id of a specific `Month`
     var id = UUID()
     
-    /// The `[Day]` representing the `Day`s in the `Month`
-    var data = [Day]()
+    /// The `[Date]` representing the `Date`s in the `Month`
+    var data = [Date]()
     
     /// A description of the `Month`
     var description = String()
@@ -48,7 +48,7 @@ class Month: DatesProtocol {
      - Returns: The first day in the `Month`
      */
     func firstDay() -> Date {
-        if let day = self.data.first?.data {
+        if let day = self.data.first {
             return day
         }
         
@@ -60,7 +60,7 @@ class Month: DatesProtocol {
      - Returns: The last day in the `Month`
      */
     func lastDay() -> Date {
-        if let day = self.data.last?.data {
+        if let day = self.data.last {
             return day
         }
         
@@ -107,7 +107,7 @@ class Month: DatesProtocol {
      */
     func isNextMonth() -> Bool {
         // Get the next month per currentMonth and today
-        if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.data[0].data), let upcomingMonth = Calendar.current.date(byAdding: .month, value: 1, to: .now) {
+        if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.data[0]), let upcomingMonth = Calendar.current.date(byAdding: .month, value: 1, to: .now) {
             
             // If both months fall are the same return true
             if Calendar.current.compare(nextMonth, to: upcomingMonth, toGranularity: .month) == .orderedSame {
@@ -122,9 +122,9 @@ class Month: DatesProtocol {
     /**
      Get all `Day`s in a `Month` for the given `Date`
      - Parameter day: A `Date`
-     - Returns: A `[Day]` with a `Day` representing each `Day` in the `Month`
+     - Returns: A `[Date]` with a `Date` representing each `Date` in the `Month`
      */
-    private func getMonth(day: Date) -> [Day] {
+    private func getMonth(day: Date) -> [Date] {
         // Date Formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "y"
@@ -156,13 +156,13 @@ class Month: DatesProtocol {
                    
                     // Get the max of the range
                     if let max = range.max() {
-                        var dates = [Day]()
+                        var dates = [Date]()
                         
                         // Generate an array with each date in the month
                         for index in 1...max {
                             if let date = Calendar.current.date(from: DateComponents(year: currentYear, month: currentMonth, day: index)) {
                                 
-                                dates.append(Day(date: date))
+                                dates.append(date)
                             }
                         }
                         
@@ -173,7 +173,7 @@ class Month: DatesProtocol {
         }
         
         // If any of the if or if-let statements fail return an empty array
-        return [Day]()
+        return [Date]()
     }
     
     /**

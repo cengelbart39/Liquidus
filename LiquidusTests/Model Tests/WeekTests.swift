@@ -26,13 +26,13 @@ class WeekTests: XCTestCase {
         let expected = Week()
         
         expected.data = [
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!)
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!
         ]
         expected.description = "Apr 3-9, 2022"
         expected.accessibilityDescription = "Apr 3rd to 9th, 2022"
@@ -42,13 +42,13 @@ class WeekTests: XCTestCase {
     
     func testArrayConstructor() {
         let days = [
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!)
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 3))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 4))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 5))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 6))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 7))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 9))!
         ]
         
         let result = Week(days: days)
@@ -80,13 +80,13 @@ class WeekTests: XCTestCase {
     func testPrevWeek() {
         let expected = Week()
         expected.data = [
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 27))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 28))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 29))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 30))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 31))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 2))!)
+            Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 27))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 28))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 29))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 30))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 3, day: 31))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 1))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 2))!
         ]
         expected.description = "Mar 27 - Apr 2, 2022"
         expected.accessibilityDescription = "Mar 27th to Apr 2nd, 2022"
@@ -99,13 +99,13 @@ class WeekTests: XCTestCase {
     func testNextWeek() {
         let expected = Week()
         expected.data = [
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 10))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 11))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 12))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 13))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 14))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 15))!),
-            Day(date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 16))!)
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 10))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 11))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 12))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 13))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 14))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 15))!,
+            Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 16))!
         ]
         expected.description = "Apr 10-16, 2022"
         expected.accessibilityDescription = "Apr 10th to 16th, 2022"
@@ -122,7 +122,6 @@ class WeekTests: XCTestCase {
     
     func testUpdate() {
         week.update(date: Date.now)
-        
         XCTAssertEqual(week!, Week())
     }
     

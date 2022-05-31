@@ -13,13 +13,13 @@ import SwiftUI
  */
 class Week: DatesProtocol {
     /// The type of the `data` property
-    typealias DatesData = [Day]
+    typealias DatesData = [Date]
     
     /// The unique id of a specific `Week`
     var id = UUID()
     
-    /// The `[Day]` representing the `Day`s in the `Week`
-    var data = [Day]()
+    /// The `[Date]` representing the `Day`s in the `Week`
+    var data = [Date]()
     
     /// A description of the `Week`
     var description = String()
@@ -51,10 +51,10 @@ class Week: DatesProtocol {
     }
     
     /**
-     Get a `Week` using a passed in `[Day]`
-     - Parameter days: A `[Day]`
+     Get a `Week` using a passed in `[Date]`
+     - Parameter days: A `[Date]`
      */
-    init(days: [Day]) {
+    init(days: [Date]) {
         // Set properties
         self.data = days
         self.description = self.getDescription(week: days)
@@ -67,7 +67,7 @@ class Week: DatesProtocol {
      */
     func firstDay() -> Date {
         // Get the first day and return it
-        if let day = self.data.first?.data {
+        if let day = self.data.first {
             return day
         }
         
@@ -81,7 +81,7 @@ class Week: DatesProtocol {
      */
     func lastDay() -> Date {
         // Get the last day and return it
-        if let day = self.data.last?.data {
+        if let day = self.data.last {
             return day
         }
         
@@ -183,7 +183,7 @@ class Week: DatesProtocol {
             for dayB in week2 {
                 
                 // If two days are the same...
-                if dateFormatter.string(from: dayA.data) == dateFormatter.string(from: dayB.data) {
+                if dateFormatter.string(from: dayA) == dateFormatter.string(from: dayB) {
                     return true
                 }
             }
@@ -245,9 +245,9 @@ class Week: DatesProtocol {
     /**
      Generates a `[Day]` with each `Day` in the `Week`, using a `Date`
      - Parameter date: A `Date`
-     - Returns: A `[Day]` with a `Day` for each day in the `Week`
+     - Returns: A `[Date]` with a `Day` for each day in the `Week`
      */
-    private func getWeek(date: Date) -> [Day] {
+    private func getWeek(date: Date) -> [Date] {
         // Get the week range
         let weekRange = self.getWeekRange(day: date)
         
@@ -255,13 +255,13 @@ class Week: DatesProtocol {
         if weekRange.count == 2 {
             
             // Get the exact day for each day of the week
-            let sunday = Day(date: weekRange[0])
-            let monday = Day(date: Calendar.current.date(byAdding: .day, value: 1, to: sunday.data)!)
-            let tuesday = Day(date: Calendar.current.date(byAdding: .day, value: 2, to: sunday.data)!)
-            let wednesday = Day(date: Calendar.current.date(byAdding: .day, value: 3, to: sunday.data)!)
-            let thursday = Day(date: Calendar.current.date(byAdding: .day, value: 4, to: sunday.data)!)
-            let friday = Day(date: Calendar.current.date(byAdding: .day, value: 5, to: sunday.data)!)
-            let saturday = Day(date: weekRange[1])
+            let sunday = weekRange[0]
+            let monday = Calendar.current.date(byAdding: .day, value: 1, to: sunday)!
+            let tuesday = Calendar.current.date(byAdding: .day, value: 2, to: sunday)!
+            let wednesday = Calendar.current.date(byAdding: .day, value: 3, to: sunday)!
+            let thursday = Calendar.current.date(byAdding: .day, value: 4, to: sunday)!
+            let friday = Calendar.current.date(byAdding: .day, value: 5, to: sunday)!
+            let saturday = weekRange[1]
             
             // Update weeksPopulated if false
             
@@ -269,21 +269,21 @@ class Week: DatesProtocol {
         }
         
         // Else return an empty array
-        return [Day]()
+        return [Date]()
     }
     
     /**
      Get the `description` for a `Week` using a given `[Day]`
-     - Parameter week: A `[Day]` containing the `Day`s in the `Week`
+     - Parameter week: A `[Date]` containing the `Date`s in the `Week`
      - Returns: A `String` `description` of the `Week`. Possible Formats: "Apr 3-9, 2022", "Mar 27 - Apr 2, 2022", "Dec 26, 2021 - Jan 2, 2022"
      */
-    private func getDescription(week: [Day]) -> String {
+    private func getDescription(week: [Date]) -> String {
         // Create a date formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         
         // Get first and last days in week
-        if let first = week.first?.data, let last = week.last?.data {
+        if let first = week.first, let last = week.last {
             
             // If the year is the same
             if Calendar.current.compare(first, to: last, toGranularity: .year) == .orderedSame {
@@ -339,16 +339,16 @@ class Week: DatesProtocol {
     
     /**
      Get the Accessibility Description for a `Week`
-     - Parameter week: A `[Day]` containing the `Day`s in the `Week`
+     - Parameter week: A `[Date]` containing the `Date`s in the `Week`
      - Returns: A `String` `description` of the week. Possible Formats: "Apr 3rd to 9th, 2022", "Mar 27th - Apr 2nd, 2022", "Dec 26th, 2021 to Jan 2nd, 2022"
      */
-    private func getAccessibilityDescription(week: [Day]) -> String {
+    private func getAccessibilityDescription(week: [Date]) -> String {
         // Create a date formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         
         // Get first and last days in week
-        if let first = week.first?.data, let last = week.last?.data {
+        if let first = week.first, let last = week.last {
             
             // If the year is the same
             if Calendar.current.compare(first, to: last, toGranularity: .year) == .orderedSame {
@@ -476,9 +476,26 @@ class Week: DatesProtocol {
      - Returns: `true` if they're the same; `false` if not
      */
     static func == (lhs: Week, rhs: Week) -> Bool {
-        if lhs.data == rhs.data && lhs.description == rhs.description && lhs.accessibilityDescription == rhs.accessibilityDescription {
+        if lhs.description == rhs.description && lhs.accessibilityDescription == rhs.accessibilityDescription {
             
-            return true
+            if lhs.data.count != rhs.data.count {
+                
+                return false
+                
+            } else {
+                
+                for index in 0..<lhs.data.count {
+                    
+                    let test = Calendar.current.compare(lhs.data[index], to: rhs.data[index], toGranularity: .year) == .orderedSame && Calendar.current.compare(lhs.data[index], to: rhs.data[index], toGranularity: .month) == .orderedSame && Calendar.current.compare(lhs.data[index], to: rhs.data[index], toGranularity: .day) == .orderedSame
+                    
+                    if !test {
+                        return false
+                    }
+                }
+                
+                return true
+                
+            }
         }
         
         return false

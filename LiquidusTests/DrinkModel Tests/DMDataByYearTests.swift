@@ -186,7 +186,7 @@ class DMDataByYearTests: XCTestCase {
             for day in month.data {
                 
                 // Create a drink using the values of typeIndex, amountIndex, and day
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
+                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
                 
                 // Increment indicies
                 typeIndex += 1

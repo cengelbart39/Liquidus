@@ -232,7 +232,7 @@ class DMDataByHalfYearTests: XCTestCase {
             for day in week.data {
                 
                 // Append and create a drink using typeIndex, amountIndex, and day
-                drinks.append(Drink(type: types[typeIndex % 4], amount: amounts[amountIndex % 7], date: day.data))
+                drinks.append(Drink(type: types[typeIndex % 4], amount: amounts[amountIndex % 7], date: day))
                 
                 // Increment indices
                 typeIndex += 1

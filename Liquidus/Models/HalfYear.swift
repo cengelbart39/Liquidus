@@ -53,7 +53,7 @@ class HalfYear: YearMethods, DatesProtocol {
      */
     func firstMonth() -> Date {
         // Get the first day in the first month and return it
-        if let month = self.data.first?.data.first?.data {
+        if let month = self.data.first?.firstDay() {
             return month
         }
         
@@ -67,8 +67,12 @@ class HalfYear: YearMethods, DatesProtocol {
      */
     func lastMonth() -> Date {
         // Get the first day in the last month and return it
-        if let month = self.data.last?.data.first?.data {
-            return Month(date: month).firstDay()
+        if let month = self.data.last?.lastDay() {
+            let components = Calendar.current.dateComponents([.year, .month], from: month)
+            
+            if let year = components.year, let month = components.month {
+                return Calendar.current.date(from: DateComponents(year: year, month: month, day: 1))!
+            }
         }
         
         // Return today if if-let fails
@@ -145,7 +149,7 @@ class HalfYear: YearMethods, DatesProtocol {
             var currentDay = Day(date: fiveMonthsAgo)
             
             while (!weeks.contains(where: { w in
-                w.data.contains(Day(date: lastDayCurrMonth))
+                w.data.contains(lastDayCurrMonth)
             })) {
                 let newWeek = Week(date: currentDay.data)
                 
@@ -155,7 +159,7 @@ class HalfYear: YearMethods, DatesProtocol {
             }
             
             let firstWeek = weeks[0].data.filter {
-                $0.data >= fiveMonthsAgo
+                $0 >= fiveMonthsAgo
             }
             
             weeks[0] = Week(days: firstWeek)
@@ -163,7 +167,7 @@ class HalfYear: YearMethods, DatesProtocol {
             let lastIndex = weeks.count-1
             
             let lastWeek = weeks[lastIndex].data.filter {
-                $0.data <= lastDayCurrMonth
+                $0 <= lastDayCurrMonth
             }
             
             weeks[lastIndex] = Week(days: lastWeek)
@@ -185,7 +189,7 @@ class HalfYear: YearMethods, DatesProtocol {
         
         var startIndex = 0
         for index in 0..<data.count {
-            if data[index].data.contains(Day(date: start)) {
+            if data[index].data.contains(start) {
                 startIndex = index
                 break
             }
@@ -194,7 +198,7 @@ class HalfYear: YearMethods, DatesProtocol {
         var newData = data
         newData.removeSubrange(0..<startIndex)
         
-        let first = newData[0].data.filter { $0.data >= start }
+        let first = newData[0].data.filter { $0 >= start }
         newData[0] = Week(days: first)
         
         let endIndex = newData.count-1
@@ -203,7 +207,7 @@ class HalfYear: YearMethods, DatesProtocol {
         newData[endIndex] = Week(date: currentDay)
         
         while (!newData.contains(where: { w in
-            w.data.contains(Day(date: end))
+            w.data.contains(end)
         })) {
             
             currentDay = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDay)!
@@ -211,7 +215,7 @@ class HalfYear: YearMethods, DatesProtocol {
             newData.append(Week(date: currentDay))
         }
         
-        let last = newData[newData.endIndex-1].data.filter { $0.data <= end }
+        let last = newData[newData.endIndex-1].data.filter { $0 <= end }
         newData[newData.endIndex-1] = Week(days: last)
         
         return newData
@@ -229,7 +233,7 @@ class HalfYear: YearMethods, DatesProtocol {
         
         var endIndex = data.endIndex-1
         for index in stride(from: data.endIndex-1, to: 0, by: -1) {
-            if data[index].data.contains(Day(date: end)) {
+            if data[index].data.contains(end) {
                 endIndex = index
                 break
             }
@@ -239,7 +243,7 @@ class HalfYear: YearMethods, DatesProtocol {
         newData.removeSubrange((endIndex+1)...(newData.endIndex-1))
         
         let last = newData[newData.endIndex-1].data.filter {
-            $0.data <= end
+            $0 <= end
         }
         newData[newData.endIndex-1] = Week(days: last)
         
@@ -249,7 +253,7 @@ class HalfYear: YearMethods, DatesProtocol {
         var newMonth = [Week]()
         
         while (!newMonth.contains(where: { w in
-            w.data.contains(Day(date: lastDay))
+            w.data.contains(lastDay)
         })) {
             
             newMonth.append(Week(date: currentDay))
@@ -257,7 +261,7 @@ class HalfYear: YearMethods, DatesProtocol {
             currentDay = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: currentDay)!
         }
         
-        let first = newMonth[0].data.filter { $0.data >= start }
+        let first = newMonth[0].data.filter { $0 >= start }
         newMonth[0] = Week(days: first)
         
         newData.removeFirst()

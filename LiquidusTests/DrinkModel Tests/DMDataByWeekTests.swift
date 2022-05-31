@@ -44,13 +44,13 @@ class DMDataByWeekTests: XCTestCase {
         
         // Set the expected drink array
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: 300, date: testWeek.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: 400, date: testWeek.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: 100, date: testWeek.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: 300, date: testWeek.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: 400, date: testWeek.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: 200, date: testWeek.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: 100, date: testWeek.data[6])
         ]
         
         // Assert each index of the expected and result arrays are equal
@@ -84,8 +84,8 @@ class DMDataByWeekTests: XCTestCase {
         
         // Set the expected drink array
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek.data[4].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: 100, date: testWeek.data[0]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: 300, date: testWeek.data[4])
         ]
         
         // Assert result1 is equal to the expected array

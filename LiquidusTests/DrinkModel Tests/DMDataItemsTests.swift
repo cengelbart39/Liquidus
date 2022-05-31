@@ -194,18 +194,18 @@ class DMDataItemsTests: XCTestCase {
             if type == Constants.totalType {
                 
                 // Append a DataItem based on the current index
-                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index].data)], type: type, date: week.data[index].data))
+                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index])], type: type, date: week.data[index]))
             
             } else {
                 // Check to filter out any drink type than Water
                 if index % 4 == 0 {
                     
                     // Append a DataItem based on the current index (always Water)
-                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.week[index], date: week.data[index].data)], type: type, date: week.data[index].data))
+                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.week[index], date: week.data[index])], type: type, date: week.data[index]))
 
                 // If false the append a DataItem with the drink parameter set to nil
                 } else {
-                    items.append(DataItem(type: type, date: week.data[index].data))
+                    items.append(DataItem(type: type, date: week.data[index]))
 
                 }
             }
@@ -270,7 +270,7 @@ class DMDataItemsTests: XCTestCase {
             if type == Constants.totalType {
                 
                 // Append a DataItem based on the current index
-                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index].data)], type: type, date: month.data[index].data))
+                items.append(DataItem(drinks: [Drink(type: types[index % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index])], type: type, date: month.data[index]))
             
             } else {
                 
@@ -278,11 +278,11 @@ class DMDataItemsTests: XCTestCase {
                 if index % 4 == 0 {
                     
                     // Append a DataItem based on the current index
-                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.month[index], date: month.data[index].data)], type: type, date: month.data[index].data))
+                    items.append(DataItem(drinks: [Drink(type: types[0], amount: SampleDrinkAmounts.month[index], date: month.data[index])], type: type, date: month.data[index]))
 
                 // If false the append a DataItem with the drink parameter set to nil
                 } else {
-                    items.append(DataItem(type: type, date: month.data[index].data))
+                    items.append(DataItem(type: type, date: month.data[index]))
 
                 }
             }
@@ -358,13 +358,13 @@ class DMDataItemsTests: XCTestCase {
                 if type == Constants.totalType {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day.data))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
                 
                 // Check to filter out any drink type than Water
                 } else if typeIndex % 4 == 0 {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day.data))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
                 
                 }
                 
@@ -446,13 +446,13 @@ class DMDataItemsTests: XCTestCase {
                 if type == Constants.totalType {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
                 
                 // Check to filter out any drink type than Water
                 } else if typeIndex % 4 == 0 {
                     
                     // Append a DataItem based on the current index
-                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day.data))
+                    drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
 
                 }
                 
@@ -465,7 +465,7 @@ class DMDataItemsTests: XCTestCase {
             amountIndex = 0
             
             // Append a DataItem using the drink array (nil if empty)
-            items.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: month.data.first!.data))
+            items.append(DataItem(drinks: drinks.isEmpty ? nil : drinks, type: type, date: month.firstDay()))
         }
         
         // Return items array

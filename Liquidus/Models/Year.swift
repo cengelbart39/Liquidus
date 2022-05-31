@@ -53,7 +53,7 @@ class Year: YearMethods, DatesProtocol {
      */
     func firstMonth() -> Date {
         // Get and return the first day of the first month
-        if let month = data.first?.data.first?.data {
+        if let month = data.first?.firstDay() {
             return month
         }
         
@@ -67,7 +67,7 @@ class Year: YearMethods, DatesProtocol {
      */
     func lastMonth() -> Date {
         // Get and return the first day of the last month
-        if let month = data.last?.data.first?.data {
+        if let month = data.last?.firstDay() {
             return month
         }
         

@@ -310,10 +310,10 @@ struct TrendsDetailView: View {
         
         // Return the selected day as a string
         if selectedTimePeriod == .weekly {
-            return formatter.string(from: selectedWeek.data[touchLocation].data)
+            return formatter.string(from: selectedWeek.data[touchLocation])
             
         } else if selectedTimePeriod == .monthly {
-            return formatter.string(from: selectedMonth.data[touchLocation].data)
+            return formatter.string(from: selectedMonth.data[touchLocation])
             
         }
         
@@ -339,7 +339,7 @@ struct TrendsDetailView: View {
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM y"
             
-            return formatter.string(from: day.data)
+            return formatter.string(from: day)
         }
         
         return ""
@@ -382,10 +382,10 @@ struct TrendsDetailView: View {
             return model.getTypeAmountByHour(type: type, hour: Hour(date: dataItems[touchLocation].date))
             
         } else if selectedTimePeriod == .weekly {
-            return model.getTypeAmountByDay(type: type, day: selectedWeek.data[touchLocation])
+            return model.getTypeAmountByDay(type: type, day: Day(date: selectedWeek.data[touchLocation]))
 
         } else if selectedTimePeriod == .monthly {
-            return model.getTypeAmountByDay(type: type, day: selectedMonth.data[touchLocation])
+            return model.getTypeAmountByDay(type: type, day: Day(date: selectedMonth.data[touchLocation]))
 
         } else if selectedTimePeriod == .halfYearly {
             return model.getTypeAmountByWeek(type: type, week: selectedHalfYear.data[touchLocation])

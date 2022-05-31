@@ -175,8 +175,8 @@ class DMDrinkTypeTests: XCTestCase {
         // Assert test isn't nil
         XCTAssertNotNil(test)
         
-        // Assert test returns 139
-        XCTAssertEqual(test!, 139)
+        // Assert test returns 137
+        XCTAssertEqual(test!, 137)
     }
     
     func testSaveDrinkType() {

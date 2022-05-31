@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import Liquidus
 
 class DMConstructor: XCTestCase {
@@ -27,5 +28,4 @@ class DMConstructor: XCTestCase {
         // Check that healthStore exists
         XCTAssertNotNil(model.healthStore)
     }
-    
 }

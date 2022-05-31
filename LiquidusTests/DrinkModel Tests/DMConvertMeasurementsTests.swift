@@ -41,13 +41,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -78,13 +78,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -115,13 +115,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -152,13 +152,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -189,13 +189,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -226,13 +226,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -263,13 +263,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
 
         // Convert measurements in drink store
@@ -300,13 +300,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -337,13 +337,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -374,13 +374,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -411,13 +411,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store
@@ -448,13 +448,13 @@ class DMConvertMeasurementsTests: XCTestCase {
         
         // Set expected drinks
         let expected = [
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2].data),
-            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3].data),
-            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4].data),
-            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5].data),
-            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6].data)
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[0], date: week.data[0]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[1], date: week.data[1]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[2], date: week.data[2]),
+            Drink(type: model.drinkData.drinkTypes[3], amount: amounts[3], date: week.data[3]),
+            Drink(type: model.drinkData.drinkTypes[0], amount: amounts[4], date: week.data[4]),
+            Drink(type: model.drinkData.drinkTypes[1], amount: amounts[5], date: week.data[5]),
+            Drink(type: model.drinkData.drinkTypes[2], amount: amounts[6], date: week.data[6])
         ]
         
         // Convert measurements in drink store

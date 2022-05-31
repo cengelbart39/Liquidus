@@ -124,7 +124,7 @@ class YearMethods {
      */
     func isNextMonth(currentMonth: Month) -> Bool {
         // Get the next month per currentMonth and today
-        if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth.data[0].data), let upcomingMonth = Calendar.current.date(byAdding: .month, value: 1, to: .now) {
+        if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth.data[0]), let upcomingMonth = Calendar.current.date(byAdding: .month, value: 1, to: .now) {
             
             return Calendar.current.compare(nextMonth, to: upcomingMonth, toGranularity: .month) == .orderedSame
         }
