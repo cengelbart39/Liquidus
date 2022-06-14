@@ -4,17 +4,18 @@
 //
 //  Created by Christopher Engelbart on 9/6/21.
 //
-//  String Extension by Paul Hudson
-//  https://www.hackingwithswift.com/example-code/strings/how-to-read-a-single-character-from-a-string
-//
 
 import SwiftUI
 
 @main
 struct Liquidus_App: App {
+    
+    let context = PersistenceController.shared.container.viewContext
+        
     var body: some Scene {
         WindowGroup {
             LaunchView()
+                .environment(\.managedObjectContext, context)
                 .environmentObject(DrinkModel(test: false, suiteName: nil))
         }
     }

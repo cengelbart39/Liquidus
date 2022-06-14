@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Drink" representedClassName="Drink" syncable="YES">
+        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="type" maxCount="1" deletionRule="Nullify" destinationEntity="DrinkType" inverseName="drinks" inverseEntity="DrinkType"/>
+    </entity>
+    <entity name="DrinkType" representedClassName="DrinkType" syncable="YES">
+        <attribute name="color" attributeType="Binary"/>
+        <attribute name="colorChanged" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="enabled" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isDefault" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Drink" inverseName="type" inverseEntity="Drink"/>
+    </entity>
+    <elements>
+        <element name="Drink" positionX="-36" positionY="72" width="128" height="89"/>
+        <element name="DrinkType" positionX="-54" positionY="27" width="128" height="149"/>
+    </elements>
+</model>

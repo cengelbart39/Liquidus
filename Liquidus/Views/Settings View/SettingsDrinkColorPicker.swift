@@ -19,15 +19,14 @@ struct SettingsDrinkColorPicker: View {
         ColorPicker(drinkType.name, selection: $color, supportsOpacity: false)
             // When the color changes, update model
             .onChange(of: color) { newValue in
-                if let index = model.drinkData.drinkTypes.firstIndex(of: drinkType) {
-                    model.drinkData.drinkTypes[index].color = CodableColor(color: UIColor(color))
-                    model.drinkData.drinkTypes[index].colorChanged = true
-                }
+                drinkType.color = UIColor(newValue).encode()
             }
             // When view appears, update color to drinkType's color
             .onAppear {
-                if let index = model.drinkData.drinkTypes.firstIndex(of: drinkType) {
-                    color = model.drinkData.drinkTypes[index].color.getColor()
+                if let data = drinkType.color {
+                    if let uiColor = UIColor.color(data: data) {
+                        color = Color(uiColor: uiColor)
+                    }
                 }
             }
         

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 @testable import Liquidus
 
 /**
@@ -15,10 +16,12 @@ class SampleDataItems {
     
     /**
      Gets a sample set of `DataItem`s with a `DataItem` for every `Hour` in the `Day`
-     - Parameter day: The `Day` to create `DataItem`s for
+     - Parameters:
+        - day: The `Day` to create `DataItem`s for
+        - context: A view context used to create `DrinkType`s and `Drink`s
      - Returns: A sample set of `DataItem`s
      */
-    static func day(_ day: Day) -> [DataItem] {
+    static func day(_ day: Day, context: NSManagedObjectContext) -> [DataItem] {
         // Empty items array
         var items = [DataItem]()
 
@@ -26,7 +29,7 @@ class SampleDataItems {
         let hours = day.getHours()
         
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex
         var typeIndex = 0
@@ -34,8 +37,15 @@ class SampleDataItems {
         // Loop through dates array
         for index in 0..<hours.count {
             
-            // Append drink based on index and typeIndex
-            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.day[index], date: hours[index].data)], type: types[typeIndex % 4], date: hours[index].data))
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.amount = SampleDrinkAmounts.day[index]
+            drink.date = hours[index].data
+            drink.type = types[typeIndex % 4]
+            
+            types[typeIndex % 4].addToDrinks(drink)
+            
+            items.append(DataItem(drinks: [drink], type: nil, total: true, date: hours[index].data))
             
             // Increment typeIndex
             typeIndex += 1
@@ -47,15 +57,17 @@ class SampleDataItems {
     
     /**
      Gets a sample set of `DataItem`s with a `DataItem` for every `Day` in the `Week`
-     - Parameter day: The `Week` to create `DataItem`s for
+     - Parameters:
+        - week: The `Week` to create `DataItem`s for
+        - context: A view context used to create `DrinkType`s and `Drink`s
      - Returns: A sample set of `DataItem`s
      */
-    static func week(_ week: Week) -> [DataItem] {
+    static func week(_ week: Week, context: NSManagedObjectContext) -> [DataItem] {
         // Empty items array
         var items = [DataItem]()
         
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex
         var typeIndex = 0
@@ -63,8 +75,15 @@ class SampleDataItems {
         // Loop through week array
         for index in 0..<week.data.count {
             
-            // Append drink based on index and typeIndex
-            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index])], type: types[typeIndex % 4], date: week.data[index]))
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.amount = SampleDrinkAmounts.week[index]
+            drink.date = week.data[index]
+            drink.type = types[typeIndex % 4]
+            
+            types[typeIndex % 4].addToDrinks(drink)
+            
+            items.append(DataItem(drinks: [drink], type: nil, total: true, date: week.data[index]))
             
             // Increment typeIndex
             typeIndex += 1
@@ -76,15 +95,17 @@ class SampleDataItems {
     
     /**
      Gets a sample set of `DataItem`s with a `DataItem` for every `Day` in the `Month`
-     - Parameter day: The `Month` to create `DataItem`s for
+     - Parameters:
+        - month: The `Month` to create `DataItem`s for
+        - context: A view context used to create `DrinkType`s and `Drink`s
      - Returns: A sample set of `DataItem`s
      */
-    static func month(_ month: Month) -> [DataItem] {
+    static func month(_ month: Month, context: NSManagedObjectContext) -> [DataItem] {
         // Empty items array
         var items = [DataItem]()
         
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex
         var typeIndex = 0
@@ -92,8 +113,15 @@ class SampleDataItems {
         // Loop through dates array
         for index in 0..<month.data.count {
             
-            // Append drink based on index and typeIndex
-            items.append(DataItem(drinks: [Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index])], type: types[typeIndex % 4], date: month.data[index]))
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.amount = SampleDrinkAmounts.month[index]
+            drink.date = month.data[index]
+            drink.type = types[typeIndex % 4]
+            
+            types[typeIndex % 4].addToDrinks(drink)
+            
+            items.append(DataItem(drinks: [drink], type: nil, total: true, date: month.data[index]))
 
             // Increment typeIndex
             typeIndex += 1
@@ -105,15 +133,17 @@ class SampleDataItems {
     
     /**
      Gets a sample set of `DataItem`s with a single `DataItem` for every `Week` in the `HalfYear`
-     - Parameter day: The `HalfYear` to create `DataItem`s for
+     - Parameters:
+        - halfYear: The `HalfYear` to create `DataItem`s for
+        - context: A view context used to create `DrinkType`s and `Drink`s
      - Returns: A sample set of `DataItem`s
      */
-    static func halfYear(_ halfYear: HalfYear) -> [DataItem] {
+    static func halfYear(_ halfYear: HalfYear, context: NSManagedObjectContext) -> [DataItem] {
         // Empty items array
         var items = [DataItem]()
         
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex and amountIndex
         var typeIndex = 0
@@ -127,8 +157,16 @@ class SampleDataItems {
             // Loop through days in week
             for day in week.data {
                 
+                let drink = Drink(context: context)
+                drink.id = UUID()
+                drink.amount = SampleDrinkAmounts.week[amountIndex % 7]
+                drink.date = day
+                drink.type = types[typeIndex % 4]
+                
+                types[typeIndex % 4].addToDrinks(drink)
+                                
                 // Append drink based on typeIndex and amountIndex
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
+                drinks.append(drink)
                 
                 // Increment indices
                 typeIndex += 1
@@ -136,7 +174,7 @@ class SampleDataItems {
             }
             
             // Append DataItem
-            items.append(DataItem(drinks: drinks, type: Constants.totalType, date: week.firstDay()))
+            items.append(DataItem(drinks: drinks, type: nil, total: true, date: week.firstDay()))
         }
         
         // Return items array
@@ -145,15 +183,17 @@ class SampleDataItems {
     
     /**
      Gets a sample set of `DataItem`s with a single `DataItem` for every `Month` in the `Year`
-     - Parameter day: The `Year` to create `DataItem`s for
+     - Parameters:
+        - year: The `Year` to create `DataItem`s for
+        - context: A view context used to create `DrinkType`s and `Drink`s
      - Returns: A sample set of `DataItem`s
      */
-    static func year(_ year: Year) -> [DataItem] {
+    static func year(_ year: Year, context: NSManagedObjectContext) -> [DataItem] {
         // Empty items array
         var items = [DataItem]()
         
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex and amountIndex
         var typeIndex = 0
@@ -168,8 +208,16 @@ class SampleDataItems {
             // Loop through days in month
             for day in month.data {
                 
+                let drink = Drink(context: context)
+                drink.id = UUID()
+                drink.amount = SampleDrinkAmounts.month[amountIndex]
+                drink.date = day
+                drink.type = types[typeIndex % 4]
+                
+                types[typeIndex % 4].addToDrinks(drink)
+                                
                 // Append drink based on typeIndex and amountIndex
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
+                drinks.append(drink)
                 
                 // Increment indices
                 typeIndex += 1
@@ -177,8 +225,8 @@ class SampleDataItems {
             }
             
             // Append DataItem
-            items.append(DataItem(drinks: drinks, type: Constants.totalType, date: month.firstDay()))
-            
+            items.append(DataItem(drinks: drinks, type: nil, total: true, date: month.firstDay()))
+                        
             // Reset amountIndex
             amountIndex = 0
         }

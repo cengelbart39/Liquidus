@@ -30,7 +30,7 @@ struct SettingsDailyGoalView: View {
                 
                 HStack {
                     // Daily Goal input
-                    TextField("\(Int(model.drinkData.dailyGoal))", text: $dailyGoal)
+                    TextField("\(Int(model.userInfo.dailyGoal))", text: $dailyGoal)
                         .keyboardType(.decimalPad)
                         .focused($isFieldFocused)
                     
@@ -39,7 +39,7 @@ struct SettingsDailyGoalView: View {
                     Text(model.getUnits())
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityValue("\(model.drinkData.dailyGoal, specifier: model.getSpecifier(amount: model.drinkData.dailyGoal)) \(model.getAccessibilityUnitLabel())")
+                .accessibilityValue("\(model.userInfo.dailyGoal, specifier: model.getSpecifier(amount: model.userInfo.dailyGoal)) \(model.getAccessibilityUnitLabel())")
                 .accessibilityHint("Edit text to change your goal")
             }
             
@@ -65,9 +65,9 @@ struct SettingsDailyGoalView: View {
                 Button(action: {
                     if let num = Double(dailyGoal) {
                         // Update daily goal
-                        model.drinkData.dailyGoal = num
+                        model.userInfo.dailyGoal = num
                         // Save to user defaults
-                        model.save(test: false)
+                        model.saveUserInfo(test: false)
                         // Update Widget
                         WidgetCenter.shared.reloadAllTimelines()
                         // Dismiss screen
@@ -93,9 +93,9 @@ struct SettingsDailyGoalView: View {
         .accessibilityAction(named: "Save") {
             if let num = Double(dailyGoal) {
                 // Update daily goal
-                model.drinkData.dailyGoal = num
+                model.userInfo.dailyGoal = num
                 // Save to user defaults
-                model.save(test: false)
+                model.saveUserInfo(test: false)
                 // Dismiss screen
                 presentationMode.wrappedValue.dismiss()
             }

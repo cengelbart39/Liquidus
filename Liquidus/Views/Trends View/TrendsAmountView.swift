@@ -13,7 +13,8 @@ struct TrendsAmountView: View {
     
     @Environment(\.dynamicTypeSize) var dynamicType
     
-    var type: DrinkType
+    var type: DrinkType?
+    var total: Bool
     var avg1: Double?
     
     var body: some View {
@@ -29,7 +30,7 @@ struct TrendsAmountView: View {
                     .font(self.getUnitFontStyle())
                     .accessibilityLabel("\(model.getAccessibilityUnitLabel()) per day")
             }
-            .foregroundStyle(type.name == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+            .foregroundStyle(total ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type!)], startPoint: .top, endPoint: .bottom))
             
         } else {
             Group {
@@ -40,7 +41,7 @@ struct TrendsAmountView: View {
                     .bold()
                     .font(self.getUnitFontStyle())
             }
-            .foregroundStyle(type.name == Constants.totalKey ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type)], startPoint: .top, endPoint: .bottom))
+            .foregroundStyle(total ? model.getDrinkTypeGradient() : LinearGradient(colors: [model.getDrinkTypeColor(type: type!)], startPoint: .top, endPoint: .bottom))
             .accessibilityLabel("Not Enough Data")
         }
     }

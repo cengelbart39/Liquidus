@@ -15,41 +15,47 @@
 		9D0309E4279329EA0034526D /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309E3279329EA0034526D /* Provider.swift */; };
 		9D0309E627932A070034526D /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309E527932A070034526D /* SimpleEntry.swift */; };
 		9D0309E827932A280034526D /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0309E727932A280034526D /* WidgetView.swift */; };
-		9D0309EE279334A20034526D /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
-		9D0309EF279334A40034526D /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
-		9D0309F02793381A0034526D /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
-		9D070CEC280768F900C92EE6 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D070CEB280768F900C92EE6 /* DrinkType.swift */; };
-		9D070CED280768F900C92EE6 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D070CEB280768F900C92EE6 /* DrinkType.swift */; };
-		9D070CEE280768F900C92EE6 /* DrinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D070CEB280768F900C92EE6 /* DrinkType.swift */; };
+		9D0309EE279334A20034526D /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* UserInfo.swift */; };
+		9D085124284FD55D00750A60 /* DrinkType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085120284FD55D00750A60 /* DrinkType+CoreDataClass.swift */; };
+		9D085125284FD55D00750A60 /* Drink+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085121284FD55D00750A60 /* Drink+CoreDataClass.swift */; };
+		9D085126284FD55D00750A60 /* Drink+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085122284FD55D00750A60 /* Drink+CoreDataProperties.swift */; };
+		9D085127284FD55D00750A60 /* DrinkType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085123284FD55D00750A60 /* DrinkType+CoreDataProperties.swift */; };
+		9D085128284FD57800750A60 /* Drink+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085121284FD55D00750A60 /* Drink+CoreDataClass.swift */; };
+		9D085129284FD57800750A60 /* Drink+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085121284FD55D00750A60 /* Drink+CoreDataClass.swift */; };
+		9D08512A284FD57B00750A60 /* Drink+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085122284FD55D00750A60 /* Drink+CoreDataProperties.swift */; };
+		9D08512B284FD57C00750A60 /* Drink+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085122284FD55D00750A60 /* Drink+CoreDataProperties.swift */; };
+		9D08512C284FD57F00750A60 /* DrinkType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085120284FD55D00750A60 /* DrinkType+CoreDataClass.swift */; };
+		9D08512D284FD57F00750A60 /* DrinkType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085120284FD55D00750A60 /* DrinkType+CoreDataClass.swift */; };
+		9D08512F284FD58300750A60 /* DrinkType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085123284FD55D00750A60 /* DrinkType+CoreDataProperties.swift */; };
+		9D085130284FD58400750A60 /* DrinkType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085123284FD55D00750A60 /* DrinkType+CoreDataProperties.swift */; };
 		9D110E7A281C7C29006A54A5 /* DMUnitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D110E79281C7C29006A54A5 /* DMUnitsTests.swift */; };
 		9D1A4AB4283D4AB200B50BD6 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE2A2835817400A623AC /* Day.swift */; };
 		9D1A4AB5283D4AB500B50BD6 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE2E2835884C00A623AC /* Week.swift */; };
 		9D1A4AB7283D4ABB00B50BD6 /* DatesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE2C2835882B00A623AC /* DatesProtocol.swift */; };
 		9D1A4AB8283D4AC100B50BD6 /* Hour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2768D62836B6EC000D6115 /* Hour.swift */; };
-		9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
+		9D1C3BB626E8012600D03771 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* UserInfo.swift */; };
 		9D1E701626EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */; };
 		9D2017522793663D008257FA /* IntakeCircularProgressBarHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */; };
 		9D20175727937CD7008257FA /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */; };
+		9D23F57A285781A70040059A /* DTTypeMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D23F579285781A70040059A /* DTTypeMeasurementTests.swift */; };
+		9D23F57C2857846C0040059A /* DTHourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D23F57B2857846C0040059A /* DTHourTests.swift */; };
+		9D23F57E285793400040059A /* DTDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D23F57D285793400040059A /* DTDayTests.swift */; };
 		9D263EA0279CBA260084FE2E /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D1A0DD8279B808400BB8548 /* Intents.framework */; };
 		9D263EA3279CBA260084FE2E /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D263EA2279CBA260084FE2E /* IntentHandler.swift */; };
 		9D263EB7279CBA260084FE2E /* ViewIntakeIntent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D263E9F279CBA260084FE2E /* ViewIntakeIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D263EC0279CBA730084FE2E /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
-		9D263EC2279CBA760084FE2E /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
-		9D263EC4279CBA7B0084FE2E /* DrinkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* DrinkData.swift */; };
-		9D263EC6279CBA7E0084FE2E /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
+		9D263EC4279CBA7B0084FE2E /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C3BB526E8012600D03771 /* UserInfo.swift */; };
 		9D263ECD279CBB4E0084FE2E /* IntentLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D263ECC279CBB4E0084FE2E /* IntentLogic.swift */; };
 		9D2768D72836B6EC000D6115 /* Hour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2768D62836B6EC000D6115 /* Hour.swift */; };
 		9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */; };
 		9D308CED280B469100BC7350 /* DrinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CEC280B469100BC7350 /* DrinkTests.swift */; };
-		9D308CEF280B492C00BC7350 /* DrinkTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CEE280B492C00BC7350 /* DrinkTypeTests.swift */; };
+		9D308CEF280B492C00BC7350 /* DTConstructorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CEE280B492C00BC7350 /* DTConstructorTests.swift */; };
 		9D308CF1280B4C9600BC7350 /* DataItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF0280B4C9600BC7350 /* DataItemTests.swift */; };
-		9D308CF3280B501200BC7350 /* DrinkDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF2280B501200BC7350 /* DrinkDataTests.swift */; };
+		9D308CF3280B501200BC7350 /* UserInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF2280B501200BC7350 /* UserInfoTests.swift */; };
 		9D308CF6280B51C200BC7350 /* DMDataItemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D308CF5280B51C200BC7350 /* DMDataItemsTests.swift */; };
 		9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */; };
-		9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D395165270A0CFF009E7F40 /* CodableColor.swift */; };
 		9D3B49C22832CDC000C34E98 /* DMUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3B49C12832CDC000C34E98 /* DMUserDefaultsTests.swift */; };
-		9D3B49C42832D30300C34E98 /* DMAddDrinkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3B49C32832D30300C34E98 /* DMAddDrinkTest.swift */; };
 		9D400C5127FB83D700A480BA /* WidgetChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D400C5027FB83D700A480BA /* WidgetChartView.swift */; };
 		9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */; };
 		9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */; };
@@ -71,40 +77,46 @@
 		9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3B726E6752C00FEFE49 /* TabBar.swift */; };
 		9D48B3BC26E675A200FEFE49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BB26E675A200FEFE49 /* SettingsView.swift */; };
 		9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */; };
-		9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */; };
+		9D48B3C226E69F7A00FEFE49 /* IntakeLogDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D48B3C126E69F7A00FEFE49 /* IntakeLogDrinkView.swift */; };
 		9D5609FE2823202F007FFFE1 /* SampleDataItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5609FD2823202F007FFFE1 /* SampleDataItems.swift */; };
 		9D560A0028232055007FFFE1 /* SampleDrinkAmounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5609FF28232055007FFFE1 /* SampleDrinkAmounts.swift */; };
+		9D56DE2D2850E187004431DF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56DE2C2850E187004431DF /* Persistence.swift */; };
+		9D56DE2E2850E187004431DF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56DE2C2850E187004431DF /* Persistence.swift */; };
+		9D56DE2F2850E187004431DF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56DE2C2850E187004431DF /* Persistence.swift */; };
+		9D56DE36285117BA004431DF /* SampleDrinkTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D56DE35285117BA004431DF /* SampleDrinkTypes.swift */; };
 		9D60620F281DC87400883DCC /* DMConvertMeasurementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D60620E281DC87400883DCC /* DMConvertMeasurementsTests.swift */; };
 		9D606211281DCCB000883DCC /* DMDataByDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D606210281DCCB000883DCC /* DMDataByDayTests.swift */; };
 		9D6B55D8284146D20046F8BA /* IntentLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D263ECC279CBB4E0084FE2E /* IntentLogic.swift */; };
-		9D765CDC2821EF8D00C61C2E /* DMConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D765CDB2821EF8D00C61C2E /* DMConstructor.swift */; };
+		9D765CDC2821EF8D00C61C2E /* DMConstructorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D765CDB2821EF8D00C61C2E /* DMConstructorTests.swift */; };
 		9D765CDE2821F05800C61C2E /* DMProgressBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D765CDD2821F05800C61C2E /* DMProgressBarTests.swift */; };
 		9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */; };
 		9D7E11CB280F72B600F549A1 /* SampleDrinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E11CA280F72B600F549A1 /* SampleDrinks.swift */; };
 		9D7E8EB92835A2FB00F7E9CC /* HalfYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E8EB82835A2FB00F7E9CC /* HalfYear.swift */; };
 		9D7E8EBB2835A3BA00F7E9CC /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E8EBA2835A3BA00F7E9CC /* Year.swift */; };
-		9D8037DD28206331003F018C /* DMDataByHalfYearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8037DC28206331003F018C /* DMDataByHalfYearTests.swift */; };
 		9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */; };
 		9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */; };
 		9D87F54327ED02A500208EB3 /* IntakeCircularProgressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */; };
-		9D87F54427ED047800208EB3 /* IntakeCircularProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */; };
+		9D8ABEAB28468836007CF54A /* Liquidus Data Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEA928468836007CF54A /* Liquidus Data Model.xcdatamodeld */; };
+		9D8ABEDC28469373007CF54A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEDB28469373007CF54A /* UIColorExtension.swift */; };
+		9D8ABEF528469DCA007CF54A /* Liquidus Data Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEA928468836007CF54A /* Liquidus Data Model.xcdatamodeld */; };
+		9D8ABEFE2846B4E3007CF54A /* IntakeCircularProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEFD2846B4E3007CF54A /* IntakeCircularProgressDisplay.swift */; };
+		9D8ABEFF2846B4EB007CF54A /* IntakeCircularProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEFD2846B4E3007CF54A /* IntakeCircularProgressDisplay.swift */; };
 		9D8AEAFB2842D99F0033C9DB /* False Failures in Resources */ = {isa = PBXBuildFile; fileRef = 9D8AEAFA2842D99F0033C9DB /* False Failures */; };
 		9D8AEAFD2842E6E50033C9DB /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AEAFC2842E6E50033C9DB /* TimePeriod.swift */; };
 		9D8AEAFE2842E7270033C9DB /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AEAFC2842E6E50033C9DB /* TimePeriod.swift */; };
 		9D8AEAFF2842E7270033C9DB /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8AEAFC2842E6E50033C9DB /* TimePeriod.swift */; };
-		9D8B09C127EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */; };
 		9D8E8774278F7E520051D808 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8E8773278F7E510051D808 /* SettingsAboutView.swift */; };
 		9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */; };
 		9D935BF126ED0E2400CA9C31 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D935BF026ED0E2400CA9C31 /* HealthKit.framework */; };
 		9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */; };
-		9D97063C2821CC5D00460834 /* DMDataByYearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D97063B2821CC5D00460834 /* DMDataByYearTests.swift */; };
 		9D97DAC9284268D400D1B950 /* DatesProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D97DAC8284268D400D1B950 /* DatesProtocolTests.swift */; };
-		9D9FBECE281F33AF00235525 /* DMDataByHourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FBECD281F33AF00235525 /* DMDataByHourTests.swift */; };
-		9D9FBED0281F353C00235525 /* DMDataByWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9FBECF281F353C00235525 /* DMDataByWeekTests.swift */; };
+		9D9B61992857CC4800BF12D0 /* DTWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B61982857CC4800BF12D0 /* DTWeekTests.swift */; };
+		9D9B619B2858D23F00BF12D0 /* DTMonthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B619A2858D23F00BF12D0 /* DTMonthTests.swift */; };
+		9D9B619D2858DEC600BF12D0 /* DTHalfYearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B619C2858DEC600BF12D0 /* DTHalfYearTests.swift */; };
+		9D9B619F2858E5F700BF12D0 /* DTYearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B619E2858E5F700BF12D0 /* DTYearTests.swift */; };
 		9DA67BE8283008E00027260E /* DMHealthKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA67BE7283008E00027260E /* DMHealthKitTests.swift */; };
 		9DA7B148270C9D8100C5C1A7 /* NewDrinkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */; };
 		9DA8D6E426E7BAE900FEEC6C /* IntakeDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E326E7BAE900FEEC6C /* IntakeDataPicker.swift */; };
-		9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8D6E726E7BBC500FEEC6C /* Drink.swift */; };
 		9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */; };
 		9DB24C5D279F5D8C009F265A /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
 		9DB24C64279F79D1009F265A /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
@@ -138,8 +150,7 @@
 		9DCACE2F2835884C00A623AC /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE2E2835884C00A623AC /* Week.swift */; };
 		9DCACE3128358C8900A623AC /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE3028358C8800A623AC /* Month.swift */; };
 		9DCEFAA92822E59F00D8A56A /* DMTrendsChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCEFAA82822E59F00D8A56A /* DMTrendsChartTests.swift */; };
-		9DD2D22128203F94008FB162 /* DMDataByMonthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD2D22028203F94008FB162 /* DMDataByMonthTests.swift */; };
-		9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* CalendarView.swift */; };
+		9DD3F9E32778D32000809D1F /* IntakeCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD3F9E22778D32000809D1F /* IntakeCalendarView.swift */; };
 		9DD698842836D28A00EEF10D /* YearMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD698832836D28A00EEF10D /* YearMethods.swift */; };
 		9DD698852836E23D00EEF10D /* DatesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE2C2835882B00A623AC /* DatesProtocol.swift */; };
 		9DD698862836E24000EEF10D /* Hour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2768D62836B6EC000D6115 /* Hour.swift */; };
@@ -156,9 +167,16 @@
 		9DE2CA2D27EA3A91009ADE3D /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */; };
 		9DE2CA2E27EA3A91009ADE3D /* StringSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */; };
 		9DE79BA5281B157300EA78F3 /* DMDrinkTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE79BA4281B157300EA78F3 /* DMDrinkTypeTests.swift */; };
+		9DF4DA80284A7F31008CD3CE /* Liquidus Data Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEA928468836007CF54A /* Liquidus Data Model.xcdatamodeld */; };
+		9DF4DA86284A833C008CD3CE /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB24C5C279F5D8C009F265A /* DataItem.swift */; };
+		9DF4DA87284A8352008CD3CE /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCACE3028358C8800A623AC /* Month.swift */; };
+		9DF4DA88284A8355008CD3CE /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E8EBA2835A3BA00F7E9CC /* Year.swift */; };
+		9DF4DA89284A8358008CD3CE /* HalfYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7E8EB82835A2FB00F7E9CC /* HalfYear.swift */; };
+		9DF4DA8A284A835A008CD3CE /* YearMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD698832836D28A00EEF10D /* YearMethods.swift */; };
 		9DFE221F2843D8E200C44445 /* ViewIntake.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9DFE221E2843D8E200C44445 /* ViewIntake.intentdefinition */; };
-		9DFE22202843D8E200C44445 /* ViewIntake.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9DFE221E2843D8E200C44445 /* ViewIntake.intentdefinition */; };
 		9DFE22212843D8E200C44445 /* ViewIntake.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 9DFE221E2843D8E200C44445 /* ViewIntake.intentdefinition */; };
+		9DFF610628495BEE00AF6F57 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEDB28469373007CF54A /* UIColorExtension.swift */; };
+		9DFF610728495BEF00AF6F57 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8ABEDB28469373007CF54A /* UIColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,13 +229,19 @@
 		9D0309E527932A070034526D /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
 		9D0309E727932A280034526D /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntakeWidgetExtension.entitlements; sourceTree = "<group>"; };
-		9D070CEB280768F900C92EE6 /* DrinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkType.swift; sourceTree = "<group>"; };
+		9D085120284FD55D00750A60 /* DrinkType+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DrinkType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9D085121284FD55D00750A60 /* Drink+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Drink+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9D085122284FD55D00750A60 /* Drink+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Drink+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9D085123284FD55D00750A60 /* DrinkType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DrinkType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9D0ACC5B279CA8A4005BEDE9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		9D110E79281C7C29006A54A5 /* DMUnitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMUnitsTests.swift; sourceTree = "<group>"; };
 		9D1A0DD8279B808400BB8548 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
-		9D1C3BB526E8012600D03771 /* DrinkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkData.swift; sourceTree = "<group>"; };
+		9D1C3BB526E8012600D03771 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeSingleDrinkBreakup.swift; sourceTree = "<group>"; };
 		9D215F0227108124000F9BED /* SettingsEditCustomTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsEditCustomTypeView.swift; sourceTree = "<group>"; };
+		9D23F579285781A70040059A /* DTTypeMeasurementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTTypeMeasurementTests.swift; sourceTree = "<group>"; };
+		9D23F57B2857846C0040059A /* DTHourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTHourTests.swift; sourceTree = "<group>"; };
+		9D23F57D285793400040059A /* DTDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTDayTests.swift; sourceTree = "<group>"; };
 		9D263E9F279CBA260084FE2E /* ViewIntakeIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ViewIntakeIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D263EA2279CBA260084FE2E /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		9D263EA4279CBA260084FE2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -227,14 +251,12 @@
 		9D2AFF1126ECF83300A9C8EC /* SettingsUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsView.swift; sourceTree = "<group>"; };
 		9D308CE3280B466900BC7350 /* LiquidusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiquidusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D308CEC280B469100BC7350 /* DrinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTests.swift; sourceTree = "<group>"; };
-		9D308CEE280B492C00BC7350 /* DrinkTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTypeTests.swift; sourceTree = "<group>"; };
+		9D308CEE280B492C00BC7350 /* DTConstructorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTConstructorTests.swift; sourceTree = "<group>"; };
 		9D308CF0280B4C9600BC7350 /* DataItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataItemTests.swift; sourceTree = "<group>"; };
-		9D308CF2280B501200BC7350 /* DrinkDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDataTests.swift; sourceTree = "<group>"; };
+		9D308CF2280B501200BC7350 /* UserInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTests.swift; sourceTree = "<group>"; };
 		9D308CF5280B51C200BC7350 /* DMDataItemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataItemsTests.swift; sourceTree = "<group>"; };
 		9D395163270A038A009E7F40 /* SettingsDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkTypeView.swift; sourceTree = "<group>"; };
-		9D395165270A0CFF009E7F40 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		9D3B49C12832CDC000C34E98 /* DMUserDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMUserDefaultsTests.swift; sourceTree = "<group>"; };
-		9D3B49C32832D30300C34E98 /* DMAddDrinkTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMAddDrinkTest.swift; sourceTree = "<group>"; };
 		9D400C5027FB83D700A480BA /* WidgetChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetChartView.swift; sourceTree = "<group>"; };
 		9D46BBDF2714B0BE00DB9149 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		9D46BBE12714B9F100DB9149 /* OnboardingUnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUnitsView.swift; sourceTree = "<group>"; };
@@ -258,37 +280,40 @@
 		9D48B3B726E6752C00FEFE49 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		9D48B3BB26E675A200FEFE49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D48B3BD26E68CD100FEFE49 /* SettingsDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDailyGoalView.swift; sourceTree = "<group>"; };
-		9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDrinkView.swift; sourceTree = "<group>"; };
+		9D48B3C126E69F7A00FEFE49 /* IntakeLogDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeLogDrinkView.swift; sourceTree = "<group>"; };
 		9D5609FD2823202F007FFFE1 /* SampleDataItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDataItems.swift; sourceTree = "<group>"; };
 		9D5609FF28232055007FFFE1 /* SampleDrinkAmounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDrinkAmounts.swift; sourceTree = "<group>"; };
+		9D56DE2C2850E187004431DF /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		9D56DE35285117BA004431DF /* SampleDrinkTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDrinkTypes.swift; sourceTree = "<group>"; };
 		9D60620E281DC87400883DCC /* DMConvertMeasurementsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMConvertMeasurementsTests.swift; sourceTree = "<group>"; };
 		9D606210281DCCB000883DCC /* DMDataByDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByDayTests.swift; sourceTree = "<group>"; };
-		9D765CDB2821EF8D00C61C2E /* DMConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMConstructor.swift; sourceTree = "<group>"; };
+		9D765CDB2821EF8D00C61C2E /* DMConstructorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMConstructorTests.swift; sourceTree = "<group>"; };
 		9D765CDD2821F05800C61C2E /* DMProgressBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMProgressBarTests.swift; sourceTree = "<group>"; };
 		9D7696C22710C51000B6D68C /* SettingsEditDefaultTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEditDefaultTypeView.swift; sourceTree = "<group>"; };
 		9D7E11CA280F72B600F549A1 /* SampleDrinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleDrinks.swift; sourceTree = "<group>"; };
 		9D7E8EB82835A2FB00F7E9CC /* HalfYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfYear.swift; sourceTree = "<group>"; };
 		9D7E8EBA2835A3BA00F7E9CC /* Year.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Year.swift; sourceTree = "<group>"; };
-		9D8037DC28206331003F018C /* DMDataByHalfYearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByHalfYearTests.swift; sourceTree = "<group>"; };
 		9D80A7D227934A3800FDD10B /* MediumWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumWidgetView.swift; sourceTree = "<group>"; };
 		9D80A7D427934A4D00FDD10B /* LargeWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeWidgetView.swift; sourceTree = "<group>"; };
 		9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressInfo.swift; sourceTree = "<group>"; };
+		9D8ABEAA28468836007CF54A /* Liquidus Data Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Liquidus Data Model.xcdatamodel"; sourceTree = "<group>"; };
+		9D8ABEDB28469373007CF54A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		9D8ABEFD2846B4E3007CF54A /* IntakeCircularProgressDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressDisplay.swift; sourceTree = "<group>"; };
 		9D8AEAFA2842D99F0033C9DB /* False Failures */ = {isa = PBXFileReference; lastKnownFileType = text; path = "False Failures"; sourceTree = "<group>"; };
 		9D8AEAFC2842E6E50033C9DB /* TimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
-		9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCircularProgressDisplay.swift; sourceTree = "<group>"; };
 		9D8E8773278F7E510051D808 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
 		9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		9D935BEE26ED0E2400CA9C31 /* Liquidus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Liquidus.entitlements; sourceTree = "<group>"; };
 		9D935BF026ED0E2400CA9C31 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeMultiDrinkBreakup.swift; sourceTree = "<group>"; };
-		9D97063B2821CC5D00460834 /* DMDataByYearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByYearTests.swift; sourceTree = "<group>"; };
 		9D97DAC8284268D400D1B950 /* DatesProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesProtocolTests.swift; sourceTree = "<group>"; };
-		9D9FBECD281F33AF00235525 /* DMDataByHourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByHourTests.swift; sourceTree = "<group>"; };
-		9D9FBECF281F353C00235525 /* DMDataByWeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByWeekTests.swift; sourceTree = "<group>"; };
+		9D9B61982857CC4800BF12D0 /* DTWeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTWeekTests.swift; sourceTree = "<group>"; };
+		9D9B619A2858D23F00BF12D0 /* DTMonthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTMonthTests.swift; sourceTree = "<group>"; };
+		9D9B619C2858DEC600BF12D0 /* DTHalfYearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTHalfYearTests.swift; sourceTree = "<group>"; };
+		9D9B619E2858E5F700BF12D0 /* DTYearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTYearTests.swift; sourceTree = "<group>"; };
 		9DA67BE7283008E00027260E /* DMHealthKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMHealthKitTests.swift; sourceTree = "<group>"; };
 		9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDrinkTypeView.swift; sourceTree = "<group>"; };
 		9DA8D6E326E7BAE900FEEC6C /* IntakeDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeDataPicker.swift; sourceTree = "<group>"; };
-		9DA8D6E726E7BBC500FEEC6C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		9DAA9F63270A4F50001496F5 /* SettingsDrinkColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDrinkColorPicker.swift; sourceTree = "<group>"; };
 		9DB24C5C279F5D8C009F265A /* DataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataItem.swift; sourceTree = "<group>"; };
 		9DB7C68A282D47EB00F1C6C1 /* SampleAXDataPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAXDataPoints.swift; sourceTree = "<group>"; };
@@ -318,8 +343,7 @@
 		9DCACE2E2835884C00A623AC /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		9DCACE3028358C8800A623AC /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		9DCEFAA82822E59F00D8A56A /* DMTrendsChartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMTrendsChartTests.swift; sourceTree = "<group>"; };
-		9DD2D22028203F94008FB162 /* DMDataByMonthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDataByMonthTests.swift; sourceTree = "<group>"; };
-		9DD3F9E22778D32000809D1F /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9DD3F9E22778D32000809D1F /* IntakeCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntakeCalendarView.swift; sourceTree = "<group>"; };
 		9DD698832836D28A00EEF10D /* YearMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMethods.swift; sourceTree = "<group>"; };
 		9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSubstring.swift; sourceTree = "<group>"; };
 		9DE79BA4281B157300EA78F3 /* DMDrinkTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMDrinkTypeTests.swift; sourceTree = "<group>"; };
@@ -365,6 +389,7 @@
 		9D0309D6279329CD0034526D /* IntakeWidget */ = {
 			isa = PBXGroup;
 			children = (
+				9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */,
 				9D0309D7279329CD0034526D /* IntakeWidget.swift */,
 				9D0309ED279334780034526D /* Views */,
 				9D0309E527932A070034526D /* SimpleEntry.swift */,
@@ -386,10 +411,37 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		9D085131284FF15000750A60 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				9DA8D6E926E7BC6100FEEC6C /* ViewModel */,
+				9DA8D6E626E7BBB900FEEC6C /* Models */,
+				9D8ABEA828468812007CF54A /* Data */,
+				9D48B3B326E671CD00FEFE49 /* Helpers */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		9D23F578285780CA0040059A /* DrinkType Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9D308CEE280B492C00BC7350 /* DTConstructorTests.swift */,
+				9D23F579285781A70040059A /* DTTypeMeasurementTests.swift */,
+				9D23F57B2857846C0040059A /* DTHourTests.swift */,
+				9D23F57D285793400040059A /* DTDayTests.swift */,
+				9D9B61982857CC4800BF12D0 /* DTWeekTests.swift */,
+				9D9B619A2858D23F00BF12D0 /* DTMonthTests.swift */,
+				9D9B619C2858DEC600BF12D0 /* DTHalfYearTests.swift */,
+				9D9B619E2858E5F700BF12D0 /* DTYearTests.swift */,
+			);
+			path = "DrinkType Tests";
+			sourceTree = "<group>";
+		};
 		9D263EA1279CBA260084FE2E /* ViewIntakeIntent */ = {
 			isa = PBXGroup;
 			children = (
 				9D263ECA279CBA9B0084FE2E /* ViewIntakeIntent.entitlements */,
+				9DFE221E2843D8E200C44445 /* ViewIntake.intentdefinition */,
 				9D263EA2279CBA260084FE2E /* IntentHandler.swift */,
 				9D263ECC279CBB4E0084FE2E /* IntentLogic.swift */,
 				9D263EA4279CBA260084FE2E /* Info.plist */,
@@ -401,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				9D8AEAFA2842D99F0033C9DB /* False Failures */,
+				9D56DE302850ECF7004431DF /* Data Tests */,
 				9D308CF4280B510300BC7350 /* Model Tests */,
 				9D74DA5D28188E160087C326 /* DrinkModel Tests */,
 				9D3B49C02832CBD300C34E98 /* Sample Items */,
@@ -412,9 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				9D308CF0280B4C9600BC7350 /* DataItemTests.swift */,
-				9D308CF2280B501200BC7350 /* DrinkDataTests.swift */,
-				9D308CEC280B469100BC7350 /* DrinkTests.swift */,
-				9D308CEE280B492C00BC7350 /* DrinkTypeTests.swift */,
+				9D308CF2280B501200BC7350 /* UserInfoTests.swift */,
 				9D97DAC8284268D400D1B950 /* DatesProtocolTests.swift */,
 				9DBD0D0128416BFF0063CF83 /* HourTests.swift */,
 				9DBD0CFF284165170063CF83 /* DayTests.swift */,
@@ -430,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				9D5609FF28232055007FFFE1 /* SampleDrinkAmounts.swift */,
+				9D56DE35285117BA004431DF /* SampleDrinkTypes.swift */,
 				9D7E11CA280F72B600F549A1 /* SampleDrinks.swift */,
 				9D5609FD2823202F007FFFE1 /* SampleDataItems.swift */,
 				9DB7C68A282D47EB00F1C6C1 /* SampleAXDataPoints.swift */,
@@ -441,9 +493,7 @@
 		9D48B38E26E65E2C00FEFE49 = {
 			isa = PBXGroup;
 			children = (
-				9D0309E927932BB00034526D /* IntakeWidgetExtension.entitlements */,
-				9DFE221E2843D8E200C44445 /* ViewIntake.intentdefinition */,
-				9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */,
+				9D085131284FF15000750A60 /* Shared */,
 				9D48B39926E65E2C00FEFE49 /* Liquidus */,
 				9D0309D6279329CD0034526D /* IntakeWidget */,
 				9D263EA1279CBA260084FE2E /* ViewIntakeIntent */,
@@ -470,9 +520,6 @@
 				9D935BEE26ED0E2400CA9C31 /* Liquidus.entitlements */,
 				9D48B39A26E65E2C00FEFE49 /* Liquidus_App.swift */,
 				9DA8D6E526E7BB8700FEEC6C /* Views */,
-				9DA8D6E926E7BC6100FEEC6C /* ViewModel */,
-				9DA8D6E626E7BBB900FEEC6C /* Models */,
-				9D48B3B326E671CD00FEFE49 /* Helpers */,
 				9D48B39E26E65E2F00FEFE49 /* Assets.xcassets */,
 				9D48B3A326E65E2F00FEFE49 /* Info.plist */,
 				9D48B3A026E65E2F00FEFE49 /* Preview Content */,
@@ -491,10 +538,11 @@
 		9D48B3B326E671CD00FEFE49 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9DE2CA2C27EA3A91009ADE3D /* StringSubstring.swift */,
 				9D8AEAFC2842E6E50033C9DB /* TimePeriod.swift */,
 				9DC52F7D27EA363200EB1E28 /* Constants.swift */,
 				9D935BEC26ED0B1500CA9C31 /* HealthStore.swift */,
-				9D395165270A0CFF009E7F40 /* CodableColor.swift */,
+				9D8ABEDB28469373007CF54A /* UIColorExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -505,8 +553,6 @@
 				9D48B3B126E6719100FEFE49 /* RectangleCard.swift */,
 				9D46BBE52714C58300DB9149 /* DailyIntakeInfoView.swift */,
 				9D46BBED2714D50A00DB9149 /* CustomDrinkTypeView.swift */,
-				9D48B3C126E69F7A00FEFE49 /* LogDrinkView.swift */,
-				9DD3F9E22778D32000809D1F /* CalendarView.swift */,
 				9DA7B147270C9D8100C5C1A7 /* NewDrinkTypeView.swift */,
 			);
 			path = Common;
@@ -518,11 +564,13 @@
 				9D48B39C26E65E2C00FEFE49 /* IntakeView.swift */,
 				9DA8D6E326E7BAE900FEEC6C /* IntakeDataPicker.swift */,
 				9D48B3AB26E6635000FEFE49 /* IntakeCircularProgressBar.swift */,
-				9D8B09C027EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift */,
+				9D8ABEFD2846B4E3007CF54A /* IntakeCircularProgressDisplay.swift */,
 				9D87F54227ED02A500208EB3 /* IntakeCircularProgressInfo.swift */,
 				9D48B3AD26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift */,
 				9D9378F326F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift */,
 				9D1E701526EC0B6B00080B50 /* IntakeSingleDrinkBreakup.swift */,
+				9D48B3C126E69F7A00FEFE49 /* IntakeLogDrinkView.swift */,
+				9DD3F9E22778D32000809D1F /* IntakeCalendarView.swift */,
 			);
 			path = "Intake View";
 			sourceTree = "<group>";
@@ -583,27 +631,43 @@
 			path = "Trends View";
 			sourceTree = "<group>";
 		};
+		9D56DE302850ECF7004431DF /* Data Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9D308CEC280B469100BC7350 /* DrinkTests.swift */,
+				9D23F578285780CA0040059A /* DrinkType Tests */,
+			);
+			path = "Data Tests";
+			sourceTree = "<group>";
+		};
 		9D74DA5D28188E160087C326 /* DrinkModel Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9D765CDB2821EF8D00C61C2E /* DMConstructor.swift */,
+				9D765CDB2821EF8D00C61C2E /* DMConstructorTests.swift */,
 				9D3B49C12832CDC000C34E98 /* DMUserDefaultsTests.swift */,
-				9D3B49C32832D30300C34E98 /* DMAddDrinkTest.swift */,
 				9DE79BA4281B157300EA78F3 /* DMDrinkTypeTests.swift */,
 				9D110E79281C7C29006A54A5 /* DMUnitsTests.swift */,
 				9D60620E281DC87400883DCC /* DMConvertMeasurementsTests.swift */,
-				9D9FBECD281F33AF00235525 /* DMDataByHourTests.swift */,
 				9D606210281DCCB000883DCC /* DMDataByDayTests.swift */,
-				9D9FBECF281F353C00235525 /* DMDataByWeekTests.swift */,
-				9DD2D22028203F94008FB162 /* DMDataByMonthTests.swift */,
-				9D8037DC28206331003F018C /* DMDataByHalfYearTests.swift */,
-				9D97063B2821CC5D00460834 /* DMDataByYearTests.swift */,
 				9D765CDD2821F05800C61C2E /* DMProgressBarTests.swift */,
 				9D308CF5280B51C200BC7350 /* DMDataItemsTests.swift */,
 				9DCEFAA82822E59F00D8A56A /* DMTrendsChartTests.swift */,
 				9DA67BE7283008E00027260E /* DMHealthKitTests.swift */,
 			);
 			path = "DrinkModel Tests";
+			sourceTree = "<group>";
+		};
+		9D8ABEA828468812007CF54A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9D8ABEA928468836007CF54A /* Liquidus Data Model.xcdatamodeld */,
+				9D56DE2C2850E187004431DF /* Persistence.swift */,
+				9D085121284FD55D00750A60 /* Drink+CoreDataClass.swift */,
+				9D085122284FD55D00750A60 /* Drink+CoreDataProperties.swift */,
+				9D085120284FD55D00750A60 /* DrinkType+CoreDataClass.swift */,
+				9D085123284FD55D00750A60 /* DrinkType+CoreDataProperties.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		9D935BEF26ED0E2400CA9C31 /* Frameworks */ = {
@@ -635,9 +699,7 @@
 		9DA8D6E626E7BBB900FEEC6C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9DA8D6E726E7BBC500FEEC6C /* Drink.swift */,
-				9D070CEB280768F900C92EE6 /* DrinkType.swift */,
-				9D1C3BB526E8012600D03771 /* DrinkData.swift */,
+				9D1C3BB526E8012600D03771 /* UserInfo.swift */,
 				9DB24C5C279F5D8C009F265A /* DataItem.swift */,
 				9DCACE2C2835882B00A623AC /* DatesProtocol.swift */,
 				9D2768D62836B6EC000D6115 /* Hour.swift */,
@@ -820,38 +882,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D80A7D327934A3800FDD10B /* MediumWidgetView.swift in Sources */,
+				9D085128284FD57800750A60 /* Drink+CoreDataClass.swift in Sources */,
 				9DB24C64279F79D1009F265A /* DataItem.swift in Sources */,
+				9D8ABEFF2846B4EB007CF54A /* IntakeCircularProgressDisplay.swift in Sources */,
 				9D0309E627932A070034526D /* SimpleEntry.swift in Sources */,
 				9DE2CA2A27EA3986009ADE3D /* TrendsDetailChartBarView.swift in Sources */,
-				9D070CED280768F900C92EE6 /* DrinkType.swift in Sources */,
 				9DD6988B2836E24F00EEF10D /* Year.swift in Sources */,
 				9DD698872836E24200EEF10D /* Day.swift in Sources */,
 				9DC52F7C27EA35F000EB1E28 /* DrinkModel.swift in Sources */,
-				9D0309EE279334A20034526D /* DrinkData.swift in Sources */,
+				9D0309EE279334A20034526D /* UserInfo.swift in Sources */,
 				9DD698892836E24900EEF10D /* Month.swift in Sources */,
 				9DE2CA2B27EA3986009ADE3D /* TrendsDetailChartView.swift in Sources */,
 				9DD698882836E24600EEF10D /* Week.swift in Sources */,
+				9D8ABEF528469DCA007CF54A /* Liquidus Data Model.xcdatamodeld in Sources */,
 				9D80A7D527934A4D00FDD10B /* LargeWidgetView.swift in Sources */,
 				9DC52F7F27EA363200EB1E28 /* Constants.swift in Sources */,
 				9DD698862836E24000EEF10D /* Hour.swift in Sources */,
-				9D87F54427ED047800208EB3 /* IntakeCircularProgressDisplay.swift in Sources */,
 				9DE2CA2927EA3986009ADE3D /* TrendsDetailChartYAxisGridlines.swift in Sources */,
 				9D0309E4279329EA0034526D /* Provider.swift in Sources */,
 				9DE2CA2827EA3986009ADE3D /* TrendsDetailChartAudioGraph.swift in Sources */,
 				9D400C5127FB83D700A480BA /* WidgetChartView.swift in Sources */,
+				9DFF610628495BEE00AF6F57 /* UIColorExtension.swift in Sources */,
 				9DD6988C2836E25100EEF10D /* HalfYear.swift in Sources */,
 				9D0309E827932A280034526D /* WidgetView.swift in Sources */,
+				9D08512B284FD57C00750A60 /* Drink+CoreDataProperties.swift in Sources */,
 				9D8AEAFE2842E7270033C9DB /* TimePeriod.swift in Sources */,
+				9D56DE2E2850E187004431DF /* Persistence.swift in Sources */,
 				9DD698852836E23D00EEF10D /* DatesProtocol.swift in Sources */,
 				9D20175727937CD7008257FA /* HealthStore.swift in Sources */,
 				9DE2CA2E27EA3A91009ADE3D /* StringSubstring.swift in Sources */,
-				9DFE22202843D8E200C44445 /* ViewIntake.intentdefinition in Sources */,
-				9D0309EF279334A40034526D /* Drink.swift in Sources */,
-				9D0309F02793381A0034526D /* CodableColor.swift in Sources */,
 				9D6B55D8284146D20046F8BA /* IntentLogic.swift in Sources */,
 				9D2017522793663D008257FA /* IntakeCircularProgressBarHighlight.swift in Sources */,
 				9D0309D8279329CD0034526D /* IntakeWidget.swift in Sources */,
 				9DD6988A2836E24C00EEF10D /* YearMethods.swift in Sources */,
+				9D08512F284FD58300750A60 /* DrinkType+CoreDataProperties.swift in Sources */,
+				9D08512C284FD57F00750A60 /* DrinkType+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,20 +924,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D070CEE280768F900C92EE6 /* DrinkType.swift in Sources */,
+				9D08512A284FD57B00750A60 /* Drink+CoreDataProperties.swift in Sources */,
+				9D085130284FD58400750A60 /* DrinkType+CoreDataProperties.swift in Sources */,
 				9DFE22212843D8E200C44445 /* ViewIntake.intentdefinition in Sources */,
+				9D08512D284FD57F00750A60 /* DrinkType+CoreDataClass.swift in Sources */,
 				9D8AEAFF2842E7270033C9DB /* TimePeriod.swift in Sources */,
 				9D1A4AB7283D4ABB00B50BD6 /* DatesProtocol.swift in Sources */,
 				9D263EA3279CBA260084FE2E /* IntentHandler.swift in Sources */,
-				9D263EC4279CBA7B0084FE2E /* DrinkData.swift in Sources */,
+				9DF4DA87284A8352008CD3CE /* Month.swift in Sources */,
+				9D263EC4279CBA7B0084FE2E /* UserInfo.swift in Sources */,
 				9D1A4AB4283D4AB200B50BD6 /* Day.swift in Sources */,
+				9DFF610728495BEF00AF6F57 /* UIColorExtension.swift in Sources */,
 				9D1A4AB8283D4AC100B50BD6 /* Hour.swift in Sources */,
+				9DF4DA88284A8355008CD3CE /* Year.swift in Sources */,
+				9DF4DA86284A833C008CD3CE /* DataItem.swift in Sources */,
 				9D1A4AB5283D4AB500B50BD6 /* Week.swift in Sources */,
+				9D56DE2F2850E187004431DF /* Persistence.swift in Sources */,
 				9D263EC0279CBA730084FE2E /* HealthStore.swift in Sources */,
+				9DF4DA8A284A835A008CD3CE /* YearMethods.swift in Sources */,
+				9DF4DA80284A7F31008CD3CE /* Liquidus Data Model.xcdatamodeld in Sources */,
+				9D085129284FD57800750A60 /* Drink+CoreDataClass.swift in Sources */,
 				9D263ECD279CBB4E0084FE2E /* IntentLogic.swift in Sources */,
-				9D263EC2279CBA760084FE2E /* CodableColor.swift in Sources */,
-				9D263EC6279CBA7E0084FE2E /* Drink.swift in Sources */,
 				9DC52F8027EA363200EB1E28 /* Constants.swift in Sources */,
+				9DF4DA89284A8358008CD3CE /* HalfYear.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,37 +954,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D56DE36285117BA004431DF /* SampleDrinkTypes.swift in Sources */,
 				9D110E7A281C7C29006A54A5 /* DMUnitsTests.swift in Sources */,
+				9D9B619F2858E5F700BF12D0 /* DTYearTests.swift in Sources */,
 				9DBD0D08284187770063CF83 /* HalfYearTests.swift in Sources */,
-				9D765CDC2821EF8D00C61C2E /* DMConstructor.swift in Sources */,
+				9D765CDC2821EF8D00C61C2E /* DMConstructorTests.swift in Sources */,
 				9DBD0D0228416BFF0063CF83 /* HourTests.swift in Sources */,
 				9D5609FE2823202F007FFFE1 /* SampleDataItems.swift in Sources */,
+				9D23F57A285781A70040059A /* DTTypeMeasurementTests.swift in Sources */,
 				9DBD0D06284183880063CF83 /* MonthTests.swift in Sources */,
-				9D9FBECE281F33AF00235525 /* DMDataByHourTests.swift in Sources */,
 				9DBD0D04284175C40063CF83 /* WeekTests.swift in Sources */,
 				9DBD0D0A2841935A0063CF83 /* YearTests.swift in Sources */,
 				9D97DAC9284268D400D1B950 /* DatesProtocolTests.swift in Sources */,
-				9D308CF3280B501200BC7350 /* DrinkDataTests.swift in Sources */,
+				9D308CF3280B501200BC7350 /* UserInfoTests.swift in Sources */,
 				9D560A0028232055007FFFE1 /* SampleDrinkAmounts.swift in Sources */,
 				9DC413DF282D57410012E55E /* AXDataPointEquatable.swift in Sources */,
 				9D60620F281DC87400883DCC /* DMConvertMeasurementsTests.swift in Sources */,
 				9DCEFAA92822E59F00D8A56A /* DMTrendsChartTests.swift in Sources */,
+				9D23F57C2857846C0040059A /* DTHourTests.swift in Sources */,
 				9D308CED280B469100BC7350 /* DrinkTests.swift in Sources */,
 				9DA67BE8283008E00027260E /* DMHealthKitTests.swift in Sources */,
 				9D308CF1280B4C9600BC7350 /* DataItemTests.swift in Sources */,
+				9D9B61992857CC4800BF12D0 /* DTWeekTests.swift in Sources */,
+				9D23F57E285793400040059A /* DTDayTests.swift in Sources */,
 				9D308CF6280B51C200BC7350 /* DMDataItemsTests.swift in Sources */,
-				9D8037DD28206331003F018C /* DMDataByHalfYearTests.swift in Sources */,
-				9D9FBED0281F353C00235525 /* DMDataByWeekTests.swift in Sources */,
 				9D765CDE2821F05800C61C2E /* DMProgressBarTests.swift in Sources */,
 				9D606211281DCCB000883DCC /* DMDataByDayTests.swift in Sources */,
 				9D7E11CB280F72B600F549A1 /* SampleDrinks.swift in Sources */,
+				9D9B619D2858DEC600BF12D0 /* DTHalfYearTests.swift in Sources */,
 				9DBD0D00284165170063CF83 /* DayTests.swift in Sources */,
-				9D97063C2821CC5D00460834 /* DMDataByYearTests.swift in Sources */,
-				9D308CEF280B492C00BC7350 /* DrinkTypeTests.swift in Sources */,
-				9DD2D22128203F94008FB162 /* DMDataByMonthTests.swift in Sources */,
+				9D308CEF280B492C00BC7350 /* DTConstructorTests.swift in Sources */,
 				9D3B49C22832CDC000C34E98 /* DMUserDefaultsTests.swift in Sources */,
-				9D3B49C42832D30300C34E98 /* DMAddDrinkTest.swift in Sources */,
 				9DE79BA5281B157300EA78F3 /* DMDrinkTypeTests.swift in Sources */,
+				9D9B619B2858D23F00BF12D0 /* DTMonthTests.swift in Sources */,
 				9DB7C68B282D47EB00F1C6C1 /* SampleAXDataPoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -924,13 +1000,13 @@
 				9D46BBF02714D88200DB9149 /* OnboardingAppleHealthView.swift in Sources */,
 				9D7E8EB92835A2FB00F7E9CC /* HalfYear.swift in Sources */,
 				9D48B39D26E65E2C00FEFE49 /* IntakeView.swift in Sources */,
-				9D070CEC280768F900C92EE6 /* DrinkType.swift in Sources */,
 				9D2768D72836B6EC000D6115 /* Hour.swift in Sources */,
+				9D085126284FD55D00750A60 /* Drink+CoreDataProperties.swift in Sources */,
 				9D9378F426F38E9A00B83926 /* IntakeMultiDrinkBreakup.swift in Sources */,
-				9D48B3C226E69F7A00FEFE49 /* LogDrinkView.swift in Sources */,
+				9D48B3C226E69F7A00FEFE49 /* IntakeLogDrinkView.swift in Sources */,
 				9DCACE3128358C8900A623AC /* Month.swift in Sources */,
 				9DC52F7E27EA363200EB1E28 /* Constants.swift in Sources */,
-				9DD3F9E32778D32000809D1F /* CalendarView.swift in Sources */,
+				9DD3F9E32778D32000809D1F /* IntakeCalendarView.swift in Sources */,
 				9DC52F7B27EA35F000EB1E28 /* DrinkModel.swift in Sources */,
 				9D46BBE22714B9F100DB9149 /* OnboardingUnitsView.swift in Sources */,
 				9DAA9F64270A4F50001496F5 /* SettingsDrinkColorPicker.swift in Sources */,
@@ -945,8 +1021,10 @@
 				9D48B39B26E65E2C00FEFE49 /* Liquidus_App.swift in Sources */,
 				9DC52F7627EA35C000EB1E28 /* TrendsDetailInfoView.swift in Sources */,
 				9D2AFF1226ECF83300A9C8EC /* SettingsUnitsView.swift in Sources */,
+				9D085125284FD55D00750A60 /* Drink+CoreDataClass.swift in Sources */,
+				9D085124284FD55D00750A60 /* DrinkType+CoreDataClass.swift in Sources */,
 				9DA8D6E426E7BAE900FEEC6C /* IntakeDataPicker.swift in Sources */,
-				9D395166270A0CFF009E7F40 /* CodableColor.swift in Sources */,
+				9D085127284FD55D00750A60 /* DrinkType+CoreDataProperties.swift in Sources */,
 				9D46BBEE2714D50A00DB9149 /* CustomDrinkTypeView.swift in Sources */,
 				9DC52F7927EA35C000EB1E28 /* TrendsView.swift in Sources */,
 				9D46BBEA2714D1D300DB9149 /* OnboardingToggleDrinksView.swift in Sources */,
@@ -957,6 +1035,7 @@
 				9DC52F7327EA35C000EB1E28 /* TrendsDetailChartBarView.swift in Sources */,
 				9D48B3AC26E6635000FEFE49 /* IntakeCircularProgressBar.swift in Sources */,
 				9D7E8EBB2835A3BA00F7E9CC /* Year.swift in Sources */,
+				9D8ABEAB28468836007CF54A /* Liquidus Data Model.xcdatamodeld in Sources */,
 				9DC52F7127EA35C000EB1E28 /* TrendsDetailChartYAxisGridlines.swift in Sources */,
 				9DE2CA2D27EA3A91009ADE3D /* StringSubstring.swift in Sources */,
 				9DB24C5D279F5D8C009F265A /* DataItem.swift in Sources */,
@@ -967,17 +1046,18 @@
 				9D48B3B226E6719100FEFE49 /* RectangleCard.swift in Sources */,
 				9D48B3BE26E68CD100FEFE49 /* SettingsDailyGoalView.swift in Sources */,
 				9D46BBE02714B0BE00DB9149 /* OnboardingWelcomeView.swift in Sources */,
-				9D8B09C127EBA5AB0030F02F /* IntakeCircularProgressDisplay.swift in Sources */,
+				9D8ABEFE2846B4E3007CF54A /* IntakeCircularProgressDisplay.swift in Sources */,
 				9D48B3AE26E667FE00FEFE49 /* IntakeCircularProgressBarHighlight.swift in Sources */,
+				9D56DE2D2850E187004431DF /* Persistence.swift in Sources */,
 				9D395164270A038A009E7F40 /* SettingsDrinkTypeView.swift in Sources */,
 				9D215F0327108124000F9BED /* SettingsEditCustomTypeView.swift in Sources */,
-				9D1C3BB626E8012600D03771 /* DrinkData.swift in Sources */,
+				9D8ABEDC28469373007CF54A /* UIColorExtension.swift in Sources */,
+				9D1C3BB626E8012600D03771 /* UserInfo.swift in Sources */,
 				9DC52F6F27EA35C000EB1E28 /* TrendsDetailDataListView.swift in Sources */,
 				9DC52F7027EA35C000EB1E28 /* TrendsDetailChartView.swift in Sources */,
 				9DFE221F2843D8E200C44445 /* ViewIntake.intentdefinition in Sources */,
 				9D48B3B826E6752C00FEFE49 /* TabBar.swift in Sources */,
 				9D46BBE62714C58300DB9149 /* DailyIntakeInfoView.swift in Sources */,
-				9DA8D6E826E7BBC500FEEC6C /* Drink.swift in Sources */,
 				9DCACE2B2835817400A623AC /* Day.swift in Sources */,
 				9D935BED26ED0B1500CA9C31 /* HealthStore.swift in Sources */,
 				9D7696C32710C51000B6D68C /* SettingsEditDefaultTypeView.swift in Sources */,
@@ -1012,7 +1092,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_ENTITLEMENTS = IntakeWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = IntakeWidget/IntakeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6DS9W86UXV;
@@ -1042,7 +1122,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_ENTITLEMENTS = IntakeWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = IntakeWidget/IntakeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6DS9W86UXV;
@@ -1375,6 +1455,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9D8ABEA928468836007CF54A /* Liquidus Data Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9D8ABEAA28468836007CF54A /* Liquidus Data Model.xcdatamodel */,
+			);
+			currentVersion = 9D8ABEAA28468836007CF54A /* Liquidus Data Model.xcdatamodel */;
+			path = "Liquidus Data Model.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9D48B38F26E65E2C00FEFE49 /* Project object */;
 }

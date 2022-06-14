@@ -24,9 +24,9 @@ struct WidgetChartView: View {
             
             let day = Day(date: entry.date)
             
-            let dataItems = model.getDataItemsForDay(day: day, type: type)
+            let dataItems = type.getDataItemsByDay(day: day)
             
-            let typeAmount = model.getTypeAmountByDay(type: type, day: day)
+            let typeAmount = type.getTypeAmountByDay(day: day)
             
             HStack {
             
@@ -47,6 +47,8 @@ struct WidgetChartView: View {
                     .accessibilityHidden(true)
             }
             
+            let horizontalAmount = model.getOverallAmount(type: type, dates: day)
+            
             TrendsDetailChartView(
                 timePeriod: .daily,
                 type: type,
@@ -54,8 +56,8 @@ struct WidgetChartView: View {
                 amount: typeAmount,
                 maxValue: maxVal,
                 verticalAxisText: model.verticalAxisText(dataItems: dataItems, timePeriod: .daily),
-                horizontalAxisText: model.horizontalAxisText(type: type, dates: Date.now),
-                chartAccessibilityLabel: model.getChartAccessibilityLabel(type: type, dates: Date.now),
+                horizontalAxisText: model.horizontalAxisText(amount: horizontalAmount),
+                chartAccessibilityLabel: model.getChartAccessibilityLabel(type: type, dates: day),
                 chartSpacerWidth: model.chartSpacerMaxWidth(timePeriod: .daily, isWidget: true),
                 isWidget: true,
                 isYear: false,

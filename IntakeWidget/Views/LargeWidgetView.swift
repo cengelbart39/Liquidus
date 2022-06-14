@@ -10,6 +10,9 @@ import WidgetKit
 
 struct LargeWidgetView: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)], predicate: NSPredicate(format: "enabled == true")) var drinkTypes: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.dynamicTypeSize) var dynamicType
@@ -33,10 +36,13 @@ struct LargeWidgetView: View {
                     
                     let day = Day(date: entry.date)
                     
+                    let types = drinkTypes.map { $0 }
+                    
                     // MARK: - Circular Progress Bar
                     IntakeCircularProgressDisplay(
                         day: day,
-                        totalPercent: model.getProgressPercent(type: model.drinkData.drinkTypes.last!, date: day),
+                        types: types,
+                        totalPercent: model.getProgressPercent(types: types, day: day),
                         width: 20,
                         trigger: $hiddenTrigger
                     )
@@ -51,7 +57,7 @@ struct LargeWidgetView: View {
                     
                     // MARK: - Total Info
                     VStack(alignment: .leading, spacing: 5) {
-                        let percent = model.getTotalPercentByDay(day: day)
+                        let percent = model.getTotalPercentByDay(types: types, day: day)
                         
                         Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                             .font(.title)
@@ -68,7 +74,7 @@ struct LargeWidgetView: View {
                                 
                                 ForEach(first, id: \.self) { type in
                                     
-                                    let typeAmount = model.getTypeAmountByDay(type: type, day: day)
+                                    let typeAmount = type.getTypeAmountByDay(day: day)
                                     
                                     if (differentiateWithoutColor) {
                                         
@@ -191,10 +197,10 @@ struct LargeWidgetView: View {
         let day = Day(date: entry.date)
         
         // Loop through all DrinkTypes
-        for type in model.drinkData.drinkTypes {
+        for type in drinkTypes {
             
             // Append to nonZeroTypes if any Drinks of type were consumed
-            if model.getTypeAmountByDay(type: type, day: day) > 0.0 {
+            if type.getTypeAmountByDay(day: day) > 0.0 {
                 nonZeroTypes.append(type)
             }
         }
@@ -204,7 +210,7 @@ struct LargeWidgetView: View {
             
             // Sort by the greatest amount consumed on day
             nonZeroTypes.sort {
-                model.getTypeAmountByDay(type: $0, day: day) > model.getTypeAmountByDay(type: $1, day: day)
+                $0.getTypeAmountByDay(day: day) > $1.getTypeAmountByDay(day: day)
             }
         }
         
@@ -227,7 +233,7 @@ struct LargeWidgetView: View {
         for type in types {
             
             // Get the DataItems by Day or Week depending on timePeriod
-            let dataItems = model.getDataItemsForDay(day: day, type: type)
+            let dataItems = type.getDataItemsByDay(day: day)
             
             // Append the maxValue of the DataItems
             maxes.append(model.getMaxValue(dataItems: dataItems, timePeriod: .daily))

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct OnboardingWelcomeView: View {
-    
+        
     @Environment(\.colorScheme) var colorScheme
-    
+        
     var body: some View {
         NavigationView {
             GeometryReader { geo in

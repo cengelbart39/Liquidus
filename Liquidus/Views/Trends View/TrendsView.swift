@@ -10,6 +10,11 @@ import WidgetKit
 
 struct TrendsView: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)], predicate: NSPredicate(format: "enabled = true")) var drinkTypes: FetchedResults<DrinkType>
+    
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "type.enabled == true")) var drinks: FetchedResults<Drink>
+    
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.dynamicTypeSize) var dynamicType
@@ -21,50 +26,83 @@ struct TrendsView: View {
 
     var body: some View {
         NavigationView {
-            // Get all drink types
-            let drinkTypes = [Constants.totalType] + model.drinkData.drinkTypes
-            
             ScrollView {
                 
                 VStack(alignment: .leading) {
                     
+                    NavigationLink {
+                        TrendsDetailView(type: nil, total: true)
+                    } label: {
+                        
+                        ZStack {
+                            // Background
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(Color(.systemGray6))
+                            
+                            let drinkArray = drinks.map { $0 }
+                            
+                            HStack {
+                                let avg1 = model.getTotalAverage(drinks: drinkArray, startDate: .now)
+                                
+                                let avg2 = model.getTotalAverage(drinks: drinkArray, startDate: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now) ?? Date())
+                                
+                                // Trends Symbol
+                                TrendsSymbolView(type: nil, total: true, avg1: avg1, avg2: avg2)
+                                
+                                // Text
+                                VStack(alignment: .leading) {
+                                    Text(Constants.totalKey)
+                                        .font(self.getTypeFontStyle())
+                                        .foregroundColor(.primary)
+                                    
+                                    TrendsAmountView(type: nil, total: true, avg1: avg1)
+                                }
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color(.systemGray2))
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal)
+                    }
+                    
                     // Loop through drink types
                     ForEach(drinkTypes) { type in
-                        if type.enabled {
-                            NavigationLink {
-                                TrendsDetailView(type: type)
-                            } label: {
+                        NavigationLink {
+                            TrendsDetailView(type: type, total: false)
+                        } label: {
+                            
+                            ZStack {
+                                // Background
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color(.systemGray6))
                                 
-                                ZStack {
-                                    // Background
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color(.systemGray6))
+                                HStack {
+                                    let avg1 = type.getTypeAverage(startDate: .now)
+                                    let avg2 = type.getTypeAverage(startDate: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now) ?? Date())
                                     
-                                    HStack {
-                                        let avg1 = model.getTypeAverage(type: type, startDate: .now)
-                                        let avg2 = model.getTypeAverage(type: type, startDate: Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now) ?? Date())
+                                    // Trends Symbol
+                                    TrendsSymbolView(type: type, total: false, avg1: avg1, avg2: avg2)
+                                    
+                                    // Text
+                                    VStack(alignment: .leading) {
+                                        Text(type.name)
+                                            .font(self.getTypeFontStyle())
+                                            .foregroundColor(.primary)
                                         
-                                        // Trends Symbol
-                                        TrendsSymbolView(type: type, avg1: avg1, avg2: avg2)
-                                        
-                                        // Text
-                                        VStack(alignment: .leading) {
-                                            Text(type.name)
-                                                .font(self.getTypeFontStyle())
-                                                .foregroundColor(.primary)
-                                            
-                                            TrendsAmountView(type: type, avg1: avg1)
-                                        }
-                                        
-                                        Spacer()
-                                        
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(Color(.systemGray2))
+                                        TrendsAmountView(type: type, total: false, avg1: avg1)
                                     }
-                                    .padding()
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(Color(.systemGray2))
                                 }
-                                .padding(.horizontal)
+                                .padding()
                             }
+                            .padding(.horizontal)
                         }
                     }
                     

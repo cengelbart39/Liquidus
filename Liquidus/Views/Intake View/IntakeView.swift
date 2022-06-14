@@ -13,6 +13,9 @@ struct IntakeView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dynamicTypeSize) var dynamicType
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var drinks: FetchedResults<Drink>
+    
     @EnvironmentObject var model: DrinkModel
     
     // Are the sheet views up
@@ -22,7 +25,7 @@ struct IntakeView: View {
     // Current day selected
     @State var selectedDay = Day()
         
-    @State var hiddenTrigger = false
+    @Binding var hiddenTrigger: Bool
     
     // Button IDs
     @State var addDrinkButtonID = UUID()
@@ -65,7 +68,7 @@ struct IntakeView: View {
                 currentDayWeekButtonID = UUID()
             }
             .onAppear {
-                if model.drinkData.drinks.count > 0 {
+                if drinks.count > 0 {
                     makeDonation(timePeriod: .daily)
                     makeDonation(timePeriod: .weekly)
                 }
@@ -79,8 +82,8 @@ struct IntakeView: View {
                 hiddenTrigger.toggle()
             }
             .sheet(isPresented: $isAddDrinkViewShowing, content: {
-                // Show LogDrinkView
-                LogDrinkView(isPresented: $isAddDrinkViewShowing)
+                // Show IntakeLogDrinkView
+                IntakeLogDrinkView(isPresented: $isAddDrinkViewShowing, trigger: $hiddenTrigger)
                     .environmentObject(model)
                     .onDisappear {
                         // Update ids so buttons are responsive
@@ -90,8 +93,8 @@ struct IntakeView: View {
                     }
             })
             .sheet(isPresented: $isCalendarViewShowing, content: {
-                // Show CalendarView
-                CalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay,trigger: $hiddenTrigger)
+                // Show IntakeCalendarView
+                IntakeCalendarView(isPresented: $isCalendarViewShowing, selectedDay: $selectedDay,trigger: $hiddenTrigger)
                     .environmentObject(model)
                     .onDisappear {
                         // Updates ids so buttons are tapable
@@ -102,7 +105,7 @@ struct IntakeView: View {
             })
             .navigationTitle("Intake")
             .toolbar {
-                // Show LogDrinkView
+                // Show IntakeLogDrinkView
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         isAddDrinkViewShowing = true
@@ -113,7 +116,7 @@ struct IntakeView: View {
                     .accessibilityLabel("Log a Drink")
                 }
                 
-                // Show CalendarView
+                // Show IntakeCalendarView
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         isCalendarViewShowing = true
@@ -180,12 +183,5 @@ struct IntakeView: View {
                 print("Successfully donated interaction")
             }
         }
-    }
-}
-
-struct StatsView_Previews: PreviewProvider {
-    static var previews: some View {
-        IntakeView(updateButtons: false)
-            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

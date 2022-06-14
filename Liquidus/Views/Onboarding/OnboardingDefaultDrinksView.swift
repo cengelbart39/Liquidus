@@ -11,6 +11,9 @@ struct OnboardingDefaultDrinksView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)], predicate: NSPredicate(format: "isDefault == true")) var drinkTypes: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @State var isEnabled = true
@@ -57,7 +60,8 @@ struct OnboardingDefaultDrinksView: View {
             // Drink Toggles
             Section {
                 List {
-                    ForEach(model.drinkData.drinkTypes.filter { $0.isDefault }) { type in
+
+                    ForEach(drinkTypes) { type in
                         OnboardingToggleDrinksView(type: type)
                     }
                 }
@@ -74,7 +78,11 @@ struct OnboardingDefaultDrinksView: View {
         }
         .onDisappear {
             // Save changes
-            model.save(test: false)
+            do {
+                try context.save()
+            } catch {
+                fatalError("OnboardingDefaultDrinksView: Unable to save to CoreData")
+            }
         }
     }
 }

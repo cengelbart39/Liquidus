@@ -11,13 +11,16 @@ import SwiftUI
 /**
  A `struct` representing of the information stored locally on device
  */
-struct DrinkData: Decodable, Encodable, Equatable {
+struct UserInfo: Decodable, Encodable, Equatable {
     
     /// Whether or not the user is in onboarding; `true` by default
     var isOnboarding = true
+
+    /// Used in tandem with `dailyTotalToGoal` to reset it when it's a new day
+    var currentDay = Date()
     
-    /// The `Drink`s consumed by the user
-    var drinks = [Drink]()
+    /// The user's current progress toward their goal for the current day. Used for the Widget.
+    var dailyTotalToGoal = 0.0
     
     /// The Daily Goal set by the user
     var dailyGoal = 2000.0
@@ -25,12 +28,13 @@ struct DrinkData: Decodable, Encodable, Equatable {
     /// The units used by the user
     var units = Constants.milliliters
     
-    /// The `DrinkType`s the user can use; defaults with Water, Coffee, Soda, and Juice
-    var drinkTypes = DrinkType.getDefault()
-    
     /// When the last save to Apple HealthKit was completed; `nil` if it hasn't occured once yet
     var lastHKSave: Date? = nil
     
     /// Whether or not the user has authorized access to their Apple Health data
     var healthKitEnabled = false
+    
+    static func == (lhs: UserInfo, rhs: UserInfo) -> Bool {
+        return lhs.isOnboarding == rhs.isOnboarding && Calendar.current.isDate(lhs.currentDay, inSameDayAs: rhs.currentDay) && lhs.dailyTotalToGoal == rhs.dailyTotalToGoal && lhs.dailyGoal == rhs.dailyGoal && lhs.units == rhs.units && lhs.lastHKSave == rhs.lastHKSave && lhs.healthKitEnabled == rhs.healthKitEnabled
+    }
 }

@@ -23,35 +23,35 @@ class DMUserDefaultsTests: XCTestCase {
 
     func testSaveAndRetrieve() {
         // Create a configure a new DrinkData
-        var drinkData = DrinkData()
-        drinkData.isOnboarding = false
-        drinkData.drinks = [Drink(type: model.drinkData.drinkTypes.first!, amount: 39, date: Calendar.current.date(from: DateComponents(year: 2022, month: 4, day: 8))!)]
-        drinkData.dailyGoal = 27.0
-        drinkData.units = Constants.fluidOuncesUS
-        drinkData.drinkTypes += [DrinkType(name: "Apple Cider", color: CodableColor(color: UIColor(red: 207/255, green: 58/255, blue: 31/255, alpha: 1)), isDefault: false, enabled: true, colorChanged: true)]
-        drinkData.lastHKSave = Date.now
-        drinkData.healthKitEnabled = false
+        var userInfo = UserInfo()
+        userInfo.isOnboarding = false
+        userInfo.currentDay = Date()
+        userInfo.dailyTotalToGoal = 10.5
+        userInfo.dailyGoal = 27.0
+        userInfo.units = Constants.fluidOuncesUS
+        userInfo.lastHKSave = Date.now
+        userInfo.healthKitEnabled = false
         
         // Update the model
-        model.drinkData = drinkData
+        model.userInfo = userInfo
         
-        // Save the new drinkData
-        model.save(test: true)
+        // Save the new userInfo
+        model.saveUserInfo(test: true)
         
-        // Return drinkData to its default state
-        model.drinkData = DrinkData()
+        // Return userInfo to its default state
+        model.userInfo = UserInfo()
         
         // Retrieve the data
-        model.retrieve(test: true)
+        model.retrieveUserInfo(test: true)
         
         // Assert it was saved and retrieved correctly
-        XCTAssertEqual(model.drinkData.isOnboarding, drinkData.isOnboarding)
-        XCTAssertEqual(model.drinkData.drinks, drinkData.drinks)
-        XCTAssertEqual(model.drinkData.dailyGoal, drinkData.dailyGoal)
-        XCTAssertEqual(model.drinkData.units, drinkData.units)
-        XCTAssertEqual(model.drinkData.drinkTypes, drinkData.drinkTypes)
-        XCTAssertEqual(model.drinkData.lastHKSave, drinkData.lastHKSave)
-        XCTAssertEqual(model.drinkData.healthKitEnabled, drinkData.healthKitEnabled)
+        XCTAssertEqual(model.userInfo.isOnboarding, userInfo.isOnboarding)
+        XCTAssertEqual(model.userInfo.currentDay.description, userInfo.currentDay.description)
+        XCTAssertEqual(model.userInfo.dailyTotalToGoal, userInfo.dailyTotalToGoal)
+        XCTAssertEqual(model.userInfo.dailyGoal, userInfo.dailyGoal)
+        XCTAssertEqual(model.userInfo.units, userInfo.units)
+        XCTAssertEqual(model.userInfo.lastHKSave, userInfo.lastHKSave)
+        XCTAssertEqual(model.userInfo.healthKitEnabled, userInfo.healthKitEnabled)
     }
 
 }

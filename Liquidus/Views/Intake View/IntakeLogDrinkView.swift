@@ -1,5 +1,5 @@
 //
-//  LogDrinkView.swift
+//  IntakeLogDrinkView.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 9/6/21.
@@ -9,16 +9,21 @@
 //
 
 import SwiftUI
+import WidgetKit
 
-struct LogDrinkView: View {
+struct IntakeLogDrinkView: View {
     
     @Environment(\.colorScheme) var colorScheme
+    
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)]) var drinkTypes: FetchedResults<DrinkType>
     
     @EnvironmentObject var model: DrinkModel
     
     @Binding var isPresented: Bool
+    @Binding var trigger: Bool
     
-    @State var drinkType = DrinkType()
+    @State var orderNumber = 0
     @State var amount = ""
     @State var timeSelection = Date()
         
@@ -28,6 +33,10 @@ struct LogDrinkView: View {
     
     var body: some View {
         
+        let allTypes = drinkTypes.sorted { d1, d2 in
+            d1.order < d2.order
+        }
+        
         NavigationView {
             ZStack {
                 
@@ -36,15 +45,15 @@ struct LogDrinkView: View {
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
-                    let types = model.drinkData.drinkTypes.filter { $0.enabled }
-                    
                     Form {
                         // Drink Type Picker
                         Section(header: Text("Drink Type")) {
-                            Picker(drinkType.name, selection: $drinkType) {
-                                ForEach(types) { type in
-                                    Text(type.name)
-                                        .tag(type)
+                            Picker(allTypes[orderNumber].name, selection: $orderNumber) {
+                                ForEach(drinkTypes, id: \.self) { type in
+                                    if type.enabled {
+                                        Text(type.name)
+                                            .tag(type.order)
+                                    }
                                 }
                             }
                             .pickerStyle(MenuPickerStyle())
@@ -86,12 +95,29 @@ struct LogDrinkView: View {
                         if amount.isEmpty {
                             isAmountFocusedAccessibility = true
                         } else {
-                            // Add a drink to the model
-                            let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
-                            model.addDrink(drink: drink)
-                            
-                            // Dismiss the sheet
-                            isPresented = false
+                            if let double = Double(amount) {
+                                // Add a drink to the model
+                                let drink = Drink(context: context)
+                                drink.id = UUID()
+                                drink.type = allTypes[orderNumber]
+                                drink.amount = double
+                                drink.date = timeSelection
+                                
+                                drink.type.addToDrinks(drink)
+                                
+                                PersistenceController.shared.saveContext()
+                                    
+                                model.userInfo.dailyTotalToGoal += double
+                                
+                                model.saveUserInfo(test: false)
+                                
+                                WidgetCenter.shared.reloadAllTimelines()
+                                
+                                trigger.toggle()
+                                
+                                // Dismiss the sheet
+                                isPresented = false
+                            }
                         }
                     } label: {
                         Text("Add")
@@ -123,12 +149,23 @@ struct LogDrinkView: View {
             }
             .accessibilityAction(named: "Add") {
                 if amount != "" {
-                    // Add a drink to the model
-                    let drink = Drink(type: drinkType, amount: Double(amount)!, date: timeSelection)
-                    model.addDrink(drink: drink)
-                    
-                    // Dismiss the sheet
-                    isPresented = false
+                    if let double = Double(amount) {
+                        // Add a drink to the model
+                        let drink = Drink(context: context)
+                        drink.id = UUID()
+                        drink.type = allTypes[orderNumber]
+                        drink.amount = double
+                        drink.date = timeSelection
+                        
+                        drink.type.addToDrinks(drink)
+                        
+                        PersistenceController.shared.saveContext()
+                        
+                        trigger.toggle()
+                        
+                        // Dismiss the sheet
+                        isPresented = false
+                    }
                 }
             }
             .accessibilityAction(named: "Cancel") {
@@ -136,14 +173,9 @@ struct LogDrinkView: View {
             }
         }
         .onAppear {
-            drinkType = model.drinkData.drinkTypes.filter { $0.enabled }.first!
+            if let first = drinkTypes.first {
+                self.orderNumber = first.order
+            }
         }
-    }
-}
-
-struct LogDrinkView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogDrinkView(isPresented: .constant(true))
-            .environmentObject(DrinkModel(test: false, suiteName: nil))
     }
 }

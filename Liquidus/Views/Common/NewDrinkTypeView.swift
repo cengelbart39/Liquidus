@@ -12,11 +12,14 @@ import SwiftUI
 
 struct NewDrinkTypeView: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var drinkTypes: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @Binding var isPresented: Bool
     
-    @State var drinkType = ""
+    @State var name = ""
     @State var color = Color(red: 0, green: 0, blue: 0)
     
     @FocusState private var isNameFocused: Bool
@@ -37,7 +40,7 @@ struct NewDrinkTypeView: View {
                     Form {
                         // Change drink type name
                         Section(header: Text("Name"), footer: model.grayscaleEnabled ? Text("In the event Grayscale Color Filters are disabled, created drink types are assigned a random color.") : nil) {
-                            TextField("Water", text: $drinkType)
+                            TextField("Water", text: $name)
                                 .accessibilityHint("Edit text to choose name")
                                 .accessibilityFocused($isNameFocusedAccessibility)
                                 .focused($isNameFocused)
@@ -62,25 +65,39 @@ struct NewDrinkTypeView: View {
                 // Save new Drink Type
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        if drinkType.isEmpty {
+                        if name.isEmpty {
                             isNameFocusedAccessibility = true
+                            
                         } else {
+                            
+                            var newColor = color
+                            
                             if model.grayscaleEnabled {
                                 let red = Double.random(in: 0...255)/255
                                 let green = Double.random(in: 0...255)/255
                                 let blue = Double.random(in: 0...255)/255
                                 
-                                let randomColor = Color(red: red, green: green, blue: blue)
+                                color = Color(red: red, green: green, blue: blue)
                                 
-                                model.saveDrinkType(type: drinkType, color: randomColor)
-                            } else {
-                                model.saveDrinkType(type: drinkType, color: color)
                             }
+
+                            let drinkType = DrinkType(context: context)
+                            drinkType.id = UUID()
+                            drinkType.order = drinkTypes.count
+                            drinkType.name = model.processDrinkTypeName(name: name)
+                            drinkType.isDefault = false
+                            drinkType.enabled = true
+                            drinkType.colorChanged = true
+                            drinkType.color = UIColor(newColor).encode()
+                            drinkType.drinks = nil
+                                                          
+                            PersistenceController.shared.saveContext()
+                            
                             isPresented = false
                         }
                     } label: {
                         Text("Save")
-                            .foregroundColor(drinkType.isEmpty ? .gray : Color(.systemBlue))
+                            .foregroundColor(name.isEmpty ? .gray : Color(.systemBlue))
                     }
                 }
                 

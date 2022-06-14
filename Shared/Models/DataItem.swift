@@ -18,8 +18,11 @@ struct DataItem: CustomStringConvertible, Equatable, Identifiable {
     /// The `Drink`s consumed during `date`; `nil` if no `Drink`s have been consumed
     var drinks: [Drink]?
     
-    /// The associated `DrinkType` with the `Drink`s
-    var type: DrinkType
+    /// The associated `DrinkType` with the `Drink`s; `nil` if `total` is `true`
+    var type: DrinkType?
+    
+    /// Whether or not the `DataItem` contains `Drink`s from different `DrinkType`s; `true` if so
+    var total: Bool
     
     /// The `Date` for the assoicated data
     var date: Date
@@ -29,10 +32,23 @@ struct DataItem: CustomStringConvertible, Equatable, Identifiable {
      */
     var description: String {
         if let drinks = drinks {
-            return "DataItem(drinks: \(drinks), type: \(type), date: \(date.description)"
-        }
+            if let type = type {
+                return "DataItem(drinks: \(drinks), type: \(type), total: \(total), date: \(date.description)"
+                
+            } else {
+                return "DataItem(drinks: \(drinks), type: nil, total: \(total), date: \(date.description)"
+                
+            }
         
-        return "DataItem(drinks: nil, type: \(type), date: \(date.description)"
+        } else if let type = type {
+            
+            return "DataItem(drinks: nil, type: \(type), total: \(total),  date: \(date.description)"
+        
+        } else {
+            
+            return "DataItem(drinks: nil, type: nil, total: \(total),  date: \(date.description)"
+            
+        }
     }
     
     /**
@@ -93,33 +109,6 @@ struct DataItem: CustomStringConvertible, Equatable, Identifiable {
         
         return total
     }
-    /**
-     Generate a random array of `DataItem`
-     - Returns: A random `[DataItem]` array
-     */
-    static func dailySampleData() -> [DataItem] {
-        var dates = [Date]()
-        
-        for index in 0...23 {
-            dates.append(Calendar.current.date(bySettingHour: index, minute: 0, second: 0, of: .now)!)
-        }
-        
-        var drinks = [Drink]()
-        
-        let water = DrinkType(name: Constants.waterKey, color: CodableColor(color: .systemCyan), isDefault: true, enabled: true, colorChanged: false)
-        
-        for date in dates {
-            drinks.append(Drink(type: water, amount: Double(Int.random(in: 250...1500)), date: date))
-        }
-        
-        var dataItems = [DataItem]()
-        
-        for index in 0...23 {
-            dataItems.append(DataItem(drinks: [drinks[index]], type: water, date: dates[index]))
-        }
-        
-        return dataItems
-    }
     
     /**
      Determines if two `DataItem`s are the same
@@ -130,25 +119,50 @@ struct DataItem: CustomStringConvertible, Equatable, Identifiable {
      */
     static func == (lhs: DataItem, rhs: DataItem) -> Bool {
         // Check if the type and dates are the same
-        if lhs.type == rhs.type && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .year) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .month) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .day) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .hour) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .minute) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .second) == .orderedSame {
+        if lhs.total == rhs.total && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .year) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .month) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .day) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .hour) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .minute) == .orderedSame && Calendar.current.compare(lhs.date, to: rhs.date, toGranularity: .second) == .orderedSame {
             
-            // Checl if drinks exists for both
-            if let l = lhs.drinks, let r = rhs.drinks {
-                
-                // Checks if any drink are exclusive
-                for drink in l {
+            if let lDrinks = lhs.drinks, let rDrinks = rhs.drinks {
+                if let lT = lhs.type, let rT = rhs.type {
                     
-                    // If so returns false
-                    if !r.contains(drink) {
-                        return false
+                    for lD in lDrinks {
+                        
+                        var exists = false
+                        
+                        for rD in rDrinks {
+                            if lD == rD { exists = true }
+                        }
+                        
+                        if !exists { return false }
+                        exists = false
                     }
+                    
+                    return lT == rT
+                    
+                } else {
+                    
+                    for lD in lDrinks {
+                        
+                        var exists = false
+                        
+                        for rD in rDrinks {
+                            if lD == rD { exists = true }
+                        }
+                        
+                        if !exists { return false }
+                        exists = false
+                    }
+                    
+                    return lhs.type == rhs.type
                 }
+            
+            } else if let lT = lhs.type, let rT = rhs.type {
                 
-                // If not return true
-                return true
+                if lT == rT && lhs.drinks == nil && rhs.drinks == nil {
+                    return true
+                }
+            
+            } else if lhs.drinks == nil && rhs.drinks == nil && lhs.type == nil && rhs.type == nil {
                 
-            // If both drinks array are nil return true
-            } else if lhs.drinks == nil && rhs.drinks == nil {
                 return true
                 
             }

@@ -13,6 +13,9 @@ struct SettingsUnitsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var drinks: FetchedResults<Drink>
+    
     @EnvironmentObject var model: DrinkModel
     
     var body: some View {
@@ -20,21 +23,23 @@ struct SettingsUnitsView: View {
         Form {
             Section(footer: Text("Changing the unit will cause all measurements to be converted")) {
                 
+                let drinkArray = drinks.map { $0 }
+                
                 // MARK: - Cups (US)
                 Button(action: {
                     // If the units are not Cups (US)...
-                    if model.drinkData.units != Constants.cupsUS {
+                    if model.userInfo.units != Constants.cupsUS {
                         
-                        let pastUnit = model.drinkData.units
+                        let pastUnit = model.userInfo.units
                         
                         // Change to oz
-                        model.drinkData.units = Constants.cupsUS
-                        
+                        model.userInfo.units = Constants.cupsUS
+
                         // Convert all measurements
-                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.cupsUS)
+                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.cupsUS, drinks: drinkArray)
                         
                         // Save model
-                        model.save(test: false)
+                        model.saveUserInfo(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -50,7 +55,7 @@ struct SettingsUnitsView: View {
                             .accessibilityLabel(Constants.cupsUS)
                         
                         // If Cups (US) are selected
-                        if model.drinkData.units == Constants.cupsUS {
+                        if model.userInfo.units == Constants.cupsUS {
                             
                             Spacer()
                             
@@ -66,18 +71,18 @@ struct SettingsUnitsView: View {
                 // MARK: - Fluid Ounces (US)
                 Button(action: {
                     // If the units are not Fluid Ounces (US)...
-                    if model.drinkData.units != Constants.fluidOuncesUS {
+                    if model.userInfo.units != Constants.fluidOuncesUS {
                         
-                        let pastUnit = model.drinkData.units
+                        let pastUnit = model.userInfo.units
                         
                         // Change to oz
-                        model.drinkData.units = Constants.fluidOuncesUS
+                        model.userInfo.units = Constants.fluidOuncesUS
                         
                         // Convert all measurements
-                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.fluidOuncesUS)
+                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.fluidOuncesUS, drinks: drinkArray)
                         
                         // Save model
-                        model.save(test: false)
+                        model.saveUserInfo(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -93,7 +98,7 @@ struct SettingsUnitsView: View {
                             .accessibilityLabel(Constants.fluidOuncesUS)
                         
                         // If Fluid Ounces (US) are selected
-                        if model.drinkData.units == Constants.fluidOuncesUS {
+                        if model.userInfo.units == Constants.fluidOuncesUS {
                             
                             Spacer()
                             
@@ -109,18 +114,18 @@ struct SettingsUnitsView: View {
                 // MARK: - Liters
                 Button(action: {
                     // If the units are not Liters...
-                    if model.drinkData.units != Constants.liters {
+                    if model.userInfo.units != Constants.liters {
                         
-                        let pastUnit = model.drinkData.units
+                        let pastUnit = model.userInfo.units
                         
                         // Change to liters
-                        model.drinkData.units = Constants.liters
+                        model.userInfo.units = Constants.liters
                         
                         // Convert all measurements
-                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.liters)
+                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.liters, drinks: drinkArray)
                         
                         // Save model
-                        model.save(test: false)
+                        model.saveUserInfo(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -137,7 +142,7 @@ struct SettingsUnitsView: View {
                             .accessibilityLabel(Constants.liters)
                         
                         // If Liters are selected
-                        if model.drinkData.units == Constants.liters {
+                        if model.userInfo.units == Constants.liters {
                             
                             Spacer()
                             
@@ -154,18 +159,18 @@ struct SettingsUnitsView: View {
                 // MARK: - Milliliters
                 Button(action: {
                     // If the units are not mL...
-                    if model.drinkData.units != Constants.milliliters {
+                    if model.userInfo.units != Constants.milliliters {
                         
-                        let pastUnit = model.drinkData.units
+                        let pastUnit = model.userInfo.units
                         
                         // Change units to mL
-                        model.drinkData.units = Constants.milliliters
+                        model.userInfo.units = Constants.milliliters
                         
                         // Convert all measurements
-                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.milliliters)
+                        model.convertMeasurements(pastUnit: pastUnit, newUnit: Constants.milliliters, drinks: drinkArray)
                         
                         // Save model
-                        model.save(test: false)
+                        model.saveUserInfo(test: false)
                         
                         // Update widget
                         WidgetCenter.shared.reloadAllTimelines()
@@ -183,7 +188,7 @@ struct SettingsUnitsView: View {
                             .accessibilityLabel(Constants.milliliters)
                         
                         // If mL is selected...
-                        if model.drinkData.units == Constants.milliliters {
+                        if model.userInfo.units == Constants.milliliters {
                             Spacer()
                             
                             // Display a checkmark

@@ -68,10 +68,13 @@ struct Constants {
     static var totalKey = "Total"
     
     /// The Total `DrinkType`
-    static var totalType = DrinkType(name: "Total", color: CodableColor(color: .systemRed), isDefault: true, enabled: true, colorChanged: false)
-    
+//    static var totalType = DrinkType(name: "Total", color: LocalCodableColor(color: .systemRed), isDefault: true, enabled: true, colorChanged: false)
+
     /// The UserDefaults key where data is stored
     static var savedKey = "SavedKey"
+    
+    /// A key used for checking for the first run of app
+    static var loadDefault = "LoadDefault"
     
     /// The UserDefaults `suiteName` where user data is stored
     static var sharedKey = "group.com.cengelbart.Liquidus.shared"
@@ -92,6 +95,4 @@ struct Constants {
         Constants.liters:UnitVolume.liters,
         Constants.milliliters:UnitVolume.milliliters
     ]
-    
-    
 }

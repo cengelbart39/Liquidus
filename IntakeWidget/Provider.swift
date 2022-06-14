@@ -6,8 +6,10 @@
 //
 
 import WidgetKit
+import SwiftUI
 
 struct Provider: TimelineProvider {
+        
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), relevance: nil)
     }
@@ -45,16 +47,21 @@ struct Provider: TimelineProvider {
     private func getScore(date: Date) -> Float {
         if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
             if let data = userDefaults.data(forKey: Constants.savedKey) {
-                if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
+                if let decoded = try? JSONDecoder().decode(UserInfo.self, from: data) {
                     
                     let goal = decoded.dailyGoal
                     
-                    let amount = IntentLogic.getTotalAmountByDay(date: date, data: decoded)
+                    let amount = decoded.dailyTotalToGoal
                     
-                    if amount > goal {
-                        return Float(goal) + Float(amount)
+                    if Calendar.current.isDate(decoded.currentDay, inSameDayAs: date) {
+                        if amount > goal {
+                            return Float(goal) + Float(amount)
+                        } else {
+                            return Float(goal) - Float(amount)
+                        }
+                    
                     } else {
-                        return Float(goal) - Float(amount)
+                        return Float(goal)
                     }
                 }
             }

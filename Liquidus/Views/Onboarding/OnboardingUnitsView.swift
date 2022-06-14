@@ -9,7 +9,11 @@ import SwiftUI
 
 struct OnboardingUnitsView: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var drinkTypes: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
+    
     @Environment(\.colorScheme) var colorScheme
     
     @State var selectedUnit = Constants.milliliters
@@ -75,16 +79,32 @@ struct OnboardingUnitsView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
                     OnboardingDailyGoalView(selectedUnit: selectedUnit)
+
                 } label: {
                     Text("Next")
+
                 }
-                
             }
+        }
+        .onAppear {
+            let water = drinkTypes.filter { $0.order == 0 }
+            context.delete(water.last!)
+            
+            let coffee = drinkTypes.filter { $0.order == 1 }
+            context.delete(coffee.last!)
+            
+            let soda = drinkTypes.filter { $0.order == 2 }
+            context.delete(soda.last!)
+            
+            let juice = drinkTypes.filter { $0.order == 3 }
+            context.delete(juice.last!)
+            
+            PersistenceController.shared.saveContext()
         }
         .onDisappear {
             // Update and save model
-            model.drinkData.units = selectedUnit
-            model.save(test: false)
+            model.userInfo.units = selectedUnit
+            model.saveUserInfo(test: false)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  CalendarView.swift
+//  IntakeCalendarView.swift
 //  Liquidus
 //
 //  Created by Christopher Engelbart on 12/26/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarView: View {
+struct IntakeCalendarView: View {
     
     @EnvironmentObject var model: DrinkModel
     

@@ -65,7 +65,7 @@ extension TrendsDetailChartView: AXChartDescriptorRepresentable {
      Return the Y-Axis Title as a NSAttributedString
      */
     func yAxisTite() -> NSAttributedString {
-        return NSAttributedString(string: "\(model.drinkData.units) consumed")
+        return NSAttributedString(string: "\(model.userInfo.units) consumed")
     }
     
     /**
@@ -167,12 +167,12 @@ extension TrendsDetailChartView: AXChartDescriptorRepresentable {
                 let first = Month(date: startDate).firstDay()
                     
                 // If all data is selected
-                if type.name == Constants.totalKey {
-                    return NSAttributedString(string: "Data representing your data on \(formatter.string(from: first))")
+                if let type = type {
+                    return NSAttributedString(string: "Data representing your \(type) data on \(formatter.string(from: first))")
                     
                 // If a specific drink type is selected
                 } else {
-                    return NSAttributedString(string: "Data representing your \(type) data on \(formatter.string(from: first))")
+                    return NSAttributedString(string: "Data representing your data on \(formatter.string(from: first))")
                 }
             }
             

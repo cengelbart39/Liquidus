@@ -9,6 +9,9 @@ import SwiftUI
 
 struct IntakeMultiDrinkBreakup: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)], predicate: NSPredicate(format: "enabled == true")) var types: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @Namespace private var consumedDrinkNamespace
@@ -18,18 +21,16 @@ struct IntakeMultiDrinkBreakup: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(model.drinkData.drinkTypes) { type in
+            ForEach(types) { type in
                 // if type is enabled...
-                if type.enabled {
-                    IntakeSingleDrinkBreakup(color: model.getDrinkTypeColor(type: type), drinkType: type, day: day, trigger: $trigger)
-                        .padding(.leading)
-                        .accessibilityRotorEntry(id: type.id, in: consumedDrinkNamespace)
-                }
+                IntakeSingleDrinkBreakup(color: model.getDrinkTypeColor(type: type), type: type, day: day, trigger: $trigger)
+                    .padding(.leading)
+                    .accessibilityRotorEntry(id: type.id, in: consumedDrinkNamespace)
             }
         }
         .accessibilityRotor("Consumed Drink Types") {
-            ForEach(model.drinkData.drinkTypes) { type in
-                if model.getTypeAmountByDay(type: type, day: day) != 0.0 {
+            ForEach(types) { type in
+                if type.getTypeAmountByDay(day: day) != 0.0 {
                     AccessibilityRotorEntry(type.name, type.id, in: consumedDrinkNamespace)
                 }
             }

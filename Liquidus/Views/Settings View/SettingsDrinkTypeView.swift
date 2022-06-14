@@ -12,12 +12,16 @@ import SwiftUI
 
 struct SettingsDrinkTypeView: View {
     
-    @EnvironmentObject var model: DrinkModel
-    
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.editMode) private var editMode: Binding<EditMode>!
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.dynamicTypeSize) var dynamicType
+    
+    @Environment(\.managedObjectContext) var context
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)], predicate: NSPredicate(format: "isDefault == true")) var defaultTypes: FetchedResults<DrinkType>
+    
+    @EnvironmentObject var model: DrinkModel
     
     @State var isPresented = false
     
@@ -27,12 +31,14 @@ struct SettingsDrinkTypeView: View {
     @ScaledMetric(relativeTo: .body) var symbolSize = 20
     
     var body: some View {
+                
         Form {
             
             // MARK: - Default Drinks
             Section(header: Text("Default")) {
+                
                 // Loop through default drinks
-                ForEach(model.drinkData.drinkTypes.filter { $0.isDefault }) { type in
+                ForEach(defaultTypes) { type in
                     
                     NavigationLink {
                         // Go to Edit view

@@ -12,6 +12,8 @@ import SwiftUI
 
 struct OnboardingDailyGoalView: View {
     
+    @Environment(\.managedObjectContext) var context
+    
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.colorScheme) var colorScheme
@@ -136,8 +138,8 @@ struct OnboardingDailyGoalView: View {
         }
         .onDisappear {
             if let num = Double(dailyGoal) {
-                model.drinkData.dailyGoal = num
-                model.save(test: false)
+                model.userInfo.dailyGoal = num
+                model.saveUserInfo(test: false)
             }
         }
     }

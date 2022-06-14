@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 @testable import Liquidus
 
 /**
@@ -14,18 +15,18 @@ import Foundation
 class SampleDrinks {
     /**
      Gets a sample set of drinks with a drink per hour in the day
-     - Parameter day: The `Day` to create `Drink`s for
-     - Returns: A sample set of `Drink`s
+     - Parameters:
+        - day: The `Day` to create `Drink`s for
+        - context: A view context to create the `Drink`s
+     - Returns: A sample set of `DrinkType`s with appended `Drink`(s)
      */
-    static func day(_ day: Day) -> [Drink] {
-        // Empty drink array
-        var drinks = [Drink]()
+    static func day(_ day: Day, context: NSManagedObjectContext) -> [DrinkType] {
         
         // Get hours
         let hours = day.getHours()
         
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex
         var typeIndex = 0
@@ -34,59 +35,67 @@ class SampleDrinks {
         for index in 0..<hours.count {
             
             // Append drink based on index
-            drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.day[index], date: hours[index].data))
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.type = types[typeIndex % 4]
+            drink.amount = SampleDrinkAmounts.day[index]
+            drink.date = hours[index].data
+            
+            types[typeIndex % 4].addToDrinks(drink)
             
             // Increment typeIndex
             typeIndex += 1
         }
         
         // Return drinks array
-        return drinks
+        return types
     
-    }
-    
-    /**
-     Gets a sample set of drinks with a drink per day in the week
-     - Parameter week: The `Week` to create `Drink`s for
-     - Returns: A sample set of `Drink`s
-     */
-    static func week(_ week: Week) -> [Drink] {
-        // Empty drink array
-        var drinks = [Drink]()
-        
-        // Get default drink types
-        let drinkTypes = DrinkType.getDefault()
-        
-        // Create typeIndex
-        var typeIndex = 0
-        
-        // Loop through week array
-        for index in 0..<week.data.count {
-            
-            // Append drink based on index
-            drinks.append(Drink(type: drinkTypes[typeIndex % 4], amount: SampleDrinkAmounts.week[index], date: week.data[index]))
-            
-            // Increment typeIndex
-            typeIndex += 1
-        }
-        
-        // Return drinks array
-        return drinks
     }
     
     /**
      Gets a sample set of drinks with a drink per day in the week
      - Parameters:
         - week: The `Week` to create `Drink`s for
-        - type: Adds a `DrinkType` along with the default ones
-     - Returns: A sample set of `Drink`s
+        - context: A view context to create the `Drink`s
+     - Returns: A sample set of `DrinkType`s with appended `Drink`(s)
      */
-    static func week(_ week: Week, type: DrinkType) -> [Drink] {
-        // Empty drink array
-        var drinks = [Drink]()
+    static func week(_ week: Week, context: NSManagedObjectContext) -> [DrinkType] {
+        // Get default drink types
+        let types = SampleDrinkTypes.defaultTypes(context)
         
-        // Get default drink types and add passed in type
-        let drinkTypes = DrinkType.getDefault() + [type]
+        // Create typeIndex
+        var typeIndex = 0
+        
+        // Loop through dates array
+        for index in 0..<week.data.count {
+            
+            // Append drink based on index
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.type = types[typeIndex % 4]
+            drink.amount = SampleDrinkAmounts.week[index]
+            drink.date = week.data[index]
+            
+            types[typeIndex % 4].addToDrinks(drink)
+            
+            // Increment typeIndex
+            typeIndex += 1
+        }
+        
+        return types
+    }
+    
+    /**
+     Gets a sample set of drinks with a drink per day in the week with an additional custom `DrinkType`
+     - Parameters:
+        - week: The `Week` to create `Drink`s for
+        - context: A view context to create the `Drink`s
+     - Returns: A sample set of `DrinkType`s with appended `Drink`(s)
+     */
+    static func weekCustom(_ week: Week, context: NSManagedObjectContext) -> [DrinkType] {
+
+        // Get default drink types
+        let types = SampleDrinkTypes.allTypes(context)
         
         // Create typeIndex
         var typeIndex = 0
@@ -95,27 +104,32 @@ class SampleDrinks {
         for index in 0..<week.data.count {
             
             // Append drink based on index
-            drinks.append(Drink(type: drinkTypes[typeIndex % 5], amount: SampleDrinkAmounts.week[index], date: week.data[index]))
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.type = types[typeIndex % 5]
+            drink.amount = SampleDrinkAmounts.week[index]
+            drink.date = week.data[index]
+            
+            types[typeIndex % 5].addToDrinks(drink)
             
             // Increment typeIndex
             typeIndex += 1
         }
         
-        // Return drinks array
-        return drinks
+        return types
     }
     
     /**
      Gets a sample set of drinks with a drink per day in the month
-     - Parameter month: The `Month` to create `Drink`s for
-     - Returns: A sample set of `Drink`s
+     - Parameters:
+        - month: The `Month` to create `Drink`s for
+        - context: A view context to create the `Drink`s
+     - Returns: A sample set of `DrinkType`s with appended `Drink`(s)
      */
-    static func month(_ month: Month) -> [Drink] {
-        // Empty drink array
-        var drinks = [Drink]()
-        
+    static func month(_ month: Month, context: NSManagedObjectContext) -> [DrinkType] {
+
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex
         var typeIndex = 0
@@ -124,27 +138,32 @@ class SampleDrinks {
         for index in 0..<month.data.count {
             
             // Append drink based on index
-            drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[index], date: month.data[index]))
+            let drink = Drink(context: context)
+            drink.id = UUID()
+            drink.type = types[typeIndex % 4]
+            drink.amount = SampleDrinkAmounts.month[index]
+            drink.date = month.data[index]
+            
+            types[typeIndex % 4].addToDrinks(drink)
             
             // Increment typeIndex
             typeIndex += 1
         }
         
-        // Return drinks array
-        return drinks
+        return types
     }
     
     /**
-     Gets a sample set of drinks with a drink for every day in every week in the `HalfYear`
-     - Parameter halfYear: The `halfYear` to create `Drink`s for
-     - Returns: A sample set of `Drink`s
+     Gets a sample set of drinks with a drink for every day in every week in a `HalfYear`
+     - Parameters:
+        - halfYear: The `HalfYear` to create `Drink`s for
+        - context: A view context to create the `Drink`s
+     - Returns: A sample set of `DrinkType`s with appended `Drink`(s)
      */
-    static func halfYear(_ halfYear: HalfYear) -> [Drink] {
-        // Empty drink array
-        var drinks = [Drink]()
-        
+    static func halfYear(_ halfYear: HalfYear, context: NSManagedObjectContext) -> [DrinkType] {
+
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex and amountIndex
         var typeIndex = 0
@@ -156,8 +175,13 @@ class SampleDrinks {
             // Loop through day in week
             for day in week.data {
                 
-                // Append drink based on indices
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.week[amountIndex % 7], date: day))
+                let drink = Drink(context: context)
+                drink.id = UUID()
+                drink.type = types[typeIndex % 4]
+                drink.amount = SampleDrinkAmounts.week[amountIndex % 7]
+                drink.date = day
+                
+                types[typeIndex % 4].addToDrinks(drink)
                 
                 // Increment indices
                 typeIndex += 1
@@ -166,20 +190,20 @@ class SampleDrinks {
         }
         
         // Return drinks array
-        return drinks
+        return types
     }
     
     /**
-     Gets a sample set of drinks with a drink for every day in every month in the `Year`
-     - Parameter year: The `year` to create `Drink`s for
-     - Returns: A sample set of `Drink`s
+     Gets a sample set of drinks with a drink for every day in every month in `Year`
+     - Parameters:
+        - year: The `Year` to create `Drink`s for
+        - context: A view context to create the `Drink`s
+     - Returns: A sample set of `DrinkType`s with appended `Drink`(s)
      */
-    static func year(_ year: Year) -> [Drink] {
-        // Empty drink array
-        var drinks = [Drink]()
-        
+    static func year(_ year: Year, context: NSManagedObjectContext) -> [DrinkType] {
+
         // Get default drink types
-        let types = DrinkType.getDefault()
+        let types = SampleDrinkTypes.defaultTypes(context)
         
         // Create typeIndex and amountIndex
         var typeIndex = 0
@@ -191,8 +215,13 @@ class SampleDrinks {
             // Loop through days in month
             for day in month.data {
                 
-                // Append drink based on indices
-                drinks.append(Drink(type: types[typeIndex % 4], amount: SampleDrinkAmounts.month[amountIndex], date: day))
+                let drink = Drink(context: context)
+                drink.id = UUID()
+                drink.type = types[typeIndex % 4]
+                drink.amount = SampleDrinkAmounts.month[amountIndex]
+                drink.date = day
+                
+                types[typeIndex % 4].addToDrinks(drink)
                 
                 // Increment indices
                 typeIndex += 1
@@ -204,6 +233,6 @@ class SampleDrinks {
         }
         
         // Return drinks array
-        return drinks
+        return types
     }
 }

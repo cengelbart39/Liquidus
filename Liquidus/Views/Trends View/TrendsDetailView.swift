@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct TrendsDetailView: View {
+    @Environment(\.managedObjectContext) var context
+    
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "type.enabled == true")) var drinks: FetchedResults<Drink>
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "order", ascending: true)], predicate: NSPredicate(format: "enabled == true")) var drinkTypes: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     
     @AccessibilityFocusState var isHeaderFocused: Bool
     
-    var type: DrinkType
+    var type: DrinkType?
+    var total: Bool
     
     // MARK: - State Variables
     @State var selectedTimePeriod = TimePeriod.daily
@@ -40,15 +47,26 @@ struct TrendsDetailView: View {
                 VStack(alignment: .leading) {
                     TrendsDetailTimePickerView(binding: $selectedTimePeriod, touchLocation: $touchLocation)
                     
-                    let dataItems = self.getDataItems()
-
-                    let amount = touchLocation == -1 ? model.getOverallAmount(type: type, dates: self.getDates()) : self.getIndividualAmount(dataItems: dataItems)
+                    let types = drinkTypes.map { $0 }
                     
-                    TrendsDetailInfoView(dataItems: dataItems, amount: amount, amountTypeText: self.getAmontTypeText(), amountText: self.getAmountText(amount: amount, dataItems: dataItems), timeRangeText: self.getTimeRangeText(), trigger: $hiddenTrigger)
+                    let dataItems = self.getDataItems(types: types)
+                    
+                    let amount = self.getAmount(items: dataItems)
+                    
+                    TrendsDetailInfoView(
+                        dataItems: dataItems,
+                        amount: amount,
+                        amountTypeText: self.getAmontTypeText(),
+                        amountText: self.getAmountText(amount: amount, dataItems: dataItems),
+                        timeRangeText: self.getTimeRangeText(),
+                        trigger: $hiddenTrigger
+                    )
                         .accessibilityFocused($isHeaderFocused)
                         .opacity(hiddenTrigger ? 1 : 1)
                     
                     let maxValue = model.getMaxValue(dataItems: dataItems, timePeriod: selectedTimePeriod)
+                    
+                    let horizontalAmount = type != nil ? model.getOverallAmount(type: type!, dates: self.getDates()) : model.getTotalAmount(types: types, dates: self.getDates())
                     
                     VStack() {
                         // MARK: - Chart
@@ -59,7 +77,7 @@ struct TrendsDetailView: View {
                             amount: amount,
                             maxValue: maxValue,
                             verticalAxisText: model.verticalAxisText(dataItems: dataItems, timePeriod: selectedTimePeriod),
-                            horizontalAxisText: model.horizontalAxisText(type: type, dates: self.getDates()),
+                            horizontalAxisText: model.horizontalAxisText(amount: horizontalAmount),
                             chartAccessibilityLabel: model.getChartAccessibilityLabel(type: type, dates: self.getDates()),
                             chartSpacerWidth: model.chartSpacerMaxWidth(timePeriod: selectedTimePeriod, isWidget: false),
                             isWidget: false,
@@ -102,7 +120,7 @@ struct TrendsDetailView: View {
                 }
             }
         }
-        .navigationTitle(type.name)
+        .navigationTitle(type != nil ? type!.name : "Total")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             isHeaderFocused = false
@@ -120,7 +138,7 @@ struct TrendsDetailView: View {
      Returns the appropriate `selected___` for the `selectedTimePeriod`
      - Returns: `selectedDay`, `selectedWeek`, `selectedMonth`, `selectedHalfYear`, `selectedYear` or `nil`
      */
-    func getDates() -> Any? {
+    func getDates() -> Any {
         if selectedTimePeriod == .daily {
             return selectedDay
 
@@ -137,7 +155,7 @@ struct TrendsDetailView: View {
             return selectedYear
         }
         
-        return nil
+        fatalError("TrendsDetailView: getDates: Unknown selectedTimePeriod \(selectedTimePeriod).")
     }
     
     // MARK: - Header Text Methods
@@ -346,26 +364,65 @@ struct TrendsDetailView: View {
     }
     
     // MARK: - Data Methods
+    func getAmount(items: [DataItem]) -> Double {
+        if touchLocation == -1 {
+            // Non-Total Type
+            if let type = type {
+                return model.getOverallAmount(type: type, dates: self.getDates())
+            
+            }
+            
+            let drinkArray = drinks.map { $0 }
+            
+            // Total Condition
+            return model.getTotalAmount(drinks: drinkArray)
+            
+        }
+        
+        // Type doesn't matter otherwise
+        return self.getIndividualAmount(dataItems: items)
+    }
+    
     /**
      Depending on the selected time period, return the data items for the associated selected time range. For example, if daily data is chosen, it returns the Data Items, by hour, for a chosen day.
+     - Parameter types: All enabled `DrinkType`s to calculate Total data
      - Returns: An array of `DataItem`s based on `selectedTimePeriod`.
      - Note: An empty `[DataItem]` is only returned if there is an unrecognized `TimePeriod` case
      */
-    func getDataItems() -> [DataItem] {
-        if selectedTimePeriod == .daily {
-            return model.getDataItemsForDay(day: selectedDay, type: type)
+    func getDataItems(types: [DrinkType]) -> [DataItem] {
+        if let type = type {
+            if selectedTimePeriod == .daily {
+                return type.getDataItemsByDay(day: selectedDay)
+                
+            } else if selectedTimePeriod == .weekly {
+                return type.getDataItemsByWeek(week: selectedWeek)
+                
+            } else if selectedTimePeriod == .monthly {
+                return type.getDataItemsByMonth(month: selectedMonth)
+                
+            } else if selectedTimePeriod == .halfYearly {
+                return type.getDataItemsByHalfYear(halfYear: selectedHalfYear)
+                
+            } else if selectedTimePeriod == .yearly {
+                return type.getDataItemsByYear(year: selectedYear)
+            }
+        
+        } else {
+            if selectedTimePeriod == .daily {
+                return model.getAllDataItems(types: types, dates: selectedDay)
+                
+            } else if selectedTimePeriod == .weekly {
+                return model.getAllDataItems(types: types, dates: selectedWeek)
+                
+            } else if selectedTimePeriod == .monthly {
+                return model.getAllDataItems(types: types, dates: selectedMonth)
             
-        } else if selectedTimePeriod == .weekly {
-            return model.getDataItemsForWeek(week: selectedWeek, type: type)
-            
-        } else if selectedTimePeriod == .monthly {
-            return model.getDataItemsForMonth(month: selectedMonth, type: type)
-            
-        } else if selectedTimePeriod == .halfYearly {
-            return model.getDataItemsForHalfYear(halfYear: selectedHalfYear, type: type)
-            
-        } else if selectedTimePeriod == .yearly {
-            return model.getDataItemsforYear(year: selectedYear, type: type)
+            } else if selectedTimePeriod == .halfYearly {
+                return model.getAllDataItems(types: types, dates: selectedHalfYear)
+                
+            } else if selectedTimePeriod == .yearly {
+                return model.getAllDataItems(types: types, dates: selectedYear)
+            }
         }
         
         return [DataItem]()
@@ -378,20 +435,62 @@ struct TrendsDetailView: View {
      - Returns: The Type Amount for the given selected date period
      */
     private func getIndividualAmount(dataItems: [DataItem]) -> Double {
+        var amount = 0.0
+        
         if selectedTimePeriod == .daily {
-            return model.getTypeAmountByHour(type: type, hour: Hour(date: dataItems[touchLocation].date))
+            
+            if let type = type {
+                amount = type.getTypeAmountByHour(hour: Hour(date: dataItems[touchLocation].date))
+            
+            } else {
+                for type in drinkTypes {
+                    amount += type.getTypeAmountByHour(hour: Hour(date: dataItems[touchLocation].date))
+                }
+            }
             
         } else if selectedTimePeriod == .weekly {
-            return model.getTypeAmountByDay(type: type, day: Day(date: selectedWeek.data[touchLocation]))
+            
+            if let type = type {
+                amount = type.getTypeAmountByDay(day: Day(date: selectedWeek.data[touchLocation]))
+            
+            } else {
+                for type in drinkTypes {
+                    amount += type.getTypeAmountByDay(day: Day(date: selectedWeek.data[touchLocation]))
+                }
+            }
 
         } else if selectedTimePeriod == .monthly {
-            return model.getTypeAmountByDay(type: type, day: Day(date: selectedMonth.data[touchLocation]))
+           
+            if let type = type {
+                amount = type.getTypeAmountByDay(day: Day(date: selectedMonth.data[touchLocation]))
+            
+            } else {
+                for type in drinkTypes {
+                    amount += type.getTypeAmountByDay(day: Day(date: selectedMonth.data[touchLocation]))
+                }
+            }
 
         } else if selectedTimePeriod == .halfYearly {
-            return model.getTypeAmountByWeek(type: type, week: selectedHalfYear.data[touchLocation])
+            
+            if let type = type {
+                amount = type.getTypeAmountByWeek(week: selectedHalfYear.data[touchLocation])
+            
+            } else {
+                for type in drinkTypes {
+                    amount += type.getTypeAmountByWeek(week: selectedHalfYear.data[touchLocation])
+                }
+            }
 
         } else if selectedTimePeriod == .yearly {
-            return model.getTypeAmountByMonth(type: type, month: selectedYear.data[touchLocation])
+            
+            if let type = type {
+                amount = type.getTypeAmountByMonth(month: selectedYear.data[touchLocation])
+            
+            } else {
+                for type in drinkTypes {
+                    amount += type.getTypeAmountByMonth(month: selectedYear.data[touchLocation])
+                }
+            }
         }
         
         return 0.0

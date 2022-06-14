@@ -10,9 +10,14 @@ import HealthKit
 
 struct TabBar: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "order == 0")) var water: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @State var selectedTab = 0
+    
+    @State var hiddenTrigger = false
     
     @State var isLogDrinkViewShowing = false
     
@@ -22,7 +27,7 @@ struct TabBar: View {
         
         TabView(selection: $selectedTab) {
             // IntakeView
-            IntakeView(updateButtons: updateButtons)
+            IntakeView(hiddenTrigger: $hiddenTrigger, updateButtons: updateButtons)
                 .tabItem {
                     VStack {
                         Image("custom.drink.fill")
@@ -63,8 +68,8 @@ struct TabBar: View {
             }
         })
         .sheet(isPresented: $isLogDrinkViewShowing, content: {
-            // Show LogDrinkView
-            LogDrinkView(isPresented: $isLogDrinkViewShowing)
+            // Show IntakeLogDrinkView
+            IntakeLogDrinkView(isPresented: $isLogDrinkViewShowing, trigger: $hiddenTrigger)
                 .environmentObject(model)
                 .onDisappear {
                     updateButtons = false
@@ -73,14 +78,14 @@ struct TabBar: View {
         })
         .onAppear {
             // If water is enabled...
-            if self.waterEnabled() && model.drinkData.healthKitEnabled {
+            if self.waterEnabled() && model.userInfo.healthKitEnabled {
                 // If healthStore exists and does app have access...
                 if model.healthStore?.healthStore != nil && HKHealthStore.isHealthDataAvailable() {
                     // Get statsCollections
                     model.healthStore!.getHealthKitData { statsCollection in
                         // Retrieve HealthKit data
-                        if let statsCollection = statsCollection {
-                            model.retrieveFromHealthKit(statsCollection)
+                        if let statsCollection = statsCollection, let type = water.first {
+                            self.retrieveFromHealthKit(statsCollection, type: type)
                         }
                     }
                 }
@@ -94,12 +99,55 @@ struct TabBar: View {
      - Returns: True if enabled; False if not
      */
     func waterEnabled() -> Bool {
-        if let water = model.drinkData.drinkTypes.first {
+        if let water = water.first {
             return water.enabled
         }
         
         return false
     }
+    
+    /**
+     Retrieve data from HealthKit
+     - Parameters:
+        - statsCollection: The data extracted from Apple Health
+        - type: The `DrinkType` to save the new `Drink` to
+     - Precondition: Liquidus can only be granted permission to read and write Water consumption data from HealthKit. The assumption is the passed in `DrinkType` is Water.
+     */
+    func retrieveFromHealthKit(_ statsCollection: HKStatisticsCollection, type: DrinkType) {
+        
+        // Get start and end date
+        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        let endDate = Date()
+        
+        // Go through every date pulled from HealthKit
+        statsCollection.enumerateStatistics(from: startDate, to: endDate) { stats, stop in
+            
+            // Get the summed amount converted to unit based on user preference
+            if let amount = stats.sumQuantity()?.doubleValue(for: model.getHKUnit()) {
+
+                let drink = Drink(context: context)
+                drink.id = UUID()
+                drink.type = type
+                drink.amount = amount
+                drink.date = stats.startDate
+                
+                type.addToDrinks(drink)
+                
+                if let drinks = type.drinks?.allObjects as? [Drink] {
+                    if drink.amount > 0 && !drinks.contains(drink) {
+                        PersistenceController.shared.saveContext()
+                    }
+                
+                } else {
+                    if drink.amount > 0 {
+                        PersistenceController.shared.saveContext()
+
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 struct TabView_Previews: PreviewProvider {

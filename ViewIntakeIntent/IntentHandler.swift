@@ -13,8 +13,8 @@ import SwiftUI
 
 class IntentHandler: INExtension, ViewIntakeIntentHandling {
     
-    var data = DrinkData()
-    
+    var data = UserInfo()
+        
     override func handler(for intent: INIntent) -> Any {
         
         guard intent is ViewIntakeIntent else {
@@ -47,7 +47,7 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
     func getData() -> Bool {
         if let userDefaults = UserDefaults(suiteName: Constants.sharedKey) {
             if let data = userDefaults.data(forKey: Constants.savedKey) {
-                if let decoded = try? JSONDecoder().decode(DrinkData.self, from: data) {
+                if let decoded = try? JSONDecoder().decode(UserInfo.self, from: data) {
                     self.data = decoded
                     return true
                 }
@@ -113,12 +113,8 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
      - Returns: The total amount consumed during the user's current day or week
      */
     private func getAmount(intent: ViewIntakeIntent) -> NSNumber {
-        
-        // Get the total amount
-        let totalAmount = IntentLogic.getTotalAmountByDay(date: .now, data: self.data)
-        
         // Return totalAmount as a NSNumber
-        return NSNumber.init(value: totalAmount)
+        return NSNumber.init(value: data.dailyTotalToGoal)
     }
     
     /**
@@ -127,10 +123,8 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
      - Returns: The percentage towards the user's daily or weekly goal
      */
     private func getPercent(intent: ViewIntakeIntent) -> NSNumber {
-        
-        
         // Get the percentage
-        let percent = IntentLogic.getTotalPercentByDay(date: .now, data: data)*100
+        let percent = self.getTotalPercentByDay(date: Date.now)*100
         
         // Configure Number formatter
         let formatter = NumberFormatter()
@@ -151,6 +145,10 @@ class IntentHandler: INExtension, ViewIntakeIntentHandling {
         
         // If ether if-let fails return 0
         return 0.0
+    }
+    
+    private func getTotalPercentByDay(date: Date) -> Double {
+        return data.dailyTotalToGoal/data.dailyGoal
     }
     
 }

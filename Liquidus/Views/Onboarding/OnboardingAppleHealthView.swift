@@ -10,6 +10,10 @@ import HealthKit
 
 struct OnboardingAppleHealthView: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "order == 0"))
+    var water: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @Environment(\.colorScheme) var colorScheme
@@ -62,16 +66,26 @@ struct OnboardingAppleHealthView: View {
             // Ask for Apple Health access and pull data if authorized
             Button(action: {
                 if let healthStore = model.healthStore {
-                    if model.drinkData.lastHKSave == nil {
+                    if model.userInfo.lastHKSave == nil {
                         healthStore.requestAuthorization { succcess in
                             if succcess {
-                                healthKitEnabled = true
                                 healthStore.getHealthKitData { statsCollection in
-                                    if let statsCollection = statsCollection {
-                                        model.retrieveFromHealthKit(statsCollection)
-                                        model.saveToHealthKit()
+                                    if let statsCollection = statsCollection, let type = water.first {
+                                        if let drinks = type.drinks?.allObjects as? [Drink] {
+                                            
+                                            self.retrieveFromHealthKit(statsCollection, type: type)
+                                            
+                                            model.saveToHealthKit(allDrinks: drinks)
+                                            
+                                        } else {
+                                            self.retrieveFromHealthKit(statsCollection, type: type)
+                                        }
+                                        
+                                        healthKitEnabled = true
+                                        
                                         DispatchQueue.main.async {
-                                            model.drinkData.healthKitEnabled = true
+                                            model.userInfo.healthKitEnabled = true
+                                            model.saveUserInfo(test: false)
                                         }
                                     }
                                 }
@@ -96,8 +110,8 @@ struct OnboardingAppleHealthView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     // Update and save onboarding status
-                    model.drinkData.isOnboarding = false
-                    model.save(test: false)
+                    model.userInfo.isOnboarding = false
+                    model.saveUserInfo(test: false)
                 } label: {
                     if healthKitEnabled {
                         Text("Done")
@@ -108,6 +122,50 @@ struct OnboardingAppleHealthView: View {
             }
         }
     }
+    
+    /**
+     Retrieve data from HealthKit
+     - Parameters:
+        - statsCollection: The data extracted from Apple Health
+        - type: The `DrinkType` to save the new `Drink` to
+     - Precondition: Liquidus can only be granted permission to read and write Water consumption data from HealthKit. The assumption is the passed in `DrinkType` is Water.
+     */
+    func retrieveFromHealthKit(_ statsCollection: HKStatisticsCollection, type: DrinkType) {
+        
+        // Get start and end date
+        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        let endDate = Date()
+        
+        // Go through every date pulled from HealthKit
+        statsCollection.enumerateStatistics(from: startDate, to: endDate) { stats, stop in
+            
+            // Get the summed amount converted to unit based on user preference
+            if let amount = stats.sumQuantity()?.doubleValue(for: model.getHKUnit()) {
+                
+                let context = PersistenceController.shared.container.viewContext
+                
+                let drink = Drink(context: context)
+                drink.id = UUID()
+                drink.type = type
+                drink.amount = amount
+                drink.date = stats.startDate
+                
+                type.addToDrinks(drink)
+                
+                if let drinks = type.drinks?.allObjects as? [Drink] {
+                    if drink.amount > 0 && !drinks.contains(drink) {
+                        PersistenceController.shared.saveContext()
+                    }
+                
+                } else {
+                    if drink.amount > 0 {
+                        PersistenceController.shared.saveContext()
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 struct OnboardingAppleHealthView_Previews: PreviewProvider {

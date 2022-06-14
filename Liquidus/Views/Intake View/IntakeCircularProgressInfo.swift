@@ -15,6 +15,7 @@ struct IntakeCircularProgressInfo: View {
     @Environment(\.dynamicTypeSize) var dynamicType
     
     var day: Day
+    var types: [DrinkType]
     var totalPercent: Double
     @Binding var trigger: Bool
     
@@ -30,7 +31,7 @@ struct IntakeCircularProgressInfo: View {
             }
             
             // Get percentage of liquid drank for day
-            let percent = model.getTotalPercentByDay(day: day)
+            let percent = model.getTotalPercentByDay(types: types, day: day)
             
             Text(String(format: "\(model.getSpecifier(amount: percent*100))%%", percent*100.0))
                 .font(self.getFontStylePercent())
@@ -40,7 +41,7 @@ struct IntakeCircularProgressInfo: View {
                 .accessibilitySortPriority(0)
             
             // Get the total amount of liquid drank for day
-            let total = model.getTotalAmountByDay(day: day)
+            let total = model.getTotalAmount(types: types, dates: day)
             
             Text("\(total, specifier: model.getSpecifier(amount: total)) \(model.getUnits())")
                 .font(getFontStyleAmount())

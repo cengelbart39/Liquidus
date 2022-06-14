@@ -11,6 +11,10 @@ import WidgetKit
 
 struct SettingsView: View {
     
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var drinks: FetchedResults<Drink>
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "order == 0")) var water: FetchedResults<DrinkType>
+    
     @EnvironmentObject var model: DrinkModel
     
     @State var dailyGoal = ""
@@ -55,9 +59,10 @@ struct SettingsView: View {
                             Label("Units", systemImage: "ruler")
                         })
                     
-
+                    
                 }
                 
+                // MARK: - Debug
                 Section(header: Text("Debug")) {
                     Button {
                         model.addYearDrinks()
@@ -70,9 +75,13 @@ struct SettingsView: View {
                     }
                     
                     Button {
-                        model.drinkData.drinks = [Drink]()
+                        for drink in drinks {
+                            context.delete(drink)
+                        }
                         
-                        model.save(test: false)
+                        model.userInfo.dailyTotalToGoal = 0
+                        
+                        PersistenceController.shared.saveContext()
                         
                         WidgetCenter.shared.reloadAllTimelines()
                     } label: {
@@ -89,20 +98,29 @@ struct SettingsView: View {
                 
                 // MARK: - Apple Health
                 // Don't display button if Apple Health access is granted
-                if !model.drinkData.healthKitEnabled {
+                if !model.userInfo.healthKitEnabled {
                     Section(header: Text("Apple Health")) {
                         
                         Button(action: {
                             if let healthStore = model.healthStore {
-                                if model.drinkData.lastHKSave == nil {
+                                if model.userInfo.lastHKSave == nil {
                                     healthStore.requestAuthorization { succcess in
                                         if succcess {
                                             healthStore.getHealthKitData { statsCollection in
-                                                if let statsCollection = statsCollection {
-                                                    model.retrieveFromHealthKit(statsCollection)
-                                                    model.saveToHealthKit()
+                                                if let statsCollection = statsCollection, let type = water.first {
+                                                    if let drinks = type.drinks?.allObjects as? [Drink] {
+                                                        
+                                                        self.retrieveFromHealthKit(statsCollection, type: type)
+                                                        
+                                                        model.saveToHealthKit(allDrinks: drinks)
+                                                        
+                                                    } else {
+                                                        self.retrieveFromHealthKit(statsCollection, type: type)
+                                                    }
+                                                
                                                     DispatchQueue.main.async {
-                                                        model.drinkData.healthKitEnabled = true
+                                                        model.userInfo.healthKitEnabled = true
+                                                        model.saveUserInfo(test: false)
                                                     }
                                                 }
                                             }
@@ -155,6 +173,55 @@ struct SettingsView: View {
                 
             }
             .navigationBarTitle("Settings")
+        }
+    }
+    
+    /**
+     Retrieve data from HealthKit
+     - Parameters:
+        - statsCollection: The data extracted from Apple Health
+        - type: The `DrinkType` to save the new `Drink` to
+     - Precondition: Liquidus can only be granted permission to read and write Water consumption data from HealthKit. The assumption is the passed in `DrinkType` is Water.
+     */
+    func retrieveFromHealthKit(_ statsCollection: HKStatisticsCollection, type: DrinkType) {
+        
+        // Get start and end date
+        let startDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        let endDate = Date()
+        
+        // Go through every date pulled from HealthKit
+        statsCollection.enumerateStatistics(from: startDate, to: endDate) { stats, stop in
+            
+            // Get the summed amount converted to unit based on user preference
+            if let amount = stats.sumQuantity()?.doubleValue(for: model.getHKUnit()) {
+                
+                let drink = Drink(context: self.context)
+                drink.id = UUID()
+                drink.type = type
+                drink.amount = amount
+                drink.date = stats.startDate
+                
+                type.addToDrinks(drink)
+                
+                if let drinks = type.drinks?.allObjects as? [Drink] {
+                    if drink.amount > 0 && !drinks.contains(drink) {
+                        do {
+                            try self.context.save()
+                        } catch {
+                            fatalError("SettingsView: retrieveFromHealthKit: \(error.localizedDescription)")
+                        }
+                    }
+                
+                } else {
+                    if drink.amount > 0 {
+                        do {
+                            try self.context.save()
+                        } catch {
+                            fatalError("SettingsView: retrieveFromHealthKit: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
         }
     }
 }

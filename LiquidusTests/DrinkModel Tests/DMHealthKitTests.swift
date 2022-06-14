@@ -23,19 +23,19 @@ class DMHealthKitTests: XCTestCase {
     
     func testGetHKUnit() {
         // Set units to millilters and test for the correct HKUnit
-        model.drinkData.units = Constants.milliliters
+        model.userInfo.units = Constants.milliliters
         XCTAssertEqual(model.getHKUnit(), HKUnit.literUnit(with: .milli))
         
         // Set units to liters and test for the correct HKUnit
-        model.drinkData.units = Constants.liters
+        model.userInfo.units = Constants.liters
         XCTAssertEqual(model.getHKUnit(), HKUnit.liter())
         
         // Set units to fluid ounces and test for the correct HKUnit
-        model.drinkData.units = Constants.fluidOuncesUS
+        model.userInfo.units = Constants.fluidOuncesUS
         XCTAssertEqual(model.getHKUnit(), HKUnit.fluidOunceUS())
         
         // Set units to cups and test for the correct HKUnit
-        model.drinkData.units = Constants.cupsUS
+        model.userInfo.units = Constants.cupsUS
         XCTAssertEqual(model.getHKUnit(), HKUnit.cupUS())
     }
 }

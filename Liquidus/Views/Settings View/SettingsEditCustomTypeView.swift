@@ -13,6 +13,8 @@ import WidgetKit
 
 struct SettingsEditCustomTypeView: View {
     
+    @Environment(\.managedObjectContext) var context
+    
     @EnvironmentObject var model: DrinkModel
     @Environment(\.presentationMode) var presentationMode
     
@@ -57,13 +59,19 @@ struct SettingsEditCustomTypeView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     // Edit existing drinks of type
-                    model.editDrinkType(old: type, new: name)
-                    // Tell views to update
-                    model.objectWillChange.send()
+                    type.name = name
+                    type.color = UIColor(newColor).encode()
+                    type.colorChanged = true
+                    
+                    // Update CoreData
+                    PersistenceController.shared.saveContext()
+                    
                     // Update Widget
                     WidgetCenter.shared.reloadAllTimelines()
+                    
                     // Dismiss view
                     presentationMode.wrappedValue.dismiss()
+                    
                 } label: {
                     Text("Save")
                 }
@@ -83,11 +91,20 @@ struct SettingsEditCustomTypeView: View {
         }
         .accessibilityAction(named: "Save") {
             // Edit existing drinks of type
-            model.editDrinkType(old: type, new: name)
-            // Tell views to update
-            model.objectWillChange.send()
+            type.name = name
+            type.color = UIColor(newColor).encode()
+            type.colorChanged = true
+            
+            // Update CoreData
+            do {
+                try context.save()
+            } catch {
+                fatalError("SettingsEditCustomTypeView: Unable to save to CoreData")
+            }
+            
             // Update Widget
             WidgetCenter.shared.reloadAllTimelines()
+            
             // Dismiss view
             presentationMode.wrappedValue.dismiss()
         }

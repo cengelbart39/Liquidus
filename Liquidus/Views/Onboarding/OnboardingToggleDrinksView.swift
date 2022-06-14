@@ -19,8 +19,7 @@ struct OnboardingToggleDrinksView: View {
         Toggle(type.name, isOn: $isEnabled)
             .onChange(of: isEnabled) { newValue in
                 // When isEnabled changes update model
-                let index = model.drinkData.drinkTypes.firstIndex(of: type)!
-                model.drinkData.drinkTypes[index].enabled.toggle()
+                type.enabled = newValue
             }
     }
 }

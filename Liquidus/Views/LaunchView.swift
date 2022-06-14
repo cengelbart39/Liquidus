@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct LaunchView: View {
+        
+    @Environment(\.managedObjectContext) var context
     
     @EnvironmentObject var model: DrinkModel
     
     var body: some View {
         
         // If the user is onboarding, show onboarding screens
-        if model.drinkData.isOnboarding {
+        if model.userInfo.isOnboarding {
             OnboardingWelcomeView()
                 .navigationBarHidden(true)
                 .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
@@ -22,15 +24,27 @@ struct LaunchView: View {
                 }
                 .onAppear {
                     model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                    
+                    if !Calendar.current.isDate(model.userInfo.currentDay, inSameDayAs: Date()) {
+                        
+                        model.userInfo.currentDay = Date()
+                        model.userInfo.dailyTotalToGoal = 0.0
+                    }
                 }
         // If the user isn't onboarding, start with TabBar
-        } else if !model.drinkData.isOnboarding {
+        } else if !model.userInfo.isOnboarding {
             TabBar()
                 .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.grayscaleStatusDidChangeNotification)) { _ in
                     model.grayscaleEnabled.toggle()
                 }
                 .onAppear {
                     model.grayscaleEnabled = UIAccessibility.isGrayscaleEnabled
+                    
+                    if !Calendar.current.isDate(model.userInfo.currentDay, inSameDayAs: Date()) {
+                        
+                        model.userInfo.currentDay = Date()
+                        model.userInfo.dailyTotalToGoal = 0.0
+                    }
                 }
         }
     }
